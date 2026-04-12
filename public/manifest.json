@@ -1,0 +1,26 @@
+{
+  "short_name": "Sales Crates",
+  "name": "Digging in the Sales Crates",
+  "description": "Find the best vinyl deals across Discogs, eBay, and top independent record stores.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#f59e0b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["music", "shopping", "entertainment"],
+  "screenshots": []
+}

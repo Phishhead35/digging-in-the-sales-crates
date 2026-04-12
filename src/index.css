@@ -1,0 +1,249 @@
+:root {
+  --bg-deep: #0a0a0f;
+  --bg-surface: #111118;
+  --bg-card: #16161f;
+  --bg-card-hover: #1c1c28;
+  --border: rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.12);
+  --amber: #f59e0b;
+  --amber-dim: #d97706;
+  --amber-glow: rgba(245,158,11,0.15);
+  --text-primary: #f0eff5;
+  --text-secondary: #b8b7c8;
+  --text-muted: #8b8a9b;
+  --groove-red: #e63946;
+  --groove-teal: #2ec4b6;
+  --font-display: 'Bebas Neue', 'Bebas Neue Fallback', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+@font-face {
+  font-family: 'Bebas Neue';
+  font-display: optional;
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-display: optional;
+}
+@font-face {
+  font-family: 'DM Mono';
+  font-display: optional;
+}
+
+/* Size-adjusted fallback for Bebas Neue to prevent CLS on nav/footer */
+@font-face {
+  font-family: 'Bebas Neue Fallback';
+  src: local('Arial Narrow'), local('Arial');
+  size-adjust: 75%;
+  ascent-override: 120%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+footer { min-height: 180px; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input { font-family: inherit; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+/* Animations */
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes pulse-amber { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+@keyframes fade-up { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes shimmer { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+
+.animate-spin-slow { animation: spin-slow 10s linear infinite; }
+.animate-fade-up { animation: fade-up 0.5s ease forwards; }
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* ── INP Fix: CSS hover states replace inline onMouseOver/onMouseOut ── */
+
+/* Home: trending search pills */
+.trending-pill {
+  padding: 5px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-family: var(--font-body);
+  transition: border-color 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.trending-pill:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+/* Home: feature cards */
+.feature-card {
+  padding: 28px;
+  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: border-color 0.3s, transform 0.3s;
+}
+.feature-card:hover {
+  transform: translateY(-4px);
+}
+.feature-card[data-color="teal"]:hover { border-color: rgba(46,196,182,0.27); }
+.feature-card[data-color="amber"]:hover { border-color: rgba(245,158,11,0.27); }
+.feature-card[data-color="green"]:hover { border-color: rgba(74,222,128,0.27); }
+.feature-card[data-color="red"]:hover { border-color: rgba(230,57,70,0.27); }
+
+/* Home: source pills */
+.source-pill {
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: border-color 0.2s, background 0.2s;
+  text-align: center;
+  min-width: 140px;
+  display: block;
+}
+.source-pill:hover {
+  border-color: var(--amber);
+  background: var(--amber-glow);
+}
+
+/* Home: DIG button */
+.dig-btn {
+  padding: 18px 28px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border-radius: 0 12px 12px 0;
+  color: #000;
+  font-weight: 600;
+  font-size: 15px;
+  font-family: var(--font-body);
+  transition: opacity 0.2s;
+}
+.dig-btn:hover { opacity: 0.9; }
+
+/* Deals: quick search pills */
+.quick-search-pill {
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 13px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.quick-search-pill:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+  background: var(--amber-glow);
+}
+
+/* Deals: API source cards */
+.api-source-card {
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid rgba(245,158,11,0.25);
+  display: block;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.api-source-card:hover {
+  border-color: var(--amber);
+  transform: translateY(-3px);
+}
+
+/* FollowUs */
+
+.follow-us-section {
+  background: #111;
+  border-top: 1px solid #2a2a2a;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.follow-us-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.follow-us-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.follow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: opacity 0.15s ease;
+}
+
+.follow-pill:hover {
+  opacity: 0.85;
+}
+
+.follow-pill--tiktok {
+  background: #010101;
+  color: #fff;
+  border-color: #333;
+}
+
+.follow-pill--facebook {
+  background: #1877f2;
+  color: #fff;
+}
