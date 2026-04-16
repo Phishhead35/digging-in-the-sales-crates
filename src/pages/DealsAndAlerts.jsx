@@ -232,7 +232,7 @@ export function Deals() {
           </div>
 
           <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6, marginBottom: 16 }}>
-            600,000+ titles including vinyl, CDs, cassettes, and turntables. UK-based, ships worldwide. Limited time spring sale — stock moves fast.
+            600,000+ titles including vinyl, CDs, cassettes, and turntables. UK-based, ships worldwide. Limited time spring sale. Stock moves fast.
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600, color: '#f87171' }}>
