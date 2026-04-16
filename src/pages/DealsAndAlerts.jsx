@@ -68,8 +68,8 @@ export function Deals() {
     { name: 'Amoeba Music', url: 'https://www.amoeba.com', desc: 'Largest independent vinyl store in the US. 27,000+ records including rare, vintage, and hard-to-find.', tag: 'Used & Rare' },
     { name: 'Bandcamp', url: 'https://bandcamp.com', desc: 'Buy directly from artists. Best source for indie, underground Hip-Hop, and limited self-released pressings.', tag: 'Artist Direct' },
     { name: 'Vinyl Castle', url: 'http://www.awin1.com/awclick.php?mid=109172&id=2823694', desc: 'Over 600,000 titles including vinyl, CDs, cassettes, and turntables. Ships worldwide. Founded by music lovers.', tag: 'New & Used' },
-    { name: 'Vinyl Flat', url: 'https://www.awin1.com/cread.php?awinmid=37520&awinaffid=2823694&ued=https%3A%2F%2Fwww.vinylflat.com%2Fproduct-page%2Fthe-vinyl-flat-record-flattener', desc: 'The go-to record flattener for serious collectors. Saves warped records without heat or pressure damage. US-based. 10% off all orders through this link.', tag: 'Gear & Accessories' },
-  ];
+    { name: 'Vinyl Flat', url: 'https://www.awin1.com/cread.php?awinmid=37520&awinaffid=2823694&ued=https%3A%2F%2Fwww.vinylflat.com%2Fproduct-page%2Fthe-vinyl-flat-record-flattener&utm_source=ditsc&utm_medium=referral&utm_campaign=vinyl-flat-record-flattener', desc: 'The go-to record flattener for serious collectors. Saves warped records without heat or pressure damage. US-based. 10% off all orders through this link.', tag: 'Gear & Accessories' },
+];
 
   const quickSearches = [
     { label: 'Golden Era Hip-Hop', q: 'golden era hip hop vinyl' },
@@ -169,7 +169,7 @@ export function Deals() {
       </p>
       <div style={{ marginBottom: 48 }}>
         <a
-          href="https://www.awin1.com/cread.php?awinmid=109172&awinaffid=2823694&ued=https%3A%2F%2Fvinylcastle.com%2Fpages%2Fspring-sale"
+          href="https://www.awin1.com/cread.php?awinmid=109172&awinaffid=2823694&ued=https%3A%2F%2Fvinylcastle.com%2Fpages%2Fspring-sale&utm_source=ditsc&utm_medium=referral&utm_campaign=vinyl-castle-spring-sale"
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => handleStoreClick('Vinyl Castle Spring Sale', 'national')}
