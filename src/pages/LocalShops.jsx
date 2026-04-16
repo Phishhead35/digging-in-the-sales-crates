@@ -19,6 +19,16 @@ function StoreCard({ store, index }) {
   const rating = store.rating || null;
   const totalRatings = store.user_ratings_total || null;
 
+  const handleStoreClick = (actionType) => {
+    if (window.gtag) {
+      window.gtag('event', 'store_click', {
+        store_name: store.name,
+        store_type: 'local',
+        action: actionType,
+      });
+    }
+  };
+
   return (
     <div
       className="store-card"
@@ -146,6 +156,7 @@ function StoreCard({ store, index }) {
               href={store.website}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => handleStoreClick('visit_website')}
               style={{
                 flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                 padding: '8px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600,
@@ -160,6 +171,7 @@ function StoreCard({ store, index }) {
             href={`https://www.google.com/maps/place/?q=place_id:${store.place_id}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => handleStoreClick('get_directions')}
             style={{
               flex: store.website ? '0 0 auto' : 1,
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
