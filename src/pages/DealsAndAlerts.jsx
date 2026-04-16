@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { TrendingDown, Bell, BellOff, Trash2, Search, Plus } from 'lucide-react';
+import { TrendingDown, Bell, BellOff, Trash2, Search, Plus, Zap } from 'lucide-react';
+
+
 import { formatPrice } from '../utils/api';
 
 // ============================================================
@@ -66,6 +68,7 @@ export function Deals() {
     { name: 'Amoeba Music', url: 'https://www.amoeba.com', desc: 'Largest independent vinyl store in the US. 27,000+ records including rare, vintage, and hard-to-find.', tag: 'Used & Rare' },
     { name: 'Bandcamp', url: 'https://bandcamp.com', desc: 'Buy directly from artists. Best source for indie, underground Hip-Hop, and limited self-released pressings.', tag: 'Artist Direct' },
     { name: 'Vinyl Castle', url: 'http://www.awin1.com/awclick.php?mid=109172&id=2823694', desc: 'Over 600,000 titles including vinyl, CDs, cassettes, and turntables. Ships worldwide. Founded by music lovers.', tag: 'New & Used' },
+    { name: 'Vinyl Flat', url: 'https://www.awin1.com/cread.php?awinmid=37520&awinaffid=2823694&ued=https%3A%2F%2Fwww.vinylflat.com%2Fproduct-page%2Fthe-vinyl-flat-record-flattener', desc: 'The go-to record flattener for serious collectors. Saves warped records without heat or pressure damage. US-based. 10% off all orders through this link.', tag: 'Gear & Accessories' },
   ];
 
   const quickSearches = [
@@ -156,6 +159,94 @@ export function Deals() {
           ))}
         </div>
       </div>
+
+      {/* Deal Alert */}
+      <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 8 }}>
+        DEAL ALERT
+      </h2>
+      <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 16 }}>
+        A sale worth knowing about, hand-picked by DITSC. Limited time.
+      </p>
+      <div style={{ marginBottom: 48 }}>
+        <a
+          href="https://www.awin1.com/cread.php?awinmid=109172&awinaffid=2823694&ued=https%3A%2F%2Fvinylcastle.com%2Fpages%2Fspring-sale"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => handleStoreClick('Vinyl Castle Spring Sale', 'national')}
+          style={{
+            display: 'block',
+            padding: 24,
+            borderRadius: 16,
+            background: 'var(--bg-card)',
+            border: '1.5px solid rgba(230,57,70,0.4)',
+            textDecoration: 'none',
+            position: 'relative',
+            overflow: 'hidden',
+            maxWidth: 560,
+          }}
+        >
+          {/* Background glow */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'radial-gradient(ellipse at top left, rgba(230,57,70,0.06), transparent 70%)',
+            pointerEvents: 'none',
+          }} />
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12, flexWrap: 'wrap', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              {/* Pulsing dot */}
+              <div style={{ position: 'relative', width: 10, height: 10, flexShrink: 0 }}>
+                <div style={{
+                  position: 'absolute', inset: 0, borderRadius: '50%',
+                  background: '#f87171',
+                  animation: 'ping 1.5s cubic-bezier(0,0,0.2,1) infinite',
+                  opacity: 0.6,
+                }} />
+                <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ef4444' }} />
+              </div>
+              <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)' }}>Vinyl Castle</h3>
+            </div>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+              <span style={{
+                padding: '3px 10px', borderRadius: 100, fontSize: 10,
+                background: 'rgba(230,57,70,0.12)',
+                border: '1px solid rgba(230,57,70,0.35)',
+                color: '#f87171',
+                fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap', fontWeight: 700,
+              }}>SPRING SALE</span>
+              <span style={{
+                padding: '3px 10px', borderRadius: 100, fontSize: 10,
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid var(--border)',
+                color: 'var(--text-muted)',
+                fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
+              }}>Ships to US</span>
+            </div>
+          </div>
+
+          <div style={{
+            fontSize: 28, fontWeight: 800, fontFamily: 'var(--font-mono)',
+            color: '#f87171', marginBottom: 8, letterSpacing: 1,
+          }}>
+            Up to 75% off
+          </div>
+
+          <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6, marginBottom: 16 }}>
+            600,000+ titles including vinyl, CDs, cassettes, and turntables. UK-based, ships worldwide. Limited time spring sale — stock moves fast.
+          </p>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600, color: '#f87171' }}>
+            <Zap size={14} /> Shop the sale →
+          </div>
+        </a>
+      </div>
+
+      {/* Ping animation keyframes */}
+      <style>{`
+        @keyframes ping {
+          75%, 100% { transform: scale(2); opacity: 0; }
+        }
+      `}</style>
 
       {/* API Sources */}
       <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 8 }}>
