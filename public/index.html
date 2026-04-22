@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-82Y1CFP1X4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-82Y1CFP1X4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-82Y1CFP1X4');
+    </script>
 
-  gtag('config', 'G-82Y1CFP1X4');
-</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
     <meta name="theme-color" content="#0a0a0f" />
@@ -44,15 +44,15 @@
     <!-- Google Search Console verification — do not remove -->
     <meta name="google-site-verification" content="63quMBAIQOmqgbGVAi_Xl9E00jqcqgEh0H-FtIKXqd4" />
 
-    <!-- Fonts -->
+    <!-- Fonts: preconnect first, then preload the stylesheet, then load -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=optional" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
       *, *::before, *::after { box-sizing: border-box; }
       html, body, #root { overflow-x: hidden; max-width: 100vw; width: 100%; }
-      footer { min-height: 180px; }
 
       /* Size-adjusted fallback for DM Sans to prevent CLS on font swap */
       @font-face {
@@ -61,6 +61,16 @@
         size-adjust: 98%;
         ascent-override: 94%;
         descent-override: 24%;
+        line-gap-override: 0%;
+      }
+
+      /* Size-adjusted fallback for Bebas Neue (LCP element) */
+      @font-face {
+        font-family: 'Bebas Neue Fallback';
+        src: local('Arial Narrow'), local('Arial');
+        size-adjust: 110%;
+        ascent-override: 85%;
+        descent-override: 20%;
         line-gap-override: 0%;
       }
 
