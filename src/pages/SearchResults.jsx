@@ -126,7 +126,7 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
         <a
           href={
             result.source === 'discogs'
-              ? `https://www.discogs.com/release/${result.id}`
+              ? (result.url || `https://www.discogs.com/release/${result.id}`)
               : result.source === 'ebay'
               ? (result.url ? result.url + (result.url.includes("?") ? "&" : "?") + "mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc" : "https://www.ebay.com/itm/" + result.id)
               : result.source === 'cdandlp'
