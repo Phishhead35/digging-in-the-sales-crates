@@ -26,7 +26,14 @@ export async function onRequestGet(context) {
 
     const token = env.DISCOGS_TOKEN;
 
-    // Marketplace search — returns actual for-sale listings with real prices
+    // DEBUG: confirm token is being read
+    if (!token) {
+      return new Response(JSON.stringify({ error: 'DISCOGS_TOKEN env var is missing or empty' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const params = new URLSearchParams({
       q: query,
       format: 'Vinyl',
@@ -46,9 +53,15 @@ export async function onRequestGet(context) {
       }
     );
 
+    // DEBUG: return exact Discogs error so we can see what's happening
     if (!res.ok) {
-      const err = await res.text();
-      return new Response(JSON.stringify({ error: `Discogs marketplace failed: ${res.status}`, detail: err }), {
+      const errText = await res.text();
+      return new Response(JSON.stringify({
+        error: `Discogs marketplace failed: ${res.status}`,
+        discogs_response: errText,
+        token_present: !!token,
+        token_length: token?.length,
+      }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -56,7 +69,6 @@ export async function onRequestGet(context) {
 
     const data = await res.json();
 
-    // Transform marketplace listings to match our existing card format
     const results = (data.listings || []).map(listing => ({
       id: listing.release?.id,
       title: listing.release?.description || listing.release?.title || '',
