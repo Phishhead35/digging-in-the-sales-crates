@@ -25,8 +25,7 @@ export async function onRequestGet(context) {
 
     const token = env.DISCOGS_TOKEN;
 
-    // Cap at 10 results to stay within Cloudflare Worker CPU limits
-    // 10 parallel release calls is reliable; 20 risks timeout
+    // Step 1: Database search — 10 results
     const params = new URLSearchParams({
       q: query,
       type: 'release',
@@ -56,35 +55,41 @@ export async function onRequestGet(context) {
     const data = await res.json();
     const results = data.results || [];
 
-    // Fire all release detail calls in parallel to get lowest_price + condition
-    const releaseDetails = await Promise.all(
-      results.map(async (release) => {
-        try {
-          const releaseRes = await fetch(
-            `https://api.discogs.com/releases/${release.id}`,
-            {
-              headers: {
-                Authorization: `Discogs token=${token}`,
-                'User-Agent': 'DiggingInTheSalesCrates/1.0',
-              },
-            }
-          );
-          if (!releaseRes.ok) return { id: release.id, lowest_price: null, lowest_condition: null };
-          const releaseData = await releaseRes.json();
-
-          const lowest_price = releaseData.lowest_price || null;
-          const lowest_condition = releaseData.lowest_price
+    // Step 2: Fetch release details in two batches of 5
+    // Batching reduces peak CPU load and avoids Worker timeout
+    const fetchRelease = async (release) => {
+      try {
+        const releaseRes = await fetch(
+          `https://api.discogs.com/releases/${release.id}`,
+          {
+            headers: {
+              Authorization: `Discogs token=${token}`,
+              'User-Agent': 'DiggingInTheSalesCrates/1.0',
+            },
+          }
+        );
+        if (!releaseRes.ok) return { id: release.id, lowest_price: null, lowest_condition: null };
+        const releaseData = await releaseRes.json();
+        return {
+          id: release.id,
+          lowest_price: releaseData.lowest_price || null,
+          lowest_condition: releaseData.lowest_price
             ? getConditionFromCommunity(releaseData.community?.rating?.average)
-            : null;
+            : null,
+        };
+      } catch {
+        return { id: release.id, lowest_price: null, lowest_condition: null };
+      }
+    };
 
-          return { id: release.id, lowest_price, lowest_condition };
-        } catch {
-          return { id: release.id, lowest_price: null, lowest_condition: null };
-        }
-      })
-    );
+    const batchA = results.slice(0, 5);
+    const batchB = results.slice(5, 10);
 
-    // Merge price + condition back onto search results
+    const detailsA = await Promise.all(batchA.map(fetchRelease));
+    const detailsB = await Promise.all(batchB.map(fetchRelease));
+    const releaseDetails = [...detailsA, ...detailsB];
+
+    // Step 3: Merge price + condition back onto results
     const detailMap = Object.fromEntries(releaseDetails.map(d => [d.id, d]));
     const enrichedResults = results.map(release => ({
       ...release,
