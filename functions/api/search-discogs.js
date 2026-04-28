@@ -24,7 +24,7 @@ export async function onRequestGet(context) {
       });
     }
 
-    const token = env.REACT_APP_DISCOGS_TOKEN;
+    const token = env.DISCOGS_TOKEN;
 
     // Marketplace search — returns actual for-sale listings with real prices
     const params = new URLSearchParams({
