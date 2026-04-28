@@ -113,14 +113,14 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
               <span style={{ fontSize: 18, fontWeight: 700, color: 'var(--amber)', fontFamily: 'var(--font-mono)' }}>
                 {formatPrice(result.lowest_price)}
               </span>
+              {result.lowest_condition && (
+                <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 6 }}>
+                  ({result.lowest_condition})
+                </span>
+              )}
             </div>
           ) : (
             <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>Price varies</span>
-          )}
-          {result.num_for_sale > 0 && (
-            <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
-              {result.num_for_sale} for sale
-            </div>
           )}
         </div>
         <a

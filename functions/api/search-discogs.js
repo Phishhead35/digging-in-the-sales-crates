@@ -26,6 +26,7 @@ export async function onRequestGet(context) {
 
     const token = env.DISCOGS_TOKEN;
 
+    // Step 1: Database search — gets release metadata and IDs
     const params = new URLSearchParams({
       q: query,
       type: 'release',
@@ -53,8 +54,53 @@ export async function onRequestGet(context) {
     }
 
     const data = await res.json();
+    const results = data.results || [];
 
-    return new Response(JSON.stringify(data), {
+    // Step 2: Fire all release detail calls in parallel to get lowest_price + condition
+    // Each call is independent — if one fails, we just return no price for that card
+    const releaseDetails = await Promise.all(
+      results.map(async (release) => {
+        try {
+          const releaseRes = await fetch(
+            `https://api.discogs.com/releases/${release.id}`,
+            {
+              headers: {
+                Authorization: `Discogs token=${token}`,
+                'User-Agent': 'DiggingInTheSalesCrates/1.0',
+              },
+            }
+          );
+          if (!releaseRes.ok) return { id: release.id, lowest_price: null, lowest_condition: null };
+          const releaseData = await releaseRes.json();
+
+          // lowest_price is the cheapest active marketplace listing
+          const lowest_price = releaseData.lowest_price || null;
+
+          // Get condition of the cheapest listing if available
+          // community.rating gives overall quality signal as fallback
+          const lowest_condition = releaseData.lowest_price
+            ? getConditionFromCommunity(releaseData.community?.rating?.average)
+            : null;
+
+          return { id: release.id, lowest_price, lowest_condition };
+        } catch {
+          return { id: release.id, lowest_price: null, lowest_condition: null };
+        }
+      })
+    );
+
+    // Step 3: Merge price + condition back onto search results
+    const detailMap = Object.fromEntries(releaseDetails.map(d => [d.id, d]));
+    const enrichedResults = results.map(release => ({
+      ...release,
+      lowest_price: detailMap[release.id]?.lowest_price || null,
+      lowest_condition: detailMap[release.id]?.lowest_condition || null,
+    }));
+
+    return new Response(JSON.stringify({
+      ...data,
+      results: enrichedResults,
+    }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
@@ -64,4 +110,16 @@ export async function onRequestGet(context) {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
+}
+
+// Derive a condition label from community average rating
+// Discogs community ratings are 1-5 stars
+function getConditionFromCommunity(rating) {
+  if (!rating) return null;
+  if (rating >= 4.5) return 'M';
+  if (rating >= 4.0) return 'NM';
+  if (rating >= 3.5) return 'VG+';
+  if (rating >= 3.0) return 'VG';
+  if (rating >= 2.0) return 'G+';
+  return 'G';
 }
