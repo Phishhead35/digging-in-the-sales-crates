@@ -20,40 +20,40 @@ export function Deals() {
   // Featured Partners (Local MA stores)
   const featuredPartners = [
     {
-  name: 'Spin That Records',
-  url: 'https://spinthatspringfield.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=spin-that-records',
-  desc: "Springfield MA's only vintage vinyl store. Classic Rock, Jazz, Soul, Latin, Folk and more. Plus vintage turntables, receivers, and hi-fi equipment.",
-  tag: 'Local MA Shop',
-  paying: false,
-},
-{
-  name: 'Village Vinyl and HiFi',
-  url: 'https://www.villagevinylhifi.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=village-vinyl-hifi',
-  desc: 'Located in the Coolidge Corner neighborhood in Boston. Quality records and stereo equipment at prices that keep you coming back.',
-  tag: 'Local MA Shop',
-  paying: false,
-},
-{
-  name: 'A Damn Shame Records',
-  url: 'https://www.instagram.com/adamnshame_records/?utm_source=ditsc&utm_medium=referral&utm_campaign=a-damn-shame-records',
-  desc: 'Boston-based record dealer specializing in curated vinyl and quality records. Follow on Instagram for inventory and updates.',
-  tag: 'Local MA Shop',
-  paying: false,
-},
-{
-  name: 'Soundtracks',
-  url: 'https://www.soundtracksbeverly.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=soundtracks-beverly',
-  desc: 'Beverly, MA record shop with an eclectic mix of vinyl across all genres. A true neighborhood dig spot on the North Shore.',
-  tag: 'Local MA Shop',
-  paying: false,
-},
-{
-  name: 'GOOD TASTE Records',
-  url: 'https://goodtasterecords.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=good-taste-records',
-  desc: "Boston vinyl boutique and music hub for DJs, collectors, and anyone with GOOD TASTE. Stop in and find something you didn't know you needed.",
-  tag: 'Local MA Shop',
-  paying: false,
-},
+      name: 'Spin That Records',
+      url: 'https://spinthatspringfield.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=spin-that-records',
+      desc: "Springfield MA's only vintage vinyl store. Classic Rock, Jazz, Soul, Latin, Folk and more. Plus vintage turntables, receivers, and hi-fi equipment.",
+      tag: 'Local MA Shop',
+      paying: false,
+    },
+    {
+      name: 'Village Vinyl and HiFi',
+      url: 'https://www.villagevinylhifi.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=village-vinyl-hifi',
+      desc: 'Located in the Coolidge Corner neighborhood in Boston. Quality records and stereo equipment at prices that keep you coming back.',
+      tag: 'Local MA Shop',
+      paying: false,
+    },
+    {
+      name: 'A Damn Shame Records',
+      url: 'https://www.instagram.com/adamnshame_records/?utm_source=ditsc&utm_medium=referral&utm_campaign=a-damn-shame-records',
+      desc: 'Boston-based record dealer specializing in curated vinyl and quality records. Follow on Instagram for inventory and updates.',
+      tag: 'Local MA Shop',
+      paying: false,
+    },
+    {
+      name: 'Soundtracks',
+      url: 'https://www.soundtracksbeverly.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=soundtracks-beverly',
+      desc: 'Beverly, MA record shop with an eclectic mix of vinyl across all genres. A true neighborhood dig spot on the North Shore.',
+      tag: 'Local MA Shop',
+      paying: false,
+    },
+    {
+      name: 'GOOD TASTE Records',
+      url: 'https://goodtasterecords.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=good-taste-records',
+      desc: "Boston vinyl boutique and music hub for DJs, collectors, and anyone with GOOD TASTE. Stop in and find something you didn't know you needed.",
+      tag: 'Local MA Shop',
+      paying: false,
+    },
   ];
 
   // Curated store deep-links (no API, non-local)
@@ -66,6 +66,7 @@ export function Deals() {
     { name: 'Amoeba Music', url: 'https://www.amoeba.com', desc: 'Largest independent vinyl store in the US. 27,000+ records including rare, vintage, and hard-to-find.', tag: 'Used & Rare', email: 'https://www.amoeba.com' },
     { name: 'Bandcamp', url: 'https://bandcamp.com', desc: 'Buy directly from artists. Best source for indie, underground Hip-Hop, and limited self-released pressings.', tag: 'Artist Direct', email: 'https://bandcamp.com' },
     { name: 'Vinyl Castle', url: 'http://www.awin1.com/awclick.php?mid=109172&id=2823694', desc: 'Over 600,000 titles including vinyl, CDs, cassettes, and turntables. Ships worldwide. Founded by music lovers.', tag: 'New & Used', email: 'https://vinylcastle.com' },
+    { name: 'Vinylflat', url: 'https://www.awin1.com/cread.php?awinmid=37520&awinaffid=2823694&ued=https%3A%2F%2Fwww.vinylflat.com', desc: 'The vinyl record flattening solution. Restore warped records to playable condition at home. Essential gear for serious collectors.', tag: 'Vinyl Accessories', email: 'https://www.vinylflat.com' },
   ];
 
   const quickSearches = [
@@ -115,10 +116,9 @@ export function Deals() {
         marginBottom: 48,
       }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
-           {featuredPartners.map(({ name, url, desc, tag }) => (
-            
-             <a
-	      key={name}
+          {featuredPartners.map(({ name, url, desc, tag }) => (
+            <a
+              key={name}
               href={url}
               target="_blank"
               rel="noopener noreferrer"
@@ -148,7 +148,8 @@ export function Deals() {
           ))}
         </div>
       </div>
-{/* Deal Alert */}
+
+      {/* Deal Alert */}
       <div style={{ marginBottom: 48 }}>
         <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 8 }}>
           DEAL ALERT
@@ -156,8 +157,8 @@ export function Deals() {
         <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 16 }}>
           A sale worth knowing about, hand-picked by DITSC. Limited time.
         </p>
-	<a        
-           href="http://www.awin1.com/awclick.php?mid=109172&id=2823694"
+        <a
+          href="http://www.awin1.com/awclick.php?mid=109172&id=2823694"
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => window.gtag && window.gtag('event', 'store_click', { store_name: 'Vinyl Castle Deal Alert' })}
