@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, startTransition } from 'react';
+import React, { useState, useEffect, useCallback, useRef, startTransition, useDeferredValue } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { searchDiscogs, searchEbay, searchCDandLP, formatPrice, getConditionColor, getConditionShort } from '../utils/api';
@@ -8,7 +8,6 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
   const thumb = result.cover_image || result.thumb || result.picture || null;
   const [imgError, setImgError] = useState(false);
 
-  // FIX: Wrap wishlist handler in useCallback so it doesn't re-create on every render
   const handleWishlist = useCallback(() => {
     onWishlist(result);
   }, [result, onWishlist]);
@@ -19,7 +18,6 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
       borderRadius: 16, overflow: 'hidden',
       display: 'flex', flexDirection: 'column',
     }}>
-      {/* Cover — padded container reserves space to prevent CLS */}
       <div style={{ position: 'relative', width: '100%', paddingBottom: '100%', background: 'var(--bg-surface)' }}>
         <div style={{ position: 'absolute', inset: 0 }}>
           {thumb && !imgError ? (
@@ -53,7 +51,6 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
           )}
         </div>
 
-        {/* Source badge */}
         <div style={{
           position: 'absolute', top: 10, left: 10,
           padding: '3px 10px', borderRadius: 100, fontSize: 10, fontWeight: 600,
@@ -66,7 +63,6 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
           {result.source === 'discogs' ? 'DISCOGS' : result.source === 'ebay' ? 'EBAY' : 'CDANDLP'}
         </div>
 
-        {/* Wishlist btn */}
         <button onClick={handleWishlist} style={{
           position: 'absolute', top: 10, right: 10,
           width: 32, height: 32, borderRadius: '50%', display: 'flex',
@@ -79,7 +75,6 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
         </button>
       </div>
 
-      {/* Info */}
       <div style={{ padding: '16px', flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
         <div style={{ fontSize: 13, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
           {result.year || '—'} {result.country ? `· ${result.country}` : ''}
@@ -110,7 +105,6 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
         )}
       </div>
 
-      {/* Pricing footer */}
       <div style={{ padding: '12px 16px', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div>
           {result.lowest_price ? (
@@ -165,7 +159,12 @@ export default function SearchResults() {
   const [wishlist, setWishlist] = useState(() => {
     try { return JSON.parse(localStorage.getItem('wishlist') || '[]'); } catch { return []; }
   });
-  const [source, setSource] = useState('all');
+
+  // FIX: Split source into two pieces.
+  // activeSource drives the UI immediately (button highlight, no delay).
+  // deferredSource drives the actual fetch — React defers it until after paint.
+  const [activeSource, setActiveSource] = useState('all');
+  const deferredSource = useDeferredValue(activeSource);
 
   const toTitleCase = (str) =>
     str.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -195,7 +194,9 @@ export default function SearchResults() {
     sessionStorage.setItem('searchScrollPos', window.scrollY.toString());
   };
 
-  const doSearch = useCallback(async (q, pg) => {
+  // FIX: doSearch no longer depends on source at all.
+  // It receives source as a parameter so useCallback stays stable.
+  const doSearch = useCallback(async (q, pg, src) => {
     if (!q) return;
     setLoading(true);
     setError(null);
@@ -203,14 +204,14 @@ export default function SearchResults() {
     try {
       const combined = [];
 
-      if (source === 'all' || source === 'discogs') {
+      if (src === 'all' || src === 'discogs') {
         const data = await searchDiscogs(q, pg, 20);
         const items = (data.results || []).map(r => ({ ...r, source: 'discogs' }));
         combined.push(...items);
         if (data.pagination) setTotalPages(data.pagination.pages || 1);
       }
 
-      if (source === 'all' || source === 'ebay') {
+      if (src === 'all' || src === 'ebay') {
         try {
           const ebayData = await searchEbay(q);
           const items = ebayData?.findItemsByKeywordsResponse?.[0]?.searchResult?.[0]?.item || [];
@@ -228,7 +229,7 @@ export default function SearchResults() {
         }
       }
 
-      if (source === 'all' || source === 'cdandlp') {
+      if (src === 'all' || src === 'cdandlp') {
         try {
           const cdData = await searchCDandLP(q);
           const rawItems = cdData?.information?.items || {};
@@ -244,7 +245,7 @@ export default function SearchResults() {
             currency: item.currency || 'EUR',
           }));
           combined.push(...mapped);
-          if (source === 'cdandlp') {
+          if (src === 'cdandlp') {
             const nbItems = cdData?.information?.nb_items || 0;
             setTotalPages(Math.ceil(nbItems / 10) || 1);
           }
@@ -259,36 +260,34 @@ export default function SearchResults() {
     } finally {
       setLoading(false);
     }
-  }, [source]);
+  }, []); // stable — no source dependency
 
+  // Fires on new search query
   useEffect(() => {
     setInputVal(query);
     setPage(1);
-    doSearch(query, 1);
+    doSearch(query, 1, deferredSource);
   }, [query]);
 
+  // FIX: Fires only when deferredSource changes (after paint), not on activeSource.
+  // This means the button highlights instantly; the fetch starts after.
   useEffect(() => {
     if (!query) return;
-    const timer = setTimeout(() => {
-      startTransition(() => { doSearch(query, 1); });
-    }, 150);
-    return () => clearTimeout(timer);
-  }, [source]);
+    doSearch(query, 1, deferredSource);
+  }, [deferredSource]);
 
+  // Pagination
   useEffect(() => {
-    if (page > 1 && query) startTransition(() => { doSearch(query, page); });
-  }, [page, query]);
+    if (page > 1 && query) doSearch(query, page, deferredSource);
+  }, [page]);
 
   const handleSearch = (e) => {
-  e.preventDefault();
-  if (inputVal.trim()) {
-    startTransition(() => {
+    e.preventDefault();
+    if (inputVal.trim()) {
       navigate(`/search?q=${encodeURIComponent(inputVal.trim())}`);
-    });
-  }
-};
+    }
+  };
 
-  // FIX: toggleWishlist wrapped in useCallback so it's stable across renders
   const toggleWishlist = useCallback((item) => {
     setWishlist(prev => {
       const exists = prev.find(w => w.id === item.id && w.source === item.source);
@@ -303,7 +302,6 @@ export default function SearchResults() {
   return (
     <div style={{ maxWidth: 1280, margin: '0 auto', padding: '32px 16px', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
 
-      {/* Search bar */}
       <form onSubmit={handleSearch} style={{ marginBottom: 32 }}>
         <div style={{ display: 'flex', gap: 0, maxWidth: 640 }}>
           <div style={{ position: 'relative', flex: 1 }}>
@@ -328,12 +326,11 @@ export default function SearchResults() {
         </div>
       </form>
 
-      {/* Filters */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap', alignItems: 'center' }}>
         <Filter size={14} color="var(--text-muted)" />
         {['all', 'discogs', 'ebay', 'cdandlp'].map(s => (
-          <button key={s} onClick={() => setSource(s)}
-            className={`filter-btn${source === s ? ' filter-btn-active' : ''}`}>
+          <button key={s} onClick={() => setActiveSource(s)}
+            className={`filter-btn${activeSource === s ? ' filter-btn-active' : ''}`}>
             {s === 'all' ? 'All Sources' : s === 'cdandlp' ? 'CDandLP' : s.charAt(0).toUpperCase() + s.slice(1)}
           </button>
         ))}
@@ -344,7 +341,6 @@ export default function SearchResults() {
         )}
       </div>
 
-      {/* Error */}
       {error && (
         <div style={{
           padding: 20, borderRadius: 12, background: 'rgba(230,57,70,0.1)',
@@ -362,7 +358,6 @@ export default function SearchResults() {
         </div>
       )}
 
-      {/* Loading skeletons */}
       {loading && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(220px, 100%), 1fr))', gap: 20 }}>
           {Array(8).fill(0).map((_, i) => (
@@ -378,7 +373,6 @@ export default function SearchResults() {
         </div>
       )}
 
-      {/* Results grid */}
       {!loading && results.length > 0 && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(220px, 100%), 1fr))', gap: 20 }}>
           {results.map((r, index) => (
@@ -394,7 +388,6 @@ export default function SearchResults() {
         </div>
       )}
 
-      {/* Empty state */}
       {!loading && !error && results.length === 0 && query && (
         <div style={{ textAlign: 'center', padding: '80px 24px', color: 'var(--text-muted)' }}>
           <div style={{ fontSize: 48, marginBottom: 16 }}>🕳️</div>
@@ -403,7 +396,6 @@ export default function SearchResults() {
         </div>
       )}
 
-      {/* Pagination */}
       {!loading && totalPages > 1 && (
         <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 40, alignItems: 'center' }}>
           <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={{
