@@ -15,6 +15,7 @@ export async function onRequestGet(context) {
     const url = new URL(request.url);
     const query = url.searchParams.get('q');
     const page = url.searchParams.get('page') || '1';
+    const perPage = url.searchParams.get('per_page') || '20';
 
     if (!query) {
       return new Response(JSON.stringify({ error: 'No query provided' }), {
@@ -25,13 +26,12 @@ export async function onRequestGet(context) {
 
     const token = env.DISCOGS_TOKEN;
 
-    // Step 1: Database search — gets release metadata and IDs
     const params = new URLSearchParams({
       q: query,
       type: 'release',
       format: 'vinyl',
       page: page,
-      per_page: '20',
+      per_page: perPage,
     });
 
     const res = await fetch(
@@ -53,49 +53,8 @@ export async function onRequestGet(context) {
     }
 
     const data = await res.json();
-    const results = data.results || [];
 
-    // Step 2: Fire all 20 release detail calls in parallel
-    // Paid Workers plan: 30s wall time per invocation — no timeout risk
-    const releaseDetails = await Promise.all(
-      results.map(async (release) => {
-        try {
-          const releaseRes = await fetch(
-            `https://api.discogs.com/releases/${release.id}`,
-            {
-              headers: {
-                Authorization: `Discogs token=${token}`,
-                'User-Agent': 'DiggingInTheSalesCrates/1.0',
-              },
-            }
-          );
-          if (!releaseRes.ok) return { id: release.id, lowest_price: null, lowest_condition: null };
-          const releaseData = await releaseRes.json();
-
-          const lowest_price = releaseData.lowest_price || null;
-          const lowest_condition = lowest_price
-            ? getConditionFromCommunity(releaseData.community?.rating?.average)
-            : null;
-
-          return { id: release.id, lowest_price, lowest_condition };
-        } catch {
-          return { id: release.id, lowest_price: null, lowest_condition: null };
-        }
-      })
-    );
-
-    // Step 3: Merge price + condition back onto search results
-    const detailMap = Object.fromEntries(releaseDetails.map(d => [d.id, d]));
-    const enrichedResults = results.map(release => ({
-      ...release,
-      lowest_price: detailMap[release.id]?.lowest_price || null,
-      lowest_condition: detailMap[release.id]?.lowest_condition || null,
-    }));
-
-    return new Response(JSON.stringify({
-      ...data,
-      results: enrichedResults,
-    }), {
+    return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
@@ -105,15 +64,4 @@ export async function onRequestGet(context) {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
-}
-
-// Derive condition label from Discogs community average rating (1-5 stars)
-function getConditionFromCommunity(rating) {
-  if (!rating) return null;
-  if (rating >= 4.5) return 'M';
-  if (rating >= 4.0) return 'NM';
-  if (rating >= 3.5) return 'VG+';
-  if (rating >= 3.0) return 'VG';
-  if (rating >= 2.0) return 'G+';
-  return 'G';
 }
