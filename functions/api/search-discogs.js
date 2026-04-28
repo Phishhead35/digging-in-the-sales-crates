@@ -15,7 +15,6 @@ export async function onRequestGet(context) {
     const url = new URL(request.url);
     const query = url.searchParams.get('q');
     const page = url.searchParams.get('page') || '1';
-    const perPage = url.searchParams.get('per_page') || '20';
 
     if (!query) {
       return new Response(JSON.stringify({ error: 'No query provided' }), {
@@ -26,13 +25,14 @@ export async function onRequestGet(context) {
 
     const token = env.DISCOGS_TOKEN;
 
-    // Step 1: Database search — gets release metadata and IDs
+    // Cap at 10 results to stay within Cloudflare Worker CPU limits
+    // 10 parallel release calls is reliable; 20 risks timeout
     const params = new URLSearchParams({
       q: query,
       type: 'release',
       format: 'vinyl',
       page: page,
-      per_page: perPage,
+      per_page: '10',
     });
 
     const res = await fetch(
@@ -56,8 +56,7 @@ export async function onRequestGet(context) {
     const data = await res.json();
     const results = data.results || [];
 
-    // Step 2: Fire all release detail calls in parallel to get lowest_price + condition
-    // Each call is independent — if one fails, we just return no price for that card
+    // Fire all release detail calls in parallel to get lowest_price + condition
     const releaseDetails = await Promise.all(
       results.map(async (release) => {
         try {
@@ -73,11 +72,7 @@ export async function onRequestGet(context) {
           if (!releaseRes.ok) return { id: release.id, lowest_price: null, lowest_condition: null };
           const releaseData = await releaseRes.json();
 
-          // lowest_price is the cheapest active marketplace listing
           const lowest_price = releaseData.lowest_price || null;
-
-          // Get condition of the cheapest listing if available
-          // community.rating gives overall quality signal as fallback
           const lowest_condition = releaseData.lowest_price
             ? getConditionFromCommunity(releaseData.community?.rating?.average)
             : null;
@@ -89,7 +84,7 @@ export async function onRequestGet(context) {
       })
     );
 
-    // Step 3: Merge price + condition back onto search results
+    // Merge price + condition back onto search results
     const detailMap = Object.fromEntries(releaseDetails.map(d => [d.id, d]));
     const enrichedResults = results.map(release => ({
       ...release,
@@ -112,8 +107,7 @@ export async function onRequestGet(context) {
   }
 }
 
-// Derive a condition label from community average rating
-// Discogs community ratings are 1-5 stars
+// Derive condition label from community average rating (1-5 stars)
 function getConditionFromCommunity(rating) {
   if (!rating) return null;
   if (rating >= 4.5) return 'M';
