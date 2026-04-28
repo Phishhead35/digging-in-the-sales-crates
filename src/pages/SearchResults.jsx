@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef, startTransition, useDeferredValue } from 'react';
+import React, { useState, useEffect, useCallback, useRef, startTransition } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { searchDiscogs, searchEbay, searchCDandLP, formatPrice, getConditionColor, getConditionShort } from '../utils/api';
@@ -151,9 +151,11 @@ export default function SearchResults() {
   const query = searchParams.get('q') || '';
 
   const [inputVal, setInputVal] = useState(query);
+  const [allResults, setAllResults] = useState([]);
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [sourceErrors, setSourceErrors] = useState({ discogs: false, ebay: false, cdandlp: false });
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [wishlist, setWishlist] = useState(() => {
@@ -164,7 +166,6 @@ export default function SearchResults() {
   // activeSource drives the UI immediately (button highlight, no delay).
   // deferredSource drives the actual fetch — React defers it until after paint.
   const [activeSource, setActiveSource] = useState('all');
-  const deferredSource = useDeferredValue(activeSource);
 
   const toTitleCase = (str) =>
     str.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -254,6 +255,7 @@ export default function SearchResults() {
         }
       }
 
+      setAllResults(combined);
       setResults(combined);
     } catch (err) {
       setError(err.message);
@@ -262,23 +264,26 @@ export default function SearchResults() {
     }
   }, []); // stable — no source dependency
 
-  // Fires on new search query
+  // Fires on new search query — always fetch all sources
   useEffect(() => {
     setInputVal(query);
     setPage(1);
-    doSearch(query, 1, deferredSource);
+    setActiveSource('all');
+    doSearch(query, 1, 'all');
   }, [query]);
 
-  // FIX: Fires only when deferredSource changes (after paint), not on activeSource.
-  // This means the button highlights instantly; the fetch starts after.
+  // Filter already-loaded results client-side when tab changes — no re-fetch
   useEffect(() => {
-    if (!query) return;
-    doSearch(query, 1, deferredSource);
-  }, [deferredSource]);
+    if (activeSource === 'all') {
+      setResults(allResults);
+    } else {
+      setResults(allResults.filter(r => r.source === activeSource));
+    }
+  }, [activeSource, allResults]);
 
   // Pagination
   useEffect(() => {
-    if (page > 1 && query) doSearch(query, page, deferredSource);
+    if (page > 1 && query) doSearch(query, page, 'all');
   }, [page]);
 
   const handleSearch = (e) => {
@@ -341,7 +346,7 @@ export default function SearchResults() {
         )}
       </div>
 
-      {error && (
+      {sourceErrors.discogs && !sourceErrors.ebay === false && !sourceErrors.cdandlp === false && (
         <div style={{
           padding: 20, borderRadius: 12, background: 'rgba(230,57,70,0.1)',
           border: '1px solid rgba(230,57,70,0.3)', color: '#f87171',
@@ -349,11 +354,8 @@ export default function SearchResults() {
         }}>
           <AlertCircle size={18} style={{ flexShrink: 0, marginTop: 2 }} />
           <div>
-            <div style={{ fontWeight: 600, marginBottom: 4 }}>Search failed</div>
-            <div style={{ fontSize: 13 }}>{error}</div>
-            <div style={{ fontSize: 12, marginTop: 8, color: 'rgba(248,113,113,0.7)' }}>
-              Make sure your API tokens are set in your .env file.
-            </div>
+            <div style={{ fontWeight: 600, marginBottom: 4 }}>Some results unavailable</div>
+            <div style={{ fontSize: 13 }}>One or more sources are temporarily unavailable. Try again in a moment.</div>
           </div>
         </div>
       )}

@@ -18,7 +18,6 @@ export async function onRequestGet(context) {
       });
     }
 
-    // Step 1: Get OAuth token using client credentials
     const clientId = env.EBAY_CLIENT_ID;
     const clientSecret = env.EBAY_CLIENT_SECRET;
     const credentials = btoa(`${clientId}:${clientSecret}`);
@@ -40,15 +39,15 @@ export async function onRequestGet(context) {
     const tokenData = await tokenRes.json();
     const accessToken = tokenData.access_token;
 
-    // Step 2: Search using Browse API
-    // deliveryCountry:US filters out listings that cannot ship to the US
+    // Wrap query in quotes for exact phrase matching — stops "Pete Rock" returning Pete Townshend
     const searchParams = new URLSearchParams({
-      q: `${query} vinyl record`,
+      q: `"${query}" vinyl record`,
       category_ids: '306',
       limit: '10',
       sort: 'price',
       filter: 'deliveryCountry:US',
     });
+
     const searchRes = await fetch(
       `https://api.ebay.com/buy/browse/v1/item_summary/search?${searchParams}`,
       {
@@ -68,7 +67,6 @@ export async function onRequestGet(context) {
     }
     const searchData = await searchRes.json();
 
-    // Step 3: Transform Browse API response to match our existing format
     const items = (searchData.itemSummaries || []).map(item => ({
       itemId: [item.itemId],
       title: [item.title],
