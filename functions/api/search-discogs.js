@@ -25,13 +25,13 @@ export async function onRequestGet(context) {
 
     const token = env.DISCOGS_TOKEN;
 
-    // Step 1: Database search — 10 results
+    // Step 1: Database search — gets release metadata and IDs
     const params = new URLSearchParams({
       q: query,
       type: 'release',
       format: 'vinyl',
       page: page,
-      per_page: '10',
+      per_page: '20',
     });
 
     const res = await fetch(
@@ -55,41 +55,36 @@ export async function onRequestGet(context) {
     const data = await res.json();
     const results = data.results || [];
 
-    // Step 2: Fetch release details in two batches of 5
-    // Batching reduces peak CPU load and avoids Worker timeout
-    const fetchRelease = async (release) => {
-      try {
-        const releaseRes = await fetch(
-          `https://api.discogs.com/releases/${release.id}`,
-          {
-            headers: {
-              Authorization: `Discogs token=${token}`,
-              'User-Agent': 'DiggingInTheSalesCrates/1.0',
-            },
-          }
-        );
-        if (!releaseRes.ok) return { id: release.id, lowest_price: null, lowest_condition: null };
-        const releaseData = await releaseRes.json();
-        return {
-          id: release.id,
-          lowest_price: releaseData.lowest_price || null,
-          lowest_condition: releaseData.lowest_price
+    // Step 2: Fire all 20 release detail calls in parallel
+    // Paid Workers plan: 30s wall time per invocation — no timeout risk
+    const releaseDetails = await Promise.all(
+      results.map(async (release) => {
+        try {
+          const releaseRes = await fetch(
+            `https://api.discogs.com/releases/${release.id}`,
+            {
+              headers: {
+                Authorization: `Discogs token=${token}`,
+                'User-Agent': 'DiggingInTheSalesCrates/1.0',
+              },
+            }
+          );
+          if (!releaseRes.ok) return { id: release.id, lowest_price: null, lowest_condition: null };
+          const releaseData = await releaseRes.json();
+
+          const lowest_price = releaseData.lowest_price || null;
+          const lowest_condition = lowest_price
             ? getConditionFromCommunity(releaseData.community?.rating?.average)
-            : null,
-        };
-      } catch {
-        return { id: release.id, lowest_price: null, lowest_condition: null };
-      }
-    };
+            : null;
 
-    const batchA = results.slice(0, 5);
-    const batchB = results.slice(5, 10);
+          return { id: release.id, lowest_price, lowest_condition };
+        } catch {
+          return { id: release.id, lowest_price: null, lowest_condition: null };
+        }
+      })
+    );
 
-    const detailsA = await Promise.all(batchA.map(fetchRelease));
-    const detailsB = await Promise.all(batchB.map(fetchRelease));
-    const releaseDetails = [...detailsA, ...detailsB];
-
-    // Step 3: Merge price + condition back onto results
+    // Step 3: Merge price + condition back onto search results
     const detailMap = Object.fromEntries(releaseDetails.map(d => [d.id, d]));
     const enrichedResults = results.map(release => ({
       ...release,
@@ -112,7 +107,7 @@ export async function onRequestGet(context) {
   }
 }
 
-// Derive condition label from community average rating (1-5 stars)
+// Derive condition label from Discogs community average rating (1-5 stars)
 function getConditionFromCommunity(rating) {
   if (!rating) return null;
   if (rating >= 4.5) return 'M';
