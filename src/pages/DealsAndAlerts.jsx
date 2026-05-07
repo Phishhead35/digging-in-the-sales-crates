@@ -67,8 +67,16 @@ export function Deals() {
     },
   ];
 
-  // Featured Partners — New Hampshire (outreach in progress, no stores yet)
-  const nhPartners = [];
+  // Featured Partners — New Hampshire
+  const nhPartners = [
+    {
+      name: 'New Hampshire Vintage Vinyl',
+      url: 'https://www.nhvintagevinyl.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=nh-vintage-vinyl',
+      desc: 'Laconia, NH record shop at 633 Main St. New crates of pre-owned records hit the floor every Saturday. In-store customers get first dibs; the rest go live online Sunday evenings.',
+      tag: 'Local New Hampshire Shop',
+      paying: false,
+    },
+  ];
 
   // Curated store deep-links (no API, non-local)
   const curatedStores = [
