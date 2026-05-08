@@ -54,6 +54,13 @@ export function Deals() {
       tag: 'Local Massachusetts Shop',
       paying: false,
     },
+    {
+      name: "Joe's Albums",
+      url: 'https://www.joesalbums.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=joes-albums',
+      desc: "Worcester's go-to record shop at 317 Main St, housed in a historic performance venue renowned for its acoustics. Open 7 days a week, 10am-6pm. Online since 2010, brick and mortar since 2011.",
+      tag: 'Local Massachusetts Shop',
+      paying: false,
+    },
   ];
 
   // Featured Partners — Rhode Island
