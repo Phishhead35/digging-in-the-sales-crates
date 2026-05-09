@@ -22,6 +22,20 @@ export async function onRequestGet(context) {
       });
     }
 
+    // Check Cloudflare cache first
+    const cacheKey = new Request(
+      `https://cache.cdandlp-proxy/search?q=${encodeURIComponent(query)}`,
+      { method: 'GET' }
+    );
+    const cache = caches.default;
+    const cached = await cache.match(cacheKey);
+    if (cached) {
+      const cachedBody = await cached.json();
+      return new Response(JSON.stringify(cachedBody), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': 'HIT' },
+      });
+    }
+
     const uid = env.CDANDLP_UID;
 
     const jsonObject = JSON.stringify({
@@ -59,8 +73,17 @@ export async function onRequestGet(context) {
 
     const data = JSON.parse(text);
 
+    // Cache for 5 minutes
+    const responseToCache = new Response(JSON.stringify(data), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, max-age=300',
+      },
+    });
+    context.waitUntil(cache.put(cacheKey, responseToCache));
+
     return new Response(JSON.stringify(data), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': 'MISS' },
     });
 
   } catch (err) {

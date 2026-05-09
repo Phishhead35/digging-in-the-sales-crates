@@ -18,6 +18,20 @@ export async function onRequestGet(context) {
       });
     }
 
+    // Check Cloudflare cache first
+    const cacheKey = new Request(
+      `https://cache.ebay-proxy/search?q=${encodeURIComponent(query)}`,
+      { method: 'GET' }
+    );
+    const cache = caches.default;
+    const cached = await cache.match(cacheKey);
+    if (cached) {
+      const cachedBody = await cached.json();
+      return new Response(JSON.stringify(cachedBody), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': 'HIT' },
+      });
+    }
+
     const clientId = env.EBAY_CLIENT_ID;
     const clientSecret = env.EBAY_CLIENT_SECRET;
     const credentials = btoa(`${clientId}:${clientSecret}`);
@@ -39,7 +53,6 @@ export async function onRequestGet(context) {
     const tokenData = await tokenRes.json();
     const accessToken = tokenData.access_token;
 
-    // Wrap query in quotes for exact phrase matching — stops "Pete Rock" returning Pete Townshend
     const searchParams = new URLSearchParams({
       q: `"${query}" vinyl record`,
       category_ids: '306',
@@ -78,12 +91,23 @@ export async function onRequestGet(context) {
       condition: [{ conditionDisplayName: [item.condition || 'Not Specified'] }],
     }));
 
-    return new Response(JSON.stringify({
+    const responseData = {
       findItemsByKeywordsResponse: [{
         searchResult: [{ item: items }]
       }]
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    };
+
+    // Cache for 5 minutes
+    const responseToCache = new Response(JSON.stringify(responseData), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, max-age=300',
+      },
+    });
+    context.waitUntil(cache.put(cacheKey, responseToCache));
+
+    return new Response(JSON.stringify(responseData), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': 'MISS' },
     });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
