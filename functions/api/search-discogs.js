@@ -24,6 +24,21 @@ export async function onRequestGet(context) {
       });
     }
 
+    // Use Cloudflare Cache API to avoid hammering Discogs
+    const cacheKey = new Request(
+      `https://cache.discogs-proxy/search?q=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}`,
+      { method: 'GET' }
+    );
+    const cache = caches.default;
+    const cached = await cache.match(cacheKey);
+
+    if (cached) {
+      const cachedBody = await cached.json();
+      return new Response(JSON.stringify(cachedBody), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': 'HIT' },
+      });
+    }
+
     const token = env.DISCOGS_TOKEN;
 
     const params = new URLSearchParams({
@@ -54,8 +69,17 @@ export async function onRequestGet(context) {
 
     const data = await res.json();
 
+    // Cache the response for 5 minutes
+    const responseToCache = new Response(JSON.stringify(data), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, max-age=300',
+      },
+    });
+    context.waitUntil(cache.put(cacheKey, responseToCache));
+
     return new Response(JSON.stringify(data), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': 'MISS' },
     });
 
   } catch (err) {
