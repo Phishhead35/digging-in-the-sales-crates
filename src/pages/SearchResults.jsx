@@ -189,7 +189,7 @@ export default function SearchResults() {
         window.scrollTo(0, parseInt(savedScroll));
       });
     }
-  }, [results]);
+  }, []);
 
   const handleResultClick = () => {
     sessionStorage.setItem('searchScrollPos', window.scrollY.toString());
