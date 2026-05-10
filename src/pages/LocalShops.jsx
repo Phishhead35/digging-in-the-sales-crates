@@ -245,7 +245,7 @@ export default function LocalShops() {
     searchShops(query);
   };
 
-  const filteredShops = activeFilter === 'All' ? shops : shops;
+  const filteredShops = activeFilter === 'All' ? shops : shops.filter(s => s.specialties && s.specialties.includes(activeFilter));
 
   return (
     <div style={{ maxWidth: 1280, margin: '0 auto', padding: '32px 16px', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>

@@ -284,9 +284,16 @@ export default function SearchResults() {
     }
   }, [activeSource, allResults]);
 
-  // Pagination
+  // Pagination — only fires when user explicitly clicks next/prev
+  // Uses a ref to detect real page changes vs resets triggered by new searches
+  const prevPageRef = useRef(1);
   useEffect(() => {
-    if (page > 1 && query) doSearch(query, page, 'all');
+    if (page > 1 && query && page !== prevPageRef.current) {
+      prevPageRef.current = page;
+      doSearch(query, page, 'all');
+    } else {
+      prevPageRef.current = page;
+    }
   }, [page]);
 
   const handleSearch = (e) => {
