@@ -166,6 +166,7 @@ export default function SearchResults() {
   // activeSource drives the UI immediately (button highlight, no delay).
   // deferredSource drives the actual fetch — React defers it until after paint.
   const [activeSource, setActiveSource] = useState('all');
+  const lastSearchedRef = useRef('');
 
   const toTitleCase = (str) =>
     str.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -264,8 +265,10 @@ export default function SearchResults() {
     }
   }, []); // stable — no source dependency
 
-  // Fires on new search query — always fetch all sources
+  // Fires on new search query — only when query actually changes
   useEffect(() => {
+    if (!query || query === lastSearchedRef.current) return;
+    lastSearchedRef.current = query;
     setInputVal(query);
     setPage(1);
     setActiveSource('all');
