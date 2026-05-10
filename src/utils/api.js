@@ -14,10 +14,18 @@ const CDANDLP_UID = process.env.REACT_APP_CDANDLP_UID || 'YOUR_CDANDLP_UID_HERE'
 // ============================================================
 
 export async function searchDiscogs(query, page = 1, perPage = 20) {
-  const params = new URLSearchParams({ q: query, page, per_page: perPage });
-  const res = await fetch(`/api/search-discogs?${params}`);
-  if (!res.ok) throw new Error(`Discogs search failed: ${res.status}`);
-  return res.json();
+  try {
+    const params = new URLSearchParams({ q: query, page, per_page: perPage });
+    const res = await fetch(`/api/search-discogs?${params}`);
+    if (!res.ok) {
+      console.warn(`Discogs search failed: ${res.status}`);
+      return { results: [], pagination: { pages: 1 } };
+    }
+    return res.json();
+  } catch (err) {
+    console.warn('Discogs unavailable:', err.message);
+    return { results: [], pagination: { pages: 1 } };
+  }
 }
 
 // ============================================================
