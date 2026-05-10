@@ -62,8 +62,8 @@ export async function onRequestGet(context) {
     if (!res.ok) {
       const err = await res.text();
       return new Response(JSON.stringify({ error: `Discogs search failed: ${res.status}`, detail: err }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: res.status,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
       });
     }
 
