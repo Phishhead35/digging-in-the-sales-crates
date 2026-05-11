@@ -57,7 +57,7 @@ export function Deals() {
     {
       name: 'Big Fun Records',
       discogsUrl: 'https://www.discogs.com/seller/bigfunrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records',
-      ebayUrl: 'https://www.ebay.com/sch/m.html?_ssn=bigfunrecords&utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records',
+      ebayUrl: 'https://www.ebay.com/sch/m.html?_ssn=bigfunrecords&mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc&utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records',
       desc: 'Beverly, MA shop at 284A Cabot St. Buying and selling Rock, Jazz, Soul/Funk, Punk, Metal, Hip-Hop, Electronic, and more. Find them on Discogs and eBay.',
       tag: 'Local Massachusetts Shop',
       paying: false,
