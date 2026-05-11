@@ -110,6 +110,7 @@ export function Deals() {
     { name: 'Rough Trade', url: 'https://www.roughtrade.com/en-us', desc: 'Independent icon since 1976. Exclusive pressings, pre-orders, and a members club with special pricing.', tag: 'Indie / Exclusives', email: 'https://www.roughtrade.com' },
     { name: 'Amoeba Music', url: 'https://www.amoeba.com', desc: 'Largest independent vinyl store in the US. 27,000+ records including rare, vintage, and hard-to-find.', tag: 'Used & Rare', email: 'https://www.amoeba.com' },
     { name: 'Bandcamp', url: 'https://bandcamp.com', desc: 'Buy directly from artists. Best source for indie, underground Hip-Hop, and limited self-released pressings.', tag: 'Artist Direct', email: 'https://bandcamp.com' },
+    { name: 'Vinyl Castle', url: 'http://www.awin1.com/awclick.php?mid=109172&id=2823694', desc: 'Over 600,000 titles including vinyl, CDs, cassettes, and turntables. Ships worldwide. Founded by music lovers.', tag: 'New & Used', email: 'https://vinylcastle.com' },
 
     { name: 'Vinylflat', url: 'https://www.awin1.com/cread.php?awinmid=37520&awinaffid=2823694&ued=https%3A%2F%2Fwww.vinylflat.com', desc: 'The vinyl record flattening solution. Restore warped records to playable condition at home. Essential gear for serious collectors.', tag: 'Vinyl Accessories', email: 'https://www.vinylflat.com' },
   ];
@@ -350,54 +351,6 @@ export function Deals() {
         </>
       )}
 
-      {/* Deal Alert */}
-      <div style={{ marginBottom: 48 }}>
-        <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 8 }}>
-          DEAL ALERT
-        </h2>
-        <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 16 }}>
-          A sale worth knowing about, hand-picked by DITSC. Limited time.
-        </p>
-        <a
-          href="http://www.awin1.com/awclick.php?mid=109172&id=2823694"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => window.gtag && window.gtag('event', 'store_click', { store_name: 'Vinyl Castle Deal Alert' })}
-          style={{
-            display: 'block',
-            padding: 24,
-            borderRadius: 16,
-            background: 'var(--bg-card)',
-            border: '1.5px solid rgba(220, 60, 60, 0.4)',
-            textDecoration: 'none',
-            maxWidth: 600,
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#e63946', display: 'inline-block' }} />
-            <span style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-primary)' }}>Vinyl Castle</span>
-            <span style={{
-              padding: '3px 10px', borderRadius: 100, fontSize: 10,
-              background: 'rgba(230,57,70,0.15)', border: '1px solid rgba(230,57,70,0.4)',
-              color: '#e63946', fontFamily: 'var(--font-mono)',
-            }}>SPRING SALE</span>
-            <span style={{
-              padding: '3px 10px', borderRadius: 100, fontSize: 10,
-              background: 'rgba(139,138,155,0.15)', border: '1px solid rgba(139,138,155,0.3)',
-              color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)',
-            }}>Ships to US</span>
-          </div>
-          <div style={{ fontSize: 36, fontFamily: 'var(--font-mono)', color: '#e63946', fontWeight: 700, marginBottom: 12 }}>
-            Up to 75% off
-          </div>
-          <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, marginBottom: 16 }}>
-            600,000+ titles including vinyl, CDs, cassettes, and turntables. UK-based, ships worldwide. Limited time spring sale. Stock moves fast.
-          </p>
-          <div style={{ fontSize: 13, color: '#e63946', display: 'flex', alignItems: 'center', gap: 6 }}>
-            ⚡ Shop the sale →
-          </div>
-        </a>
-      </div>
 
       {/* API Sources */}
       <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 8 }}>
