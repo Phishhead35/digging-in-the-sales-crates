@@ -55,6 +55,22 @@ export function Deals() {
       paying: false,
     },
     {
+      name: 'Big Fun Records',
+      discogsUrl: 'https://www.discogs.com/seller/bigfunrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records',
+      ebayUrl: 'https://www.ebay.com/sch/m.html?_ssn=bigfunrecords&utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records',
+      desc: 'Beverly, MA shop at 284A Cabot St. Buying and selling Rock, Jazz, Soul/Funk, Punk, Metal, Hip-Hop, Electronic, and more. Find them on Discogs and eBay.',
+      tag: 'Local Massachusetts Shop',
+      paying: false,
+      multiLink: true,
+    },
+    {
+      name: 'Residency Records',
+      url: 'https://www.discogs.com/seller/residencyrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=residency-records',
+      desc: 'Located in the Witch City Mall in Salem, MA. Find them on Discogs for their full inventory.',
+      tag: 'Local Massachusetts Shop',
+      paying: false,
+    },
+    {
       name: "Joe's Albums",
       url: 'https://www.joesalbums.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=joes-albums',
       desc: "Worcester's go-to record shop at 317 Main St, housed in a historic performance venue renowned for its acoustics. Open 7 days a week, 10am-6pm. Online since 2010, brick and mortar since 2011.",
@@ -150,36 +166,93 @@ export function Deals() {
         marginBottom: 32,
       }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
-          {maPartners.map(({ name, url, desc, tag }) => (
-            <a
-              key={name}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="store-card"
-              onClick={() => window.gtag && window.gtag('event', 'store_click', { store_name: name, store_url: url })}
-              style={{
-                padding: 24, borderRadius: 16, background: 'var(--bg-card)',
-                border: '1.5px solid rgba(245,158,11,0.5)',
-                display: 'block',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-                <h3 style={{ fontSize: 16, fontWeight: 600 }}>{name}</h3>
-                <span style={{
-                  padding: '3px 10px', borderRadius: 100, fontSize: 10,
-                  background: 'rgba(245,158,11,0.1)',
-                  border: '1px solid rgba(245,158,11,0.35)',
-                  color: 'var(--amber)',
-                  fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
-                }}>{tag}</span>
-              </div>
-              <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
-              <div style={{ marginTop: 14 }}>
-                <div style={{ fontSize: 12, color: 'var(--amber)' }}>Visit store →</div>
-              </div>
-            </a>
-          ))}
+          {maPartners.map((store) => {
+            const { name, url, desc, tag, multiLink, discogsUrl, ebayUrl } = store;
+            if (multiLink) {
+              return (
+                <div
+                  key={name}
+                  className="store-card"
+                  style={{
+                    padding: 24, borderRadius: 16, background: 'var(--bg-card)',
+                    border: '1.5px solid rgba(245,158,11,0.5)',
+                    display: 'flex', flexDirection: 'column',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+                    <h3 style={{ fontSize: 16, fontWeight: 600 }}>{name}</h3>
+                    <span style={{
+                      padding: '3px 10px', borderRadius: 100, fontSize: 10,
+                      background: 'rgba(245,158,11,0.1)',
+                      border: '1px solid rgba(245,158,11,0.35)',
+                      color: 'var(--amber)',
+                      fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
+                    }}>{tag}</span>
+                  </div>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6, flex: 1 }}>{desc}</p>
+                  <div style={{ marginTop: 14, display: 'flex', gap: 10 }}>
+                    <a
+                      href={discogsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => window.gtag && window.gtag('event', 'store_click', { store_name: name + ' (Discogs)', store_url: discogsUrl })}
+                      style={{
+                        fontSize: 12, color: '#000', background: 'var(--amber)',
+                        padding: '6px 12px', borderRadius: 6, fontWeight: 600,
+                        textDecoration: 'none', whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Discogs →
+                    </a>
+                    <a
+                      href={ebayUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => window.gtag && window.gtag('event', 'store_click', { store_name: name + ' (eBay)', store_url: ebayUrl })}
+                      style={{
+                        fontSize: 12, color: 'var(--amber)', background: 'transparent',
+                        padding: '6px 12px', borderRadius: 6, fontWeight: 600,
+                        textDecoration: 'none', border: '1px solid rgba(245,158,11,0.4)',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      eBay →
+                    </a>
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <a
+                key={name}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="store-card"
+                onClick={() => window.gtag && window.gtag('event', 'store_click', { store_name: name, store_url: url })}
+                style={{
+                  padding: 24, borderRadius: 16, background: 'var(--bg-card)',
+                  border: '1.5px solid rgba(245,158,11,0.5)',
+                  display: 'block',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+                  <h3 style={{ fontSize: 16, fontWeight: 600 }}>{name}</h3>
+                  <span style={{
+                    padding: '3px 10px', borderRadius: 100, fontSize: 10,
+                    background: 'rgba(245,158,11,0.1)',
+                    border: '1px solid rgba(245,158,11,0.35)',
+                    color: 'var(--amber)',
+                    fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
+                  }}>{tag}</span>
+                </div>
+                <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
+                <div style={{ marginTop: 14 }}>
+                  <div style={{ fontSize: 12, color: 'var(--amber)' }}>Visit store →</div>
+                </div>
+              </a>
+            );
+          })}
         </div>
       </div>
 
