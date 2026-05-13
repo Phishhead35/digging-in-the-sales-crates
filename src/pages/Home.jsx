@@ -8,37 +8,6 @@ const TRENDING_SEARCHES = [
   'J Dilla', 'Pete Rock', 'Nas Illmatic', 'De La Soul',
 ];
 
-// Featured (paying) store partners — swap in real data / props as needed
-const FEATURED_STORES = [
-  {
-    name: 'Vinyl Castle',
-    type: 'New & Used',
-    location: 'Online',
-    desc: 'One of the UKs largest independent record stores. Massive selection of new and used vinyl across every genre.',
-    tags: ['Hip-Hop', 'Jazz', 'Soul', 'New Releases'],
-    url: 'http://www.awin1.com/awclick.php?mid=109172&id=2823694',
-    highlight: true,
-  },
-  {
-    name: 'A Damn Shame Records',
-    type: 'Independent',
-    location: 'Massachusetts',
-    desc: 'Local MA institution. Deep hip-hop and funk crates with serious collector knowledge behind the counter.',
-    tags: ['Hip-Hop', 'Funk', 'Soul', 'Local'],
-    url: '#',
-    highlight: false,
-  },
-  {
-    name: 'Soundtracks Beverly',
-    type: 'Independent',
-    location: 'Beverly, MA',
-    desc: 'North Shore gem run by George. Eclectic selection with rotating deals and a genuine love for the music.',
-    tags: ['All Genres', 'Local', 'Used'],
-    url: '#',
-    highlight: false,
-  },
-];
-
 // Latest deals preview — static placeholder, replace with live data from your API
 const DEALS_PREVIEW = [
   { title: 'Herbie Hancock – Head Hunters', store: 'Vinyl Castle', price: '$12.99', was: '$24.99', condition: 'VG+' },
@@ -222,95 +191,94 @@ export default function Home() {
             <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 8 }}>
               FEATURED PARTNERS
             </p>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 36, letterSpacing: 1 }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 36, letterSpacing: 1, color: 'var(--text-primary)' }}>
               SHOPS WE DIG
             </h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginTop: 6, maxWidth: 480 }}>
+            <p style={{ color: 'var(--text-primary)', fontSize: 15, marginTop: 8, maxWidth: 560 }}>
               Hand-picked independent stores worth your time and money. These are the real ones.
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
-            {FEATURED_STORES.map((store) => (
-              <a
-                key={store.name}
-                href={store.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="store-card"
-                style={{
-                  display: 'block',
-                  padding: '24px',
-                  borderRadius: 16,
-                  background: 'var(--bg-card)',
-                  border: store.highlight
-                    ? '1px solid rgba(245,158,11,0.45)'
-                    : '1px solid var(--border)',
-                  position: 'relative',
-                  textDecoration: 'none',
-                }}
-              >
-                {store.highlight && (
-                  <div style={{
-                    position: 'absolute', top: -1, right: 16,
-                    background: 'var(--amber)', color: '#000',
-                    fontSize: 9, fontWeight: 700, letterSpacing: 1,
-                    padding: '3px 10px', borderRadius: '0 0 8px 8px',
-                    fontFamily: 'var(--font-mono)',
-                  }}>
-                    FEATURED
-                  </div>
-                )}
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 10 }}>
+          {/* Massachusetts */}
+          <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>MASSACHUSETTS</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 40 }}>
+            {[
+              { name: 'Spin That Records', type: 'Vintage Vinyl', location: 'Springfield, MA', desc: "Springfield MA's only vintage vinyl store. Classic Rock, Jazz, Soul, Latin, Folk and more. Plus vintage turntables, receivers, and hi-fi equipment.", url: 'https://spinthatspringfield.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=spin-that-records' },
+              { name: 'Village Vinyl and HiFi', type: 'Records & Stereo', location: 'Boston, MA', desc: 'Located in the Coolidge Corner neighborhood in Boston. Quality records and stereo equipment at prices that keep you coming back.', url: 'https://www.villagevinylhifi.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=village-vinyl-hifi' },
+              { name: 'A Damn Shame Records', type: 'Curated Vinyl', location: 'Boston, MA', desc: 'Boston-based record dealer specializing in curated vinyl and quality records. Follow on Instagram for inventory and updates.', url: 'https://www.instagram.com/adamnshame_records/?utm_source=ditsc&utm_medium=referral&utm_campaign=a-damn-shame-records' },
+              { name: 'Soundtracks Beverly', type: 'All Genres', location: 'Beverly, MA', desc: 'Beverly, MA record shop with an eclectic mix of vinyl across all genres. A true neighborhood dig spot on the North Shore.', url: 'https://www.soundtracksbeverly.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=soundtracks-beverly' },
+              { name: 'GOOD TASTE Records', type: 'Vinyl Boutique', location: 'Boston, MA', desc: "Boston vinyl boutique and music hub for DJs, collectors, and anyone with GOOD TASTE. Stop in and find something you didn't know you needed.", url: 'https://goodtasterecords.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=good-taste-records' },
+              { name: 'Big Fun Records', type: 'Multi-Genre', location: 'Beverly, MA', desc: 'Beverly, MA shop at 284A Cabot St. Buying and selling Rock, Jazz, Soul/Funk, Punk, Metal, Hip-Hop, Electronic, and more.', url: 'https://www.discogs.com/seller/bigfunrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records' },
+              { name: 'Residency Records', type: 'Used Vinyl', location: 'Salem, MA', desc: 'Located in the Witch City Mall in Salem, MA. Find them on Discogs for their full inventory.', url: 'https://www.discogs.com/seller/residencyrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=residency-records' },
+              { name: "Joe's Albums", type: 'New & Used', location: 'Worcester, MA', desc: "Worcester's go-to record shop at 317 Main St, housed in a historic performance venue. Open 7 days a week, 10am-6pm. Online since 2010, brick and mortar since 2011.", url: 'https://www.joesalbums.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=joes-albums' },
+            ].map((store) => (
+              <a key={store.name} href={store.url} target="_blank" rel="noopener noreferrer" className="store-card"
+                style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)', textDecoration: 'none' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: 16, color: 'var(--text-primary)' }}>{store.name}</div>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
-                      {store.type} · {store.location}
-                    </div>
+                    <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
+                    <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
                   </div>
-                  <ExternalLink size={14} color="var(--text-muted)" style={{ flexShrink: 0, marginTop: 4 }} />
+                  <ExternalLink size={13} color="var(--amber)" style={{ flexShrink: 0, marginTop: 3 }} />
                 </div>
-                <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 14 }}>
-                  {store.desc}
-                </p>
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {store.tags.map(tag => (
-                    <span key={tag} style={{
-                      background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid var(--border)',
-                      borderRadius: 4, padding: '2px 8px',
-                      fontSize: 10, color: 'var(--text-muted)',
-                    }}>
-                      {tag}
-                    </span>
-                  ))}
+                <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>{store.desc}</p>
+              </a>
+            ))}
+          </div>
+
+          {/* Rhode Island */}
+          <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>RHODE ISLAND</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 40 }}>
+            {[
+              { name: 'Music Magick', type: 'Multi-Media', location: 'West Warwick, RI', desc: 'The ultimate multi-media store in West Warwick, RI. Over 50,000 CDs and 30,000 DVDs across all genres, plus games and Blu-rays. Most priced at just $2.', url: 'https://www.discogs.com/seller/musicmagickshop/profile?page=1&utm_source=ditsc&utm_medium=referral&utm_campaign=music-magick' },
+            ].map((store) => (
+              <a key={store.name} href={store.url} target="_blank" rel="noopener noreferrer" className="store-card"
+                style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)', textDecoration: 'none' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
+                    <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
+                  </div>
+                  <ExternalLink size={13} color="var(--amber)" style={{ flexShrink: 0, marginTop: 3 }} />
                 </div>
+                <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>{store.desc}</p>
+              </a>
+            ))}
+          </div>
+
+          {/* New Hampshire */}
+          <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>NEW HAMPSHIRE</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 32 }}>
+            {[
+              { name: 'New Hampshire Vintage Vinyl', type: 'Pre-Owned Vinyl', location: 'Laconia, NH', desc: 'Laconia, NH record shop at 633 Main St. New crates of pre-owned records hit the floor every Saturday. In-store customers get first dibs; the rest go live online Sunday evenings.', url: 'https://www.nhvintagevinyl.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=nh-vintage-vinyl' },
+            ].map((store) => (
+              <a key={store.name} href={store.url} target="_blank" rel="noopener noreferrer" className="store-card"
+                style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)', textDecoration: 'none' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
+                    <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
+                  </div>
+                  <ExternalLink size={13} color="var(--amber)" style={{ flexShrink: 0, marginTop: 3 }} />
+                </div>
+                <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>{store.desc}</p>
               </a>
             ))}
           </div>
 
           {/* Store signup CTA */}
           <div style={{
-            marginTop: 24, padding: '18px 24px',
-            background: 'var(--bg-card)', border: '1px solid var(--border)',
-            borderRadius: 12, display: 'flex',
-            alignItems: 'center', justifyContent: 'space-between',
-            flexWrap: 'wrap', gap: 12,
+            padding: '18px 24px', background: 'var(--bg-card)', border: '1px solid var(--border)',
+            borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12,
           }}>
             <div>
-              <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-primary)' }}>
-                Own a record store?
-              </span>
-              <span style={{ fontSize: 13, color: 'var(--text-secondary)', marginLeft: 8 }}>
-                Get your shop in front of serious collectors.
-              </span>
+              <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-primary)' }}>Own a record store?</span>
+              <span style={{ fontSize: 13, color: 'var(--text-primary)', marginLeft: 8 }}>Get your shop in front of serious collectors.</span>
             </div>
             <Link to="/featured-partners" style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6,
-              padding: '8px 18px', borderRadius: 8,
+              display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 18px', borderRadius: 8,
               background: 'var(--amber-glow)', border: '1px solid rgba(245,158,11,0.3)',
-              color: 'var(--amber)', fontSize: 13, fontWeight: 600,
-              textDecoration: 'none', transition: 'opacity 0.2s',
+              color: 'var(--amber)', fontSize: 13, fontWeight: 600, textDecoration: 'none',
             }}>
               Learn more <ArrowRight size={13} />
             </Link>
@@ -467,13 +435,13 @@ export default function Home() {
       {/* ── AGGREGATOR CTA ────────────────────────────────────── */}
       <section style={{ padding: '64px 24px', borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', textAlign: 'center' }}>
-          <p style={{ color: 'var(--text-muted)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 20 }}>
+          <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 20 }}>
             MULTI-MARKETPLACE SEARCH
           </p>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 42, letterSpacing: 1, marginBottom: 12 }}>
             STOP OVERPAYING FOR RECORDS
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: 15, maxWidth: 480, margin: '0 auto 28px', lineHeight: 1.7 }}>
+          <p style={{ color: 'var(--text-primary)', fontSize: 15, maxWidth: 480, margin: '0 auto 28px', lineHeight: 1.7 }}>
             Search Discogs, eBay, and CDandLP at the same time. Condition graded. Lowest price first. Every time.
           </p>
           <Link to="/aggregator" className="view-deals-btn" style={{ display: 'inline-flex', fontSize: 15, padding: '14px 32px', borderRadius: 12 }}>

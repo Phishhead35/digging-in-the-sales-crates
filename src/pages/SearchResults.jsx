@@ -429,6 +429,37 @@ export default function SearchResults() {
           </button>
         </div>
       )}
+
+      {/* Live API Sources */}
+      <div style={{ marginTop: 64, borderTop: '1px solid var(--border)', paddingTop: 48 }}>
+        <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 8 }}>
+          LIVE API SOURCES
+        </h2>
+        <p style={{ color: 'var(--text-primary)', fontSize: 13, marginBottom: 24 }}>
+          Every search queries these marketplaces in real-time simultaneously.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
+          {[
+            { name: 'Discogs', url: 'https://discogs.com/sell/list', desc: 'The definitive used vinyl marketplace. Millions of listings, condition graded, worldwide sellers.', tag: 'Live API' },
+            { name: 'eBay', url: 'https://rover.ebay.com/rover/1/711-53200-19255-0/1?mpre=https%3A%2F%2Fwww.ebay.com%2Fb%2FVinyl-Records%2F306%2Fbn_1852757&campid=5339145834&mkcid=1&mkevt=1&toolid=10001&customid=ditsc', desc: 'Auctions and fixed-price listings. Best for sealed copies, graded records, and quick finds.', tag: 'Live API' },
+            { name: 'CDandLP', url: 'https://www.cdandlp.com/?affilie=digginginthesalescrates&lng=2&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation', desc: 'European-heavy used marketplace with millions of vinyl listings. Great for international pressings and pricing.', tag: 'Live API' },
+          ].map(({ name, url, desc, tag }) => (
+            <a key={name} href={url} target="_blank" rel="noopener noreferrer" className="api-source-card">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
+                <h3 style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{name}</h3>
+                <span style={{
+                  padding: '3px 10px', borderRadius: 100, fontSize: 10,
+                  background: 'var(--amber-glow)', border: '1px solid rgba(245,158,11,0.4)',
+                  color: 'var(--amber)', fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
+                }}>{tag}</span>
+              </div>
+              <p style={{ color: 'var(--text-primary)', fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
+              <div style={{ marginTop: 12, fontSize: 12, color: 'var(--amber)' }}>Visit store →</div>
+            </a>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 }

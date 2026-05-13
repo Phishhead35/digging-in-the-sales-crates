@@ -10,97 +10,6 @@ export function Deals() {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
 
-  // API-integrated sources (live search)
-  const apiSources = [
-    { name: 'Discogs', url: 'https://discogs.com/sell/list', desc: 'The definitive used vinyl marketplace. Millions of listings, condition graded, worldwide sellers.', tag: 'Live API', color: '#f59e0b' },
-    { name: 'eBay', url: 'https://rover.ebay.com/rover/1/711-53200-19255-0/1?mpre=https%3A%2F%2Fwww.ebay.com%2Fb%2FVinyl-Records%2F306%2Fbn_1852757&campid=5339145834&mkcid=1&mkevt=1&toolid=10001&customid=ditsc', desc: 'Auctions and fixed-price listings. Best for sealed copies, graded records, and quick finds.', tag: 'Live API', color: '#f59e0b' },
-    { name: 'CDandLP', url: 'https://www.cdandlp.com/?affilie=digginginthesalescrates&lng=2&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation', desc: 'European-heavy used marketplace with millions of vinyl listings. Great for international pressings and pricing.', tag: 'Live API', color: '#f59e0b' },
-  ];
-
-  // Featured Partners — Massachusetts
-  const maPartners = [
-    {
-      name: 'Spin That Records',
-      url: 'https://spinthatspringfield.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=spin-that-records',
-      desc: "Springfield MA's only vintage vinyl store. Classic Rock, Jazz, Soul, Latin, Folk and more. Plus vintage turntables, receivers, and hi-fi equipment.",
-      tag: 'Local Massachusetts Shop',
-      paying: false,
-    },
-    {
-      name: 'Village Vinyl and HiFi',
-      url: 'https://www.villagevinylhifi.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=village-vinyl-hifi',
-      desc: 'Located in the Coolidge Corner neighborhood in Boston. Quality records and stereo equipment at prices that keep you coming back.',
-      tag: 'Local Massachusetts Shop',
-      paying: false,
-    },
-    {
-      name: 'A Damn Shame Records',
-      url: 'https://www.instagram.com/adamnshame_records/?utm_source=ditsc&utm_medium=referral&utm_campaign=a-damn-shame-records',
-      desc: 'Boston-based record dealer specializing in curated vinyl and quality records. Follow on Instagram for inventory and updates.',
-      tag: 'Local Massachusetts Shop',
-      paying: false,
-    },
-    {
-      name: 'Soundtracks',
-      url: 'https://www.soundtracksbeverly.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=soundtracks-beverly',
-      desc: 'Beverly, MA record shop with an eclectic mix of vinyl across all genres. A true neighborhood dig spot on the North Shore.',
-      tag: 'Local Massachusetts Shop',
-      paying: false,
-    },
-    {
-      name: 'GOOD TASTE Records',
-      url: 'https://goodtasterecords.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=good-taste-records',
-      desc: "Boston vinyl boutique and music hub for DJs, collectors, and anyone with GOOD TASTE. Stop in and find something you didn't know you needed.",
-      tag: 'Local Massachusetts Shop',
-      paying: false,
-    },
-    {
-      name: 'Big Fun Records',
-      discogsUrl: 'https://www.discogs.com/seller/bigfunrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records',
-      ebayUrl: 'https://www.ebay.com/sch/m.html?_ssn=bigfunrecords&mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc&utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records',
-      desc: 'Beverly, MA shop at 284A Cabot St. Buying and selling Rock, Jazz, Soul/Funk, Punk, Metal, Hip-Hop, Electronic, and more. Find them on Discogs and eBay.',
-      tag: 'Local Massachusetts Shop',
-      paying: false,
-      multiLink: true,
-    },
-    {
-      name: 'Residency Records',
-      url: 'https://www.discogs.com/seller/residencyrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=residency-records',
-      desc: 'Located in the Witch City Mall in Salem, MA. Find them on Discogs for their full inventory.',
-      tag: 'Local Massachusetts Shop',
-      paying: false,
-    },
-    {
-      name: "Joe's Albums",
-      url: 'https://www.joesalbums.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=joes-albums',
-      desc: "Worcester's go-to record shop at 317 Main St, housed in a historic performance venue renowned for its acoustics. Open 7 days a week, 10am-6pm. Online since 2010, brick and mortar since 2011.",
-      tag: 'Local Massachusetts Shop',
-      paying: false,
-    },
-  ];
-
-  // Featured Partners — Rhode Island
-  const riPartners = [
-    {
-      name: 'Music Magick',
-      url: 'https://www.discogs.com/seller/musicmagickshop/profile?page=1&utm_source=ditsc&utm_medium=referral&utm_campaign=music-magick',
-      desc: 'The ultimate multi-media store in West Warwick, RI. Over 50,000 CDs and 30,000 DVDs across all genres, plus games and Blu-rays. Most priced at just $2.',
-      tag: 'Local Rhode Island Shop',
-      paying: false,
-    },
-  ];
-
-  // Featured Partners — New Hampshire
-  const nhPartners = [
-    {
-      name: 'New Hampshire Vintage Vinyl',
-      url: 'https://www.nhvintagevinyl.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=nh-vintage-vinyl',
-      desc: 'Laconia, NH record shop at 633 Main St. New crates of pre-owned records hit the floor every Saturday. In-store customers get first dibs; the rest go live online Sunday evenings.',
-      tag: 'Local New Hampshire Shop',
-      paying: false,
-    },
-  ];
-
   // Curated store deep-links (no API, non-local)
   const curatedStores = [
     { name: 'Fat Beats', url: 'https://fatbeats.com', desc: 'Hip-hop and rap specialists since 1994. New releases, exclusives, and pre-orders. Subscribe for sale emails.', tag: 'Hip-Hop / New', email: 'https://fatbeats.com' },
@@ -129,13 +38,13 @@ export function Deals() {
       <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 48, letterSpacing: 2, marginBottom: 8 }}>
         FIND <span style={{ color: 'var(--amber)' }}>DEALS</span>
       </h1>
-      <p style={{ color: 'var(--text-secondary)', marginBottom: 40 }}>
+      <p style={{ color: 'var(--text-primary)', marginBottom: 40 }}>
         Quick access to the best vinyl sources, plus curated search shortcuts.
       </p>
 
       {/* Quick searches */}
       <div style={{ marginBottom: 48 }}>
-        <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 16 }}>
+        <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>
           QUICK SEARCHES
         </h2>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
@@ -147,243 +56,12 @@ export function Deals() {
         </div>
       </div>
 
-      {/* Featured Partners */}
-      <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 8 }}>
-        FEATURED PARTNERS
-      </h2>
-      <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 24 }}>
-        Local record shops curated and collector-approved by DITSC.
-      </p>
-
-      {/* Massachusetts */}
-      <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 12, textTransform: 'uppercase' }}>
-        Massachusetts
-      </div>
-      <div style={{
-        background: 'rgba(245,158,11,0.04)',
-        border: '1px solid rgba(245,158,11,0.15)',
-        borderRadius: 16,
-        padding: 20,
-        marginBottom: 32,
-      }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
-          {maPartners.map((store) => {
-            const { name, url, desc, tag, multiLink, discogsUrl, ebayUrl } = store;
-            if (multiLink) {
-              return (
-                <div
-                  key={name}
-                  className="store-card"
-                  style={{
-                    padding: 24, borderRadius: 16, background: 'var(--bg-card)',
-                    border: '1.5px solid rgba(245,158,11,0.5)',
-                    display: 'flex', flexDirection: 'column',
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-                    <h3 style={{ fontSize: 16, fontWeight: 600 }}>{name}</h3>
-                    <span style={{
-                      padding: '3px 10px', borderRadius: 100, fontSize: 10,
-                      background: 'rgba(245,158,11,0.1)',
-                      border: '1px solid rgba(245,158,11,0.35)',
-                      color: 'var(--amber)',
-                      fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
-                    }}>{tag}</span>
-                  </div>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6, flex: 1 }}>{desc}</p>
-                  <div style={{ marginTop: 14, display: 'flex', gap: 10 }}>
-                    <a
-                      href={discogsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => window.gtag && window.gtag('event', 'store_click', { store_name: name + ' (Discogs)', store_url: discogsUrl })}
-                      style={{
-                        fontSize: 12, color: '#000', background: 'var(--amber)',
-                        padding: '6px 12px', borderRadius: 6, fontWeight: 600,
-                        textDecoration: 'none', whiteSpace: 'nowrap',
-                      }}
-                    >
-                      Discogs →
-                    </a>
-                    <a
-                      href={ebayUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => window.gtag && window.gtag('event', 'store_click', { store_name: name + ' (eBay)', store_url: ebayUrl })}
-                      style={{
-                        fontSize: 12, color: 'var(--amber)', background: 'transparent',
-                        padding: '6px 12px', borderRadius: 6, fontWeight: 600,
-                        textDecoration: 'none', border: '1px solid rgba(245,158,11,0.4)',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      eBay →
-                    </a>
-                  </div>
-                </div>
-              );
-            }
-            return (
-              <a
-                key={name}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="store-card"
-                onClick={() => window.gtag && window.gtag('event', 'store_click', { store_name: name, store_url: url })}
-                style={{
-                  padding: 24, borderRadius: 16, background: 'var(--bg-card)',
-                  border: '1.5px solid rgba(245,158,11,0.5)',
-                  display: 'block',
-                }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-                  <h3 style={{ fontSize: 16, fontWeight: 600 }}>{name}</h3>
-                  <span style={{
-                    padding: '3px 10px', borderRadius: 100, fontSize: 10,
-                    background: 'rgba(245,158,11,0.1)',
-                    border: '1px solid rgba(245,158,11,0.35)',
-                    color: 'var(--amber)',
-                    fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
-                  }}>{tag}</span>
-                </div>
-                <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
-                <div style={{ marginTop: 14 }}>
-                  <div style={{ fontSize: 12, color: 'var(--amber)' }}>Visit store →</div>
-                </div>
-              </a>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Rhode Island */}
-      <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 12, textTransform: 'uppercase' }}>
-        Rhode Island
-      </div>
-      <div style={{
-        background: 'rgba(245,158,11,0.04)',
-        border: '1px solid rgba(245,158,11,0.15)',
-        borderRadius: 16,
-        padding: 20,
-        marginBottom: 32,
-      }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
-          {riPartners.map(({ name, url, desc, tag }) => (
-            <a
-              key={name}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="store-card"
-              onClick={() => window.gtag && window.gtag('event', 'store_click', { store_name: name, store_url: url })}
-              style={{
-                padding: 24, borderRadius: 16, background: 'var(--bg-card)',
-                border: '1.5px solid rgba(245,158,11,0.5)',
-                display: 'block',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-                <h3 style={{ fontSize: 16, fontWeight: 600 }}>{name}</h3>
-                <span style={{
-                  padding: '3px 10px', borderRadius: 100, fontSize: 10,
-                  background: 'rgba(245,158,11,0.1)',
-                  border: '1px solid rgba(245,158,11,0.35)',
-                  color: 'var(--amber)',
-                  fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
-                }}>{tag}</span>
-              </div>
-              <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
-              <div style={{ marginTop: 14 }}>
-                <div style={{ fontSize: 12, color: 'var(--amber)' }}>Visit store →</div>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-
-      {/* New Hampshire — hidden until first store is added */}
-      {nhPartners.length > 0 && (
-        <>
-          <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 12, textTransform: 'uppercase' }}>
-            New Hampshire
-          </div>
-          <div style={{
-            background: 'rgba(245,158,11,0.04)',
-            border: '1px solid rgba(245,158,11,0.15)',
-            borderRadius: 16,
-            padding: 20,
-            marginBottom: 32,
-          }}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
-              {nhPartners.map(({ name, url, desc, tag }) => (
-                <a
-                  key={name}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="store-card"
-                  onClick={() => window.gtag && window.gtag('event', 'store_click', { store_name: name, store_url: url })}
-                  style={{
-                    padding: 24, borderRadius: 16, background: 'var(--bg-card)',
-                    border: '1.5px solid rgba(245,158,11,0.5)',
-                    display: 'block',
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-                    <h3 style={{ fontSize: 16, fontWeight: 600 }}>{name}</h3>
-                    <span style={{
-                      padding: '3px 10px', borderRadius: 100, fontSize: 10,
-                      background: 'rgba(245,158,11,0.1)',
-                      border: '1px solid rgba(245,158,11,0.35)',
-                      color: 'var(--amber)',
-                      fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
-                    }}>{tag}</span>
-                  </div>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
-                  <div style={{ marginTop: 14 }}>
-                    <div style={{ fontSize: 12, color: 'var(--amber)' }}>Visit store →</div>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </>
-      )}
-
-
-      {/* API Sources */}
-      <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 8 }}>
-        LIVE API SOURCES
-      </h2>
-      <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 16 }}>
-        These are searched in real-time when you use the Dig page.
-      </p>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16, marginBottom: 48 }}>
-        {apiSources.map(({ name, url, desc, tag, color }) => (
-          <a key={name} href={url} target="_blank" rel="noopener noreferrer" className="api-source-card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-              <h3 style={{ fontSize: 16, fontWeight: 600 }}>{name}</h3>
-              <span style={{
-                padding: '3px 10px', borderRadius: 100, fontSize: 10,
-                background: 'var(--amber-glow)', border: '1px solid rgba(245,158,11,0.4)',
-                color: 'var(--amber)', fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
-              }}>{tag}</span>
-            </div>
-            <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
-            <div style={{ marginTop: 12, fontSize: 12, color: 'var(--amber)', display: 'flex', alignItems: 'center', gap: 4 }}>
-              Visit store →
-            </div>
-          </a>
-        ))}
-      </div>
-
       {/* Curated Store Cards */}
-      <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--text-muted)', marginBottom: 8 }}>
+      <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 8 }}>
         CURATED STORES
       </h2>
-      <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginBottom: 16 }}>
-        Subscribe to their email lists and paste promos into the <strong style={{ color: 'var(--text-primary)' }}>Email Parser</strong> to extract deals automatically.
+      <p style={{ color: 'var(--text-primary)', fontSize: 13, marginBottom: 16 }}>
+        Subscribe to their email lists and paste promos into the <strong style={{ color: 'var(--amber)' }}>Email Parser</strong> to extract deals automatically.
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
         {curatedStores.map(({ name, url, desc, tag }) => (
@@ -396,7 +74,7 @@ export function Deals() {
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-              <h3 style={{ fontSize: 16, fontWeight: 600 }}>{name}</h3>
+              <h3 style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{name}</h3>
               <span style={{
                 padding: '3px 10px', borderRadius: 100, fontSize: 10,
                 background: 'rgba(46,196,182,0.1)',
@@ -405,7 +83,7 @@ export function Deals() {
                 fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
               }}>{tag}</span>
             </div>
-            <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
+            <p style={{ color: 'var(--text-primary)', fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
             <div style={{ marginTop: 14, display: 'flex', gap: 10 }}>
               <div style={{ fontSize: 12, color: 'var(--amber)' }}>Visit store →</div>
               <div style={{ fontSize: 12, color: '#2ec4b6', marginLeft: 'auto' }}>✉ Subscribe for emails</div>

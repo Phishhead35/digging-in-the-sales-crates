@@ -53,15 +53,17 @@ export default function Layout({ children }) {
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', height: 64, gap: 32 }}>
 
-            {/* Logo — record cropped in circle + wordmark text */}
+            {/* Logo — gold record PNG cropped in circle + wordmark */}
             <Link to="/" className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-              <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
-                <img
-                  src="/ditsc_banner_svg_v8.svg"
-                  alt="DITSC"
-                  style={{ width: 160, height: 160, marginLeft: -30, marginTop: -40, pointerEvents: 'none' }}
-                />
-              </div>
+              <img
+                src="/GoldRevisedDITSCLogo.png"
+                alt="DITSC"
+                style={{
+                  width: 42, height: 42, borderRadius: '50%',
+                  objectFit: 'cover', objectPosition: 'center center',
+                  flexShrink: 0, pointerEvents: 'none',
+                }}
+              />
               <div className="nav-logo-text" style={{
                 fontFamily: 'var(--font-display)', fontSize: 22, letterSpacing: 2,
                 lineHeight: 1, whiteSpace: 'nowrap', overflow: 'hidden',
@@ -190,13 +192,15 @@ export default function Layout({ children }) {
       }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <div className="footer-logo-wrap">
-            <div style={{ width: 52, height: 52, borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
-              <img
-                src="/ditsc_banner_svg_v8.svg"
-                alt="DITSC"
-                style={{ width: 210, height: 210, marginLeft: -38, marginTop: -52, pointerEvents: 'none' }}
-              />
-            </div>
+            <img
+              src="/GoldRevisedDITSCLogo.png"
+              alt="DITSC"
+              style={{
+                width: 52, height: 52, borderRadius: '50%',
+                objectFit: 'cover', objectPosition: 'center center',
+                flexShrink: 0,
+              }}
+            />
             <span style={{ fontFamily: 'var(--font-display)', letterSpacing: 1, fontSize: 18 }}>
               DIGGING IN THE <span style={{ color: 'var(--amber)' }}>SALES CRATES</span>
             </span>
