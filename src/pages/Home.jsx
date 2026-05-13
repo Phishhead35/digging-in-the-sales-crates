@@ -227,30 +227,11 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Rhode Island */}
-          <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>RHODE ISLAND</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, marginBottom: 40, maxWidth: 560 }}>
+          {/* Rhode Island & New Hampshire */}
+          <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>RHODE ISLAND & NEW HAMPSHIRE</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, marginBottom: 32 }}>
             {[
               { name: 'Music Magick', type: 'Multi-Media', location: 'West Warwick, RI', desc: 'The ultimate multi-media store in West Warwick, RI. Over 50,000 CDs and 30,000 DVDs across all genres, plus games and Blu-rays. Most priced at just $2.', url: 'https://www.discogs.com/seller/musicmagickshop/profile?page=1&utm_source=ditsc&utm_medium=referral&utm_campaign=music-magick' },
-            ].map((store) => (
-              <a key={store.name} href={store.url} target="_blank" rel="noopener noreferrer" className="store-card"
-                style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)', textDecoration: 'none' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <div>
-                    <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
-                    <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
-                  </div>
-                  <ExternalLink size={13} color="var(--amber)" style={{ flexShrink: 0, marginTop: 3 }} />
-                </div>
-                <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>{store.desc}</p>
-              </a>
-            ))}
-          </div>
-
-          {/* New Hampshire */}
-          <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>NEW HAMPSHIRE</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, marginBottom: 32, maxWidth: 560 }}>
-            {[
               { name: 'New Hampshire Vintage Vinyl', type: 'Pre-Owned Vinyl', location: 'Laconia, NH', desc: 'Laconia, NH record shop at 633 Main St. New crates of pre-owned records hit the floor every Saturday. In-store customers get first dibs; the rest go live online Sunday evenings.', url: 'https://www.nhvintagevinyl.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=nh-vintage-vinyl' },
             ].map((store) => (
               <a key={store.name} href={store.url} target="_blank" rel="noopener noreferrer" className="store-card"
