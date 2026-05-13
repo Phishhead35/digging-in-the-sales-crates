@@ -78,7 +78,7 @@ export default function Layout({ children }) {
                 <Link key={to} to={to} style={{
                   display: 'flex', alignItems: 'center', gap: 6,
                   padding: '8px 12px', borderRadius: 8, fontSize: 12, fontWeight: 500,
-                  color: isActive(to) ? 'var(--amber)' : 'var(--text-secondary)',
+                  color: isActive(to) ? 'var(--amber)' : 'var(--text-primary)',
                   background: isActive(to) ? 'var(--amber-glow)' : 'transparent',
                   transition: 'all 0.2s',
                   border: isActive(to) ? '1px solid rgba(245,158,11,0.2)' : '1px solid transparent',
@@ -121,7 +121,7 @@ export default function Layout({ children }) {
             {navLinks.map(({ to, label, icon: Icon, comingSoon }) => (
               <Link key={to} to={to} style={{
                 display: 'flex', alignItems: 'center', gap: 10,
-                padding: '12px 0', color: isActive(to) ? 'var(--amber)' : 'var(--text-secondary)',
+                padding: '12px 0', color: isActive(to) ? 'var(--amber)' : 'var(--text-primary)',
                 borderBottom: '1px solid var(--border)', fontSize: 15,
               }}>
                 <Icon size={18} />
@@ -209,7 +209,7 @@ export default function Layout({ children }) {
           {/* Footer nav links */}
           <div style={{ display: 'flex', gap: 20, justifyContent: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
             {navLinks.map(({ to, label }) => (
-              <Link key={to} to={to} style={{ fontSize: 11, color: 'var(--text-muted)', textDecoration: 'none' }}>
+              <Link key={to} to={to} style={{ fontSize: 11, color: 'var(--text-primary)', textDecoration: 'none' }}>
                 {label}
               </Link>
             ))}
@@ -223,10 +223,10 @@ export default function Layout({ children }) {
               hello@digginginthesalescrates.com
             </a>
           </div>
-          <p style={{ color: 'var(--text-secondary)', fontSize: 12 }}>
+          <p style={{ color: 'var(--text-primary)', fontSize: 12 }}>
             © 2026 Digging in the Sales Crates. Find your perfect record.
           </p>
-          <p style={{ color: 'var(--text-secondary)', fontSize: 11, marginTop: 6 }}>
+          <p style={{ color: 'var(--text-primary)', fontSize: 11, marginTop: 6 }}>
             Pricing data via Discogs &amp; eBay. Not affiliated with, sponsored by, or endorsed by any listed marketplace or store.
           </p>
         </div>

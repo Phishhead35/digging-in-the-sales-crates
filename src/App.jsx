@@ -7,11 +7,9 @@ import Wishlist from './pages/Wishlist';
 import { Deals, Alerts } from './pages/DealsAndAlerts';
 import EmailParser from './pages/EmailParser';
 import LocalShops from './pages/LocalShops';
-// New pages — create these files in src/pages/
+import FeaturedPartners from './pages/FeaturedPartners';
 // import Blog from './pages/Blog';
 // import BlogPost from './pages/BlogPost';
-// import FeaturedPartners from './pages/FeaturedPartners';
-// import Aggregator from './pages/Aggregator';
 
 const globalStyle = `
   *, *::before, *::after { box-sizing: border-box !important; }
@@ -28,19 +26,15 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<SearchResults />} />
 
-          {/* Aggregator gets its own route — rename /search hero page */}
           <Route path="/aggregator" element={<SearchResults />} />
-
           <Route path="/deals" element={<Deals />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/email-parser" element={<EmailParser />} />
           <Route path="/local-shops" element={<LocalShops />} />
-
-          {/* Uncomment as you build each new page */}
+          <Route path="/featured-partners" element={<FeaturedPartners />} />
           {/* <Route path="/blog" element={<Blog />} /> */}
           {/* <Route path="/blog/:slug" element={<BlogPost />} /> */}
-          {/* <Route path="/featured-partners" element={<FeaturedPartners />} /> */}
         </Routes>
       </Layout>
     </BrowserRouter>

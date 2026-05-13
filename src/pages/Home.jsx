@@ -24,7 +24,7 @@ const BLOG_PREVIEW = [
     date: 'May 2026',
     color: '#f59e0b',
     bg: 'rgba(245,158,11,0.08)',
-    url: 'https://www.youtube.com/@Phishhead35',
+    url: 'https://www.youtube.com/@digginginthesalescrates',
   },
   {
     series: 'WU-TANG WEDNESDAY',
@@ -32,7 +32,7 @@ const BLOG_PREVIEW = [
     date: 'May 2026',
     color: '#2ec4b6',
     bg: 'rgba(46,196,182,0.08)',
-    url: 'https://www.youtube.com/@Phishhead35',
+    url: 'https://www.youtube.com/@digginginthesalescrates',
   },
   {
     series: 'THROWBACK THURSDAY',
@@ -40,7 +40,7 @@ const BLOG_PREVIEW = [
     date: 'May 2026',
     color: '#e63946',
     bg: 'rgba(230,57,70,0.08)',
-    url: 'https://www.youtube.com/@Phishhead35',
+    url: 'https://www.youtube.com/@digginginthesalescrates',
   },
 ];
 
@@ -89,15 +89,16 @@ export default function Home() {
             aria-hidden="true"
             style={{
               position: 'absolute',
-              left: '-8%', top: '50%',
+              left: '-5%', top: '50%',
               transform: 'translateY(-50%)',
-              height: '140%', width: 'auto',
-              opacity: 0.06,
+              height: '120%', width: 'auto',
+              opacity: 0.04,
+              clipPath: 'inset(0 55% 0 0)',
             }}
           />
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'radial-gradient(ellipse at 25% 50%, rgba(10,10,15,0.4) 0%, rgba(10,10,15,0.95) 55%, rgba(10,10,15,1) 100%)',
+            background: 'rgba(10,10,15,0.7)',
           }} />
         </div>
 
@@ -228,7 +229,7 @@ export default function Home() {
 
           {/* Rhode Island */}
           <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>RHODE ISLAND</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 40 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, marginBottom: 40, maxWidth: 560 }}>
             {[
               { name: 'Music Magick', type: 'Multi-Media', location: 'West Warwick, RI', desc: 'The ultimate multi-media store in West Warwick, RI. Over 50,000 CDs and 30,000 DVDs across all genres, plus games and Blu-rays. Most priced at just $2.', url: 'https://www.discogs.com/seller/musicmagickshop/profile?page=1&utm_source=ditsc&utm_medium=referral&utm_campaign=music-magick' },
             ].map((store) => (
@@ -248,7 +249,7 @@ export default function Home() {
 
           {/* New Hampshire */}
           <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>NEW HAMPSHIRE</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 32 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, marginBottom: 32, maxWidth: 560 }}>
             {[
               { name: 'New Hampshire Vintage Vinyl', type: 'Pre-Owned Vinyl', location: 'Laconia, NH', desc: 'Laconia, NH record shop at 633 Main St. New crates of pre-owned records hit the floor every Saturday. In-store customers get first dibs; the rest go live online Sunday evenings.', url: 'https://www.nhvintagevinyl.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=nh-vintage-vinyl' },
             ].map((store) => (
@@ -415,7 +416,7 @@ export default function Home() {
               </span>
             </div>
             <a
-              href="https://www.youtube.com/@Phishhead35"
+              href="https://www.youtube.com/@digginginthesalescrates"
               target="_blank"
               rel="noopener noreferrer"
               style={{
