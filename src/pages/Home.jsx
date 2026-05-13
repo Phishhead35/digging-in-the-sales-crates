@@ -47,7 +47,7 @@ const DEALS_PREVIEW = [
   { title: 'MF DOOM – Mm..Food', store: 'A Damn Shame', price: '$29.99', was: '$55.00', condition: 'VG+' },
 ];
 
-// Blog post preview — replace with real posts once blog is live
+// Blog post preview — links go to YouTube videos until blog is live
 const BLOG_PREVIEW = [
   {
     series: 'SAMPLE DNA',
@@ -55,6 +55,7 @@ const BLOG_PREVIEW = [
     date: 'May 2026',
     color: '#f59e0b',
     bg: 'rgba(245,158,11,0.08)',
+    url: 'https://www.youtube.com/@Phishhead35',
   },
   {
     series: 'WU-TANG WEDNESDAY',
@@ -62,6 +63,7 @@ const BLOG_PREVIEW = [
     date: 'May 2026',
     color: '#2ec4b6',
     bg: 'rgba(46,196,182,0.08)',
+    url: 'https://www.youtube.com/@Phishhead35',
   },
   {
     series: 'THROWBACK THURSDAY',
@@ -69,6 +71,7 @@ const BLOG_PREVIEW = [
     date: 'May 2026',
     color: '#e63946',
     bg: 'rgba(230,57,70,0.08)',
+    url: 'https://www.youtube.com/@Phishhead35',
   },
 ];
 
@@ -109,26 +112,23 @@ export default function Home() {
         textAlign: 'center',
       }}>
 
-        {/* Full-width banner SVG as background hero asset */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          pointerEvents: 'none', overflow: 'hidden',
-        }}>
+        {/* Record only on left side, very subtle — no text bleed */}
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
           <img
             src="/ditsc_banner_svg_v8.svg"
             alt=""
             aria-hidden="true"
             style={{
-              width: '100%', height: '100%',
-              objectFit: 'cover', objectPosition: 'center center',
-              opacity: 0.18,
+              position: 'absolute',
+              left: '-8%', top: '50%',
+              transform: 'translateY(-50%)',
+              height: '140%', width: 'auto',
+              opacity: 0.06,
             }}
           />
-          {/* Gradient overlay so text reads cleanly over the image */}
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'radial-gradient(ellipse at center, rgba(10,10,15,0.3) 0%, rgba(10,10,15,0.85) 70%, rgba(10,10,15,1) 100%)',
+            background: 'radial-gradient(ellipse at 25% 50%, rgba(10,10,15,0.4) 0%, rgba(10,10,15,0.95) 55%, rgba(10,10,15,1) 100%)',
           }} />
         </div>
 
@@ -389,10 +389,21 @@ export default function Home() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20 }}>
             {BLOG_PREVIEW.map((post) => (
-              <div key={post.title} style={{
+              <a
+                key={post.title}
+                href={post.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'none' }}
+              >
+              <div style={{
                 background: 'var(--bg-card)', border: '1px solid var(--border)',
                 borderRadius: 16, overflow: 'hidden',
-              }}>
+                transition: 'border-color 0.2s, transform 0.2s',
+              }}
+                onMouseOver={e => { e.currentTarget.style.borderColor = post.color; e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                onMouseOut={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'; }}
+              >
                 {/* Colored series header */}
                 <div style={{
                   background: post.bg, padding: '20px 20px 16px',
@@ -416,6 +427,7 @@ export default function Home() {
                   <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{post.date}</div>
                 </div>
               </div>
+              </a>
             ))}
           </div>
 
@@ -435,7 +447,7 @@ export default function Home() {
               </span>
             </div>
             <a
-              href="https://www.youtube.com/@ditsc"
+              href="https://www.youtube.com/@Phishhead35"
               target="_blank"
               rel="noopener noreferrer"
               style={{

@@ -53,21 +53,21 @@ export default function Layout({ children }) {
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', height: 64, gap: 32 }}>
 
-            {/* Logo — uses the banner SVG cropped to show record + wordmark */}
-            <Link to="/" className="nav-logo" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-              <img
-                src="/ditsc_banner_svg_v8.svg"
-                alt="Digging in the Sales Crates"
-                style={{
-                  height: 46,
-                  width: 'auto',
-                  maxWidth: 320,
-                  objectFit: 'cover',
-                  objectPosition: 'left center',
-                  pointerEvents: 'none',
-                }}
-                className="nav-logo-img"
-              />
+            {/* Logo — record cropped in circle + wordmark text */}
+            <Link to="/" className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+              <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
+                <img
+                  src="/ditsc_banner_svg_v8.svg"
+                  alt="DITSC"
+                  style={{ width: 160, height: 160, marginLeft: -30, marginTop: -40, pointerEvents: 'none' }}
+                />
+              </div>
+              <div className="nav-logo-text" style={{
+                fontFamily: 'var(--font-display)', fontSize: 22, letterSpacing: 2,
+                lineHeight: 1, whiteSpace: 'nowrap', overflow: 'hidden',
+              }}>
+                DIGGING IN THE <span style={{ color: 'var(--amber)' }}>SALES CRATES</span>
+              </div>
             </Link>
 
             {/* Desktop Nav */}
@@ -145,7 +145,7 @@ export default function Layout({ children }) {
         @media (max-width: 900px) {
           .desktop-nav { display: none !important; }
           .mobile-toggle { display: block !important; }
-          .nav-logo-img { max-width: 220px !important; height: 38px !important; }
+          .nav-logo-text { font-size: 15px !important; letter-spacing: 1px !important; }
         }
         @media (min-width: 901px) {
           .mobile-toggle { display: none !important; }
@@ -190,11 +190,16 @@ export default function Layout({ children }) {
       }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <div className="footer-logo-wrap">
-            <img
-              src="/ditsc_banner_svg_v8.svg"
-              alt="Digging in the Sales Crates"
-              style={{ height: 60, width: 'auto', maxWidth: 360, objectFit: 'cover', objectPosition: 'left center' }}
-            />
+            <div style={{ width: 52, height: 52, borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
+              <img
+                src="/ditsc_banner_svg_v8.svg"
+                alt="DITSC"
+                style={{ width: 210, height: 210, marginLeft: -38, marginTop: -52, pointerEvents: 'none' }}
+              />
+            </div>
+            <span style={{ fontFamily: 'var(--font-display)', letterSpacing: 1, fontSize: 18 }}>
+              DIGGING IN THE <span style={{ color: 'var(--amber)' }}>SALES CRATES</span>
+            </span>
           </div>
 
           {/* Footer nav links */}
