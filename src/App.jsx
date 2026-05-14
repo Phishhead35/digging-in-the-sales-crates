@@ -8,6 +8,7 @@ import { Deals, Alerts } from './pages/DealsAndAlerts';
 import EmailParser from './pages/EmailParser';
 import LocalShops from './pages/LocalShops';
 import FeaturedPartners from './pages/FeaturedPartners';
+import ScrollToTop from './components/ScrollToTop';
 // import Blog from './pages/Blog';
 // import BlogPost from './pages/BlogPost';
 
@@ -21,11 +22,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <style>{globalStyle}</style>
+      <ScrollToTop />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<SearchResults />} />
-
           <Route path="/aggregator" element={<SearchResults />} />
           <Route path="/deals" element={<Deals />} />
           <Route path="/wishlist" element={<Wishlist />} />
