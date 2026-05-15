@@ -13,7 +13,7 @@ const DEALS_PREVIEW = [
   { title: 'Herbie Hancock – Head Hunters', store: 'Vinyl Castle', price: '$12.99', was: '$24.99', condition: 'VG+' },
   { title: 'Gang Starr – Step in the Arena', store: 'Discogs', price: '$18.50', was: '$32.00', condition: 'VG' },
   { title: 'A Tribe Called Quest – Midnight Marauders', store: 'eBay', price: '$21.00', was: '$40.00', condition: 'NM' },
-  { title: 'MF DOOM – Mm..Food', store: 'A Damn Shame', price: '$29.99', was: '$55.00', condition: 'VG+' },
+  { title: 'MF DOOM – Mm..Food', store: 'ADamnShame', price: '$29.99', was: '$55.00', condition: 'VG+' },
 ];
 
 // Blog post preview — links go to YouTube videos until blog is live
@@ -206,7 +206,7 @@ export default function Home() {
             {[
               { name: 'Spin That Records', type: 'Vintage Vinyl', location: 'Springfield, MA', desc: "Springfield MA's only vintage vinyl store. Classic Rock, Jazz, Soul, Latin, Folk and more. Plus vintage turntables, receivers, and hi-fi equipment.", url: 'https://spinthatspringfield.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=spin-that-records' },
               { name: 'Village Vinyl and HiFi', type: 'Records & Stereo', location: 'Boston, MA', desc: 'Located in the Coolidge Corner neighborhood in Boston. Quality records and stereo equipment at prices that keep you coming back.', url: 'https://www.villagevinylhifi.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=village-vinyl-hifi' },
-              { name: 'A Damn Shame Records', type: 'Curated Vinyl', location: 'Boston, MA', desc: 'Boston-based record dealer specializing in curated vinyl and quality records. Follow on Instagram for inventory and updates.', url: 'https://www.instagram.com/adamnshame_records/?utm_source=ditsc&utm_medium=referral&utm_campaign=a-damn-shame-records' },
+              { name: 'ADamnShame Records', type: 'Curated Vinyl', location: 'Lowell, MA', desc: 'Lowell-based record dealer specializing in curated vinyl and quality records. Follow on Instagram for inventory and updates.', url: 'https://www.instagram.com/adamnshame_records/?utm_source=ditsc&utm_medium=referral&utm_campaign=a-damn-shame-records' },
               { name: 'Soundtracks Beverly', type: 'All Genres', location: 'Beverly, MA', desc: 'Beverly, MA record shop with an eclectic mix of vinyl across all genres. A true neighborhood dig spot on the North Shore.', url: 'https://www.soundtracksbeverly.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=soundtracks-beverly' },
               { name: 'GOOD TASTE Records', type: 'Vinyl Boutique', location: 'Boston, MA', desc: "Boston vinyl boutique and music hub for DJs, collectors, and anyone with GOOD TASTE. Stop in and find something you didn't know you needed.", url: 'https://goodtasterecords.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=good-taste-records' },
               { name: 'Big Fun Records', type: 'Multi-Genre', location: 'Beverly, MA', desc: 'Beverly, MA shop at 284A Cabot St. Buying and selling Rock, Jazz, Soul/Funk, Punk, Metal, Hip-Hop, Electronic, and more.', url: 'https://www.discogs.com/seller/bigfunrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records' },
