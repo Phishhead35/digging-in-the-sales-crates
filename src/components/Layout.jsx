@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star } from 'lucide-react';
+import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle } from 'lucide-react';
 import FollowUs from './FollowUs';
 
 export default function Layout({ children }) {
@@ -32,6 +32,7 @@ export default function Layout({ children }) {
     { to: '/blog',               label: 'Blog',              icon: BookOpen,  comingSoon: true },
     { to: '/featured-partners',  label: 'Featured Partners', icon: Star,      comingSoon: true },
     { to: '/local-shops',        label: "Where's My Shop?",  icon: MapPin },
+    { to: '/faq',                label: 'FAQ',               icon: HelpCircle },
   ];
 
   const isActive = (to) => {

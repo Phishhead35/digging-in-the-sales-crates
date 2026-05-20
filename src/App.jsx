@@ -8,6 +8,7 @@ import { Deals, Alerts } from './pages/DealsAndAlerts';
 import EmailParser from './pages/EmailParser';
 import LocalShops from './pages/LocalShops';
 import FeaturedPartners from './pages/FeaturedPartners';
+import FAQ from './pages/FAQ';
 import ScrollToTop from './components/ScrollToTop';
 // import Blog from './pages/Blog';
 // import BlogPost from './pages/BlogPost';
@@ -34,6 +35,7 @@ export default function App() {
           <Route path="/email-parser" element={<EmailParser />} />
           <Route path="/local-shops" element={<LocalShops />} />
           <Route path="/featured-partners" element={<FeaturedPartners />} />
+          <Route path="/faq" element={<FAQ />} />
           {/* <Route path="/blog" element={<Blog />} /> */}
           {/* <Route path="/blog/:slug" element={<BlogPost />} /> */}
         </Routes>
