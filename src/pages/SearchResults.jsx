@@ -126,7 +126,13 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, q
         <a
           href={
             result.source === 'discogs'
-              ? `https://www.discogs.com/sell/release/${result.id}?sort=price&sort_order=asc`
+              ? (() => {
+                  const uri = result.uri || '';
+                  const sellUri = uri.replace('/release/', '/sell/release/').replace('/master/', '/sell/master/');
+                  return sellUri
+                    ? `https://www.discogs.com${sellUri}?sort=price&sort_order=asc`
+                    : `https://www.discogs.com/sell/list?q=${encodeURIComponent(query)}&format=Vinyl&sort=price&sort_order=asc`;
+                })()
               : result.source === 'ebay'
               ? (result.url ? result.url + (result.url.includes("?") ? "&" : "?") + "mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc" : "https://www.ebay.com/itm/" + result.id)
               : result.source === 'cdandlp'
