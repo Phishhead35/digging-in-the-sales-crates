@@ -4,7 +4,7 @@ import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, Ch
 import { searchDiscogs, searchEbay, searchCDandLP, formatPrice, getConditionColor, getConditionShort } from '../utils/api';
 import useSEO from '../hooks/useSEO';
 
-function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority }) {
+function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, query }) {
   const thumb = result.cover_image || result.thumb || result.picture || null;
   const [imgError, setImgError] = useState(false);
 
@@ -126,7 +126,7 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
         <a
           href={
             result.source === 'discogs'
-              ? `https://www.discogs.com/sell/list?q=${encodeURIComponent(result.title)}&format=Vinyl&sort=price&sort_order=asc`
+              ? `https://www.discogs.com/sell/list?q=${encodeURIComponent(query)}&format=Vinyl&sort=price&sort_order=asc`
               : result.source === 'ebay'
               ? (result.url ? result.url + (result.url.includes("?") ? "&" : "?") + "mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc" : "https://www.ebay.com/itm/" + result.id)
               : result.source === 'cdandlp'
@@ -395,6 +395,7 @@ export default function SearchResults() {
               wishlisted={isWishlisted(r)}
               onResultClick={handleResultClick}
               priority={index === 0}
+              query={query}
             />
           ))}
         </div>
