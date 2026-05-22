@@ -10,7 +10,7 @@ const TRENDING_SEARCHES = [
 
 // Latest deals preview — static placeholder, replace with live data from your API
 const DEALS_PREVIEW = [
-  { title: 'Herbie Hancock – Head Hunters', store: 'Vinyl Castle', price: '$12.99', was: '$24.99', condition: 'VG+' },
+  { title: 'Herbie Hancock – Head Hunters', store: 'Discogs', price: '$12.99', was: '$24.99', condition: 'VG+' },
   { title: 'Gang Starr – Step in the Arena', store: 'Discogs', price: '$18.50', was: '$32.00', condition: 'VG' },
   { title: 'A Tribe Called Quest – Midnight Marauders', store: 'eBay', price: '$21.00', was: '$40.00', condition: 'NM' },
   { title: 'MF DOOM – Mm..Food', store: 'ADamnShame', price: '$29.99', was: '$55.00', condition: 'VG+' },
@@ -43,6 +43,74 @@ const BLOG_PREVIEW = [
     url: 'https://www.youtube.com/@digginginthesalescrates',
   },
 ];
+
+// ── Store data ────────────────────────────────────────────────
+// Extracted to constants so the map logic can live in one StoreCard component.
+// All href values and UTM parameters are unchanged.
+
+const MA_STORES = [
+  { name: 'Spin That Records', type: 'Vintage Vinyl', location: 'Springfield, MA', desc: "Springfield MA's only vintage vinyl store. Classic Rock, Jazz, Soul, Latin, Folk and more. Plus vintage turntables, receivers, and hi-fi equipment.", url: 'https://spinthatspringfield.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=spin-that-records' },
+  { name: 'Village Vinyl and HiFi', type: 'Records & Stereo', location: 'Boston, MA', desc: 'Located in the Coolidge Corner neighborhood in Boston. Quality records and stereo equipment at prices that keep you coming back.', url: 'https://www.villagevinylhifi.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=village-vinyl-hifi' },
+  { name: 'ADamnShame Records', type: 'Curated Vinyl', location: 'Lowell, MA', desc: 'Lowell-based record dealer specializing in curated vinyl and quality records. Follow on Instagram for inventory and updates.', url: 'https://www.instagram.com/adamnshame_records/?utm_source=ditsc&utm_medium=referral&utm_campaign=a-damn-shame-records' },
+  { name: 'Soundtracks Beverly', type: 'All Genres', location: 'Beverly, MA', desc: 'Beverly, MA record shop with an eclectic mix of vinyl across all genres. A true neighborhood dig spot on the North Shore.', url: 'https://www.soundtracksbeverly.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=soundtracks-beverly' },
+  { name: 'GOOD TASTE Records', type: 'Vinyl Boutique', location: 'Boston, MA', desc: "Boston vinyl boutique and music hub for DJs, collectors, and anyone with GOOD TASTE. Stop in and find something you didn't know you needed.", url: 'https://goodtasterecords.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=good-taste-records' },
+  { name: 'Big Fun Records', type: 'Multi-Genre', location: 'Beverly, MA', desc: 'Beverly, MA shop at 284A Cabot St. Buying and selling Rock, Jazz, Soul/Funk, Punk, Metal, Hip-Hop, Electronic, and more.', url: 'https://www.discogs.com/seller/bigfunrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records' },
+  { name: 'Residency Records', type: 'Used Vinyl', location: 'Salem, MA', desc: 'Located in the Witch City Mall in Salem, MA. Find them on Discogs for their full inventory.', url: 'https://www.discogs.com/seller/residencyrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=residency-records' },
+  { name: "Joe's Albums", type: 'New & Used', location: 'Worcester, MA', desc: "Worcester's go-to record shop at 317 Main St, housed in a historic performance venue. Open 7 days a week, 10am-6pm. Online since 2010, brick and mortar since 2011.", url: 'https://www.joesalbums.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=joes-albums' },
+  { name: 'The Time Capsule', type: 'Records, Comics & Games', location: 'Seekonk, MA', desc: 'Seekonk location at 1733 Fall River Ave. New vinyl hits the bins every Saturday. Also stocking thousands of back-issue comics, new releases every Wednesday, and restocked video games weekly.', url: 'https://www.discogs.com/seller/oftimespast/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-seekonk', siteUrl: 'https://www.thetimecapsule.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-seekonk' },
+];
+
+const RINH_STORES = [
+  { name: 'Music Magick', type: 'Multi-Media', location: 'West Warwick, RI', desc: 'The ultimate multi-media store in West Warwick, RI. Over 50,000 CDs and 30,000 DVDs across all genres, plus games and Blu-rays. Most priced at just $2.', url: 'https://www.discogs.com/seller/musicmagickshop/profile?page=1&utm_source=ditsc&utm_medium=referral&utm_campaign=music-magick' },
+  { name: 'The Time Capsule', type: 'Records, Comics & Games', location: 'Cranston, RI', desc: 'Cranston location at 537 Pontiac Ave. Massive LP restock every Friday. Plus new comics every Wednesday (80-100 titles), thousands of back issues, and restocked video games weekly.', url: 'https://www.discogs.com/seller/oftimespast/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-cranston', siteUrl: 'https://www.thetimecapsule.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-cranston' },
+  { name: 'New Hampshire Vintage Vinyl', type: 'Pre-Owned Vinyl', location: 'Laconia, NH', desc: 'Laconia, NH record shop at 633 Main St. New crates of pre-owned records hit the floor every Saturday. In-store customers get first dibs; the rest go live online Sunday evenings.', url: 'https://www.nhvintagevinyl.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=nh-vintage-vinyl' },
+];
+
+// ── StoreCard component ───────────────────────────────────────
+// Extracted to eliminate duplicated map logic between MA and RI/NH sections.
+// className="store-card", all href values, and all UTM parameters are byte-identical
+// to the original inline code. Do not rename store-card — GTM may reference it.
+
+function StoreCard({ store }) {
+  if (store.siteUrl) {
+    return (
+      <div className="store-card"
+        style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
+            <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
+          </div>
+        </div>
+        <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '0 0 14px' }}>{store.desc}</p>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <a href={store.url} target="_blank" rel="noopener noreferrer"
+            style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.08)' }}>
+            Discogs →
+          </a>
+          <a href={store.siteUrl} target="_blank" rel="noopener noreferrer"
+            style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'transparent' }}>
+            Website →
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <a href={store.url} target="_blank" rel="noopener noreferrer" className="store-card"
+      style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)', textDecoration: 'none' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
+        <div>
+          <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
+          <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
+        </div>
+        <ExternalLink size={13} color="var(--amber)" style={{ flexShrink: 0, marginTop: 3 }} />
+      </div>
+      <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>{store.desc}</p>
+    </a>
+  );
+}
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -203,98 +271,13 @@ export default function Home() {
           {/* Massachusetts */}
           <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>MASSACHUSETTS</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 40 }}>
-            {[
-              { name: 'Spin That Records', type: 'Vintage Vinyl', location: 'Springfield, MA', desc: "Springfield MA's only vintage vinyl store. Classic Rock, Jazz, Soul, Latin, Folk and more. Plus vintage turntables, receivers, and hi-fi equipment.", url: 'https://spinthatspringfield.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=spin-that-records' },
-              { name: 'Village Vinyl and HiFi', type: 'Records & Stereo', location: 'Boston, MA', desc: 'Located in the Coolidge Corner neighborhood in Boston. Quality records and stereo equipment at prices that keep you coming back.', url: 'https://www.villagevinylhifi.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=village-vinyl-hifi' },
-              { name: 'ADamnShame Records', type: 'Curated Vinyl', location: 'Lowell, MA', desc: 'Lowell-based record dealer specializing in curated vinyl and quality records. Follow on Instagram for inventory and updates.', url: 'https://www.instagram.com/adamnshame_records/?utm_source=ditsc&utm_medium=referral&utm_campaign=a-damn-shame-records' },
-              { name: 'Soundtracks Beverly', type: 'All Genres', location: 'Beverly, MA', desc: 'Beverly, MA record shop with an eclectic mix of vinyl across all genres. A true neighborhood dig spot on the North Shore.', url: 'https://www.soundtracksbeverly.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=soundtracks-beverly' },
-              { name: 'GOOD TASTE Records', type: 'Vinyl Boutique', location: 'Boston, MA', desc: "Boston vinyl boutique and music hub for DJs, collectors, and anyone with GOOD TASTE. Stop in and find something you didn't know you needed.", url: 'https://goodtasterecords.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=good-taste-records' },
-              { name: 'Big Fun Records', type: 'Multi-Genre', location: 'Beverly, MA', desc: 'Beverly, MA shop at 284A Cabot St. Buying and selling Rock, Jazz, Soul/Funk, Punk, Metal, Hip-Hop, Electronic, and more.', url: 'https://www.discogs.com/seller/bigfunrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records' },
-              { name: 'Residency Records', type: 'Used Vinyl', location: 'Salem, MA', desc: 'Located in the Witch City Mall in Salem, MA. Find them on Discogs for their full inventory.', url: 'https://www.discogs.com/seller/residencyrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=residency-records' },
-              { name: "Joe's Albums", type: 'New & Used', location: 'Worcester, MA', desc: "Worcester's go-to record shop at 317 Main St, housed in a historic performance venue. Open 7 days a week, 10am-6pm. Online since 2010, brick and mortar since 2011.", url: 'https://www.joesalbums.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=joes-albums' },
-              { name: 'The Time Capsule', type: 'Records, Comics & Games', location: 'Seekonk, MA', desc: 'Seekonk location at 1733 Fall River Ave. New vinyl hits the bins every Saturday. Also stocking thousands of back-issue comics, new releases every Wednesday, and restocked video games weekly.', url: 'https://www.discogs.com/seller/oftimespast/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-seekonk', siteUrl: 'https://www.thetimecapsule.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-seekonk' },
-            ].map((store) => (
-              store.siteUrl ? (
-                <div key={store.name} className="store-card"
-                  style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
-                      <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
-                    </div>
-                  </div>
-                  <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '0 0 14px' }}>{store.desc}</p>
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    <a href={store.url} target="_blank" rel="noopener noreferrer"
-                      style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.08)' }}>
-                      Discogs →
-                    </a>
-                    <a href={store.siteUrl} target="_blank" rel="noopener noreferrer"
-                      style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'transparent' }}>
-                      Website →
-                    </a>
-                  </div>
-                </div>
-              ) : (
-                <a key={store.name} href={store.url} target="_blank" rel="noopener noreferrer" className="store-card"
-                  style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)', textDecoration: 'none' }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
-                      <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
-                    </div>
-                    <ExternalLink size={13} color="var(--amber)" style={{ flexShrink: 0, marginTop: 3 }} />
-                  </div>
-                  <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>{store.desc}</p>
-                </a>
-              )
-            ))}
+            {MA_STORES.map(store => <StoreCard key={store.name} store={store} />)}
           </div>
 
           {/* Rhode Island & New Hampshire */}
           <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>RHODE ISLAND & NEW HAMPSHIRE</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, marginBottom: 32 }}>
-            {[
-              { name: 'Music Magick', type: 'Multi-Media', location: 'West Warwick, RI', desc: 'The ultimate multi-media store in West Warwick, RI. Over 50,000 CDs and 30,000 DVDs across all genres, plus games and Blu-rays. Most priced at just $2.', url: 'https://www.discogs.com/seller/musicmagickshop/profile?page=1&utm_source=ditsc&utm_medium=referral&utm_campaign=music-magick' },
-              { name: 'The Time Capsule', type: 'Records, Comics & Games', location: 'Cranston, RI', desc: 'Cranston location at 537 Pontiac Ave. Massive LP restock every Friday. Plus new comics every Wednesday (80-100 titles), thousands of back issues, and restocked video games weekly.', url: 'https://www.discogs.com/seller/oftimespast/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-cranston', siteUrl: 'https://www.thetimecapsule.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-cranston' },
-              { name: 'New Hampshire Vintage Vinyl', type: 'Pre-Owned Vinyl', location: 'Laconia, NH', desc: 'Laconia, NH record shop at 633 Main St. New crates of pre-owned records hit the floor every Saturday. In-store customers get first dibs; the rest go live online Sunday evenings.', url: 'https://www.nhvintagevinyl.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=nh-vintage-vinyl' },
-            ].map((store) => (
-              store.siteUrl ? (
-                <div key={store.name} className="store-card"
-                  style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
-                      <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
-                    </div>
-                  </div>
-                  <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '0 0 14px' }}>{store.desc}</p>
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    <a href={store.url} target="_blank" rel="noopener noreferrer"
-                      style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.08)' }}>
-                      Discogs →
-                    </a>
-                    <a href={store.siteUrl} target="_blank" rel="noopener noreferrer"
-                      style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'transparent' }}>
-                      Website →
-                    </a>
-                  </div>
-                </div>
-              ) : (
-                <a key={store.name} href={store.url} target="_blank" rel="noopener noreferrer" className="store-card"
-                  style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)', textDecoration: 'none' }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
-                      <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
-                    </div>
-                    <ExternalLink size={13} color="var(--amber)" style={{ flexShrink: 0, marginTop: 3 }} />
-                  </div>
-                  <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>{store.desc}</p>
-                </a>
-              )
-            ))}
-            ))}
+            {RINH_STORES.map(store => <StoreCard key={store.name} store={store} />)}
           </div>
 
           {/* Store signup CTA */}

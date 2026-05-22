@@ -13,8 +13,9 @@ import ScrollToTop from './components/ScrollToTop';
 // import Blog from './pages/Blog';
 // import BlogPost from './pages/BlogPost';
 
+// box-sizing is set in index.css; overflow-x and img/video/iframe rules are kept here
+// because they use !important to override any inline styles set by third-party scripts.
 const globalStyle = `
-  *, *::before, *::after { box-sizing: border-box !important; }
   html, body, #root { overflow-x: hidden !important; max-width: 100vw !important; width: 100% !important; }
   img, video, iframe { max-width: 100%; }
 `;

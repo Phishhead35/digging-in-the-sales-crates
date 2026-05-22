@@ -327,8 +327,8 @@ Shop now: https://fatbeats.com/collections/hip-hop`;
           <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
             padding: '10px 20px', fontSize: 14, fontWeight: 500,
             color: activeTab === tab.id ? 'var(--amber)' : 'var(--text-secondary)',
+            background: 'none', border: 'none',
             borderBottom: activeTab === tab.id ? '2px solid var(--amber)' : '2px solid transparent',
-            background: 'none', border: 'none', borderBottom: activeTab === tab.id ? '2px solid var(--amber)' : '2px solid transparent',
             cursor: 'pointer', transition: 'color 0.2s', marginBottom: -1,
           }}>
             {tab.label}

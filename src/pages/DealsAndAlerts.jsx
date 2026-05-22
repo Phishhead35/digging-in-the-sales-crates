@@ -19,7 +19,6 @@ export function Deals() {
     { name: 'Rough Trade', url: 'https://www.roughtrade.com/en-us', desc: 'Independent icon since 1976. Exclusive pressings, pre-orders, and a members club with special pricing.', tag: 'Indie / Exclusives', email: 'https://www.roughtrade.com' },
     { name: 'Amoeba Music', url: 'https://www.amoeba.com', desc: 'Largest independent vinyl store in the US. 27,000+ records including rare, vintage, and hard-to-find.', tag: 'Used & Rare', email: 'https://www.amoeba.com' },
     { name: 'Bandcamp', url: 'https://bandcamp.com', desc: 'Buy directly from artists. Best source for indie, underground Hip-Hop, and limited self-released pressings.', tag: 'Artist Direct', email: 'https://bandcamp.com' },
-    { name: 'Vinylflat', url: 'https://www.awin1.com/cread.php?awinmid=37520&awinaffid=2823694&ued=https%3A%2F%2Fwww.vinylflat.com', desc: 'The vinyl record flattening solution. Restore warped records to playable condition at home. Essential gear for serious collectors.', tag: 'Vinyl Accessories', email: 'https://www.vinylflat.com' },
   ];
 
   const quickSearches = [

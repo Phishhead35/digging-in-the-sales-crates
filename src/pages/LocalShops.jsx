@@ -1,17 +1,22 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { MapPin, Clock, ExternalLink, Search, Music, Star, Phone, ChevronDown, ChevronUp, Disc3 } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { MapPin, Clock, ExternalLink, Search, Star, Phone, ChevronDown, ChevronUp, Disc3 } from 'lucide-react';
 
-const SPECIALTIES = ['All', 'Hip-Hop', 'Jazz', 'Soul / Funk', 'Rock', 'Electronic', 'Used / Rare', 'New Releases'];
-
-const SPECIALTY_COLORS = {
-  'Hip-Hop': '#f59e0b',
-  'Jazz': '#2ec4b6',
-  'Soul / Funk': '#fb923c',
-  'Rock': '#4ade80',
-  'Electronic': '#38bdf8',
-  'Used / Rare': '#a78bfa',
-  'New Releases': '#f472b6',
-};
+// SPECIALTIES and SPECIALTY_COLORS are commented out rather than deleted.
+// The specialty filter UI is planned for when more partner stores are onboarded
+// from in-person outreach. Uncomment both blocks and restore activeFilter state
+// and filteredShops when that work resumes.
+//
+// const SPECIALTIES = ['All', 'Hip-Hop', 'Jazz', 'Soul / Funk', 'Rock', 'Electronic', 'Used / Rare', 'New Releases'];
+//
+// const SPECIALTY_COLORS = {
+//   'Hip-Hop': '#f59e0b',
+//   'Jazz': '#2ec4b6',
+//   'Soul / Funk': '#fb923c',
+//   'Rock': '#4ade80',
+//   'Electronic': '#38bdf8',
+//   'Used / Rare': '#a78bfa',
+//   'New Releases': '#f472b6',
+// };
 
 function StoreCard({ store, index }) {
   const [expanded, setExpanded] = useState(false);
@@ -197,8 +202,9 @@ export default function LocalShops() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searched, setSearched] = useState(false);
-  const [activeFilter, setActiveFilter] = useState('All');
   const [locationLoading, setLocationLoading] = useState(false);
+  // activeFilter removed — specialty filter UI is coming once more partner stores
+  // are onboarded from in-person outreach. Restore with SPECIALTIES/SPECIALTY_COLORS above.
 
   const searchShops = useCallback(async (searchQuery) => {
     if (!searchQuery.trim()) return;
@@ -244,8 +250,6 @@ export default function LocalShops() {
     e.preventDefault();
     searchShops(query);
   };
-
-  const filteredShops = activeFilter === 'All' ? shops : shops.filter(s => s.specialties && s.specialties.includes(activeFilter));
 
   return (
     <div style={{ maxWidth: 1280, margin: '0 auto', padding: '32px 16px', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
@@ -367,7 +371,7 @@ export default function LocalShops() {
             gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))',
             gap: 20,
           }}>
-            {filteredShops.map((shop, i) => (
+            {shops.map((shop, i) => (
               <StoreCard key={shop.place_id} store={shop} index={i} />
             ))}
           </div>

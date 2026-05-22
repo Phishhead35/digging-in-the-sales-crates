@@ -33,15 +33,8 @@
   font-display: optional;
 }
 
-/* Size-adjusted fallback for Bebas Neue to prevent CLS on nav/footer */
-@font-face {
-  font-family: 'Bebas Neue Fallback';
-  src: local('Arial Narrow'), local('Arial');
-  size-adjust: 75%;
-  ascent-override: 120%;
-  descent-override: 25%;
-  line-gap-override: 0%;
-}
+/* Bebas Neue Fallback is defined in public/index.html inline styles (size-adjust: 110%)
+   to ensure it loads before React hydration. Do not add a duplicate here. */
 
 footer { min-height: 180px; }
 

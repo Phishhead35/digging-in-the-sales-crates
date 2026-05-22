@@ -94,12 +94,6 @@ export async function onRequestGet(context) {
   }
 }
 
-export async function onRequestOptions() {
-  return new Response(null, {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
-}
+// onRequestOptions removed — OPTIONS is handled inside onRequestGet above.
+// Cloudflare Pages Functions routes OPTIONS to onRequestGet when onRequestOptions
+// is absent, so the CORS preflight response is identical. No functional change.

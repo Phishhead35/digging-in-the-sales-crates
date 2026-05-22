@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef, startTransition } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
-import { searchDiscogs, searchEbay, searchCDandLP, formatPrice, getConditionColor, getConditionShort } from '../utils/api';
+import { searchDiscogs, searchEbay, searchCDandLP, formatPrice } from '../utils/api';
 import useSEO from '../hooks/useSEO';
 
-function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, query }) {
+function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority }) {
   const thumb = result.cover_image || result.thumb || result.picture || null;
   const [imgError, setImgError] = useState(false);
 
@@ -159,7 +159,6 @@ export default function SearchResults() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [sourceErrors, setSourceErrors] = useState({ discogs: false, ebay: false, cdandlp: false });
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [wishlist, setWishlist] = useState(() => {
@@ -360,20 +359,6 @@ export default function SearchResults() {
         )}
       </div>
 
-      {sourceErrors.discogs && !sourceErrors.ebay === false && !sourceErrors.cdandlp === false && (
-        <div style={{
-          padding: 20, borderRadius: 12, background: 'rgba(230,57,70,0.1)',
-          border: '1px solid rgba(230,57,70,0.3)', color: '#f87171',
-          display: 'flex', gap: 12, alignItems: 'flex-start', marginBottom: 24,
-        }}>
-          <AlertCircle size={18} style={{ flexShrink: 0, marginTop: 2 }} />
-          <div>
-            <div style={{ fontWeight: 600, marginBottom: 4 }}>Some results unavailable</div>
-            <div style={{ fontSize: 13 }}>One or more sources are temporarily unavailable. Try again in a moment.</div>
-          </div>
-        </div>
-      )}
-
       {loading && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(220px, 100%), 1fr))', gap: 20 }}>
           {Array(8).fill(0).map((_, i) => (
@@ -399,7 +384,6 @@ export default function SearchResults() {
               wishlisted={isWishlisted(r)}
               onResultClick={handleResultClick}
               priority={index === 0}
-              query={query}
             />
           ))}
         </div>

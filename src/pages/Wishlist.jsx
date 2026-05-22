@@ -58,11 +58,17 @@ export default function Wishlist() {
                     </div>
                   </div>
                 )}
+                {/* Bug 5 fix: three-source badge matching SearchResults */}
                 <div style={{
                   position: 'absolute', top: 10, left: 10,
                   padding: '3px 10px', borderRadius: 100, fontSize: 10, fontWeight: 700,
-                  background: item.source === 'discogs' ? 'rgba(245,158,11,0.9)' : 'rgba(0,100,210,0.9)',
-                  color: item.source === 'discogs' ? '#000' : '#fff', fontFamily: 'var(--font-mono)',
+                  background: item.source === 'discogs'
+                    ? 'rgba(245,158,11,0.9)'
+                    : item.source === 'ebay'
+                    ? 'rgba(0,100,210,0.9)'
+                    : 'rgba(0,160,100,0.9)',
+                  color: item.source === 'discogs' ? '#000' : '#fff',
+                  fontFamily: 'var(--font-mono)',
                 }}>
                   {item.source?.toUpperCase()}
                 </div>
@@ -78,7 +84,13 @@ export default function Wishlist() {
                   <a
                     href={
                       item.source === 'discogs'
-                        ? `https://www.discogs.com/release/${item.id}`
+                        ? (() => {
+                            // Bug 6 fix: link to sell listings, not release info page.
+                            // uri is stored on the item when saved from SearchResults.
+                            const isMaster = (item.uri || '').includes('/master/');
+                            const idParam = isMaster ? `master_id=${item.id}` : `release_id=${item.id}`;
+                            return `https://www.discogs.com/sell/list?${idParam}&sort=price&sort_order=asc`;
+                          })()
                         : item.source === 'ebay'
                         ? (item.url ? item.url + (item.url.includes('?') ? '&' : '?') + 'mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc' : `https://www.ebay.com/itm/${item.id}`)
                         : item.url || 'https://www.cdandlp.com'
