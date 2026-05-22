@@ -32,6 +32,7 @@ export default function Layout({ children }) {
     { to: '/blog',               label: 'Blog',              icon: BookOpen,  comingSoon: true },
     { to: '/featured-partners',  label: 'Featured Partners', icon: Star,      comingSoon: true },
     { to: '/local-shops',        label: "Where's My Shop?",  icon: MapPin },
+    { to: '/wishlist',           label: 'Wishlist',          icon: Heart },
     { to: '/faq',                label: 'FAQ',               icon: HelpCircle },
   ];
 
