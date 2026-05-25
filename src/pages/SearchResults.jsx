@@ -128,8 +128,11 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
             result.source === 'discogs'
               ? (() => {
                   const isMaster = (result.uri || '').includes('/master/');
-                  const idParam = isMaster ? `master_id=${result.id}` : `release_id=${result.id}`;
-                  return `https://www.discogs.com/sell/list?${idParam}&sort=price&sort_order=asc&ev=mr`;
+                  // Releases: use path-based URL (/sell/release/{id}) — routes correctly in Discogs mobile app.
+                  // Masters: keep query param format (/sell/list?master_id={id}) — spans all pressings of a master.
+                  return isMaster
+                    ? `https://www.discogs.com/sell/list?master_id=${result.id}&sort=price&sort_order=asc&ev=mr`
+                    : `https://www.discogs.com/sell/release/${result.id}?sort=price&sort_order=asc&ev=mr`;
                 })()
               : result.source === 'ebay'
               ? (result.url ? result.url + (result.url.includes("?") ? "&" : "?") + "mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc" : "https://www.ebay.com/itm/" + result.id)
