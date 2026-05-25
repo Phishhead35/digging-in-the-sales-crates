@@ -129,7 +129,7 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
               ? (() => {
                   const isMaster = (result.uri || '').includes('/master/');
                   const idParam = isMaster ? `master_id=${result.id}` : `release_id=${result.id}`;
-                  return `https://www.discogs.com/sell/list?${idParam}&sort=price&sort_order=asc`;
+                  return `https://www.discogs.com/sell/list?${idParam}&sort=price&sort_order=asc&ev=mr`;
                 })()
               : result.source === 'ebay'
               ? (result.url ? result.url + (result.url.includes("?") ? "&" : "?") + "mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc" : "https://www.ebay.com/itm/" + result.id)
