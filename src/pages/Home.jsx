@@ -58,6 +58,7 @@ const MA_STORES = [
   { name: 'Residency Records', type: 'Used Vinyl', location: 'Salem, MA', desc: 'Located in the Witch City Mall in Salem, MA. Find them on Discogs for their full inventory.', url: 'https://www.discogs.com/seller/residencyrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=residency-records' },
   { name: "Joe's Albums", type: 'New & Used', location: 'Worcester, MA', desc: "Worcester's go-to record shop at 317 Main St, housed in a historic performance venue. Open 7 days a week, 10am-6pm. Online since 2010, brick and mortar since 2011.", url: 'https://www.joesalbums.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=joes-albums' },
   { name: 'The Time Capsule', type: 'Records, Comics & Games', location: 'Seekonk, MA', desc: 'Seekonk location at 1733 Fall River Ave. New vinyl hits the bins every Saturday. Also stocking thousands of back-issue comics, new releases every Wednesday, and restocked video games weekly.', url: 'https://www.discogs.com/seller/oftimespast/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-seekonk', siteUrl: 'https://www.thetimecapsule.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-seekonk' },
+  { name: 'Planet Records', type: 'LPs, CDs, Cassettes & DVDs', location: 'Cambridge, MA', desc: 'Quality LPs, CDs, Cassettes, DVDs, and music books at 144 Mt Auburn St, Cambridge. A Cambridge institution for serious collectors.', siteUrl: 'https://planet-records.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=planet-records', url: 'https://www.discogs.com/seller/PlanetRecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=planet-records', ebayUrl: 'https://www.ebay.com/str/planetrecordsandcds?mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc&utm_source=ditsc&utm_medium=referral&utm_campaign=planet-records' },
 ];
 
 const RINH_STORES = [
@@ -72,6 +73,36 @@ const RINH_STORES = [
 // to the original inline code. Do not rename store-card — GTM may reference it.
 
 function StoreCard({ store }) {
+  // Three-button variant: Website + Discogs + eBay
+  if (store.ebayUrl) {
+    return (
+      <div className="store-card"
+        style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
+            <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
+          </div>
+        </div>
+        <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '0 0 14px' }}>{store.desc}</p>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <a href={store.siteUrl} target="_blank" rel="noopener noreferrer"
+            style={{ fontSize: 12, color: '#0a0a0f', fontWeight: 700, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, background: 'var(--amber)' }}>
+            Website →
+          </a>
+          <a href={store.url} target="_blank" rel="noopener noreferrer"
+            style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.08)' }}>
+            Discogs →
+          </a>
+          <a href={store.ebayUrl} target="_blank" rel="noopener noreferrer"
+            style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'transparent' }}>
+            eBay →
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   if (store.siteUrl) {
     return (
       <div className="store-card"
