@@ -14,9 +14,21 @@
   </url>
 
   <url>
+    <loc>https://digginginthesalescrates.com/aggregator</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://digginginthesalescrates.com/deals</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://digginginthesalescrates.com/featured-partners</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <url>
@@ -26,15 +38,9 @@
   </url>
 
   <url>
-    <loc>https://digginginthesalescrates.com/wishlist</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://digginginthesalescrates.com/alerts</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://digginginthesalescrates.com/faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
 </urlset>
