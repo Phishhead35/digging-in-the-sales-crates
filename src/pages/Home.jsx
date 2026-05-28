@@ -67,6 +67,16 @@ const RINH_STORES = [
   { name: 'New Hampshire Vintage Vinyl', type: 'Pre-Owned Vinyl', location: 'Laconia, NH', desc: 'Laconia, NH record shop at 633 Main St. New crates of pre-owned records hit the floor every Saturday. In-store customers get first dibs; the rest go live online Sunday evenings.', url: 'https://www.nhvintagevinyl.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=nh-vintage-vinyl' },
 ];
 
+// ── GA4 store click tracker ───────────────────────────────────
+// Fires store_click with both store name and the specific URL clicked.
+// Uses optional chaining so it silently no-ops if gtag isn't loaded yet.
+function trackStoreClick(storeName, storeUrl) {
+  window.gtag?.('event', 'store_click', {
+    store_name: storeName,
+    store_url: storeUrl,
+  });
+}
+
 // ── StoreCard component ───────────────────────────────────────
 // Extracted to eliminate duplicated map logic between MA and RI/NH sections.
 // className="store-card", all href values, and all UTM parameters are byte-identical
@@ -87,14 +97,17 @@ function StoreCard({ store }) {
         <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '0 0 14px' }}>{store.desc}</p>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <a href={store.siteUrl} target="_blank" rel="noopener noreferrer"
+            onClick={() => trackStoreClick(store.name, store.siteUrl)}
             style={{ fontSize: 12, color: '#0a0a0f', fontWeight: 700, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, background: 'var(--amber)' }}>
             Website →
           </a>
           <a href={store.url} target="_blank" rel="noopener noreferrer"
+            onClick={() => trackStoreClick(store.name, store.url)}
             style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.08)' }}>
             Discogs →
           </a>
           <a href={store.ebayUrl} target="_blank" rel="noopener noreferrer"
+            onClick={() => trackStoreClick(store.name, store.ebayUrl)}
             style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'transparent' }}>
             eBay →
           </a>
@@ -116,10 +129,12 @@ function StoreCard({ store }) {
         <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '0 0 14px' }}>{store.desc}</p>
         <div style={{ display: 'flex', gap: 8 }}>
           <a href={store.url} target="_blank" rel="noopener noreferrer"
+            onClick={() => trackStoreClick(store.name, store.url)}
             style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.08)' }}>
             Discogs →
           </a>
           <a href={store.siteUrl} target="_blank" rel="noopener noreferrer"
+            onClick={() => trackStoreClick(store.name, store.siteUrl)}
             style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'transparent' }}>
             Website →
           </a>
@@ -130,6 +145,7 @@ function StoreCard({ store }) {
 
   return (
     <a href={store.url} target="_blank" rel="noopener noreferrer" className="store-card"
+      onClick={() => trackStoreClick(store.name, store.url)}
       style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)', textDecoration: 'none' }}>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
         <div>
