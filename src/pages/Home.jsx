@@ -202,6 +202,8 @@ export default function Home() {
             src="/ditsc_banner_svg_v8.svg"
             alt=""
             aria-hidden="true"
+            loading="lazy"
+            fetchpriority="low"
             style={{
               position: 'absolute',
               left: '-5%', top: '50%',
