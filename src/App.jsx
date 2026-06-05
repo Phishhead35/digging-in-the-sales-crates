@@ -10,6 +10,7 @@ import LocalShops from './pages/LocalShops';
 import FeaturedPartners from './pages/FeaturedPartners';
 import FAQ from './pages/FAQ';
 import ScrollToTop from './components/ScrollToTop';
+import CanonicalTag from './components/CanonicalTag';
 // import Blog from './pages/Blog';
 // import BlogPost from './pages/BlogPost';
 
@@ -25,6 +26,7 @@ export default function App() {
     <BrowserRouter>
       <style>{globalStyle}</style>
       <ScrollToTop />
+      <CanonicalTag />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
