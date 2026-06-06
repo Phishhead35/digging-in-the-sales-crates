@@ -1,3 +1,9 @@
+// KV_SETUP_REQUIRED: Bind a KV namespace named DITSC_CACHE to this Pages project.
+// Cloudflare Dashboard → digging-in-the-sales-crates → Settings → Functions →
+// KV namespace bindings → Add binding → Variable name: DITSC_CACHE → select your namespace.
+
+const KV_TTL_SECONDS = 1800; // 30 minutes — globally consistent across all edge nodes
+
 export async function onRequestGet(context) {
   const { request, env } = context;
 
@@ -24,17 +30,13 @@ export async function onRequestGet(context) {
       });
     }
 
-    // Use Cloudflare Cache API to avoid hammering Discogs
-    const cacheKey = new Request(
-      `https://cache.discogs-proxy/search?q=${encodeURIComponent(query)}&page=${page}&per_page=${perPage}`,
-      { method: 'GET' }
-    );
-    const cache = caches.default;
-    const cached = await cache.match(cacheKey);
+    // Normalize key: lowercase, trim whitespace
+    const kvKey = `discogs:${query.toLowerCase().trim()}:${page}:${perPage}`;
 
+    // Check KV cache — globally consistent, no cold-edge-node misses
+    const cached = await env.DITSC_CACHE.get(kvKey);
     if (cached) {
-      const cachedBody = await cached.json();
-      return new Response(JSON.stringify(cachedBody), {
+      return new Response(cached, {
         headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': 'HIT' },
       });
     }
@@ -68,17 +70,14 @@ export async function onRequestGet(context) {
     }
 
     const data = await res.json();
+    const dataStr = JSON.stringify(data);
 
-    // Cache the response for 5 minutes
-    const responseToCache = new Response(JSON.stringify(data), {
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=1800',
-      },
-    });
-    context.waitUntil(cache.put(cacheKey, responseToCache));
+    // Write to KV with TTL — fire-and-forget so we don't add latency
+    context.waitUntil(
+      env.DITSC_CACHE.put(kvKey, dataStr, { expirationTtl: KV_TTL_SECONDS })
+    );
 
-    return new Response(JSON.stringify(data), {
+    return new Response(dataStr, {
       headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': 'MISS' },
     });
 

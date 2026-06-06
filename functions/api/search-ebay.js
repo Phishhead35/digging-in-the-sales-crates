@@ -1,11 +1,12 @@
-// ⚠️  STAGING NOTE: This file adds OAuth token caching (see getAccessToken below).
-// Test on a staging branch before merging to main. Verify that:
-//   1. Cache hits return a valid token (check X-Token-Cache header in Worker logs)
-//   2. After the 100-minute TTL expires, a fresh token is fetched without errors
-//   3. eBay search results are identical to the pre-caching version
+// KV_SETUP_REQUIRED: Bind a KV namespace named DITSC_CACHE to this Pages project.
+// Cloudflare Dashboard → digging-in-the-sales-crates → Settings → Functions →
+// KV namespace bindings → Add binding → Variable name: DITSC_CACHE → select your namespace.
 
+// eBay OAuth token: still cached via Cache API (token is not search-specific,
+// so edge-local caching is fine here — any edge can fetch a fresh token if needed).
 const TOKEN_CACHE_KEY = 'https://cache.ebay-proxy/oauth-token';
 const TOKEN_TTL_SECONDS = 6000; // 100 minutes — eBay tokens expire after 2 hours
+const KV_TTL_SECONDS = 1800;   // 30 minutes for search result caching
 
 async function getAccessToken(env) {
   const cache = caches.default;
@@ -30,20 +31,18 @@ async function getAccessToken(env) {
 
   if (!tokenRes.ok) {
     const err = await tokenRes.text();
-    throw new Error(`eBay auth failed: ${tokenRes.status} — ${err}`);
+    throw new Error(`eBay auth failed: ${tokenRes.status} - ${err}`);
   }
 
   const tokenData = await tokenRes.json();
 
-  // Cache the token for TOKEN_TTL_SECONDS. We store the full token object so
-  // we can extend this later (e.g. to check expires_in dynamically).
   const tokenToCache = new Response(JSON.stringify(tokenData), {
     headers: {
       'Content-Type': 'application/json',
       'Cache-Control': `public, max-age=${TOKEN_TTL_SECONDS}`,
     },
   });
-  // fire-and-forget — don't await so we don't add latency to the first request
+  // fire-and-forget
   cache.put(new Request(TOKEN_CACHE_KEY, { method: 'GET' }), tokenToCache);
 
   return tokenData.access_token;
@@ -56,12 +55,15 @@ export async function onRequestGet(context) {
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
+
   if (request.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
   try {
     const url = new URL(request.url);
     const query = url.searchParams.get('q');
+
     if (!query) {
       return new Response(JSON.stringify({ error: 'No query provided' }), {
         status: 400,
@@ -69,21 +71,17 @@ export async function onRequestGet(context) {
       });
     }
 
-    // Check Cloudflare cache for search results first
-    const cacheKey = new Request(
-      `https://cache.ebay-proxy/search?q=${encodeURIComponent(query)}`,
-      { method: 'GET' }
-    );
-    const cache = caches.default;
-    const cached = await cache.match(cacheKey);
+    // Normalize key: lowercase, trim whitespace
+    const kvKey = `ebay:${query.toLowerCase().trim()}`;
+
+    // Check KV cache — globally consistent, no cold-edge-node misses
+    const cached = await env.DITSC_CACHE.get(kvKey);
     if (cached) {
-      const cachedBody = await cached.json();
-      return new Response(JSON.stringify(cachedBody), {
+      return new Response(cached, {
         headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': 'HIT' },
       });
     }
 
-    // Fetch (or reuse cached) OAuth token
     const accessToken = await getAccessToken(env);
 
     const searchParams = new URLSearchParams({
@@ -104,6 +102,7 @@ export async function onRequestGet(context) {
         },
       }
     );
+
     if (!searchRes.ok) {
       const err = await searchRes.text();
       return new Response(JSON.stringify({ error: `eBay search failed: ${searchRes.status}`, detail: err }), {
@@ -111,6 +110,7 @@ export async function onRequestGet(context) {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+
     const searchData = await searchRes.json();
 
     const items = (searchData.itemSummaries || []).map(item => ({
@@ -130,18 +130,17 @@ export async function onRequestGet(context) {
       }]
     };
 
-    // Cache search results for 5 minutes
-    const responseToCache = new Response(JSON.stringify(responseData), {
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=300',
-      },
-    });
-    context.waitUntil(cache.put(cacheKey, responseToCache));
+    const dataStr = JSON.stringify(responseData);
 
-    return new Response(JSON.stringify(responseData), {
+    // Write to KV with TTL — fire-and-forget
+    context.waitUntil(
+      env.DITSC_CACHE.put(kvKey, dataStr, { expirationTtl: KV_TTL_SECONDS })
+    );
+
+    return new Response(dataStr, {
       headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': 'MISS' },
     });
+
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
