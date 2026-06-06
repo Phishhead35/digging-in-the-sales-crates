@@ -73,7 +73,7 @@ export async function onRequestGet(context) {
     const responseToCache = new Response(JSON.stringify(data), {
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=300',
+        'Cache-Control': 'public, max-age=1800',
       },
     });
     context.waitUntil(cache.put(cacheKey, responseToCache));
