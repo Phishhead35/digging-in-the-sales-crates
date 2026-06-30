@@ -9,6 +9,7 @@ import EmailParser from './pages/EmailParser';
 import LocalShops from './pages/LocalShops';
 import FeaturedPartners from './pages/FeaturedPartners';
 import FAQ from './pages/FAQ';
+import ArtistPage from './pages/ArtistPage';
 import ScrollToTop from './components/ScrollToTop';
 import CanonicalTag from './components/CanonicalTag';
 // import Blog from './pages/Blog';
@@ -39,6 +40,8 @@ export default function App() {
           <Route path="/local-shops" element={<LocalShops />} />
           <Route path="/featured-partners" element={<FeaturedPartners />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/artists/:slug" element={<ArtistPage type="artist" />} />
+          <Route path="/genres/:slug" element={<ArtistPage type="genre" />} />
           {/* <Route path="/blog" element={<Blog />} /> */}
           {/* <Route path="/blog/:slug" element={<BlogPost />} /> */}
         </Routes>

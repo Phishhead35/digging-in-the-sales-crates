@@ -1,0 +1,259 @@
+// ─────────────────────────────────────────────────────────────
+//  DITSC Artist & Genre Data
+//  Add a new entry here + a route in App.jsx to publish a page.
+//  searchTerms drive the Discogs / eBay / CDandLP buttons.
+// ─────────────────────────────────────────────────────────────
+
+export const ARTISTS = {
+
+  'old-dirty-bastard': {
+    slug: 'old-dirty-bastard',
+    name: 'Ol\' Dirty Bastard',
+    tagline: 'Dirty. Raw. Irreplaceable. Wu-Tang\'s wildest one.',
+    genres: ['Hip-Hop', 'Wu-Tang'],
+    searchTerms: {
+      discogs: 'Ol\' Dirty Bastard',
+      ebay: 'Old Dirty Bastard vinyl',
+      cdandlp: 'Ol Dirty Bastard',
+    },
+    bio: [
+      'Ol\' Dirty Bastard — born Russell Tyrone Jones — was the most unpredictable member of the Wu-Tang Clan, and that\'s saying something. His 1995 debut, Return to the 36 Chambers: The Dirty Version, hit like nothing else in rap: no rules, no filters, pure Brooklyn chaos over RZA\'s grimy Staten Island production.',
+      'His second album, Nigga Please (1999), showed a different side — smoother in places, still unmistakably ODB. He died in 2004 at 35. His records are collected hard because nobody sounded like him, and nobody ever will.',
+      'Wu-Tang vinyl commands serious collector premiums. ODB\'s solo pressings, especially originals on Elektra, are increasingly difficult to find in solid condition.',
+    ],
+    essentialRecords: [
+      { title: 'Return to the 36 Chambers: The Dirty Version', year: 1995, label: 'Elektra' },
+      { title: 'Nigga Please', year: 1999, label: 'Elektra' },
+      { title: 'The Trials and Tribulations of Russell Jones', year: 2002, label: 'Damon Dash Music' },
+      { title: 'Wu-Tang Clan — Enter the Wu-Tang (36 Chambers)', year: 1993, label: 'Loud' },
+      { title: 'Wu-Tang Clan — Wu-Tang Forever', year: 1997, label: 'Loud' },
+      { title: 'Osirus', year: 2005, label: 'D3 Entertainment' },
+    ],
+    producerCredits: ['RZA', 'Wu-Tang Clan production family'],
+    seo: {
+      title: 'Ol\' Dirty Bastard Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Ol\' Dirty Bastard vinyl records across Discogs, eBay, and CDandLP. Shop Return to the 36 Chambers, Nigga Please, and rare Wu-Tang pressings.',
+    },
+  },
+
+  'j-dilla': {
+    slug: 'j-dilla',
+    name: 'J Dilla',
+    tagline: 'The architect of modern hip-hop\'s heartbeat.',
+    genres: ['Hip-Hop', 'Soul', 'Instrumental'],
+    searchTerms: {
+      discogs: 'J Dilla',
+      ebay: 'J Dilla vinyl',
+      cdandlp: 'J Dilla',
+    },
+    bio: [
+      'James Dewitt Yancey — J Dilla — redefined what a drum machine could feel like. Working out of Detroit through the 1990s and early 2000s, he produced for A Tribe Called Quest, Common, Erykah Badu, and D\'Angelo before most fans knew his name.',
+      'His solo output, especially Donuts (2006), finished hours before his death, stands as one of the most influential records in hip-hop history. A 31-track collage built entirely from samples, released on Stones Throw Records.',
+      'Dilla records are actively collected. Original pressings of Donuts and his Slum Village work fetch serious prices. First pressings and colored variants appear regularly on Discogs.',
+    ],
+    essentialRecords: [
+      { title: 'Donuts', year: 2006, label: 'Stones Throw' },
+      { title: 'Ruff Draft', year: 2003, label: 'Groove Attack' },
+      { title: 'Welcome 2 Detroit', year: 2001, label: 'BBE' },
+      { title: 'Slum Village — Fantastic Vol. 2', year: 2000, label: 'Barak' },
+      { title: 'The Shining', year: 2006, label: 'BBE' },
+      { title: 'Jay Deelicious: The Delicious Vinyl Sides', year: 2007, label: 'Stones Throw' },
+    ],
+    producerCredits: [
+      'A Tribe Called Quest — Beats, Rhymes and Life (1996)',
+      'Common — Like Water for Chocolate (2000)',
+      'Erykah Badu — Mama\'s Gun (2000)',
+      'D\'Angelo — Voodoo (2000)',
+    ],
+    seo: {
+      title: 'J Dilla Vinyl Records | Digging in the Sales Crates',
+      description: 'Find J Dilla vinyl records across Discogs, eBay, and CDandLP. Shop Donuts, Ruff Draft, Slum Village, and rare Stones Throw pressings.',
+    },
+  },
+
+  'cannibal-ox': {
+    slug: 'cannibal-ox',
+    name: 'Cannibal Ox',
+    tagline: 'El-P\'s coldest production. Vast Aire\'s sharpest pen.',
+    genres: ['Hip-Hop', 'Underground'],
+    searchTerms: {
+      discogs: 'Cannibal Ox',
+      ebay: 'Cannibal Ox vinyl',
+      cdandlp: 'Cannibal Ox',
+    },
+    bio: [
+      'Cannibal Ox is Vast Aire and Vordul Mega — a Harlem rap duo whose 2001 debut The Cold Vein, produced entirely by El-P, is considered one of the most important underground hip-hop albums ever made. Dark, cinematic, and claustrophobic in the best way.',
+      'Original pressings of The Cold Vein on Definitive Jux are the grail. Reissues exist, but collectors want the original. The duo released Blade of the Ronin in 2015 and a handful of follow-ups, but The Cold Vein is what the market chases.',
+      'This is deep-crates territory. The person searching Cannibal Ox knows exactly what they\'re looking for.',
+    ],
+    essentialRecords: [
+      { title: 'The Cold Vein', year: 2001, label: 'Definitive Jux' },
+      { title: 'Blade of the Ronin', year: 2015, label: 'Brick' },
+      { title: 'Iron Galaxy', year: 2012, label: 'Block Recordz' },
+      { title: 'Vast Aire — Look Mom... No Hands', year: 2004, label: 'Def Jux' },
+    ],
+    producerCredits: ['El-P'],
+    seo: {
+      title: 'Cannibal Ox Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Cannibal Ox vinyl records across Discogs, eBay, and CDandLP. Shop The Cold Vein, Blade of the Ronin, and rare Definitive Jux pressings.',
+    },
+  },
+
+  'fatback-band': {
+    slug: 'fatback-band',
+    name: 'Fatback Band',
+    tagline: 'The Brooklyn funk machine that ran from \'70 to forever.',
+    genres: ['Funk', 'Soul'],
+    searchTerms: {
+      discogs: 'Fatback Band',
+      ebay: 'Fatback Band vinyl',
+      cdandlp: 'Fatback Band',
+    },
+    bio: [
+      'The Fatback Band formed in Brooklyn in 1970 and spent the next 15 years cranking out some of the most sample-rich funk and soul in the canon. Bill Curtis kept the drum grooves tight; the horns did the rest.',
+      'Their catalog is a goldmine for diggers. "I Found Lovin\'," "King Tim III" (one of the earliest hip-hop recordings on wax), and their Spring/Perception label records are all in demand. Easy to find, easy to spend an afternoon getting lost in.',
+      'A band where quantity doesn\'t kill quality — they put out a lot of records, and a lot of them are excellent.',
+    ],
+    essentialRecords: [
+      { title: 'Yum Yum (Gimme Some)', year: 1975, label: 'Spring' },
+      { title: 'Night Fever', year: 1976, label: 'Spring' },
+      { title: 'NYCNYUSA', year: 1977, label: 'Spring' },
+      { title: 'Fatback', year: 1980, label: 'Spring' },
+      { title: '14 Karat Soul', year: 1982, label: 'Spring' },
+      { title: 'Is This the Future?', year: 1983, label: 'Spring' },
+    ],
+    producerCredits: ['Bill Curtis'],
+    seo: {
+      title: 'Fatback Band Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Fatback Band vinyl records across Discogs, eBay, and CDandLP. Shop rare funk and soul 45s and LPs from the Spring Records catalog.',
+    },
+  },
+
+  'michael-jackson': {
+    slug: 'michael-jackson',
+    name: 'Michael Jackson',
+    tagline: 'The most collected pop catalog on wax.',
+    genres: ['Pop', 'R&B', 'Soul'],
+    searchTerms: {
+      discogs: 'Michael Jackson',
+      ebay: 'Michael Jackson vinyl',
+      cdandlp: 'Michael Jackson',
+    },
+    bio: [
+      'Michael Jackson\'s Thriller (1982) is the best-selling album of all time and one of the most collected records on the planet. Original pressings on Epic, Japanese pressings, picture discs, and promo copies all command serious prices — and they move fast.',
+      'His catalog from Off the Wall (1979) through Dangerous (1991) covers the peak of his creative run, and each album has its own collector submarket. Japanese and German pressings are particularly sought after for audio quality.',
+      'For vinyl collectors, MJ is a blue-chip pick: easy to find entry-level copies, hard to find the grails.',
+    ],
+    essentialRecords: [
+      { title: 'Thriller', year: 1982, label: 'Epic' },
+      { title: 'Off the Wall', year: 1979, label: 'Epic' },
+      { title: 'Bad', year: 1987, label: 'Epic' },
+      { title: 'Dangerous', year: 1991, label: 'Epic' },
+      { title: 'The Jacksons — Destiny', year: 1978, label: 'Epic' },
+      { title: 'Got to Be There', year: 1972, label: 'Motown' },
+    ],
+    producerCredits: ['Quincy Jones', 'Rod Temperton', 'Bill Bottrell'],
+    seo: {
+      title: 'Michael Jackson Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Michael Jackson vinyl records across Discogs, eBay, and CDandLP. Shop Thriller, Off the Wall, Bad, and rare Japanese pressings.',
+    },
+  },
+
+  'the-moments': {
+    slug: 'the-moments',
+    name: 'The Moments',
+    tagline: 'Hackensack soul. Proper and timeless.',
+    genres: ['Soul', 'R&B'],
+    searchTerms: {
+      discogs: 'The Moments',
+      ebay: 'The Moments vinyl soul',
+      cdandlp: 'The Moments',
+    },
+    bio: [
+      'The Moments were a New Jersey soul vocal group who recorded for Sylvia Robinson\'s All Platinum / Stang label through the 1970s. Smooth, unhurried harmonies over classic soul arrangements — this is Sunday afternoon music.',
+      '"Love on a Two-Way Street" (1970) is their signature and a deeply sampled track. "Sexy Mama" and "Dolly My Love" rounded out their run of charting singles. Stang 45s are the format of choice for collectors — affordable entry point, huge catalog to explore.',
+      'Later, the group evolved into Ray, Goodman & Brown and kept recording into the 1980s.',
+    ],
+    essentialRecords: [
+      { title: 'Love on a Two-Way Street', year: 1970, label: 'Stang' },
+      { title: 'Sexy Mama', year: 1973, label: 'Stang' },
+      { title: 'My Thing', year: 1973, label: 'Stang' },
+      { title: 'Look at Me (I\'m in Love)', year: 1975, label: 'All Platinum' },
+      { title: 'Dolly My Love', year: 1975, label: 'All Platinum' },
+    ],
+    producerCredits: ['Sylvia Robinson'],
+    seo: {
+      title: 'The Moments Vinyl Records | Digging in the Sales Crates',
+      description: 'Find The Moments vinyl records across Discogs, eBay, and CDandLP. Shop Love on a Two-Way Street, Stang 45s, and classic All Platinum soul.',
+    },
+  },
+
+};
+
+export const GENRES = {
+
+  'golden-era-hip-hop': {
+    slug: 'golden-era-hip-hop',
+    name: 'Golden Era Hip-Hop Vinyl',
+    tagline: '1988–1998. The decade that built the canon.',
+    genres: ['Hip-Hop'],
+    searchTerms: {
+      discogs: 'golden era hip hop',
+      ebay: 'golden era hip hop vinyl',
+      cdandlp: 'hip hop vinyl',
+    },
+    bio: [
+      'Golden Era hip-hop covers roughly 1988–1998 — from It Takes a Nation of Millions through the end of the No Limit / Cash Money era. This is the most actively traded period in hip-hop vinyl, with original pressings of albums by Nas, Biggie, Wu-Tang, EPMD, Gang Starr, and others commanding serious premiums.',
+      'The crates reward patience. Original pressings of Illmatic, Ready to Die, and Enter the Wu-Tang on Loud are increasingly scarce in strong condition. Promo copies and regional pressings surface on Discogs regularly for those paying attention.',
+      'Golden Era vinyl is where hip-hop collecting starts for most people — and often where it stays.',
+    ],
+    essentialRecords: [
+      { title: 'Nas — Illmatic', year: 1994, label: 'Columbia' },
+      { title: 'The Notorious B.I.G. — Ready to Die', year: 1994, label: 'Bad Boy' },
+      { title: 'Wu-Tang Clan — Enter the Wu-Tang (36 Chambers)', year: 1993, label: 'Loud' },
+      { title: 'EPMD — Strictly Business', year: 1988, label: 'Fresh' },
+      { title: 'Gang Starr — Step in the Arena', year: 1991, label: 'Chrysalis' },
+      { title: 'Pete Rock & CL Smooth — Mecca and the Soul Brother', year: 1992, label: 'Elektra' },
+      { title: 'A Tribe Called Quest — The Low End Theory', year: 1991, label: 'Jive' },
+      { title: 'De La Soul — 3 Feet High and Rising', year: 1989, label: 'Tommy Boy' },
+      { title: 'Eric B. & Rakim — Paid in Full', year: 1987, label: 'Fourth & Broadway' },
+      { title: 'Public Enemy — It Takes a Nation of Millions', year: 1988, label: 'Def Jam' },
+    ],
+    producerCredits: [],
+    seo: {
+      title: 'Golden Era Hip-Hop Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Golden Era hip-hop vinyl across Discogs, eBay, and CDandLP. Shop rare pressings of Nas, Biggie, Wu-Tang, Gang Starr, and more.',
+    },
+  },
+
+  'japanese-jazz': {
+    slug: 'japanese-jazz',
+    name: 'Japanese Jazz Vinyl',
+    tagline: 'Tokyo pressings. The audiophile\'s holy grail.',
+    genres: ['Jazz'],
+    searchTerms: {
+      discogs: 'japan pressing jazz vinyl',
+      ebay: 'japanese jazz pressing vinyl',
+      cdandlp: 'japan jazz pressing',
+    },
+    bio: [
+      'Japanese pressings of jazz records — particularly Victor, Toshiba EMI, and King Records releases from the 1970s — are considered among the finest vinyl pressings ever made. Quiet surfaces, heavy vinyl, exceptional mastering. American collectors actively import them.',
+      'The major labels pressed domestic Japanese editions of Blue Note, Impulse!, Prestige, and Verve titles that routinely outperform their American originals in playback quality. King Records and Trio labels are the ones to know.',
+      'Prices have climbed steadily as Western collectors discovered the format. A patient eye on Discogs and CDandLP — which has strong European inventory — will still turn up bargains.',
+    ],
+    essentialRecords: [
+      { title: 'Miles Davis — Kind of Blue (CBS/Sony Japan)', year: 1979, label: 'CBS/Sony Japan' },
+      { title: 'John Coltrane — A Love Supreme (Impulse! / King)', year: 1976, label: 'King Records Japan' },
+      { title: 'Bill Evans — Waltz for Debby (Riverside / King)', year: 1975, label: 'King Records Japan' },
+      { title: 'Herbie Hancock — Head Hunters (CBS/Sony Japan)', year: 1978, label: 'CBS/Sony Japan' },
+      { title: 'Lee Morgan — The Sidewinder (Blue Note / King)', year: 1975, label: 'King Records Japan' },
+      { title: 'Art Blakey — Moanin\' (Blue Note / King)', year: 1974, label: 'King Records Japan' },
+    ],
+    producerCredits: [],
+    seo: {
+      title: 'Japanese Jazz Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Japanese jazz vinyl pressings across Discogs, eBay, and CDandLP. Shop King Records, CBS/Sony Japan, and Toshiba EMI audiophile pressings.',
+    },
+  },
+
+};

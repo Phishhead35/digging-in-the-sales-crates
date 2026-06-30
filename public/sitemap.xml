@@ -43,4 +43,54 @@
     <priority>0.6</priority>
   </url>
 
+  <!-- Artist Pages -->
+  <url>
+    <loc>https://digginginthesalescrates.com/artists/old-dirty-bastard</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://digginginthesalescrates.com/artists/j-dilla</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://digginginthesalescrates.com/artists/cannibal-ox</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://digginginthesalescrates.com/artists/fatback-band</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://digginginthesalescrates.com/artists/michael-jackson</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://digginginthesalescrates.com/artists/the-moments</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Genre Pages -->
+  <url>
+    <loc>https://digginginthesalescrates.com/genres/golden-era-hip-hop</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://digginginthesalescrates.com/genres/japanese-jazz</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
