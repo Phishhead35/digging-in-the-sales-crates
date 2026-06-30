@@ -1,0 +1,54 @@
+# Digging in the Sales Crates
+
+> A free vinyl record deal aggregator that searches Discogs, eBay, and CDandLP simultaneously, showing the lowest prices across all three marketplaces in one place. No sign-up required. Tagline: "Taking the Dig Out of Digging."
+
+Digging in the Sales Crates (digginginthesalescrates.com) is a vinyl record price comparison tool for collectors, diggers, and music fans. Users search for any artist, album, or label and instantly see listings from Discogs, eBay, and CDandLP side by side, sorted by price. The site is free to use and earns affiliate commissions when users click through to purchase on the marketplace.
+
+## What the site does
+
+- Aggregates vinyl record listings from Discogs, eBay, and CDandLP in real time
+- Allows users to search by artist name, album title, or record label
+- Displays condition grades, prices, and seller information from all three sources
+- Links directly to marketplace listings so users can purchase on their preferred platform
+- Maintains a wishlist feature for tracking records users want to find
+- Shows deals and price alerts for vinyl collectors
+- Features a local record store directory for Massachusetts and New England shops
+
+## Artist Pages
+
+Dedicated pages with collector notes, essential records, and direct marketplace search links:
+
+- [Ol' Dirty Bastard](https://digginginthesalescrates.com/artists/old-dirty-bastard) — Wu-Tang solo catalog, Elektra pressings
+- [J Dilla](https://digginginthesalescrates.com/artists/j-dilla) — Stones Throw, Donuts, Slum Village
+- [Cannibal Ox](https://digginginthesalescrates.com/artists/cannibal-ox) — The Cold Vein, Definitive Jux
+- [Fatback Band](https://digginginthesalescrates.com/artists/fatback-band) — Brooklyn funk, Spring Records catalog
+- [Michael Jackson](https://digginginthesalescrates.com/artists/michael-jackson) — Epic catalog, Japanese pressings
+- [The Moments](https://digginginthesalescrates.com/artists/the-moments) — Stang soul 45s, All Platinum
+
+## Genre Pages
+
+- [Golden Era Hip-Hop Vinyl](https://digginginthesalescrates.com/genres/golden-era-hip-hop) — 1988–1998, Nas, Biggie, Wu-Tang, Gang Starr
+- [Japanese Jazz Vinyl](https://digginginthesalescrates.com/genres/japanese-jazz) — King Records, CBS/Sony Japan, audiophile pressings
+
+## Key Pages
+
+- [Search / Aggregator](https://digginginthesalescrates.com/aggregator) — main search tool
+- [Deals](https://digginginthesalescrates.com/deals) — current vinyl deals and price alerts
+- [Artist Directory](https://digginginthesalescrates.com/artists) — browse all artist and genre pages
+- [Local Record Shops](https://digginginthesalescrates.com/local-shops) — New England record store directory
+- [Wishlist](https://digginginthesalescrates.com/wishlist) — save records to find later
+- [FAQ](https://digginginthesalescrates.com/faq) — how the site works
+
+## Marketplaces covered
+
+- **Discogs** — largest vinyl marketplace, condition-graded listings from global sellers
+- **eBay** — auction and fixed-price listings, broad inventory
+- **CDandLP** — European-focused marketplace, strong jazz and classical inventory
+
+## Who this is for
+
+Vinyl collectors, record diggers, hip-hop heads, jazz enthusiasts, soul and funk collectors, and anyone looking to buy records without overpaying. Particularly strong for hip-hop vinyl (golden era, Wu-Tang, Stones Throw), soul and funk 45s, jazz original pressings, and audiophile collectors seeking Japanese pressings.
+
+## Contact
+
+hello@digginginthesalescrates.com
