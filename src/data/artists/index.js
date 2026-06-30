@@ -16,6 +16,7 @@ export const ARTISTS = {
       ebay: 'Old Dirty Bastard vinyl',
       cdandlp: 'Ol Dirty Bastard',
     },
+    ebayUrlOverride: 'https://www.ebay.com/sch/i.html?_nkw=Old+Dirty+Bastard+vinyl&_sacat=0&_from=R40&_trksid=m570.l1313&mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc',
     bio: [
       'Ol\' Dirty Bastard — born Russell Tyrone Jones — was the most unpredictable member of the Wu-Tang Clan, and that\'s saying something. His 1995 debut, Return to the 36 Chambers: The Dirty Version, hit like nothing else in rap: no rules, no filters, pure Brooklyn chaos over RZA\'s grimy Staten Island production.',
       'His second album, Nigga Please (1999), showed a different side — smoother in places, still unmistakably ODB. He died in 2004 at 35. His records are collected hard because nobody sounded like him, and nobody ever will.',

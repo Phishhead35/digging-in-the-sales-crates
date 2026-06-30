@@ -8,8 +8,9 @@ import { ARTISTS, GENRES } from '../data/artists';
 function discogsUrl(term) {
   return `https://www.discogs.com/search/?q=${encodeURIComponent(term)}&type=all`;
 }
-function ebayUrl(term) {
-  return `https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(term)}&mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc`;
+function ebayUrl(artist) {
+  if (artist.ebayUrlOverride) return artist.ebayUrlOverride;
+  return `https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(artist.searchTerms.ebay)}&mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc`;
 }
 function cdandlpUrl(term) {
   return `https://www.cdandlp.com/en/search/?q=${encodeURIComponent(term)}&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation`;
@@ -49,7 +50,7 @@ function SearchButtons({ artist, size = 'normal' }) {
         <Search size={14} /> Discogs
       </a>
       <a
-        href={ebayUrl(artist.searchTerms.ebay)}
+        href={ebayUrl(artist)}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackClick(artist.name, 'ebay')}
