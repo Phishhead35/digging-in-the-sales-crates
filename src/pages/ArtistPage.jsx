@@ -1,5 +1,5 @@
-import React from 'react';
-import { useParams, Link, useNavigate, startTransition } from 'react-router-dom';
+import React, { startTransition } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Search, ExternalLink, Disc3, ArrowRight, ArrowLeft } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { ARTISTS, GENRES } from '../data/artists';
