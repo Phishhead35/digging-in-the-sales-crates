@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle } from 'lucide-react';
+import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3 } from 'lucide-react';
 import FollowUs from './FollowUs';
 
 export default function Layout({ children }) {
@@ -28,6 +28,7 @@ export default function Layout({ children }) {
   const navLinks = [
     { to: '/',                   label: 'Home',              icon: Home },
     { to: '/aggregator',         label: 'Aggregator-Dig',    icon: Search },
+    { to: '/artists',            label: 'Artists',           icon: Disc3 },
     { to: '/deals',              label: 'Deals',             icon: TrendingDown },
     { to: '/blog',               label: 'Blog',              icon: BookOpen,  comingSoon: true },
     { to: '/featured-partners',  label: 'Featured Partners', icon: Star,      comingSoon: true },
