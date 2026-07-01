@@ -173,7 +173,7 @@ export const ARTISTS = {
     bio: [
       'Daniel Dumile — MF DOOM, Viktor Vaughn, King Geedorah, Metal Fingers — was the most meticulous wordsmith in underground hip-hop. Born in London and raised on Long Island, he returned to music in 1999 with a metal mask and Operation: Doomsday, one of the most original debut albums in rap history.',
       'His 2004 collaboration with Madlib, Madvillainy on Stones Throw, is widely considered the greatest underground hip-hop record ever made. MM..FOOD followed the same year. His catalog under multiple aliases is dense, rewarding, and endlessly re-listenable.',
-      'DOOM passed away on October 31, 2020. Original pressings of Operation: Doomsday on Fondle 'Em are among the most sought-after records in hip-hop collecting — rare, expensive, and worth every penny. Stones Throw pressings of Madvillainy are nearly as fierce.',
+      'DOOM passed away on October 31, 2020. Original pressings of Operation: Doomsday on Fondle \'Em are among the most sought-after records in hip-hop collecting — rare, expensive, and worth every penny. Stones Throw pressings of Madvillainy are nearly as fierce. Note: original Fondle \'Em copies are among the most counterfeited records in hip-hop — always verify matrix etchings before buying.',
     ],
     essentialRecords: [
       { title: 'Madvillain — Madvillainy', year: 2004, label: 'Stones Throw' },
