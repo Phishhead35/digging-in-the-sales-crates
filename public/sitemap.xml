@@ -80,6 +80,18 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://digginginthesalescrates.com/artists/mf-doom</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://digginginthesalescrates.com/artists/the-beatles</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Genre Pages -->
   <url>
     <loc>https://digginginthesalescrates.com/genres/golden-era-hip-hop</loc>

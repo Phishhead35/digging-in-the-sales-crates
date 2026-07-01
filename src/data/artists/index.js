@@ -160,6 +160,75 @@ export const ARTISTS = {
     },
   },
 
+  'mf-doom': {
+    slug: 'mf-doom',
+    name: 'MF DOOM',
+    tagline: 'All caps when you spell the man\'s name.',
+    genres: ['Hip-Hop', 'Underground'],
+    searchTerms: {
+      discogs: 'MF DOOM',
+      ebay: 'MF DOOM vinyl',
+      cdandlp: 'MF DOOM',
+    },
+    bio: [
+      'Daniel Dumile — MF DOOM, Viktor Vaughn, King Geedorah, Metal Fingers — was the most meticulous wordsmith in underground hip-hop. Born in London and raised on Long Island, he returned to music in 1999 with a metal mask and Operation: Doomsday, one of the most original debut albums in rap history.',
+      'His 2004 collaboration with Madlib, Madvillainy on Stones Throw, is widely considered the greatest underground hip-hop record ever made. MM..FOOD followed the same year. His catalog under multiple aliases is dense, rewarding, and endlessly re-listenable.',
+      'DOOM passed away on October 31, 2020. Original pressings of Operation: Doomsday on Fondle 'Em are among the most sought-after records in hip-hop collecting — rare, expensive, and worth every penny. Stones Throw pressings of Madvillainy are nearly as fierce.',
+    ],
+    essentialRecords: [
+      { title: 'Madvillain — Madvillainy', year: 2004, label: 'Stones Throw' },
+      { title: 'Operation: Doomsday', year: 1999, label: 'Fondle \'Em' },
+      { title: 'MM..FOOD', year: 2004, label: 'Metal Face' },
+      { title: 'Viktor Vaughn — Vaudeville Villain', year: 2003, label: 'Sound-Ink' },
+      { title: 'King Geedorah — Take Me to Your Leader', year: 2003, label: 'Big Dada' },
+      { title: 'Danger Doom — The Mouse and the Mask', year: 2005, label: 'Epitaph' },
+      { title: 'Born Like This', year: 2009, label: 'Lex' },
+    ],
+    producerCredits: [
+      'Madlib — Madvillainy (2004)',
+      'Danger Mouse — The Mouse and the Mask (2005)',
+      'Self-produced — Operation: Doomsday, MM..FOOD',
+    ],
+    seo: {
+      title: 'MF DOOM Vinyl Records | Digging in the Sales Crates',
+      description: 'Find MF DOOM vinyl records across Discogs, eBay, and CDandLP. Shop Madvillainy, Operation: Doomsday, MM..FOOD, and rare Fondle \'Em pressings.',
+    },
+  },
+
+  'the-beatles': {
+    slug: 'the-beatles',
+    name: 'The Beatles',
+    tagline: 'The most collected catalog in the history of recorded music.',
+    genres: ['Rock', 'Pop', 'Psychedelic'],
+    searchTerms: {
+      discogs: 'The Beatles',
+      ebay: 'Beatles vinyl pressing',
+      cdandlp: 'The Beatles',
+    },
+    bio: [
+      'No catalog attracts more collector attention than The Beatles. UK Parlophone originals from 1963–1966 are the grail — first pressings identified by specific matrix etchings, label variations, and sleeve conditions that collectors have documented obsessively for decades.',
+      'The mono vs. stereo debate is central to Beatles collecting. Early albums were mixed in mono first, and many collectors argue the mono versions are the definitive ones. Original UK mono pressings of Rubber Soul, Revolver, and Sgt. Pepper\'s command serious premiums over their stereo counterparts.',
+      'The Apple Records era (1968 onward) has its own collector market — early UK pressings of the White Album, Abbey Road, and Let It Be with original inserts and posters intact are increasingly hard to find in strong condition. Japanese and German pressings are also sought after for audio quality.',
+    ],
+    essentialRecords: [
+      { title: 'Please Please Me', year: 1963, label: 'Parlophone (UK)' },
+      { title: 'Rubber Soul', year: 1965, label: 'Parlophone (UK)' },
+      { title: 'Revolver', year: 1966, label: 'Parlophone (UK)' },
+      { title: 'Sgt. Pepper\'s Lonely Hearts Club Band', year: 1967, label: 'Parlophone (UK)' },
+      { title: 'The Beatles (White Album)', year: 1968, label: 'Apple' },
+      { title: 'Abbey Road', year: 1969, label: 'Apple' },
+      { title: 'Let It Be', year: 1970, label: 'Apple' },
+    ],
+    producerCredits: [
+      'George Martin (all studio albums)',
+      'Phil Spector — Let It Be (1970)',
+    ],
+    seo: {
+      title: 'The Beatles Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Beatles vinyl records across Discogs, eBay, and CDandLP. Shop UK Parlophone originals, mono pressings, Apple Records, and rare first pressings.',
+    },
+  },
+
   'the-moments': {
     slug: 'the-moments',
     name: 'The Moments',
