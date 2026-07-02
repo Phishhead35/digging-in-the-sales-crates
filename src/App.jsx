@@ -13,8 +13,8 @@ import ArtistPage from './pages/ArtistPage';
 import Artists from './pages/Artists';
 import ScrollToTop from './components/ScrollToTop';
 import CanonicalTag from './components/CanonicalTag';
-// import Blog from './pages/Blog';
-// import BlogPost from './pages/BlogPost';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
 // box-sizing is set in index.css; overflow-x and img/video/iframe rules are kept here
 // because they use !important to override any inline styles set by third-party scripts.
@@ -44,8 +44,8 @@ export default function App() {
           <Route path="/artists" element={<Artists />} />
           <Route path="/artists/:slug" element={<ArtistPage type="artist" />} />
           <Route path="/genres/:slug" element={<ArtistPage type="genre" />} />
-          {/* <Route path="/blog" element={<Blog />} /> */}
-          {/* <Route path="/blog/:slug" element={<BlogPost />} /> */}
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
         </Routes>
       </Layout>
     </BrowserRouter>
