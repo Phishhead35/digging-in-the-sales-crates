@@ -26,22 +26,39 @@ export async function onRequestGet(context) {
     let searchUrl;
 
     // Check if query is coordinates (from geolocation)
-    const coordMatch = query.match(/^(-?\d+\.?\d*),(-?\d+\.?\d*)$/);
+    let coordMatch = query.match(/^(-?\d+\.?\d*),(-?\d+\.?\d*)$/);
+
+    // US zip code: geocode it to coordinates so results rank by distance,
+    // not by Google's "prominence" (which favors big-city stores)
+    const zipMatch = query.match(/^\d{5}(-\d{4})?$/);
+    if (zipMatch) {
+      const geoParams = new URLSearchParams({
+        address: query,
+        components: 'country:US',
+        key: apiKey,
+      });
+      const geoRes = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?${geoParams}`);
+      const geoData = await geoRes.json();
+      const loc = geoData.results?.[0]?.geometry?.location;
+      if (loc) {
+        coordMatch = [null, String(loc.lat), String(loc.lng)];
+      }
+    }
 
     if (coordMatch) {
-      // Use nearby search for coordinates
+      // Nearby search ranked by distance: closest shops first.
+      // rankby=distance requires a keyword and forbids radius.
       const lat = coordMatch[1];
       const lng = coordMatch[2];
       const params = new URLSearchParams({
         location: `${lat},${lng}`,
-        radius: '8000',
+        rankby: 'distance',
         keyword: 'vinyl record shop',
-        type: 'store',
         key: apiKey,
       });
       searchUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?${params}`;
     } else {
-      // Use text search for city/zip
+      // Use text search for city names
       const params = new URLSearchParams({
         query: `vinyl record shop ${query}`,
         key: apiKey,
