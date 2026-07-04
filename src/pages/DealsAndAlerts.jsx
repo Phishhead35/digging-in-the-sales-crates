@@ -14,7 +14,7 @@ export function Deals() {
   const curatedStores = [
     { name: 'Fat Beats', url: 'https://fatbeats.com', desc: 'Hip-hop and rap specialists since 1994. New releases, exclusives, and pre-orders. Subscribe for sale emails.', tag: 'Hip-Hop / New', email: 'https://fatbeats.com' },
     { name: 'Get On Down', url: 'https://getondown.com', desc: 'Limited edition pressings, anniversary editions, and numbered sets. Known for elaborate packaging.', tag: 'Limited Editions', email: 'https://getondown.com' },
-    { name: 'HHV Records', url: 'https://www.hhv.de/shop/en/hip-hop-vinyl', desc: 'Berlin-based since 2002. 80,000+ titles, rooted in Hip-Hop, jazz, funk, and soul. Ships worldwide.', tag: 'Hip-Hop / Global', email: 'https://www.hhv.de' },
+    { name: 'HHV Records', url: 'https://www.hhv.de/en-US/records', desc: 'Berlin-based since 2002. 80,000+ titles, rooted in Hip-Hop, jazz, funk, and soul. Ships worldwide.', tag: 'Hip-Hop / Global', email: 'https://www.hhv.de/en-US' },
     { name: 'Mass Appeal', url: 'https://shop.massappeal.com', desc: "Nas's label shop. Exclusive Hip-Hop vinyl, limited color variants, and cultural collectibles.", tag: 'Hip-Hop Exclusives', email: 'https://shop.massappeal.com' },
     { name: 'Rough Trade', url: 'https://www.roughtrade.com/en-us', desc: 'Independent icon since 1976. Exclusive pressings, pre-orders, and a members club with special pricing.', tag: 'Indie / Exclusives', email: 'https://www.roughtrade.com' },
     { name: 'Amoeba Music', url: 'https://www.amoeba.com', desc: 'Largest independent vinyl store in the US. 27,000+ records including rare, vintage, and hard-to-find.', tag: 'Used & Rare', email: 'https://www.amoeba.com' },
