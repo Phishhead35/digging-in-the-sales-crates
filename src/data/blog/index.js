@@ -7,6 +7,26 @@
 
 export const BLOG_POSTS = {
 
+  'curtis-mayfield-super-fly-rhino-reissue': {
+    slug: 'curtis-mayfield-super-fly-rhino-reissue',
+    title: 'Rhino Just Recut Super Fly, and Every Sample Digger Should Care',
+    series: 'REISSUE RADAR',
+    date: '2026-07-03',
+    dateDisplay: 'July 3, 2026',
+    excerpt: 'Rhino High Fidelity dropped a new audiophile pressing of Curtis Mayfield\'s Super Fly. Here\'s how it compares to the original Buddah pressing and the 2022 Run Out Groove reissue, and why the cut matters to hip-hop crate diggers.',
+    body: [
+      'Rhino High Fidelity dropped a new audiophile pressing of Curtis Mayfield\'s Super Fly, and it\'s the best this record has ever sounded on wax. That\'s not hype. The cut uses a Kendun EQ\'ed reference tape, pulling back the overcooked top end that plagued the 2022 Run Out Groove orange vinyl while adding a 3D depth to the instrumentation that neither that pressing nor the original 1972 Buddah run captured. Bass sounds like bass. Curtis\'s guitar sits in its own pocket instead of fighting the horns for space. It\'s available now, vinyl and reel-to-reel, direct through Rhino.',
+      'Here\'s why this matters beyond audiophile bragging rights: Super Fly is one of the most foundational sample sources in hip-hop, full stop. "Pusherman" alone has been flipped for decades, and the horn stabs and wah-guitar throughout have been chopped into beats since the SP-1200 era because the tape itself has that much air in it. A cleaner cut doesn\'t just sound better on your turntable. It reveals texture in the original recording that sample-hungry producers have been fishing for since day one. If you dig for breaks, the difference between a muddy pressing and a well-mastered one is the difference between hearing a loop and hearing why it worked.',
+      'A few things worth knowing before you buy. The original 1972 Buddah pressing is still the one purists chase for warmth and grit, and it holds real value on the resale market if you find a clean copy. The 2022 Run Out Groove orange vinyl improved on the muddiness of older reissues but pushed the top end too hard. This new RHF cut splits the difference: modern mastering restraint applied to a tape that was already special.',
+      'If you already own a beat-up original and just want a listenable copy that won\'t wreck your stylus, this is the one to grab. If you\'re a completist chasing pressing variants, all three are now worth having side by side for comparison.',
+      'We\'ll be tracking where secondary market copies of this land once the exclusive Rhino run sells through. Original Buddah pressings, Run Out Groove orange, and now this RHF cut all show up across Discogs, eBay, and CDandLP, and prices move fast on records this foundational to the genre.',
+    ],
+    seo: {
+      title: 'Curtis Mayfield Super Fly Rhino Reissue | Digging in the Sales Crates',
+      description: 'Rhino High Fidelity\'s new Curtis Mayfield Super Fly reissue compared to the 1972 Buddah original and 2022 Run Out Groove pressing, plus why it matters to hip-hop sample diggers.',
+    },
+  },
+
   'roy-ayers-vibrations-reissue': {
     slug: 'roy-ayers-vibrations-reissue',
     title: 'Roy Ayers\' Vibrations Gets the Reissue Treatment It Deserves',
