@@ -22,6 +22,33 @@ export const BLOG_POSTS = {
       'We keep a full rundown of Dilla\'s essential pressings on our J Dilla artist page, and Beats, Rhymes and Life belongs in that conversation even though it wears Tribe\'s name. It is the moment his fingerprints showed up on a platinum record.',
       'Run a search for both sides of this sample: the Tribe original and the Burton source. One is a hip-hop landmark turning 30. The other is a five-dollar record hiding in plain sight.',
     ],
+    shopArtists: [
+      {
+        name: 'A Tribe Called Quest',
+        searchTerms: {
+          discogs: 'A Tribe Called Quest',
+          ebay: 'A Tribe Called Quest vinyl',
+          cdandlp: 'A Tribe Called Quest',
+        },
+      },
+      {
+        name: 'J Dilla',
+        pageSlug: 'j-dilla',
+        searchTerms: {
+          discogs: 'J Dilla',
+          ebay: 'J Dilla vinyl',
+          cdandlp: 'J Dilla',
+        },
+      },
+      {
+        name: 'Gary Burton',
+        searchTerms: {
+          discogs: 'Gary Burton',
+          ebay: 'Gary Burton vinyl',
+          cdandlp: 'Gary Burton',
+        },
+      },
+    ],
     seo: {
       title: 'Beats, Rhymes and Life 30th Anniversary | Digging in the Sales Crates',
       description: 'A Tribe Called Quest\'s Beats, Rhymes and Life turns 30. How J Dilla and The Ummah changed Tribe\'s sound, the Gary Burton sample behind "1nce Again," and which pressings to dig for.',
@@ -41,6 +68,16 @@ export const BLOG_POSTS = {
       'A few things worth knowing before you buy. The original 1972 Buddah pressing is still the one purists chase for warmth and grit, and it holds real value on the resale market if you find a clean copy. The 2022 Run Out Groove orange vinyl improved on the muddiness of older reissues but pushed the top end too hard. This new RHF cut splits the difference: modern mastering restraint applied to a tape that was already special.',
       'If you already own a beat-up original and just want a listenable copy that won\'t wreck your stylus, this is the one to grab. If you\'re a completist chasing pressing variants, all three are now worth having side by side for comparison.',
       'We\'ll be tracking where secondary market copies of this land once the exclusive Rhino run sells through. Original Buddah pressings, Run Out Groove orange, and now this RHF cut all show up across Discogs, eBay, and CDandLP, and prices move fast on records this foundational to the genre.',
+    ],
+    shopArtists: [
+      {
+        name: 'Curtis Mayfield',
+        searchTerms: {
+          discogs: 'Curtis Mayfield',
+          ebay: 'Curtis Mayfield vinyl',
+          cdandlp: 'Curtis Mayfield',
+        },
+      },
     ],
     seo: {
       title: 'Curtis Mayfield Super Fly Rhino Reissue | Digging in the Sales Crates',
@@ -62,6 +99,16 @@ export const BLOG_POSTS = {
       'Check whether Vampisoul presses on standard black or offers a colored variant; first-run colored pressings on reissue labels tend to move fast and hold value on the secondary market. Confirm the mastering credit. A reissue sourced from analog tape sounds noticeably different from one sourced off a digital transfer, especially on a record this dependent on low-end warmth. If you already own an original, this is a good moment to A/B them side by side.',
       'For anyone building a crate around sample sources rather than just artist names, Ayers belongs in the same tier as James Brown, Lou Donaldson, and Idris Muhammad. Not the flashiest name in the stack, but the one that keeps showing up in the credits of records you already love.',
       'We\'re tracking listings across Discogs, eBay, and CDandLP as the reissue hits shelves. Original pressings usually see a small bump in search interest right after a reissue announcement. If you\'ve been waiting on a vintage copy, the next couple weeks might be the window.',
+    ],
+    shopArtists: [
+      {
+        name: 'Roy Ayers',
+        searchTerms: {
+          discogs: 'Roy Ayers',
+          ebay: 'Roy Ayers vinyl',
+          cdandlp: 'Roy Ayers',
+        },
+      },
     ],
     seo: {
       title: 'Roy Ayers Vibrations Reissue | Digging in the Sales Crates',

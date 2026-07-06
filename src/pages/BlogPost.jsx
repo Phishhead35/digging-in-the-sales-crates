@@ -1,8 +1,119 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Disc3, Search } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Disc3, Search, ExternalLink } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { BLOG_POSTS } from '../data/blog';
+
+// ── Affiliate link builders (same as ArtistPage.jsx) ──────────
+function discogsUrl(term) {
+  return `https://www.discogs.com/search/?q=${encodeURIComponent(term)}&type=all`;
+}
+function ebayUrl(term) {
+  return `https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(term)}&mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc`;
+}
+function cdandlpUrl(term) {
+  return `https://www.cdandlp.com/en/search/?q=${encodeURIComponent(term)}&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation`;
+}
+
+// ── GA4 tracker ───────────────────────────────────────────────
+function trackClick(postSlug, artistName, marketplace) {
+  window.gtag?.('event', 'blog_marketplace_click', {
+    post_slug: postSlug,
+    artist_name: artistName,
+    marketplace,
+  });
+}
+
+// ── Marketplace button ────────────────────────────────────────
+const MARKETPLACE_STYLES = {
+  discogs: { color: 'var(--amber)', border: '1px solid rgba(245,158,11,0.4)' },
+  ebay: { color: '#60a5fa', border: '1px solid rgba(96,165,250,0.4)' },
+  cdandlp: { color: '#4ade80', border: '1px solid rgba(74,222,128,0.4)' },
+};
+
+function MarketplaceButton({ label, url, marketplace, postSlug, artistName }) {
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => trackClick(postSlug, artistName, marketplace)}
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 6,
+        padding: '8px 14px', borderRadius: 8, fontSize: 12,
+        fontFamily: 'var(--font-mono)', letterSpacing: 0.5,
+        background: 'transparent', textDecoration: 'none',
+        transition: 'background 0.2s',
+        ...MARKETPLACE_STYLES[marketplace],
+      }}
+      onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+      onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+    >
+      {label} <ExternalLink size={11} />
+    </a>
+  );
+}
+
+// ── Shop These Artists section ────────────────────────────────
+function ShopArtists({ post }) {
+  if (!post.shopArtists?.length) return null;
+  return (
+    <section style={{ padding: '48px 24px', borderBottom: '1px solid var(--border)' }}>
+      <div style={{ maxWidth: 760, margin: '0 auto' }}>
+        <p style={{
+          color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)',
+          letterSpacing: 2, marginBottom: 20,
+        }}>
+          SHOP THESE ARTISTS
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          {post.shopArtists.map(artist => (
+            <div key={artist.name} style={{
+              padding: '18px 20px', borderRadius: 12,
+              background: 'var(--bg-card)', border: '1px solid var(--border)',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              gap: 16, flexWrap: 'wrap',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <Disc3 size={18} color="var(--amber)" style={{ opacity: 0.6, flexShrink: 0 }} />
+                <span style={{ fontWeight: 700, fontSize: 15 }}>{artist.name}</span>
+                {artist.pageSlug && (
+                  <Link to={`/artists/${artist.pageSlug}`} style={{
+                    fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 1,
+                    color: 'var(--text-muted)', textDecoration: 'none',
+                    transition: 'color 0.2s',
+                  }}
+                    onMouseOver={e => e.currentTarget.style.color = 'var(--amber)'}
+                    onMouseOut={e => e.currentTarget.style.color = 'var(--text-muted)'}
+                  >
+                    ARTIST PAGE →
+                  </Link>
+                )}
+              </div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                <MarketplaceButton
+                  label="Discogs" marketplace="discogs"
+                  url={discogsUrl(artist.searchTerms.discogs)}
+                  postSlug={post.slug} artistName={artist.name}
+                />
+                <MarketplaceButton
+                  label="eBay" marketplace="ebay"
+                  url={artist.ebayUrlOverride || ebayUrl(artist.searchTerms.ebay)}
+                  postSlug={post.slug} artistName={artist.name}
+                />
+                <MarketplaceButton
+                  label="CDandLP" marketplace="cdandlp"
+                  url={cdandlpUrl(artist.searchTerms.cdandlp)}
+                  postSlug={post.slug} artistName={artist.name}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 // ── 404 / not found ───────────────────────────────────────────
 function NotFound() {
@@ -104,6 +215,9 @@ export default function BlogPost() {
           ))}
         </div>
       </section>
+
+      {/* ── SHOP THESE ARTISTS ───────────────────────────────── */}
+      <ShopArtists post={post} />
 
       {/* ── CTA BOTTOM ───────────────────────────────────────── */}
       <section style={{ padding: '64px 24px' }}>
