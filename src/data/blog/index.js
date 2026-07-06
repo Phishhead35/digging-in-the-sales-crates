@@ -7,6 +7,27 @@
 
 export const BLOG_POSTS = {
 
+  'beats-rhymes-and-life-30th-anniversary': {
+    slug: 'beats-rhymes-and-life-30th-anniversary',
+    title: 'Beats, Rhymes and Life Turns 30: The Album Where Dilla Went Major',
+    series: 'SAMPLE DNA',
+    date: '2026-07-06',
+    dateDisplay: 'July 6, 2026',
+    excerpt: 'A Tribe Called Quest\'s Beats, Rhymes and Life turns 30 on July 30. It was J Dilla\'s major-label debut as part of The Ummah, and the Gary Burton flip on "1nce Again" shows why both sides of the sample belong in your crate.',
+    body: [
+      'Thirty years ago this month, on July 30, 1996, A Tribe Called Quest released Beats, Rhymes and Life. Fans at the time called it a letdown after Midnight Marauders. History calls it something else: the album where J Dilla stepped onto the biggest stage in hip-hop.',
+      'This was the debut of The Ummah, the production collective of Q-Tip, Ali Shaheed Muhammad, and a young Detroit producer then billed as Jay Dee. Tribe handing him the keys, one album removed from a certified classic, was a massive co-sign. The sound changed immediately. The boom-bap crispness of the first three records gave way to something smoother, murkier, more head-nod than neck-snap. That texture became the blueprint for everything from Slum Village to the neo-soul movement.',
+      'Listen to "1nce Again" for the clearest example. The backbone comes from "I\'m Your Pal" by the Gary Burton Quartet, a Steve Swallow composition from a vibraphonist most rap fans had never heard of. The flip is subtle; a warm, floating loop under Tip and Phife trading verses, with a Cannonball Adderley monologue stitched in for good measure. It even folds in pieces of Tribe\'s own "Check the Rhime," the group sampling itself like a callback in a long conversation. That layered, self-referential approach is pure Dilla.',
+      'For diggers, this anniversary is a two-way street. On one side, original 1996 Jive pressings of Beats, Rhymes and Life are still reasonable compared to Low End Theory and Midnight Marauders originals, and 30th anniversary buzz tends to move prices. If you want an OG copy, this is the summer to grab one. On the other side, the source material remains criminally cheap. Gary Burton records sit in jazz bins everywhere for a few bucks because vibraphone jazz never got the crate-digger markup that Blue Note organ sessions did. That gap will not last forever; RCA-era Burton titles are exactly the kind of records that jump once enough people trace the sample.',
+      'We keep a full rundown of Dilla\'s essential pressings on our J Dilla artist page, and Beats, Rhymes and Life belongs in that conversation even though it wears Tribe\'s name. It is the moment his fingerprints showed up on a platinum record.',
+      'Run a search for both sides of this sample: the Tribe original and the Burton source. One is a hip-hop landmark turning 30. The other is a five-dollar record hiding in plain sight.',
+    ],
+    seo: {
+      title: 'Beats, Rhymes and Life 30th Anniversary | Digging in the Sales Crates',
+      description: 'A Tribe Called Quest\'s Beats, Rhymes and Life turns 30. How J Dilla and The Ummah changed Tribe\'s sound, the Gary Burton sample behind "1nce Again," and which pressings to dig for.',
+    },
+  },
+
   'curtis-mayfield-super-fly-rhino-reissue': {
     slug: 'curtis-mayfield-super-fly-rhino-reissue',
     title: 'Rhino Just Recut Super Fly, and Every Sample Digger Should Care',
