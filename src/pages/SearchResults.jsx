@@ -4,6 +4,21 @@ import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, Ch
 import { searchDiscogs, searchEbay, searchCDandLP, formatPrice } from '../utils/api';
 import useSEO from '../hooks/useSEO';
 
+// ── GA4 store click tracker ───────────────────────────────────
+// Fires store_click when a visitor clicks through to a marketplace
+// from search results. Mirrors trackStoreClick in Home.jsx so all
+// affiliate click-throughs roll into the same GA4 event; the
+// click_source param separates search traffic from homepage partner cards.
+// Uses optional chaining so it silently no-ops if gtag isn't loaded yet.
+function trackStoreClick(storeName, storeUrl, itemTitle) {
+  window.gtag?.('event', 'store_click', {
+    store_name: storeName,
+    store_url: storeUrl,
+    item_title: itemTitle || '(none)',
+    click_source: 'search_results',
+  });
+}
+
 function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority }) {
   const thumb = result.cover_image || result.thumb || result.picture || null;
   const [imgError, setImgError] = useState(false);
@@ -123,8 +138,10 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
             <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>Price varies</span>
           )}
         </div>
-        <a
-          href={
+        {(() => {
+          // Compute the outbound URL once so href and the GA4 event always match.
+          // URL construction is byte-identical to the previous inline version.
+          const dealUrl =
             result.source === 'discogs'
               ? (() => {
                   const isMaster = (result.uri || '').includes('/master/');
@@ -138,15 +155,24 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
               ? (result.url ? result.url + (result.url.includes("?") ? "&" : "?") + "mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc" : "https://www.ebay.com/itm/" + result.id)
               : result.source === 'cdandlp'
               ? (result.url ? result.url + (result.url.includes("?") ? "&" : "?") + "lng=2&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation" : result.url || '#')
-              : result.url || '#'
-          }
-          target="_blank"
-          rel="noopener noreferrer"
-          className="view-deals-btn"
-          onClick={onResultClick}
-        >
-          <ShoppingCart size={13} /> View Deals
-        </a>
+              : result.url || '#';
+          const storeName =
+            result.source === 'discogs' ? 'Discogs' : result.source === 'ebay' ? 'eBay' : result.source === 'cdandlp' ? 'CDandLP' : 'Other';
+          return (
+            <a
+              href={dealUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="view-deals-btn"
+              onClick={() => {
+                onResultClick();
+                trackStoreClick(storeName, dealUrl, result.title);
+              }}
+            >
+              <ShoppingCart size={13} /> View Deals
+            </a>
+          );
+        })()}
       </div>
     </div>
   );
@@ -436,7 +462,8 @@ export default function SearchResults() {
             { name: 'eBay', url: 'https://rover.ebay.com/rover/1/711-53200-19255-0/1?mpre=https%3A%2F%2Fwww.ebay.com%2Fb%2FVinyl-Records%2F306%2Fbn_1852757&campid=5339145834&mkcid=1&mkevt=1&toolid=10001&customid=ditsc', desc: 'Auctions and fixed-price listings. Best for sealed copies, graded records, and quick finds.', tag: 'Live API' },
             { name: 'CDandLP', url: 'https://www.cdandlp.com/?affilie=digginginthesalescrates&lng=2&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation', desc: 'European-heavy used marketplace with millions of vinyl listings. Great for international pressings and pricing.', tag: 'Live API' },
           ].map(({ name, url, desc, tag }) => (
-            <a key={name} href={url} target="_blank" rel="noopener noreferrer" className="api-source-card">
+            <a key={name} href={url} target="_blank" rel="noopener noreferrer" className="api-source-card"
+              onClick={() => trackStoreClick(name, url, 'api_source_card')}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
                 <h3 style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{name}</h3>
                 <span style={{
