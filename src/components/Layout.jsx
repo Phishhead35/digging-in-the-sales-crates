@@ -59,7 +59,7 @@ export default function Layout({ children }) {
             {/* Logo — gold record PNG cropped in circle + wordmark */}
             <Link to="/" className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
               <img
-                src="/GoldRevisedDITSCLogo.png"
+                src="/ditsc-logo-small.webp"
                 alt="DITSC"
                 style={{
                   width: 42, height: 42, borderRadius: '50%',
@@ -196,7 +196,7 @@ export default function Layout({ children }) {
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <div className="footer-logo-wrap">
             <img
-              src="/GoldRevisedDITSCLogo.png"
+              src="/ditsc-logo-small.webp"
               alt="DITSC"
               style={{
                 width: 52, height: 52, borderRadius: '50%',
