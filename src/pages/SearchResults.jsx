@@ -10,6 +10,23 @@ import useSEO from '../hooks/useSEO';
 // affiliate click-throughs roll into the same GA4 event; the
 // click_source param separates search traffic from homepage partner cards.
 // Uses optional chaining so it silently no-ops if gtag isn't loaded yet.
+// Also pings ntfy.sh for an instant phone notification per click.
+// keepalive lets the request complete even as the browser leaves the page.
+const NTFY_TOPIC = 'ditsc-clicks-vk8q3zt2npw4';
+
+function notifyStoreClick(message) {
+  try {
+    fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
+      method: 'POST',
+      body: message,
+      headers: { 'X-Title': 'DITSC Store Click', 'X-Tags': 'dollar' },
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // Never let a notification failure break the click-through.
+  }
+}
+
 function trackStoreClick(storeName, storeUrl, itemTitle) {
   window.gtag?.('event', 'store_click', {
     store_name: storeName,
@@ -17,6 +34,11 @@ function trackStoreClick(storeName, storeUrl, itemTitle) {
     item_title: itemTitle || '(none)',
     click_source: 'search_results',
   });
+  notifyStoreClick(
+    itemTitle && itemTitle !== 'api_source_card'
+      ? `${storeName}: ${itemTitle} (search)`
+      : `${storeName} (search page source card)`
+  );
 }
 
 function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority }) {

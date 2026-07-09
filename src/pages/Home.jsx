@@ -16,7 +16,7 @@ const DEALS_PREVIEW = [
   { title: 'MF DOOM – Mm..Food', store: 'ADamnShame', price: '$29.99', was: '$55.00', condition: 'VG+' },
 ];
 
-// Blog post preview — links go to YouTube videos until blog is live
+// Blog post preview — links go to specific YouTube Shorts videos
 const BLOG_PREVIEW = [
   {
     series: 'SAMPLE DNA',
@@ -24,7 +24,10 @@ const BLOG_PREVIEW = [
     date: 'May 2026',
     color: '#f59e0b',
     bg: 'rgba(245,158,11,0.08)',
-    url: 'https://www.youtube.com/@digginginthesalescrates',
+    videos: [
+      { label: 'The Source', url: 'https://youtube.com/shorts/vR_81bXR3JI?si=hpo297xYWZXZ6I9R' },
+      { label: 'The Flip', url: 'https://youtube.com/shorts/ypgv2ySuW9o?si=RyhVJU0s6JugltDM' },
+    ],
   },
   {
     series: 'WU-TANG WEDNESDAY',
@@ -32,7 +35,10 @@ const BLOG_PREVIEW = [
     date: 'May 2026',
     color: '#2ec4b6',
     bg: 'rgba(46,196,182,0.08)',
-    url: 'https://www.youtube.com/@digginginthesalescrates',
+    videos: [
+      { label: 'Beneath the Surface', url: 'https://youtube.com/shorts/JKlC8IN0Hvo?si=cj24315nS8QJXdQj' },
+      { label: 'Liquid Swords', url: 'https://youtube.com/shorts/p3tMsLfSFq8?si=qgD7U4d39wU8BulI' },
+    ],
   },
   {
     series: 'THROWBACK THURSDAY',
@@ -40,7 +46,9 @@ const BLOG_PREVIEW = [
     date: 'May 2026',
     color: '#e63946',
     bg: 'rgba(230,57,70,0.08)',
-    url: 'https://www.youtube.com/@digginginthesalescrates',
+    videos: [
+      { label: 'Watch Out Now', url: 'https://youtube.com/shorts/roBlGste3ik?si=8zD82hVXAHrdYAe1' },
+    ],
   },
 ];
 
@@ -70,11 +78,29 @@ const RINH_STORES = [
 // ── GA4 store click tracker ───────────────────────────────────
 // Fires store_click with both store name and the specific URL clicked.
 // Uses optional chaining so it silently no-ops if gtag isn't loaded yet.
+// Also pings ntfy.sh for an instant phone notification per click.
+// keepalive lets the request complete even as the browser leaves the page.
+const NTFY_TOPIC = 'ditsc-clicks-vk8q3zt2npw4';
+
+function notifyStoreClick(message) {
+  try {
+    fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
+      method: 'POST',
+      body: message,
+      headers: { 'X-Title': 'DITSC Store Click', 'X-Tags': 'dollar' },
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // Never let a notification failure break the click-through.
+  }
+}
+
 function trackStoreClick(storeName, storeUrl) {
   window.gtag?.('event', 'store_click', {
     store_name: storeName,
     store_url: storeUrl,
   });
+  notifyStoreClick(`${storeName} (homepage partner card)`);
 }
 
 // ── StoreCard component ───────────────────────────────────────
@@ -420,18 +446,13 @@ export default function Home() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20 }}>
             {BLOG_PREVIEW.map((post) => (
-              <a
+              <div
                 key={post.title}
-                href={post.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: 'none' }}
-              >
-              <div style={{
-                background: 'var(--bg-card)', border: '1px solid var(--border)',
-                borderRadius: 16, overflow: 'hidden',
-                transition: 'border-color 0.2s, transform 0.2s',
-              }}
+                style={{
+                  background: 'var(--bg-card)', border: '1px solid var(--border)',
+                  borderRadius: 16, overflow: 'hidden',
+                  transition: 'border-color 0.2s, transform 0.2s',
+                }}
                 onMouseOver={e => { e.currentTarget.style.borderColor = post.color; e.currentTarget.style.transform = 'translateY(-3px)'; }}
                 onMouseOut={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'; }}
               >
@@ -455,10 +476,32 @@ export default function Home() {
                   <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4, marginBottom: 10 }}>
                     {post.title}
                   </h3>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{post.date}</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 14 }}>{post.date}</div>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                    {post.videos.map((video) => (
+                      <a
+                        key={video.label}
+                        href={video.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-flex', alignItems: 'center', gap: 5,
+                          padding: '5px 12px', borderRadius: 20,
+                          border: `1px solid ${post.color}`,
+                          color: post.color, fontSize: 11, fontWeight: 600,
+                          textDecoration: 'none', letterSpacing: 0.3,
+                          background: 'transparent',
+                          transition: 'background 0.15s',
+                        }}
+                        onMouseOver={e => { e.currentTarget.style.background = `${post.color}22`; }}
+                        onMouseOut={e => { e.currentTarget.style.background = 'transparent'; }}
+                      >
+                        ▶ {video.label}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
-              </a>
             ))}
           </div>
 
