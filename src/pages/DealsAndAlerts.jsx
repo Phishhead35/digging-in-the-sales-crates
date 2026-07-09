@@ -12,6 +12,7 @@ export function Deals() {
 
   // Curated store deep-links (no API, non-local)
   const curatedStores = [
+    { name: 'Turntable Lab', url: 'https://www.turntablelab.com?aff=56122', desc: 'NYC institution since 1999. New releases, DJ gear, and vinyl across every genre, not just hip-hop.', tag: 'All Genres', email: 'https://www.turntablelab.com', affiliate: true },
     { name: 'Fat Beats', url: 'https://fatbeats.com', desc: 'Hip-hop and rap specialists since 1994. New releases, exclusives, and pre-orders. Subscribe for sale emails.', tag: 'Hip-Hop / New', email: 'https://fatbeats.com' },
     { name: 'Get On Down', url: 'https://getondown.com', desc: 'Limited edition pressings, anniversary editions, and numbered sets. Known for elaborate packaging.', tag: 'Limited Editions', email: 'https://getondown.com' },
     { name: 'HHV Records', url: 'https://www.hhv.de/en-US/records', desc: 'Berlin-based since 2002. 80,000+ titles, rooted in Hip-Hop, jazz, funk, and soul. Ships worldwide.', tag: 'Hip-Hop / Global', email: 'https://www.hhv.de/en-US' },
@@ -61,8 +62,8 @@ export function Deals() {
         Subscribe to their email lists and paste promos into the <strong style={{ color: 'var(--amber)' }}>Email Parser</strong> to extract deals automatically.
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
-        {curatedStores.map(({ name, url, desc, tag }) => (
-          <a key={name} href={url} target="_blank" rel="noopener noreferrer"
+        {curatedStores.map(({ name, url, desc, tag, affiliate }) => (
+          <a key={name} href={url} target="_blank" rel={affiliate ? 'nofollow noopener noreferrer' : 'noopener noreferrer'}
             className="store-card"
             style={{
               padding: 24, borderRadius: 16, background: 'var(--bg-card)',
