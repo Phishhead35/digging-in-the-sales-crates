@@ -7,6 +7,38 @@
 
 export const BLOG_POSTS = {
 
+  'original-pressings-market-premium-2026': {
+    slug: 'original-pressings-market-premium-2026',
+    title: 'The Money Is Moving to Originals, and the Data Proves It',
+    series: 'MARKET WATCH',
+    date: '2026-07-08',
+    dateDisplay: 'July 8, 2026',
+    excerpt: 'Vinyl dollar-value growth is outpacing unit growth, and original pressings are pulling away from reissues by 300 to 500 percent. What the 2026 market data means for diggers, and where the value plays are hiding.',
+    body: [
+      'Vinyl buyers are spending more per record than ever. Industry data for 2026 shows dollar-value growth outpacing unit growth across the board, which means the average price paid keeps climbing. Part of that is new-release packaging games: colored variants, deluxe editions, store exclusives. But the more interesting story for diggers is happening on the secondary market, where the premium for original pressings over reissues keeps widening.',
+      'The numbers are stark. Original Blue Note pressings with the deep groove and the 47 West 63rd Street address are consistently outperforming later reissues by 300 to 500 percent. A 1959 pressing of Coltrane\'s Giant Steps commands $800 to $1,200 right now; a 1970s reissue of the same music sells for $40 to $80. Same notes, same solos. The market is paying for the artifact, not the audio.',
+      'Two forces are driving this. First, demographics. Somewhere between 55 and 58 percent of vinyl buyers entering the market are now under 35, and this generation treats Discogs and eBay as the default way to buy records. More buyers with market literacy means more competition for the pressings that matter, and pressing-variant knowledge that used to live in collector forums is now a Google search away. Second, supply. Pressing plants are running near 85 percent capacity with lead times of 9 to 12 months, so labels prioritize sure sellers. Original pressings are not getting any less finite while demand pools around them.',
+      'What this means practically: condition and variant identification are worth more than they have ever been. The gap between a VG and VG+ copy of a sought-after original is real money now. Before you buy, know what you are looking at; dead wax matters, label addresses matter, deep grooves matter. And before you pay collector prices, compare across marketplaces, because the same pressing routinely sits at wildly different prices on Discogs, eBay, and CDandLP at the same moment. That spread is where the deals live.',
+      'The flip side is opportunity. If originals keep pulling away, well-mastered reissues become the value play for listeners, and mid-tier originals (the ones without forum hype) are still sitting in bins at prices that have not caught up to the trend. Soul, funk, and jazz records one tier below the trophy names remain the best risk-reward dig in the market.',
+      'Our whole site exists for exactly this moment: search once, see every listing, pay the lowest price for the pressing you actually want.',
+    ],
+    shopArtists: [
+      {
+        name: 'John Coltrane',
+        pageSlug: 'john-coltrane',
+        searchTerms: {
+          discogs: 'John Coltrane',
+          ebay: 'John Coltrane vinyl',
+          cdandlp: 'John Coltrane',
+        },
+      },
+    ],
+    seo: {
+      title: 'Original Pressings vs Reissues: 2026 Market Data | Digging in the Sales Crates',
+      description: 'Original pressings are outperforming reissues by 300-500% in 2026. What the vinyl market data means for collectors, and how to find the price spread across Discogs, eBay, and CDandLP.',
+    },
+  },
+
   'beats-rhymes-and-life-30th-anniversary': {
     slug: 'beats-rhymes-and-life-30th-anniversary',
     title: 'Beats, Rhymes and Life Turns 30: The Album Where Dilla Went Major',

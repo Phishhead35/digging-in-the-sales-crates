@@ -108,6 +108,8 @@ export default function Layout({ children }) {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="mobile-toggle"
+              aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobileOpen}
               style={{ color: 'var(--text-primary)', padding: 8, borderRadius: 8, marginLeft: 'auto' }}
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
