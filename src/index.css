@@ -203,7 +203,7 @@ input { font-family: inherit; }
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #666;
+  color: var(--text-muted); /* was #666; 3.3:1 on #111 failed WCAG AA */
   flex-shrink: 0;
 }
 
@@ -237,6 +237,6 @@ input { font-family: inherit; }
 }
 
 .follow-pill--facebook {
-  background: #1877f2;
+  background: #1663cc; /* was #1877f2; white text was 4.25:1, now 5.7:1 */
   color: #fff;
 }
