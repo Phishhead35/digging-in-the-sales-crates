@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Search, ExternalLink, Disc3, ArrowRight, ArrowLeft } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { ARTISTS, GENRES } from '../data/artists';
-import { getPartnersForArtist } from '../data/partnerStores';
+import { getPartnersForArtist, getPartnersByNames } from '../data/partnerStores';
 import { notifyStoreClick } from '../utils/storeClickTracking';
 import PartnerStoreCard from '../components/PartnerStoreCard';
 
@@ -137,14 +137,18 @@ export default function ArtistPage({ type = 'artist' }) {
 
   const artist = type === 'genre' ? GENRES[slug] : ARTISTS[slug];
 
-  // Two partner stores per artist page, picked from the full roster.
-  // Stores tagged with a specialty matching the artist's genre(s) get
-  // 2x odds, but every partner stays eligible — see getPartnersForArtist
-  // in data/partnerStores.js for why this is a weighted draw, not a filter.
-  const featuredPartners = useMemo(
-    () => getPartnersForArtist(artist?.genres, 2),
-    [artist?.slug]
-  );
+  // Two partner stores per artist page. Default is a genre-weighted
+  // auto-pick from the rotation-eligible roster (see getPartnersForArtist
+  // in data/partnerStores.js). An artist entry can instead set
+  // partnerOverride: ['Store Name', ...] in src/data/artists.js to pin
+  // exact partners for that page, including ones normally excluded from
+  // rotation (e.g. Soundtracks Beverly for a future Czarface page).
+  const featuredPartners = useMemo(() => {
+    if (artist?.partnerOverride?.length) {
+      return getPartnersByNames(artist.partnerOverride);
+    }
+    return getPartnersForArtist(artist?.genres, 2);
+  }, [artist?.slug]);
 
   useSEO(artist
     ? { title: artist.seo.title, description: artist.seo.description }
