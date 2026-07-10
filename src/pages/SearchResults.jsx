@@ -4,29 +4,16 @@ import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, Ch
 import { searchDiscogs, searchEbay, searchCDandLP, formatPrice } from '../utils/api';
 import useSEO from '../hooks/useSEO';
 import { PARTNER_STORES } from '../data/partnerStores';
+import { notifyStoreClick } from '../utils/storeClickTracking';
+import PartnerStoreCard from '../components/PartnerStoreCard';
 
 // ── GA4 store click tracker ───────────────────────────────────
 // Fires store_click when a visitor clicks through to a marketplace
 // from search results. Mirrors trackStoreClick in Home.jsx so all
 // affiliate click-throughs roll into the same GA4 event; the
 // click_source param separates search traffic from homepage partner cards.
-// Uses optional chaining so it silently no-ops if gtag isn't loaded yet.
-// Also pings ntfy.sh for an instant phone notification per click.
-// keepalive lets the request complete even as the browser leaves the page.
-const NTFY_TOPIC = 'ditsc-clicks-vk8q3zt2npw4';
-
-function notifyStoreClick(message) {
-  try {
-    fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
-      method: 'POST',
-      body: message,
-      headers: { 'X-Title': 'DITSC Store Click', 'X-Tags': 'dollar' },
-      keepalive: true,
-    }).catch(() => {});
-  } catch {
-    // Never let a notification failure break the click-through.
-  }
-}
+// notifyStoreClick (ntfy.sh phone ping) now lives in utils/storeClickTracking.js,
+// shared with Home.jsx and ArtistPage.jsx.
 
 function trackStoreClick(storeName, storeUrl, itemTitle) {
   window.gtag?.('event', 'store_click', {
@@ -44,10 +31,10 @@ function trackStoreClick(storeName, storeUrl, itemTitle) {
 
 // ── "Stores We Dig" partner promo card ────────────────────────
 // One featured partner store is inserted inline in the results grid,
-// rotated randomly each time the search query changes. Store data now
-// comes from src/data/partnerStores.js, the single source of truth
-// shared with Home.jsx (MA_STORES + RINH_STORES), so partner adds or
-// edits only need to happen in one place. Clicks fire the same
+// rotated randomly each time the search query changes. Store data comes
+// from src/data/partnerStores.js, the single source of truth shared
+// with Home.jsx (MA_STORES + RINH_STORES) and ArtistPage.jsx. The card
+// itself is the shared PartnerStoreCard component. Clicks fire the same
 // store_click GA4 event but with click_source: 'search_partner_card'
 // so partner clicks stay separate from marketplace clicks in reporting.
 
@@ -58,74 +45,6 @@ function trackPartnerClick(storeName, storeUrl) {
     click_source: 'search_partner_card',
   });
   notifyStoreClick(`${storeName} (search partner card)`);
-}
-
-function PartnerStoreCard({ store }) {
-  // Prefer the store's own website when it has one; fall back to its
-  // primary link (Discogs or Instagram for some partners).
-  const primaryUrl = store.siteUrl || store.url;
-
-  return (
-    <div className="record-card" style={{
-      background: 'linear-gradient(165deg, rgba(245,158,11,0.10), var(--bg-card) 55%)',
-      border: '1px solid rgba(245,158,11,0.45)',
-      borderRadius: 16, overflow: 'hidden',
-      display: 'flex', flexDirection: 'column',
-    }}>
-      <div style={{ padding: '14px 16px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{
-          padding: '3px 10px', borderRadius: 100, fontSize: 10, fontWeight: 600,
-          fontFamily: 'var(--font-mono)', letterSpacing: 0.5,
-          background: 'rgba(245,158,11,0.9)', color: '#000',
-        }}>
-          STORES WE DIG
-        </span>
-        <div style={{
-          width: 36, height: 36, borderRadius: '50%',
-          background: '#222', border: '3px solid #333', flexShrink: 0,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}>
-          <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--amber)' }} />
-        </div>
-      </div>
-
-      <div style={{ padding: '12px 16px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <h3 style={{ fontSize: 16, fontWeight: 700, lineHeight: 1.3, color: '#fff' }}>{store.name}</h3>
-        <div style={{ fontSize: 11, color: 'var(--amber)', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: 5 }}>
-          <MapPin size={11} style={{ flexShrink: 0 }} /> {store.type} · {store.location}
-        </div>
-        <p style={{
-          fontSize: 13, color: '#fff', lineHeight: 1.6, margin: 0,
-          display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden',
-        }}>
-          {store.desc}
-        </p>
-      </div>
-
-      <div style={{ padding: '14px 16px 16px', display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-        <a href={primaryUrl} target="_blank" rel="noopener noreferrer"
-          onClick={() => trackPartnerClick(store.name, primaryUrl)}
-          style={{
-            fontSize: 12, color: '#0a0a0f', fontWeight: 700, textDecoration: 'none',
-            padding: '7px 14px', borderRadius: 6, background: 'var(--amber)',
-            display: 'inline-flex', alignItems: 'center', gap: 5,
-          }}>
-          Visit Shop <ExternalLink size={11} />
-        </a>
-        {store.siteUrl && (
-          <a href={store.url} target="_blank" rel="noopener noreferrer"
-            onClick={() => trackPartnerClick(store.name, store.url)}
-            style={{
-              fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none',
-              padding: '7px 14px', borderRadius: 6,
-              border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.08)',
-            }}>
-            Discogs →
-          </a>
-        )}
-      </div>
-    </div>
-  );
 }
 
 function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority }) {
@@ -535,7 +454,7 @@ export default function SearchResults() {
             // when a search returns fewer than 5 results.
             cards.splice(
               Math.min(4, cards.length), 0,
-              <PartnerStoreCard key="partner-store-card" store={featuredStore} />
+              <PartnerStoreCard key="partner-store-card" store={featuredStore} trackClick={trackPartnerClick} />
             );
             return cards;
           })()}

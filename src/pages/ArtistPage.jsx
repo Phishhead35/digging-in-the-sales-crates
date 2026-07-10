@@ -1,8 +1,11 @@
-import React, { startTransition } from 'react';
+import React, { useMemo, startTransition } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Search, ExternalLink, Disc3, ArrowRight, ArrowLeft } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { ARTISTS, GENRES } from '../data/artists';
+import { getPartnersForArtist } from '../data/partnerStores';
+import { notifyStoreClick } from '../utils/storeClickTracking';
+import PartnerStoreCard from '../components/PartnerStoreCard';
 
 // ── Affiliate link builders ───────────────────────────────────
 function discogsUrl(term) {
@@ -22,6 +25,21 @@ function trackClick(artistName, marketplace) {
     artist_name: artistName,
     marketplace,
   });
+}
+
+// ── "Dig Our Partners' Crates" click tracker ──────────────────
+// Fires the same store_click GA4 event used by Home.jsx and
+// SearchResults.jsx, with its own click_source so artist-page partner
+// clicks stay separate from search and homepage clicks in reporting.
+// notifyStoreClick (ntfy.sh phone ping) lives in utils/storeClickTracking.js,
+// shared across all three pages.
+function trackPartnerClick(storeName, storeUrl) {
+  window.gtag?.('event', 'store_click', {
+    store_name: storeName,
+    store_url: storeUrl,
+    click_source: 'artist_page',
+  });
+  notifyStoreClick(`${storeName} (artist page partner card)`);
 }
 
 // ── Marketplace search buttons ────────────────────────────────
@@ -118,6 +136,15 @@ export default function ArtistPage({ type = 'artist' }) {
   const navigate = useNavigate();
 
   const artist = type === 'genre' ? GENRES[slug] : ARTISTS[slug];
+
+  // Two partner stores per artist page, picked from the full roster.
+  // Stores tagged with a specialty matching the artist's genre(s) get
+  // 2x odds, but every partner stays eligible — see getPartnersForArtist
+  // in data/partnerStores.js for why this is a weighted draw, not a filter.
+  const featuredPartners = useMemo(
+    () => getPartnersForArtist(artist?.genres, 2),
+    [artist?.slug]
+  );
 
   useSEO(artist
     ? { title: artist.seo.title, description: artist.seo.description }
@@ -286,6 +313,39 @@ export default function ArtistPage({ type = 'artist' }) {
           </p>
         </div>
       </section>
+
+      {/* ── DIG OUR PARTNERS' CRATES ─────────────────────────── */}
+      {featuredPartners.length > 0 && (
+        <section style={{ padding: '56px 24px', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ maxWidth: 900, margin: '0 auto' }}>
+            <p style={{
+              color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)',
+              letterSpacing: 2, marginBottom: 8,
+            }}>
+              SHOP LOCAL
+            </p>
+            <h2 style={{
+              fontFamily: 'var(--font-display)', fontSize: 32,
+              letterSpacing: 1, marginBottom: 10,
+            }}>
+              DIG OUR PARTNERS' CRATES
+            </h2>
+            <p style={{ color: 'var(--text-primary)', fontSize: 14, marginBottom: 28, maxWidth: 600 }}>
+              Independent shops worth a visit, in person or online. Their inventory changes constantly, so what's in stock today may not be there tomorrow.
+            </p>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: 16,
+            }}>
+              {featuredPartners.map(store => (
+                <PartnerStoreCard key={store.name} store={store} trackClick={trackPartnerClick} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── PRODUCER CREDITS ─────────────────────────────────── */}
       {artist.producerCredits && artist.producerCredits.length > 0 && (
