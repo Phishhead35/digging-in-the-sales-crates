@@ -3,17 +3,29 @@ import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, ChevronRight, Filter, MapPin } from 'lucide-react';
 import { searchDiscogs, searchEbay, searchCDandLP, formatPrice } from '../utils/api';
 import useSEO from '../hooks/useSEO';
-import { PARTNER_STORES } from '../data/partnerStores';
-import { notifyStoreClick } from '../utils/storeClickTracking';
-import PartnerStoreCard from '../components/PartnerStoreCard';
 
 // ── GA4 store click tracker ───────────────────────────────────
 // Fires store_click when a visitor clicks through to a marketplace
 // from search results. Mirrors trackStoreClick in Home.jsx so all
 // affiliate click-throughs roll into the same GA4 event; the
 // click_source param separates search traffic from homepage partner cards.
-// notifyStoreClick (ntfy.sh phone ping) now lives in utils/storeClickTracking.js,
-// shared with Home.jsx and ArtistPage.jsx.
+// Uses optional chaining so it silently no-ops if gtag isn't loaded yet.
+// Also pings ntfy.sh for an instant phone notification per click.
+// keepalive lets the request complete even as the browser leaves the page.
+const NTFY_TOPIC = 'ditsc-clicks-vk8q3zt2npw4';
+
+function notifyStoreClick(message) {
+  try {
+    fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
+      method: 'POST',
+      body: message,
+      headers: { 'X-Title': 'DITSC Store Click', 'X-Tags': 'dollar' },
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // Never let a notification failure break the click-through.
+  }
+}
 
 function trackStoreClick(storeName, storeUrl, itemTitle) {
   window.gtag?.('event', 'store_click', {
@@ -31,12 +43,27 @@ function trackStoreClick(storeName, storeUrl, itemTitle) {
 
 // ── "Stores We Dig" partner promo card ────────────────────────
 // One featured partner store is inserted inline in the results grid,
-// rotated randomly each time the search query changes. Store data comes
-// from src/data/partnerStores.js, the single source of truth shared
-// with Home.jsx (MA_STORES + RINH_STORES) and ArtistPage.jsx. The card
-// itself is the shared PartnerStoreCard component. Clicks fire the same
-// store_click GA4 event but with click_source: 'search_partner_card'
-// so partner clicks stay separate from marketplace clicks in reporting.
+// rotated randomly each time the search query changes. Store data is
+// copied byte-for-byte from Home.jsx (MA_STORES + RINH_STORES) including
+// every UTM parameter. Clicks fire the same store_click GA4 event but
+// with click_source: 'search_partner_card' so partner clicks stay
+// separate from marketplace clicks in reporting.
+
+const PARTNER_STORES = [
+  { name: 'Spin That Records', type: 'Vintage Vinyl', location: 'Springfield, MA', desc: "Springfield MA's only vintage vinyl store. Classic Rock, Jazz, Soul, Latin, Folk and more. Plus vintage turntables, receivers, and hi-fi equipment.", url: 'https://spinthatspringfield.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=spin-that-records' },
+  { name: 'Village Vinyl and HiFi', type: 'Records & Stereo', location: 'Boston, MA', desc: 'Located in the Coolidge Corner neighborhood in Boston. Quality records and stereo equipment at prices that keep you coming back.', url: 'https://www.villagevinylhifi.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=village-vinyl-hifi' },
+  { name: 'ADamnShame Records', type: 'Curated Vinyl', location: 'Lowell, MA', desc: 'Lowell-based record dealer specializing in curated vinyl and quality records. Follow on Instagram for inventory and updates.', url: 'https://www.instagram.com/adamnshame_records/?utm_source=ditsc&utm_medium=referral&utm_campaign=a-damn-shame-records' },
+  { name: 'Soundtracks Beverly', type: 'All Genres', location: 'Beverly, MA', desc: 'Beverly, MA record shop with an eclectic mix of vinyl across all genres. A true neighborhood dig spot on the North Shore.', url: 'https://www.soundtracksbeverly.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=soundtracks-beverly' },
+  { name: 'GOOD TASTE Records', type: 'Vinyl Boutique', location: 'Boston, MA', desc: "Boston vinyl boutique and music hub for DJs, collectors, and anyone with GOOD TASTE. Stop in and find something you didn't know you needed.", url: 'https://goodtasterecords.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=good-taste-records' },
+  { name: 'Big Fun Records', type: 'Multi-Genre', location: 'Beverly, MA', desc: 'Beverly, MA shop at 284A Cabot St. Buying and selling Rock, Jazz, Soul/Funk, Punk, Metal, Hip-Hop, Electronic, and more.', url: 'https://www.discogs.com/seller/bigfunrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=big-fun-records' },
+  { name: 'Residency Records', type: 'Used Vinyl', location: 'Salem, MA', desc: 'Located in the Witch City Mall in Salem, MA. Find them on Discogs for their full inventory.', url: 'https://www.discogs.com/seller/residencyrecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=residency-records' },
+  { name: "Joe's Albums", type: 'New & Used', location: 'Worcester, MA', desc: "Worcester's go-to record shop at 317 Main St, housed in a historic performance venue. Open 7 days a week, 10am-6pm. Online since 2010, brick and mortar since 2011.", url: 'https://www.joesalbums.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=joes-albums' },
+  { name: 'The Time Capsule', type: 'Records, Comics & Games', location: 'Seekonk, MA', desc: 'Seekonk location at 1733 Fall River Ave. New vinyl hits the bins every Saturday. Also stocking thousands of back-issue comics, new releases every Wednesday, and restocked video games weekly.', url: 'https://www.discogs.com/seller/oftimespast/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-seekonk', siteUrl: 'https://www.thetimecapsule.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-seekonk' },
+  { name: 'Planet Records', type: 'LPs, CDs, Cassettes & DVDs', location: 'Cambridge, MA', desc: 'Quality LPs, CDs, Cassettes, DVDs, and music books at 144 Mt Auburn St, Cambridge. A Cambridge institution for serious collectors.', siteUrl: 'https://planet-records.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=planet-records', url: 'https://www.discogs.com/seller/PlanetRecords/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=planet-records', ebayUrl: 'https://www.ebay.com/str/planetrecordsandcds?mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc&utm_source=ditsc&utm_medium=referral&utm_campaign=planet-records' },
+  { name: 'Music Magick', type: 'Multi-Media', location: 'West Warwick, RI', desc: 'The ultimate multi-media store in West Warwick, RI. Over 50,000 CDs and 30,000 DVDs across all genres, plus games and Blu-rays. Most priced at just $2.', url: 'https://www.discogs.com/seller/musicmagickshop/profile?page=1&utm_source=ditsc&utm_medium=referral&utm_campaign=music-magick' },
+  { name: 'The Time Capsule', type: 'Records, Comics & Games', location: 'Cranston, RI', desc: 'Cranston location at 537 Pontiac Ave. Massive LP restock every Friday. Plus new comics every Wednesday (80-100 titles), thousands of back issues, and restocked video games weekly.', url: 'https://www.discogs.com/seller/oftimespast/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-cranston', siteUrl: 'https://www.thetimecapsule.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-cranston' },
+  { name: 'New Hampshire Vintage Vinyl', type: 'Pre-Owned Vinyl', location: 'Laconia, NH', desc: 'Laconia, NH record shop at 633 Main St. New crates of pre-owned records hit the floor every Saturday. In-store customers get first dibs; the rest go live online Sunday evenings.', url: 'https://www.nhvintagevinyl.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=nh-vintage-vinyl' },
+];
 
 function trackPartnerClick(storeName, storeUrl) {
   window.gtag?.('event', 'store_click', {
@@ -45,6 +72,74 @@ function trackPartnerClick(storeName, storeUrl) {
     click_source: 'search_partner_card',
   });
   notifyStoreClick(`${storeName} (search partner card)`);
+}
+
+function PartnerStoreCard({ store }) {
+  // Prefer the store's own website when it has one; fall back to its
+  // primary link (Discogs or Instagram for some partners).
+  const primaryUrl = store.siteUrl || store.url;
+
+  return (
+    <div className="record-card" style={{
+      background: 'linear-gradient(165deg, rgba(245,158,11,0.10), var(--bg-card) 55%)',
+      border: '1px solid rgba(245,158,11,0.45)',
+      borderRadius: 16, overflow: 'hidden',
+      display: 'flex', flexDirection: 'column',
+    }}>
+      <div style={{ padding: '14px 16px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span style={{
+          padding: '3px 10px', borderRadius: 100, fontSize: 10, fontWeight: 600,
+          fontFamily: 'var(--font-mono)', letterSpacing: 0.5,
+          background: 'rgba(245,158,11,0.9)', color: '#000',
+        }}>
+          STORES WE DIG
+        </span>
+        <div style={{
+          width: 36, height: 36, borderRadius: '50%',
+          background: '#222', border: '3px solid #333', flexShrink: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--amber)' }} />
+        </div>
+      </div>
+
+      <div style={{ padding: '12px 16px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <h3 style={{ fontSize: 16, fontWeight: 700, lineHeight: 1.3, color: '#fff' }}>{store.name}</h3>
+        <div style={{ fontSize: 11, color: 'var(--amber)', fontFamily: 'var(--font-mono)', display: 'flex', alignItems: 'center', gap: 5 }}>
+          <MapPin size={11} style={{ flexShrink: 0 }} /> {store.type} · {store.location}
+        </div>
+        <p style={{
+          fontSize: 13, color: '#fff', lineHeight: 1.6, margin: 0,
+          display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+        }}>
+          {store.desc}
+        </p>
+      </div>
+
+      <div style={{ padding: '14px 16px 16px', display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+        <a href={primaryUrl} target="_blank" rel="noopener noreferrer"
+          onClick={() => trackPartnerClick(store.name, primaryUrl)}
+          style={{
+            fontSize: 12, color: '#0a0a0f', fontWeight: 700, textDecoration: 'none',
+            padding: '7px 14px', borderRadius: 6, background: 'var(--amber)',
+            display: 'inline-flex', alignItems: 'center', gap: 5,
+          }}>
+          Visit Shop <ExternalLink size={11} />
+        </a>
+        {store.siteUrl && (
+          <a href={store.url} target="_blank" rel="noopener noreferrer"
+            onClick={() => trackPartnerClick(store.name, store.url)}
+            style={{
+              fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none',
+              padding: '7px 14px', borderRadius: 6,
+              border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.08)',
+            }}>
+            Discogs →
+          </a>
+        )}
+      </div>
+    </div>
+  );
 }
 
 function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority }) {
@@ -229,10 +324,15 @@ export default function SearchResults() {
   const lastSearchedRef = useRef('');
 
   // One featured partner store per search, re-rolled when the query changes.
-  const featuredStore = useMemo(
-    () => PARTNER_STORES[Math.floor(Math.random() * PARTNER_STORES.length)],
-    [query]
-  );
+  // Eligible = any store with a real store page (own website, Discogs, eBay, etc.).
+  // Social-media-only links (Instagram, Facebook, etc.) are excluded — not storefronts.
+  const SOCIAL_DOMAINS = ['instagram.com', 'facebook.com', 'twitter.com', 'x.com', 'tiktok.com', 'youtube.com'];
+  const featuredStore = useMemo(() => {
+    const eligible = PARTNER_STORES.filter(
+      s => !SOCIAL_DOMAINS.some(d => s.url?.includes(d))
+    );
+    return eligible[Math.floor(Math.random() * eligible.length)];
+  }, [query]);
 
   const toTitleCase = (str) =>
     str.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -338,6 +438,8 @@ export default function SearchResults() {
     setInputVal(query);
     setPage(1);
     setActiveSource('all');
+    // Track search term in GA4 — feeds into artist page + blog recommendations
+    window.gtag?.('event', 'search', { search_term: query });
     doSearch(query, 1, 'all');
   }, [query]);
 
@@ -454,7 +556,7 @@ export default function SearchResults() {
             // when a search returns fewer than 5 results.
             cards.splice(
               Math.min(4, cards.length), 0,
-              <PartnerStoreCard key="partner-store-card" store={featuredStore} trackClick={trackPartnerClick} />
+              <PartnerStoreCard key="partner-store-card" store={featuredStore} />
             );
             return cards;
           })()}
