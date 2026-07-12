@@ -7,6 +7,37 @@
 
 export const BLOG_POSTS = {
 
+  'fatback-band-king-tim-iii-first-rap-record': {
+    slug: 'fatback-band-king-tim-iii-first-rap-record',
+    title: 'The Fatback Band Cut the First Rap Record, and It Was Buried on a B-Side',
+    series: 'CRATE SPOTLIGHT',
+    date: '2026-07-12',
+    dateDisplay: 'July 12, 2026',
+    excerpt: 'Before "Rapper\'s Delight," Fatback Band buried "King Tim III (Personality Jock)" on a B-side and it still beat Sugarhill Gang to stores. Why the pressing history matters and why the catalog belongs in your crate.',
+    body: [
+      'Before Sugarhill Gang, before "Rapper\'s Delight" ever touched a turntable, there was a Brooklyn funk band closing out an album with a novelty track nobody expected to matter. That track was "King Tim III (Personality Jock)," and it shipped to stores in late July 1979, roughly a week ahead of Sugarhill\'s single. Most historians now credit it as the first commercially released rap record. Fatback Band buried it as a B-side.',
+      'The story is almost too good. Bandleader Bill Curtis was wrapping the "Fatback XII" sessions and brought in a DJ named Timothy Washington, known as King Tim III, to rap over an instrumental called "Catch the Beat." Spring Records slotted the retitled cut on the flip of "You\'re My Candy Sweet" because the label worried radio would balk at a man rapping over a groove. Radio didn\'t balk. DJs flipped the single anyway, airplay piled up on the B-side, and Spring eventually reissued it with the sides swapped to match what the streets already knew.',
+      'That reversal is what makes the original pressing worth chasing. A first-run copy with "King Tim III" still listed as the B-side is a documented artifact of a label getting caught off guard by its own record, and that kind of pressing history is exactly what serious collectors hunt for on Discogs and eBay alike.',
+      'Fatback earns a spotlight beyond the trivia, though. This is a band that spent the seventies laying down the kind of raw, drum-heavy funk that became sample bait for the next two decades of producers. Deep, uncluttered breaks, live basslines, horn stabs that sit right in the pocket. It is a catalog built for crate diggers, not casual listeners, and it holds up next to any of the Kool & the Gang or B.T. Express records that get more shelf space in reissue bins.',
+      'We\'ve got Fatback Band\'s page live on Digging in the Sales Crates already, pulling listings across Discogs, eBay, and CDandLP in one search. If you\'re building out a collection anchored in hip-hop\'s actual origin point rather than the version most people learned, Fatback belongs at the front of the crate. Start with the "Fatback XII" pressings and work backward through the catalog from there.',
+    ],
+    shopArtists: [
+      {
+        name: 'Fatback Band',
+        pageSlug: 'fatback-band',
+        searchTerms: {
+          discogs: 'Fatback Band',
+          ebay: 'Fatback Band vinyl',
+          cdandlp: 'Fatback Band',
+        },
+      },
+    ],
+    seo: {
+      title: 'Fatback Band and the First Rap Record | Digging in the Sales Crates',
+      description: 'Fatback Band\'s "King Tim III (Personality Jock)" beat "Rapper\'s Delight" to stores by a week, buried on a B-side. The pressing history, the story, and why the catalog belongs in your crate.',
+    },
+  },
+
   'original-pressings-market-premium-2026': {
     slug: 'original-pressings-market-premium-2026',
     title: 'The Money Is Moving to Originals, and the Data Proves It',
