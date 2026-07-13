@@ -401,6 +401,65 @@ export const ARTISTS = {
     },
   },
 
+  'john-coltrane': {
+    slug: 'john-coltrane',
+    name: 'John Coltrane',
+    tagline: 'The sound of searching. Jazz\'s most collected saxophonist.',
+    genres: ['Jazz', 'Spiritual Jazz', 'Hard Bop'],
+    searchTerms: {
+      discogs: 'John Coltrane',
+      ebay: 'John Coltrane vinyl',
+      cdandlp: 'John Coltrane',
+    },
+    bio: [
+      'John Coltrane recorded for three labels that define jazz collecting: Blue Note, Atlantic, and Impulse!. Each era sounds different, and each era\'s original pressings are chased hard. Blue Train (1958) is the Blue Note grail; originals with the deep groove and 47 West 63rd Street address routinely outperform reissues by 300 to 500 percent.',
+      'The Atlantic years gave us Giant Steps and My Favorite Things; look for bullseye labels on the earliest pressings. The Impulse! era (A Love Supreme through the late spiritual work) is the most affordable entry point, with orange-and-black spine originals still surfacing at fair prices. RVG stamps in the dead wax mean Rudy Van Gelder cut the master.',
+      'Coltrane\'s catalog is deep enough to collect for a lifetime, and liquid enough that prices are transparent. Know your pressing variants before paying collector money; the same title spans two figures to four depending on label address and dead wax.',
+    ],
+    essentialRecords: [
+      { title: 'Blue Train', year: 1958, label: 'Blue Note' },
+      { title: 'Giant Steps', year: 1960, label: 'Atlantic' },
+      { title: 'My Favorite Things', year: 1961, label: 'Atlantic' },
+      { title: 'A Love Supreme', year: 1965, label: 'Impulse!' },
+      { title: 'Ballads', year: 1963, label: 'Impulse!' },
+      { title: 'Crescent', year: 1964, label: 'Impulse!' },
+    ],
+    producerCredits: ['Alfred Lion (Blue Note)', 'Nesuhi Ertegun (Atlantic)', 'Bob Thiele (Impulse!)', 'Rudy Van Gelder (engineer)'],
+    seo: {
+      title: 'John Coltrane Vinyl Records | Digging in the Sales Crates',
+      description: 'Find John Coltrane vinyl across Discogs, eBay, and CDandLP. Shop Blue Train, Giant Steps, A Love Supreme, and original Blue Note, Atlantic, and Impulse! pressings.',
+    },
+  },
+
+  'eric-b-and-rakim': {
+    slug: 'eric-b-and-rakim',
+    name: 'Eric B. & Rakim',
+    tagline: 'The blueprint. Every MC after 1987 is downstream.',
+    genres: ['Hip-Hop', 'Golden Era'],
+    searchTerms: {
+      discogs: 'Eric B. & Rakim',
+      ebay: 'Eric B Rakim vinyl',
+      cdandlp: 'Eric B Rakim',
+    },
+    bio: [
+      'Rakim rewrote the rules of MCing: internal rhyme schemes, laid-back delivery, complexity that made everything before it sound simple. Over Eric B.\'s James Brown-heavy production, the duo cut four albums between 1987 and 1992 that anchor any Golden Era collection.',
+      'Paid in Full (1987) is the essential document. Original Fourth & Broadway pressings are getting scarce in clean condition, and the earlier Zakia 12" of "Eric B. Is President" b/w "My Melody" (1986) is the real grail; original Zakia copies command serious money. The Coldcut "Seven Minutes of Madness" remix 12" of "Paid in Full" is its own collecting lane.',
+      'The albums stayed in print through various reissues, so check labels and dead wax before paying original-pressing prices. The 12" singles catalog (I Know You Got Soul, Follow the Leader, Microphone Fiend) is an affordable way in and where a lot of the DJ history lives.',
+    ],
+    essentialRecords: [
+      { title: 'Paid in Full', year: 1987, label: 'Fourth & Broadway' },
+      { title: 'Follow the Leader', year: 1988, label: 'Uni' },
+      { title: 'Let the Rhythm Hit \'Em', year: 1990, label: 'MCA' },
+      { title: 'Don\'t Sweat the Technique', year: 1992, label: 'MCA' },
+      { title: 'Eric B. Is President / My Melody 12"', year: 1986, label: 'Zakia' },
+    ],
+    producerCredits: ['Eric B.', 'Rakim', 'Large Professor (uncredited, Let the Rhythm Hit \'Em)'],
+    seo: {
+      title: 'Eric B. & Rakim Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Eric B. & Rakim vinyl across Discogs, eBay, and CDandLP. Shop Paid in Full, Follow the Leader, and the rare Zakia 12" pressings.',
+    },
+  },
+
 };
 
 export const GENRES = {
