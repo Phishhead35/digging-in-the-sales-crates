@@ -115,6 +115,7 @@ async function main() {
     [
       ['/aggregator', 'Search vinyl across Discogs, eBay & CDandLP'],
       ['/deals', 'Current vinyl deals & price alerts'],
+      ['/email-parser', 'AI email deal parser'],
       ['/artists', 'Artist & genre pages'],
       ['/blog', 'Blog: reissue radar, sample connections & more'],
       ['/local-shops', 'New England record shop directory'],
@@ -176,6 +177,16 @@ async function main() {
       description:
         'Set vinyl price alerts and catch deals on the records you want across Discogs, eBay, and CDandLP.',
       content: h1('Price Alerts') + p('Get notified when the records you want hit your target price.'),
+    },
+    {
+      path: '/email-parser',
+      title: `AI Email Deal Parser | ${SITE}`,
+      description:
+        'Paste any record store promo email and let AI extract every deal, discount, and promo code automatically.',
+      content:
+        h1('AI Email Deal Parser') +
+        p('Paste a promo email from any record store and extract every deal, discount, and promo code automatically using AI.') +
+        p('Works with Fat Beats, Get On Down, Mass Appeal, Discogs, eBay, Rough Trade, and more.'),
     },
     {
       path: '/local-shops',

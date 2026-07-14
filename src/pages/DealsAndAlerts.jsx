@@ -58,9 +58,14 @@ export function Deals() {
       <h2 style={{ fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 8 }}>
         CURATED STORES
       </h2>
-      <p style={{ color: 'var(--text-primary)', fontSize: 13, marginBottom: 16 }}>
-        Subscribe to their email lists and paste promos into the <strong style={{ color: 'var(--amber)' }}>Email Parser</strong> to extract deals automatically.
-      </p>
+      <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 16 }}>
+        <p style={{ color: 'var(--text-primary)', fontSize: 13, margin: 0 }}>
+          Subscribe to their email lists, then paste promos into the Email Parser to extract deals automatically.
+        </p>
+        <Link to="/email-parser" className="quick-search-pill">
+          Open Email Parser →
+        </Link>
+      </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
         {curatedStores.map(({ name, url, desc, tag, affiliate }) => (
           <a key={name} href={url} target="_blank" rel={affiliate ? 'nofollow noopener noreferrer' : 'noopener noreferrer'}
