@@ -32,7 +32,7 @@ export async function onRequestPost(context) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-5',
-        max_tokens: 1000,
+        max_tokens: 4096,
         messages: [{
           role: 'user',
           content: `You are a vinyl record deal extractor. Parse the following promotional email from a record store and extract all deals, discounts, sales, and featured products.
@@ -76,13 +76,34 @@ ${emailText}`
     const data = await response.json();
     const text = data.content?.find(b => b.type === 'text')?.text || '';
 
+    // If Claude hit the token cap mid-generation, the JSON is truncated and
+    // will never parse cleanly. Catch this case with a clear message instead
+    // of letting a raw JSON.parse error string reach the user.
+    if (data.stop_reason === 'max_tokens') {
+      return new Response(JSON.stringify({
+        error: 'This email has too many deals to extract in one pass. Try splitting it into smaller sections and parsing each separately.',
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     let parsed;
     try {
       parsed = JSON.parse(text);
     } catch {
-      const match = text.match(/\{[\s\S]*\}/);
-      if (match) parsed = JSON.parse(match[0]);
-      else throw new Error('Could not parse AI response as JSON');
+      try {
+        const match = text.match(/\{[\s\S]*\}/);
+        if (match) parsed = JSON.parse(match[0]);
+        else throw new Error('no match');
+      } catch {
+        return new Response(JSON.stringify({
+          error: 'Could not parse the extracted deals. Try again, or try a shorter section of the email.',
+        }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
     }
 
     return new Response(JSON.stringify(parsed), {
