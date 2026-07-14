@@ -1,8 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, ArrowRight, Disc3 } from 'lucide-react';
+import { BookOpen, ArrowRight, Disc3, TrendingUp, Radio, RefreshCw } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { BLOG_POSTS } from '../data/blog';
+
+// ── Series -> color/icon mapping for listing-card headers ──────
+// Add a new series here when the blog-generator introduces one;
+// falls back to DEFAULT_SERIES_STYLE otherwise.
+const SERIES_STYLES = {
+  'CRATE SPOTLIGHT': { color: '#f59e0b', icon: Disc3 },
+  'MARKET WATCH': { color: '#2ec4b6', icon: TrendingUp },
+  'SAMPLE DNA': { color: '#a78bfa', icon: Radio },
+  'REISSUE RADAR': { color: '#e63946', icon: RefreshCw },
+};
+const DEFAULT_SERIES_STYLE = { color: '#f59e0b', icon: BookOpen };
 
 // ── GA4 tracker ───────────────────────────────────────────────
 function trackPostClick(slug) {
@@ -14,6 +25,8 @@ function trackPostClick(slug) {
 
 // ── Post card ─────────────────────────────────────────────────
 function PostCard({ post }) {
+  const { color, icon: Icon } = SERIES_STYLES[post.series] || DEFAULT_SERIES_STYLE;
+
   return (
     <Link
       to={`/blog/${post.slug}`}
@@ -22,13 +35,13 @@ function PostCard({ post }) {
     >
       <div
         style={{
-          padding: '24px', borderRadius: 14,
+          borderRadius: 14, overflow: 'hidden',
           background: 'var(--bg-card)', border: '1px solid var(--border)',
-          height: '100%', display: 'flex', flexDirection: 'column', gap: 14,
+          height: '100%', display: 'flex', flexDirection: 'column',
           transition: 'border-color 0.2s, transform 0.2s',
         }}
         onMouseOver={e => {
-          e.currentTarget.style.borderColor = 'rgba(245,158,11,0.4)';
+          e.currentTarget.style.borderColor = `${color}66`;
           e.currentTarget.style.transform = 'translateY(-3px)';
         }}
         onMouseOut={e => {
@@ -36,45 +49,52 @@ function PostCard({ post }) {
           e.currentTarget.style.transform = 'translateY(0)';
         }}
       >
-        {/* Series badge + date */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+        {/* Colored series header - stands in for a cover image */}
+        <div style={{
+          background: `${color}18`, borderBottom: `1px solid ${color}40`,
+          padding: '22px 20px 16px', display: 'flex', flexDirection: 'column', gap: 10,
+        }}>
+          <Icon size={22} color={color} />
           <span style={{
             fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 1.5,
-            padding: '2px 8px', borderRadius: 100,
-            background: 'var(--amber-glow)', border: '1px solid rgba(245,158,11,0.25)',
-            color: 'var(--amber)',
+            color, fontWeight: 600,
           }}>
             {post.series}
           </span>
+        </div>
+
+        <div style={{ padding: '16px 20px 20px', display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
+
+          {/* Date */}
           <span style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
             {post.dateDisplay}
           </span>
-        </div>
 
-        {/* Title */}
-        <h2 style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(22px, 3vw, 26px)',
-          letterSpacing: 1, lineHeight: 1.05,
-          color: 'var(--text-primary)', margin: 0,
-        }}>
-          {post.title}
-        </h2>
+          {/* Title */}
+          <h2 style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(22px, 3vw, 26px)',
+            letterSpacing: 1, lineHeight: 1.05,
+            color: 'var(--text-primary)', margin: 0,
+          }}>
+            {post.title}
+          </h2>
 
-        {/* Excerpt */}
-        <p style={{
-          fontSize: 13, color: 'var(--text-secondary)',
-          lineHeight: 1.6, margin: 0,
-        }}>
-          {post.excerpt}
-        </p>
+          {/* Excerpt */}
+          <p style={{
+            fontSize: 13, color: 'var(--text-secondary)',
+            lineHeight: 1.6, margin: 0,
+          }}>
+            {post.excerpt}
+          </p>
 
-        {/* CTA */}
-        <div style={{
-          display: 'inline-flex', alignItems: 'center', gap: 6,
-          color: 'var(--amber)', fontSize: 13, fontWeight: 600, marginTop: 'auto',
-        }}>
-          Read <ArrowRight size={13} />
+          {/* CTA */}
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+            color, fontSize: 13, fontWeight: 600, marginTop: 'auto',
+          }}>
+            Read <ArrowRight size={13} />
+          </div>
         </div>
       </div>
     </Link>

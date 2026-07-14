@@ -175,7 +175,7 @@ export default function BlogPost() {
             <ArrowLeft size={12} /> BACK TO BLOG
           </Link>
 
-          {/* Series badge + date */}
+          {/* Series badge + date + byline */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16, flexWrap: 'wrap' }}>
             <span style={{
               fontSize: 10, fontFamily: 'var(--font-mono)', letterSpacing: 1.5,
@@ -187,6 +187,9 @@ export default function BlogPost() {
             </span>
             <span style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
               {post.dateDisplay}
+            </span>
+            <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+              · By Joe Nicholas
             </span>
           </div>
 
