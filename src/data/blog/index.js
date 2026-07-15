@@ -7,6 +7,36 @@
 
 export const BLOG_POSTS = {
 
+  'funkadelic-maggot-brain-reissue-2026': {
+    slug: 'funkadelic-maggot-brain-reissue-2026',
+    title: 'Maggot Brain Is Getting Cut From Tape Again, and That\'s a Big Deal',
+    series: 'REISSUE RADAR',
+    date: '2026-07-15',
+    dateDisplay: 'July 15, 2026',
+    excerpt: 'Funkadelic\'s Maggot Brain gets a full analog remaster on September 11, cut direct from the original 1971 tapes. Why the reissue matters, and why P-Funk sits at the root of hip-hop\'s sample lineage.',
+    body: [
+      'Funkadelic\'s Maggot Brain is getting a proper analog reissue on September 11, and for anyone who cares about where hip-hop\'s DNA actually comes from, this one belongs on the list. Org Music and Westbound Records are handling the release, mastered direct from the original 1971 analog tapes by Dave Gardner at DSG Mastering, with tape restoration by Catherine Vericolli. No digital shortcuts: tape to lathe, pressed at Furnace Record Pressing.',
+      'The formats matter here. There\'s a 2LP 45RPM edition in a case-wrapped gatefold from Stoughton Printing, a single-LP black pressing, a limited Armageddon Red color variant, plus SACD and cassette for the completionists. The 45RPM cut is the one to chase if you want the title track\'s guitar solo to hit the way Eddie Hazel intended.',
+      'That solo is the reason this album matters beyond funk circles. George Clinton reportedly told Hazel to play like he\'d just learned his mother died, then like he found out it wasn\'t true. Ten minutes later you have one of the most quoted, most covered, most emotionally unhinged guitar performances ever put to wax. Producers don\'t sample it much (it\'s too raw, too singular to chop), but that\'s part of the point. Some records exist to be studied, not looted.',
+      'What you should care about as a digger: this is P-Funk, and P-Funk\'s catalog is arguably the single most sampled body of work in hip-hop history. Dr. Dre built The Chronic\'s entire sonic identity on Clinton\'s basslines and synth whine. Digital Underground turned "Atomic Dog" adjacent grooves into "The Humpty Dance." De La Soul, Ice Cube, Snoop, all of them went back to this well repeatedly. If you\'ve ever wondered why so much West Coast rap sounds the way it does, the answer traces back to sessions like the ones that produced this record.',
+      'Original 1971 Westbound pressings are already a real hunt, and prices reflect it; clean first pressings with the original gatefold routinely land in the hundreds. This reissue won\'t replace that pressing in a serious collection, but it gives you a way to actually hear what Hazel and Clinton were doing without gambling on a beat-up copy from a bin. For anyone building a P-Funk section or tracing hip-hop\'s sample lineage back to the source, September 11 is worth circling.',
+    ],
+    shopArtists: [
+      {
+        name: 'Funkadelic',
+        searchTerms: {
+          discogs: 'Funkadelic',
+          ebay: 'Funkadelic vinyl',
+          cdandlp: 'Funkadelic',
+        },
+      },
+    ],
+    seo: {
+      title: 'Funkadelic Maggot Brain Analog Reissue 2026 | Digging in the Sales Crates',
+      description: 'Funkadelic\'s Maggot Brain gets a full analog remaster from the original 1971 tapes, out September 11. What the reissue means for collectors and hip-hop\'s deepest sample lineage.',
+    },
+  },
+
   'fatback-band-king-tim-iii-first-rap-record': {
     slug: 'fatback-band-king-tim-iii-first-rap-record',
     title: 'The Fatback Band Cut the First Rap Record, and It Was Buried on a B-Side',
