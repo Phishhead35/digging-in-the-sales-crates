@@ -7,6 +7,47 @@
 
 export const BLOG_POSTS = {
 
+  'wu-tang-clan-vinyl-collecting-guide': {
+    slug: 'wu-tang-clan-vinyl-collecting-guide',
+    title: 'Starting a Wu-Tang Vinyl Collection: 36 Chambers, Reissues and Essential Solo Albums',
+    series: 'CRATE SPOTLIGHT',
+    date: '2026-07-18',
+    dateDisplay: 'July 18, 2026',
+    excerpt: 'Where to start collecting Wu-Tang Clan on vinyl: the real catalog number for an original Enter the Wu-Tang (36 Chambers) pressing, which reissues are worth grabbing, and the essential solo records that extend the group\'s sound.',
+    body: [
+      'Nine original members, one Staten Island-based crew, and a production style RZA built out of tight budgets, limited equipment and a taste for grimy soul loops. Thirty-plus years later, Wu-Tang Clan still pulls collectors deeper into the crate than almost any other hip-hop group, and the vinyl market reflects it.',
+      'Start with Enter the Wu-Tang (36 Chambers), 1993, Loud Records. This is the record that started it all, and it\'s also the one worth buying carefully. The original 1993 US pressing carries catalog number 07863 66336-1 on the spine and labels, distributed through RCA. Original copies use the period Loud, Wu-Tang Records and RCA label design, but label color alone won\'t authenticate one; several legitimate reissues use similar black-and-yellow elements. Compare the label\'s pressing-ring size and placement, but confirm it against the full runout inscriptions, catalog number, label text and jacket details too; some legitimate later repressings retain the original catalog number, so no single detail is proof on its own.',
+      'Clean original US copies commonly sell for well over $100, swinging sharply by vinyl condition, jacket wear, shrink wrap and confirmed pressing; exceptional or sealed copies can run several hundred. Provenance matters here too, a sealed copy\'s runouts can\'t be inspected, so buy from a seller who can speak to where it came from. Prices checked July 18, 2026; verify current completed sales before buying.',
+      'If you don\'t need the original for shelf value and just want to hear it loud, the 2009 Music On Vinyl 180-gram pressing is one well-documented alternative, and several later black and colored-vinyl repressings are also widely available. For the collector who wants the full experience, Get On Down issued a 30th anniversary box in 2023 built around six split black-and-yellow 7-inch records, a 60-page liner notes book and a set of trading cards, one of the most elaborate official vinyl presentations this album has gotten.',
+      'Wu-Tang Forever (1997) arrived as an ambitious four-LP set, reflecting the album\'s sprawling double-disc CD configuration, and makes a clean original copy a substantial piece in any Wu collection. Reissues stay easier to find than clean 36 Chambers originals, while original four-LP sets get expensive in strong condition. From there the catalog branches out fast, and it doesn\'t stop being Wu-Tang when a solo name\'s on the spine: GZA\'s Liquid Swords, Raekwon\'s Only Built 4 Cuban Linx..., Ghostface Killah\'s Ironman, and Method Man\'s Tical all extend the group\'s sound, each worth its own dig, before The W (2000) picked the group thread back up. We\'ve catalogued essential pressings, labels and years for the full run on our Wu-Tang Clan artist page, plus a dedicated page for Ol\' Dirty Bastard\'s solo catalog specifically.',
+      'This is exactly the kind of catalog where pressing details matter more than usual. A cheap reissue and a $300 original can look identical in a bin from three feet away. Search any of these titles on Digging in the Sales Crates and we\'ll pull live listings from Discogs, eBay, and CDandLP side by side, so you know what you\'re actually looking at before you buy.',
+    ],
+    shopArtists: [
+      {
+        name: 'Wu-Tang Clan',
+        pageSlug: 'wu-tang-clan',
+        searchTerms: {
+          discogs: 'Wu-Tang Clan',
+          ebay: 'Wu-Tang Clan vinyl',
+          cdandlp: 'Wu-Tang Clan',
+        },
+      },
+      {
+        name: 'Ol\' Dirty Bastard',
+        pageSlug: 'old-dirty-bastard',
+        searchTerms: {
+          discogs: 'Ol\' Dirty Bastard',
+          ebay: 'Old Dirty Bastard vinyl',
+          cdandlp: 'Ol Dirty Bastard',
+        },
+      },
+    ],
+    seo: {
+      title: 'Wu-Tang Clan Vinyl Collecting Guide | Digging in the Sales Crates',
+      description: 'How to identify an original Enter the Wu-Tang (36 Chambers) pressing, which reissues are worth buying, and the essential Wu-Tang solo albums every collector should know.',
+    },
+  },
+
   'funkadelic-maggot-brain-reissue-2026': {
     slug: 'funkadelic-maggot-brain-reissue-2026',
     title: 'Maggot Brain Is Getting Cut From Tape Again, and That\'s a Big Deal',
