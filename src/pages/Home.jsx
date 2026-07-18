@@ -205,21 +205,27 @@ export default function Home() {
         textAlign: 'center',
       }}>
 
-        {/* Record only on left side, very subtle — no text bleed */}
+        {/* Record only on left side, very subtle — no text bleed.
+            CSS background-image, not <img>: an <img> here was being picked up as the
+            page's Largest Contentful Paint element (it's the biggest paintable thing
+            in the hero) even at 4% opacity and aria-hidden. loading="lazy" then delayed
+            that "LCP" candidate's paint, which is what drove P99 LCP to ~20s. Background
+            images are never LCP candidates, so this removes it from LCP scoring entirely
+            and lets the H1 become the real LCP element. 7/18/26 fix. */}
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-          <img
-            src="/ditsc_banner_svg_v8.svg"
-            alt=""
+          <div
             aria-hidden="true"
-            loading="lazy"
-            fetchpriority="low"
             style={{
               position: 'absolute',
               left: '-5%', top: '50%',
               transform: 'translateY(-50%)',
-              height: '120%', width: 'auto',
+              height: '120%', width: '100%',
               opacity: 0.04,
               clipPath: 'inset(0 55% 0 0)',
+              backgroundImage: 'url(/ditsc_banner_svg_v8.svg)',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'left center',
+              backgroundSize: 'auto 100%',
             }}
           />
           <div style={{

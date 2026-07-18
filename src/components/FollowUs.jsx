@@ -3,7 +3,7 @@ const FACEBOOK_URL = "https://www.facebook.com/digginginthesalescrates/";
 
 export default function FollowUs() {
   return (
-    <div className="follow-us-section" style={{ justifyContent: 'center', minHeight: '72px' }}>
+    <div className="follow-us-section">
       <span className="follow-us-label">follow ditsc</span>
       <div className="follow-us-links">
         <a
