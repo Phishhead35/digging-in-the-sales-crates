@@ -7,6 +7,44 @@
 
 export const BLOG_POSTS = {
 
+  'mf-doom-vinyl-collecting-guide': {
+    slug: 'mf-doom-vinyl-collecting-guide',
+    title: 'Collecting MF DOOM on Vinyl: What\'s Worth Chasing and What to Verify First',
+    series: 'CRATE SPOTLIGHT',
+    date: '2026-07-20',
+    dateDisplay: 'July 20, 2026',
+    excerpt: 'How to spot an authentic Operation: Doomsday pressing versus a well-made counterfeit, sorting out Madvillainy\'s many editions, and where MM..FOOD and the DOOM alias records fit in a serious collection.',
+    body: [
+      'MF DOOM\'s catalog rewards patience and punishes carelessness. Prices can be high, pressings are numerous, and one of the most valuable widely collected albums in his discography has a well-known counterfeit problem. If you\'re building a DOOM collection, know what you\'re buying before paying grail money for it.',
+      'Start with Operation: Doomsday. Released in 1999 by the small independent label Fondle \'Em Records, it was Daniel Dumile\'s first full-length album under the MF DOOM name and remains one of rap\'s most distinctive debuts.',
+      'The original pressing is generally reported to have been limited to roughly 3,000 copies. One visible identifier is the absence of a conventional barcode on the back cover, where the Fondle \'Em logo appears instead. That is the first thing to check, but it should not be the last.',
+      'Unofficial copies have circulated with artwork and labels that closely resemble the original. The runout or matrix markings are therefore among the most important details to verify. Ask the seller for clear photographs of the back cover, record labels, and runout markings, then compare them with a trusted entry for the 1999 Fondle \'Em pressing. If those details cannot be confirmed, do not pay original-pressing prices. A quick message to the seller can save you a considerable amount of money.',
+      'Madvillainy is the other essential. DOOM and Madlib worked on the project for roughly two years before Stones Throw released it in 2004. It is widely regarded as a landmark of underground and alternative hip-hop.',
+      'Unlike Operation: Doomsday, Madvillainy has remained in print. Its challenge is not scarcity as much as the number of editions available. Stones Throw has issued the standard album repeatedly, along with several distinct versions.',
+      'The 2014 tenth-anniversary edition used updated silver, black, and fluorescent-orange packaging but contained the regular album pressing. An HHV twentieth-anniversary edition followed in 2023, limited to 4,000 colored copies and housed in a gatefold sleeve. For the album\'s twentieth anniversary, Stones Throw later released a 45 rpm audiophile edition on 180-gram vinyl and issued the early Madvillainy Demos on vinyl for the first time in late 2024.',
+      'These are legitimate releases, but they are not interchangeable. Check the catalog number, packaging, vinyl color, speed, and edition details before paying a premium for a copy described merely as "rare."',
+      'Round out the core with MM..FOOD, released later in 2004 through Rhymesayers Entertainment. It is one of the most playful and accessible albums in DOOM\'s catalog, built around food-related wordplay, cartoon dialogue, and tightly constructed production. Original copies and certain special editions are collectible, but legitimate reissues make the album considerably easier to obtain than an original Operation: Doomsday.',
+      'DOOM\'s aliases are worth digging into once those three are covered. King Geedorah\'s Take Me to Your Leader came first, released on Big Dada in June 2003 and built as a loose concept record narrated by a monster watching humanity from above. Viktor Vaughn\'s Vaudeville Villain followed just three months later on the small Sound-Ink label, a tighter, more narrative-driven record produced mostly by the Sound-Ink production team rather than DOOM himself. Then there\'s The Mouse and the Mask, DOOM\'s 2005 collaboration with Danger Mouse as DANGERDOOM: released on Epitaph in the US and on Lex Records in the UK with different cover art between the two, it\'s the most accessible entry point in the catalog and still moves steadily on the secondary market. None of these carry Doomsday money, but they round out a collection and each one sounds like nothing else DOOM made.',
+      'DOOM died on October 31, 2020, and interest in his catalog has remained strong. That makes identification and verification especially important. The records are available, but sellers do not always distinguish clearly between originals, later official editions, and unofficial pressings.',
+      'We track MF DOOM listings across Discogs, eBay, and CDandLP at once, so you can compare what\'s currently on the market before you commit to a copy at grail pricing.',
+    ],
+    shopArtists: [
+      {
+        name: 'MF DOOM',
+        pageSlug: 'mf-doom',
+        searchTerms: {
+          discogs: 'MF DOOM',
+          ebay: 'MF DOOM vinyl',
+          cdandlp: 'MF DOOM',
+        },
+      },
+    ],
+    seo: {
+      title: 'MF DOOM Vinyl Collecting Guide | Digging in the Sales Crates',
+      description: 'How to spot an authentic Operation: Doomsday pressing, sort out Madvillainy\'s many editions, and find MF DOOM\'s essential alias records across Discogs, eBay, and CDandLP.',
+    },
+  },
+
   'wu-tang-clan-vinyl-collecting-guide': {
     slug: 'wu-tang-clan-vinyl-collecting-guide',
     title: 'Starting a Wu-Tang Vinyl Collection: 36 Chambers, Reissues and Essential Solo Albums',
