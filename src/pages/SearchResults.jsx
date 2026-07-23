@@ -328,6 +328,14 @@ export default function SearchResults() {
     setActiveSource('all');
     // Track search term in GA4 — feeds into artist page + blog recommendations
     window.gtag?.('event', 'search', { search_term: query });
+    // Fire view_search_results manually, synchronously, right alongside 'search'.
+    // GA4's automatic Enhanced Measurement site-search detection relies on a
+    // deferred history-change listener that can lose the race if the visitor
+    // navigates away quickly after searching (confirmed via DebugView: it fires
+    // reliably in slow manual testing but under-fires in real traffic — 24
+    // 'search' events vs 2 auto-detected 'view_search_results' in one week).
+    // Firing it here removes that race entirely.
+    window.gtag?.('event', 'view_search_results', { search_term: query });
     doSearch(query, 1, 'all');
   }, [query]);
 
