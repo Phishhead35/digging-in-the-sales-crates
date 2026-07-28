@@ -460,6 +460,39 @@ export const ARTISTS = {
     },
   },
 
+  'boogie-down-productions': {
+    slug: 'boogie-down-productions',
+    name: 'Boogie Down Productions',
+    tagline: 'South Bronx, 1986. KRS-One and Scott La Rock built the blueprint for conscious hip-hop.',
+    genres: ['Hip-Hop', 'Golden Era'],
+    searchTerms: {
+      discogs: 'Boogie Down Productions',
+      ebay: 'Boogie Down Productions vinyl',
+      cdandlp: 'Boogie Down Productions',
+    },
+    bio: [
+      'Boogie Down Productions formed in the South Bronx in 1986 around KRS-One and DJ Scott La Rock. Their 1987 debut, Criminal Minded, is one of hip-hop\'s foundational records: raw, minimal, and built from James Brown breaks and dancehall reggae inflections that few rap records were using yet. Scott La Rock was murdered months after its release, at just 25 years old.',
+      'KRS-One kept the group going, and By All Means Necessary (1988) turned BDP into hip-hop\'s most visible political voice. Its cover, a direct nod to a famous Malcolm X photograph, signaled the shift; "My Philosophy" and "Stop the Violence" became genre-defining statements. Ghetto Music: The Blueprint of Hip Hop and Edutainment followed, cementing KRS-One\'s reputation as "The Teacher."',
+      'Original B-Boy Records pressings of Criminal Minded are the real grail here: hard to find in strong condition and expensive when they surface. The Jive-era albums, from By All Means Necessary through Sex and Violence, are more accessible entry points. KRS-One went fully solo after 1992, and Return of the Boom Bap (1993) is often collected alongside the BDP catalog as a continuation of the same body of work.',
+    ],
+    essentialRecords: [
+      { title: 'Criminal Minded', year: 1987, label: 'B-Boy Records' },
+      { title: 'By All Means Necessary', year: 1988, label: 'Jive' },
+      { title: 'Ghetto Music: The Blueprint of Hip Hop', year: 1989, label: 'Jive' },
+      { title: 'Edutainment', year: 1990, label: 'Jive' },
+      { title: 'Sex and Violence', year: 1992, label: 'Jive' },
+      { title: 'Return of the Boom Bap', year: 1993, label: 'Jive' },
+    ],
+    producerCredits: [
+      'Scott La Rock — Criminal Minded (1987)',
+      'KRS-One — self-produced, By All Means Necessary onward',
+    ],
+    seo: {
+      title: 'Boogie Down Productions Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Boogie Down Productions and KRS-One vinyl across Discogs, eBay, and CDandLP. Shop Criminal Minded, By All Means Necessary, and rare B-Boy Records pressings.',
+    },
+  },
+
 };
 
 export const GENRES = {
