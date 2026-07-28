@@ -7,6 +7,37 @@
 
 export const BLOG_POSTS = {
 
+  'boogie-down-productions-vinyl-collecting-guide': {
+    slug: 'boogie-down-productions-vinyl-collecting-guide',
+    title: 'Collecting Boogie Down Productions: Why Criminal Minded Still Commands Crate Space',
+    series: 'CRATE SPOTLIGHT',
+    date: '2026-07-27',
+    dateDisplay: 'July 27, 2026',
+    excerpt: 'Why an original B-Boy Records pressing of Criminal Minded is a genuine collector grail, how Scott La Rock\'s death reshaped the group, and why By All Means Necessary\'s 2024 reissue makes it the easier entry point today.',
+    body: [
+      'Boogie Down Productions belongs in the same conversation as Wu-Tang Clan and Public Enemy when it comes to hip-hop\'s foundational catalogs. Cross-platform engagement on our BDP content has outpaced every other artist we\'ve tracked this year by a wide margin, which tells us collectors and casual fans alike still want to talk about this group.',
+      'Start with Criminal Minded. Released March 3, 1987 on B-Boy Records (catalog number BB 4787), it\'s widely credited as one of the records that pushed hip-hop toward harder, more explicit realism, years before "gangsta rap" became a genre label. The original pressing carries gold labels and no barcode on the jacket, details serious collectors use to separate a first press from everything that came after. Those later pressings exist because the original B-Boy run was small and independent; Criminal Minded has been repressed multiple times since, including colored vinyl and Record Store Day exclusive editions, which makes it far easier to own a playable copy than to land an original.',
+      'The record\'s history carries real weight, too. Five months after Criminal Minded came out, DJ Scott La Rock was shot and killed while trying to defuse an unrelated dispute in the Bronx. That loss reshaped the group. KRS-One\'s follow-up, By All Means Necessary (Jive Records, April 12, 1988), traded the debut\'s outlaw posture for the "Teacher" persona KRS-One is still known for, built on tracks like "My Philosophy" and "Stop the Violence." A 2024 reissue on 180g orange vinyl, done in partnership with Jive, means By All Means Necessary is currently the easier of the two records to track down in solid shape and at a fair price.',
+      'For crate diggers, that\'s the real appeal here. Criminal Minded rewards the hunt (an original B-Boy pressing is a genuine grail for serious collectors), while By All Means Necessary is a should-own record that a recent reissue has made accessible again. Both belong in any serious hip-hop collection, and both show up across Discogs, eBay, and CDandLP listings when you search for them.',
+      'We\'ve got Boogie Down Productions\' page live on Digging in the Sales Crates now, pulling listings across Discogs, eBay, and CDandLP in one search. If you\'re building out a golden-era hip-hop collection, Criminal Minded and By All Means Necessary both belong near the front of the crate.',
+    ],
+    shopArtists: [
+      {
+        name: 'Boogie Down Productions',
+        pageSlug: 'boogie-down-productions',
+        searchTerms: {
+          discogs: 'Boogie Down Productions',
+          ebay: 'Boogie Down Productions vinyl',
+          cdandlp: 'Boogie Down Productions',
+        },
+      },
+    ],
+    seo: {
+      title: 'Boogie Down Productions Vinyl Collecting Guide | Digging in the Sales Crates',
+      description: 'Why Criminal Minded\'s original B-Boy pressing is a collector grail, how Scott La Rock\'s death reshaped Boogie Down Productions, and why By All Means Necessary\'s 2024 reissue is the easier entry point today.',
+    },
+  },
+
   'mf-doom-vinyl-collecting-guide': {
     slug: 'mf-doom-vinyl-collecting-guide',
     title: 'Collecting MF DOOM on Vinyl: What\'s Worth Chasing and What to Verify First',
