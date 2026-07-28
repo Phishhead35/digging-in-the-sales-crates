@@ -3,7 +3,13 @@ const FACEBOOK_URL = "https://www.facebook.com/digginginthesalescrates/";
 
 export default function FollowUs() {
   return (
-    <div className="follow-us-section">
+    // minHeight reserves space for this section before it renders/hydrates so the
+    // footer below it doesn't jump when this mounts (CLS fix). Set inline rather
+    // than relying only on CSS so it's guaranteed regardless of stylesheet load
+    // order. ~72px covers the single-row layout (label + two pills); on narrow
+    // viewports where flex-wrap pushes the pills to a second row this undershoots
+    // slightly, which is a much smaller shift than reserving no height at all.
+    <div className="follow-us-section" style={{ minHeight: 72 }}>
       <span className="follow-us-label">follow ditsc</span>
       <div className="follow-us-links">
         <a

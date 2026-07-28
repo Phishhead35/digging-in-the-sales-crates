@@ -4,6 +4,11 @@ import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, Ch
 import { searchDiscogs, searchEbay, searchCDandLP, formatPrice } from '../utils/api';
 import useSEO from '../hooks/useSEO';
 
+// Number of results requested per page. Also used to size the loading-skeleton
+// grid below, so the skeleton's height roughly matches the real results grid's
+// height and swapping loading -> loaded doesn't cause a big layout shift (CLS).
+const RESULTS_PER_PAGE = 20;
+
 // ── GA4 store click tracker ───────────────────────────────────
 // Fires store_click when a visitor clicks through to a marketplace
 // from search results. Mirrors trackStoreClick in Home.jsx so all
@@ -261,7 +266,7 @@ export default function SearchResults() {
       const combined = [];
 
       if (src === 'all' || src === 'discogs') {
-        const data = await searchDiscogs(q, pg, 20);
+        const data = await searchDiscogs(q, pg, RESULTS_PER_PAGE);
         const items = (data.results || []).map(r => ({ ...r, source: 'discogs' }));
         combined.push(...items);
         if (data.pagination) setTotalPages(data.pagination.pages || 1);
@@ -422,7 +427,7 @@ export default function SearchResults() {
 
       {loading && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(220px, 100%), 1fr))', gap: 20 }}>
-          {Array(8).fill(0).map((_, i) => (
+          {Array(RESULTS_PER_PAGE).fill(0).map((_, i) => (
             <div key={i} style={{ borderRadius: 16, overflow: 'hidden', background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
               <div className="skeleton" style={{ aspectRatio: '1' }} />
               <div style={{ padding: 16 }}>
