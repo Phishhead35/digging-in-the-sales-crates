@@ -13,6 +13,20 @@
 //
 //  To add a static route, edit STATIC_PAGES below.
 //  Artist, genre, and blog routes are read from src/data/*.
+//
+//  TRAILING SLASHES (fixed 2026-07-28 — see urlPath() below):
+//  Every page is written as build/<route>/index.html, which is a
+//  directory-style output. Static hosts (Cloudflare Pages included)
+//  serve that by 301-redirecting a slash-less request to the
+//  trailing-slash URL. og:url, the canonical tag, and sitemap.xml
+//  were previously built from the slash-less `page.path`, so every
+//  URL the sitemap told Google to crawl 301'd on arrival — Search
+//  Console flagged this as "Redirect error" / "Page with redirect"
+//  across 12 pages (GSC audit, 2026-07-28). urlPath() below is the
+//  single place that decides the public URL shape; every page this
+//  script generates — including next week's blog post or artist
+//  page — routes through it automatically. Nothing else to remember
+//  when adding new content.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -25,6 +39,12 @@ const ROOT = path.resolve(__dirname, '..');
 const BUILD = path.join(ROOT, 'build');
 const BASE = 'https://digginginthesalescrates.com';
 const SITE = 'Digging in the Sales Crates';
+
+// The one place that decides the public URL shape for a route path.
+// Matches the directory+index.html structure written below (outDir),
+// so the sitemap/canonical/og:url always match what the static host
+// actually serves — no redirect on arrival, ever.
+const urlPath = (p) => (p === '/' || p.endsWith('/') ? p : `${p}/`);
 
 // ── Load data modules (src/data files are plain ESM; copy to a
 //    temp .mjs so Node imports them regardless of package type) ──
@@ -59,7 +79,7 @@ function replaceMeta(html, attr, key, value) {
 }
 
 function renderPage(template, page) {
-  const url = BASE + (page.path === '/' ? '/' : page.path);
+  const url = BASE + urlPath(page.path);
   let html = template;
 
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${esc(page.title)}</title>`);
@@ -75,7 +95,7 @@ function renderPage(template, page) {
 
   // canonical + JSON-LD go just before </head>.
   // CanonicalTag.jsx updates (not duplicates) an existing canonical link.
-  const canonical = BASE + (page.canonical || page.path);
+  const canonical = BASE + urlPath(page.canonical || page.path);
   let headExtra = `<link rel="canonical" href="${esc(canonical)}"/>`;
   if (page.jsonLd) {
     headExtra += `<script type="application/ld+json">${JSON.stringify(page.jsonLd)}</script>`;
@@ -246,7 +266,7 @@ async function main() {
             '@type': 'MusicGroup',
             name: entry.name,
             genre: entry.genres,
-            url: `${BASE}/artists/${entry.slug}`,
+            url: `${BASE}${urlPath(`/artists/${entry.slug}`)}`,
           }
         : undefined,
     content:
@@ -299,7 +319,7 @@ async function main() {
         headline: post.title,
         datePublished: post.date,
         description: post.seo?.description || post.excerpt || '',
-        url: `${BASE}/blog/${post.slug}`,
+        url: `${BASE}${urlPath(`/blog/${post.slug}`)}`,
         author: { '@type': 'Organization', name: SITE, url: BASE },
         publisher: { '@type': 'Organization', name: SITE, url: BASE },
       },
@@ -333,7 +353,7 @@ async function main() {
       .filter((pg) => !pg.canonical) // skip /search (canonical → /aggregator)
       .map(
         (pg) =>
-          `  <url>\n    <loc>${BASE}${pg.path === '/' ? '/' : pg.path}</loc>\n` +
+          `  <url>\n    <loc>${BASE}${urlPath(pg.path)}</loc>\n` +
           `    <lastmod>${lastmodFor(pg)}</lastmod>\n  </url>`
       )
       .join('\n') +
