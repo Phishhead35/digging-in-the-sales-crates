@@ -493,6 +493,40 @@ export const ARTISTS = {
     },
   },
 
+  'pete-rock': {
+    slug: 'pete-rock',
+    name: 'Pete Rock',
+    tagline: 'The Soul Brother. Boom bap\'s most sampled sampler.',
+    genres: ['Hip-Hop', 'Golden Era'],
+    searchTerms: {
+      discogs: 'Pete Rock',
+      ebay: 'Pete Rock vinyl',
+      cdandlp: 'Pete Rock',
+    },
+    bio: [
+      'Pete Rock is half of Pete Rock & CL Smooth and one of hip-hop\'s most influential producers, full stop. "They Reminisce Over You (T.R.O.Y.)," released April 2, 1992 as an Elektra 12" ahead of the album, is his signature: a tribute to Trouble T Roy of Heavy D & the Boyz, built from a loop of Tom Scott and The California Dreamers\' 1967 cover of Jefferson Airplane\'s "Today." Pete Rock flipped that same source two more times on the same album, on "Return of the Mecca" and "Skinz" — three different chops of one loop, and none of them sound repetitive.',
+      'Mecca and the Soul Brother, the album built around T.R.O.Y., dropped June 9, 1992 on Elektra and is a cornerstone of golden-era boom bap: dense soul horns, drums mixed loud and dry. The Main Ingredient followed on November 8, 1994, also on Elektra — a tighter, moodier record and the duo\'s final album together, still underrated relative to Mecca.',
+      'Pete Rock\'s solo debut, Soul Survivor, arrived November 10, 1998 on Loud/RCA, almost entirely self-produced. His outside production work runs deep too: he produced Nas\'s "The World Is Yours" (1994, Columbia), built from an Ahmad Jamal loop, and spent the mid-1990s on InI\'s Center of Attention, a shelved group album that finally surfaced in 2003 on BBE\'s Lost & Found: Hip Hop Underground Soul Classics. Deep-catalog territory for collectors chasing the full production discography, not just the CL Smooth albums.',
+    ],
+    essentialRecords: [
+      { title: 'Pete Rock & CL Smooth — They Reminisce Over You (T.R.O.Y.) 12"', year: 1992, label: 'Elektra' },
+      { title: 'Pete Rock & CL Smooth — Mecca and the Soul Brother', year: 1992, label: 'Elektra' },
+      { title: 'Pete Rock & CL Smooth — The Main Ingredient', year: 1994, label: 'Elektra' },
+      { title: 'Nas — The World Is Yours 12" (Pete Rock production)', year: 1994, label: 'Columbia' },
+      { title: 'Soul Survivor', year: 1998, label: 'Loud / RCA' },
+      { title: 'InI — Center of Attention (Lost & Found: Hip Hop Underground Soul Classics)', year: 2003, label: 'BBE' },
+    ],
+    producerCredits: [
+      'Pete Rock — self-produced, Pete Rock & CL Smooth catalog and Soul Survivor',
+      'Pete Rock — Nas, "The World Is Yours" (1994)',
+      'Pete Rock — InI, Center of Attention (recorded mid-1990s, released 2003)',
+    ],
+    seo: {
+      title: 'Pete Rock Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Pete Rock and Pete Rock & CL Smooth vinyl across Discogs, eBay, and CDandLP. Shop Mecca and the Soul Brother, T.R.O.Y., and rare Elektra pressings.',
+    },
+  },
+
 };
 
 export const GENRES = {
