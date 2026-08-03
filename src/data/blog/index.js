@@ -7,6 +7,38 @@
 
 export const BLOG_POSTS = {
 
+  'pete-rock-vinyl-collecting-guide': {
+    slug: 'pete-rock-vinyl-collecting-guide',
+    title: 'Pete Rock & CL Smooth: The Sample That Still Defines Boom Bap Vinyl',
+    series: 'CRATE SPOTLIGHT',
+    date: '2026-08-03',
+    dateDisplay: 'August 3, 2026',
+    excerpt: 'How one Tom Scott sample, flipped three times on Mecca and the Soul Brother, built Pete Rock\'s legend, and where The Main Ingredient and Soul Survivor fit into a serious Pete Rock collection.',
+    body: [
+      'Pete Rock\'s catalog has been generating more cross-platform engagement than almost anything else we\'ve tracked recently, and there\'s a clear reason: one sample, chopped three different ways on one album, still anchors his entire legacy.',
+      'Start with "They Reminisce Over You (T.R.O.Y.)," released April 2, 1992 on Elektra as a 12" single ahead of the album. Pete Rock wrote it as a tribute to Trouble T Roy, the Heavy D & the Boyz dancer who died in 1990, and CL Smooth\'s verses turned it into hip-hop\'s definitive eulogy record. The sample underneath is Tom Scott and The California Dreamers\' 1967 recording of "Today," itself a cover of Jefferson Airplane\'s original off Surrealistic Pillow. Pete Rock didn\'t stop at one flip: that same Tom Scott source shows up again on "Return of the Mecca" and "Skinz" (featuring Grand Puba), all from the same record. Three different chops of one loop, and none of them sound repetitive. That\'s the whole Pete Rock production philosophy in miniature.',
+      'The album built around it, Mecca and the Soul Brother, dropped June 9, 1992 on Elektra. It\'s a cornerstone of golden-era boom bap, dense with soul horns and drums mixed loud and dry, and it\'s the record every serious hip-hop collector eventually finds themselves chasing a clean pressing of. We\'ve already got it flagged on our Golden Era Hip-Hop page as one of the genre\'s defining releases.',
+      'The duo followed up with The Main Ingredient on November 8, 1994, also on Elektra, their second and final album together before going separate ways. It\'s a tighter, moodier record than Mecca, and copies move steadily on the secondary market without commanding the same premiums, which makes it a genuinely underrated pickup right now.',
+      'Pete Rock\'s solo turn came with Soul Survivor, released November 10, 1998 on Loud/RCA. Self-produced almost entirely, it\'s where his catalog as a producer-first artist really opens up, and it connects directly to the Wu-Tang and Loud Records ecosystem we\'ve covered before.',
+      'We\'ve got Pete Rock\'s page live on Digging in the Sales Crates now, pulling listings across Discogs, eBay, and CDandLP in one search. Search "Pete Rock" or "Pete Rock CL Smooth" and compare what\'s actually available before you buy.',
+    ],
+    shopArtists: [
+      {
+        name: 'Pete Rock',
+        pageSlug: 'pete-rock',
+        searchTerms: {
+          discogs: 'Pete Rock',
+          ebay: 'Pete Rock vinyl',
+          cdandlp: 'Pete Rock',
+        },
+      },
+    ],
+    seo: {
+      title: 'Pete Rock & CL Smooth Vinyl Collecting Guide | Digging in the Sales Crates',
+      description: 'How the T.R.O.Y. sample built Pete Rock\'s legacy, why Mecca and the Soul Brother and The Main Ingredient are essential, and where Soul Survivor fits in a Pete Rock vinyl collection.',
+    },
+  },
+
   'boogie-down-productions-vinyl-collecting-guide': {
     slug: 'boogie-down-productions-vinyl-collecting-guide',
     title: 'Collecting Boogie Down Productions: Why Criminal Minded Still Commands Crate Space',
