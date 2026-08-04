@@ -21,6 +21,10 @@ const ArtistPage = lazy(() => import('./pages/ArtistPage'));
 const Artists = lazy(() => import('./pages/Artists'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
+// Phase 2 (Homepage & Content Hub): Watch & Read replaces Blog as the primary
+// content nav destination. /blog and /blog/:slug stay live and indexed
+// (see prerender.mjs) — they're just no longer linked from primary nav.
+const WatchAndRead = lazy(() => import('./pages/WatchAndRead'));
 
 // box-sizing is set in index.css; overflow-x and img/video/iframe rules are kept here
 // because they use !important to override any inline styles set by third-party scripts.
@@ -59,6 +63,7 @@ export default function App() {
             <Route path="/genres/:slug" element={<ArtistPage type="genre" />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/watch-read" element={<WatchAndRead />} />
           </Routes>
         </Suspense>
       </Layout>

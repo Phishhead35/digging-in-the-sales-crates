@@ -25,12 +25,17 @@ export default function Layout({ children }) {
 
   useEffect(() => { setMobileOpen(false); }, [location]);
 
+  // Phase 2 (Homepage & Content Hub): "Blog" nav item replaced with
+  // "Watch & Read" (/watch-read), the new combined video + written content
+  // destination. /blog and /blog/:slug still exist and are still indexed —
+  // see prerender.mjs — they're just no longer linked from primary nav, per
+  // the Phase 2 SEO decision to avoid any redirect/broken-link risk.
   const navLinks = [
     { to: '/',                   label: 'Home',              icon: Home },
     { to: '/aggregator',         label: 'Aggregator-Dig',    icon: Search },
     { to: '/artists',            label: 'Artists',           icon: Disc3 },
     { to: '/deals',              label: 'Deals',             icon: TrendingDown },
-    { to: '/blog',               label: 'Blog',              icon: BookOpen,  comingSoon: true },
+    { to: '/watch-read',         label: 'Watch & Read',      icon: BookOpen },
     { to: '/featured-partners',  label: 'Featured Partners', icon: Star,      comingSoon: true },
     { to: '/local-shops',        label: "Where's My Shop?",  icon: MapPin },
     { to: '/wishlist',           label: 'Wishlist',          icon: Heart },

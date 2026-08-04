@@ -1,7 +1,9 @@
-import React, { useState, useEffect, startTransition } from 'react';
+import React, { useState, startTransition } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Search, TrendingDown, Star, ArrowRight, Disc3, ExternalLink, BookOpen, Youtube } from 'lucide-react';
+import { Search, TrendingDown, Star, ArrowRight, Disc3, ExternalLink } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
+import useLatestVideos from '../hooks/useLatestVideos';
+import VideoCard from '../components/VideoCard';
 import { MA_STORES, RINH_STORES } from '../data/partnerStores';
 
 const TRENDING_SEARCHES = [
@@ -17,50 +19,7 @@ const DEALS_PREVIEW = [
   { title: 'MF DOOM – Mm..Food', store: 'ADamnShame', price: '$29.99', was: '$55.00', condition: 'VG+' },
 ];
 
-// ── PHASE 1 (Homepage Content Automation): live YouTube videos ─────────
-// This section used to be a hand-typed array of specific YouTube Shorts URLs,
-// three months stale. It now fetches the channel's actual latest uploads from
-// /api/latest-videos (backed by ditsc-automation-worker's 6-hour cron writing
-// into Cloudflare KV). FALLBACK_VIDEOS below is the last-known-good hardcoded
-// array — it's what renders if the fetch fails, errors, or the cache is empty,
-// so this section never goes blank. Do not delete without replacing.
 const VIDEO_CARD_COLORS = ['#f59e0b', '#2ec4b6', '#e63946'];
-
-const FALLBACK_VIDEOS = [
-  {
-    id: 'fallback-1',
-    label: 'SAMPLE DNA',
-    title: 'James Brown to Redman: The Break That Built an Era',
-    url: 'https://youtube.com/shorts/vR_81bXR3JI?si=hpo297xYWZXZ6I9R',
-    thumbnail: null,
-    publishedAt: null,
-  },
-  {
-    id: 'fallback-2',
-    label: 'WU-TANG WEDNESDAY',
-    title: 'GZA & Ghostface: The Samples Behind Liquid Swords',
-    url: 'https://youtube.com/shorts/JKlC8IN0Hvo?si=cj24315nS8QJXdQj',
-    thumbnail: null,
-    publishedAt: null,
-  },
-  {
-    id: 'fallback-3',
-    label: 'THROWBACK THURSDAY',
-    title: 'The Beatnuts: Forgotten Classics Worth Digging For',
-    url: 'https://youtube.com/shorts/roBlGste3ik?si=8zD82hVXAHrdYAe1',
-    thumbnail: null,
-    publishedAt: null,
-  },
-];
-
-function formatPublished(dateStr) {
-  if (!dateStr) return null;
-  try {
-    return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  } catch {
-    return null;
-  }
-}
 
 // ── Store data ────────────────────────────────────────────────
 // MA_STORES and RINH_STORES now live in src/data/partnerStores.js,
@@ -93,6 +52,10 @@ function trackStoreClick(storeName, storeUrl) {
     store_url: storeUrl,
   });
   notifyStoreClick(`${storeName} (homepage partner card)`);
+}
+
+function trackWatchReadClick(source) {
+  window.gtag?.('event', 'watch_read_click', { source });
 }
 
 // ── StoreCard component ───────────────────────────────────────
@@ -179,32 +142,13 @@ function StoreCard({ store }) {
 
 export default function Home() {
   const [query, setQuery] = useState('');
-  const [videos, setVideos] = useState(FALLBACK_VIDEOS);
   const navigate = useNavigate();
+  const videos = useLatestVideos();
 
   useSEO({
     title: 'Digging in the Sales Crates | Vinyl Record Price Comparison',
     description: 'Find the lowest prices on vinyl records across Discogs, eBay, and CDandLP. Taking the Dig Out of Digging™ — search rare hip-hop, jazz, and soul LPs in seconds.',
   });
-
-  // Phase 1: fetch the live "latest videos" cache on mount. Client-side, small
-  // JSON payload, fires after initial render — doesn't touch LCP. If the fetch
-  // fails, errors, or returns an empty array, `videos` simply stays at its
-  // FALLBACK_VIDEOS initial value — never blank, never a broken layout.
-  useEffect(() => {
-    let cancelled = false;
-    fetch('/api/latest-videos')
-      .then((res) => res.json())
-      .then((data) => {
-        if (!cancelled && Array.isArray(data?.videos) && data.videos.length > 0) {
-          setVideos(data.videos);
-        }
-      })
-      .catch(() => {
-        // Silent — fallback array is already the current state.
-      });
-    return () => { cancelled = true; };
-  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -345,7 +289,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FEATURED STORES ──────────────────────────────────── */}
+      {/* ── FEATURED STORES ("Shops We Dig") ─────────────────────────
+          Phase 2 ground rule: stays in position 2, immediately after the
+          hero. Layout, store-card count, and all links are unchanged. */}
       <section style={{ padding: '64px 24px', borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
 
@@ -393,11 +339,54 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── LATEST DEALS PREVIEW ─────────────────────────────── */}
+      {/* ── LATEST FROM DITSC ─────────────────────────────────────
+          Phase 2, new: compact video strip, position 3. Deliberately not a
+          second hero — three cards, a short heading, one link to Watch &
+          Read. Reuses the exact Phase 1 /api/latest-videos data via the
+          shared useLatestVideos hook; no new fetch, cron, or cache. */}
+      <section style={{ padding: '48px 24px', borderTop: '1px solid var(--border)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
+            <div>
+              <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 8 }}>
+                FROM THE CHANNEL
+              </p>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, letterSpacing: 1 }}>
+                LATEST FROM DITSC
+              </h2>
+            </div>
+            <Link
+              to="/watch-read"
+              onClick={() => trackWatchReadClick('homepage_section_link')}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+                color: 'var(--amber)', fontSize: 13, fontWeight: 600,
+                textDecoration: 'none',
+              }}
+            >
+              Watch & Read <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 14 }}>
+            {videos.map((video, i) => (
+              <VideoCard
+                key={video.id || video.url}
+                video={video}
+                color={VIDEO_CARD_COLORS[i % VIDEO_CARD_COLORS.length]}
+                compact
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── LATEST DEALS PREVIEW ("Fresh in the Crates") ──────────── */}
       <section style={{ padding: '64px 24px', borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
 
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 28, flexWrap: 'wrap', gap: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 12, flexWrap: 'wrap', gap: 12 }}>
             <div>
               <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 8 }}>
                 LATEST DEALS
@@ -414,6 +403,15 @@ export default function Home() {
               See all deals <ArrowRight size={14} />
             </Link>
           </div>
+
+          {/* Phase 2: these cards are still static data (see DEALS_PREVIEW
+              above), so no "updated X ago" timestamp is added — that would be
+              misleading. This disclosure line makes the static nature
+              explicit instead. Remove/replace only once this section is
+              wired to a live data source. */}
+          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 24, maxWidth: 560 }}>
+            Recent vinyl deals worth checking out. Prices and availability may change.
+          </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 14 }}>
             {DEALS_PREVIEW.map((deal) => (
@@ -440,133 +438,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── BLOG / VIDEO PREVIEW ─────────────────────────────── */}
-      <section style={{ padding: '64px 24px', borderTop: '1px solid var(--border)' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 28, flexWrap: 'wrap', gap: 12 }}>
-            <div>
-              <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 8 }}>
-                FROM THE BLOG
-              </p>
-              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 36, letterSpacing: 1 }}>
-                SAMPLE SCIENCE
-              </h2>
-            </div>
-            <Link to="/blog" style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6,
-              color: 'var(--amber)', fontSize: 13, fontWeight: 600,
-              textDecoration: 'none',
-            }}>
-              All posts <ArrowRight size={14} />
-            </Link>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20 }}>
-            {videos.map((video, i) => {
-              const color = VIDEO_CARD_COLORS[i % VIDEO_CARD_COLORS.length];
-              const published = formatPublished(video.publishedAt);
-              return (
-                <div
-                  key={video.id || video.url}
-                  style={{
-                    background: 'var(--bg-card)', border: '1px solid var(--border)',
-                    borderRadius: 16, overflow: 'hidden',
-                    transition: 'border-color 0.2s, transform 0.2s',
-                  }}
-                  onMouseOver={e => { e.currentTarget.style.borderColor = color; e.currentTarget.style.transform = 'translateY(-3px)'; }}
-                  onMouseOut={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = 'translateY(0)'; }}
-                >
-                  {/* Thumbnail — fixed height reserved up front to avoid layout shift
-                      whether or not a real thumbnail URL is present. */}
-                  <div style={{ height: 140, background: `${color}14`, position: 'relative', overflow: 'hidden' }}>
-                    {video.thumbnail ? (
-                      <img
-                        src={video.thumbnail}
-                        alt={video.title}
-                        width={320}
-                        height={140}
-                        loading="lazy"
-                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                      />
-                    ) : (
-                      <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <Youtube size={28} color={color} />
-                      </div>
-                    )}
-                  </div>
-
-                  <div style={{ padding: '16px 20px 20px' }}>
-                    <div style={{
-                      fontSize: 9, fontFamily: 'var(--font-mono)', letterSpacing: 2,
-                      color, fontWeight: 600, marginBottom: 10,
-                    }}>
-                      {video.label || 'LATEST UPLOAD'}
-                    </div>
-                    <h3 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4, marginBottom: 10 }}>
-                      {video.title}
-                    </h3>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 14 }}>
-                      {published || 'From the vault'}
-                    </div>
-                    <a
-                      href={video.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-flex', alignItems: 'center', gap: 5,
-                        padding: '5px 12px', borderRadius: 20,
-                        border: `1px solid ${color}`,
-                        color, fontSize: 11, fontWeight: 600,
-                        textDecoration: 'none', letterSpacing: 0.3,
-                        background: 'transparent',
-                        transition: 'background 0.15s',
-                      }}
-                      onMouseOver={e => { e.currentTarget.style.background = `${color}22`; }}
-                      onMouseOut={e => { e.currentTarget.style.background = 'transparent'; }}
-                    >
-                      ▶ Watch on YouTube
-                    </a>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* YouTube CTA */}
-          <div style={{
-            marginTop: 24, padding: '18px 24px',
-            background: 'var(--bg-card)', border: '1px solid var(--border)',
-            borderRadius: 12, display: 'flex',
-            alignItems: 'center', justifyContent: 'space-between',
-            flexWrap: 'wrap', gap: 12,
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <Youtube size={18} color="#e63946" />
-              <span style={{ fontSize: 14, color: 'var(--text-primary)' }}>
-                <strong>29K+ views</strong>
-                <span style={{ color: 'var(--text-secondary)', marginLeft: 6 }}>and growing. Watch the full series on YouTube.</span>
-              </span>
-            </div>
-            <a
-              href="https://www.youtube.com/@digginginthesalescrates"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                padding: '8px 18px', borderRadius: 8,
-                background: '#e6394615', border: '1px solid rgba(230,57,70,0.3)',
-                color: '#e63946', fontSize: 13, fontWeight: 600,
-                textDecoration: 'none',
-              }}
-            >
-              Subscribe <ArrowRight size={13} />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ── AGGREGATOR CTA ────────────────────────────────────── */}
+      {/* ── AGGREGATOR CTA (final supporting CTA) ─────────────────── */}
       <section style={{ padding: '64px 24px', borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', textAlign: 'center' }}>
           <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 20 }}>

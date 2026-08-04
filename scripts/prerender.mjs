@@ -27,6 +27,13 @@
 //  script generates — including next week's blog post or artist
 //  page — routes through it automatically. Nothing else to remember
 //  when adding new content.
+//
+//  PHASE 2 (Homepage & Content Hub, Aug 2026): added /watch-read to
+//  STATIC_PAGES below and swapped it in for /blog in the crawler nav
+//  list. /blog and every /blog/:slug entry (further down, generated
+//  from BLOG_POSTS) are UNCHANGED — still generated, still in the
+//  sitemap, still indexed. Watch & Read is additive, not a
+//  replacement of the blog's URLs or SEO data.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -137,7 +144,7 @@ async function main() {
       ['/deals', 'Current vinyl deals & price alerts'],
       ['/email-parser', 'AI email deal parser'],
       ['/artists', 'Artist & genre pages'],
-      ['/blog', 'Blog: reissue radar, sample connections & more'],
+      ['/watch-read', 'Watch & Read: DITSC videos and written stories'],
       ['/local-shops', 'New England record shop directory'],
       ['/faq', 'FAQ'],
     ]
@@ -235,6 +242,19 @@ async function main() {
         h1('Frequently Asked Questions') +
         p('How the site works, where listings come from, and how affiliate links keep the tool free.'),
     },
+    {
+      // Phase 2, new. /blog and /blog/:slug (below) are unchanged and still
+      // generated/indexed — this is additive, not a replacement.
+      path: '/watch-read',
+      title: `Watch & Read | ${SITE}`,
+      description:
+        'Videos, stories, and recurring series from DITSC — the latest YouTube uploads, weekly playlist series, and written vinyl-collecting guides.',
+      content:
+        h1('Watch & Read') +
+        p('Videos, stories, and recurring series from DITSC.') +
+        p('Latest YouTube uploads, weekly series like Sample DNA and Wu-Tang Wednesday, and written vinyl-collecting guides.') +
+        `<p>${a('/blog', 'Browse written stories')} · ${a('https://www.youtube.com/@digginginthesalescrates', 'Visit the YouTube channel')}</p>`,
+    },
   ];
   pages.push(...STATIC_PAGES);
 
@@ -286,7 +306,8 @@ async function main() {
   pages.push(...artistEntries.map((e) => artistPage(e, 'artists')));
   pages.push(...genreEntries.map((e) => artistPage(e, 'genres')));
 
-  // ── Blog index ──
+  // ── Blog index (UNCHANGED in Phase 2 — /blog stays live and indexed,
+  //    it's just no longer linked from primary nav; see Layout.jsx) ──
   const posts = Object.values(BLOG_POSTS).sort((x, y) => (x.date < y.date ? 1 : -1));
   pages.push({
     path: '/blog',
@@ -306,7 +327,7 @@ async function main() {
         .join(''),
   });
 
-  // ── Blog posts ──
+  // ── Blog posts (UNCHANGED in Phase 2 — every existing URL keeps working) ──
   pages.push(
     ...posts.map((post) => ({
       path: `/blog/${post.slug}`,
