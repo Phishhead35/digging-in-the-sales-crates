@@ -25,13 +25,19 @@ const VIDEO_CARD_COLORS = ['#f59e0b', '#2ec4b6', '#e63946'];
 // Online-only resources (not physical retail), kept separate from
 // MA_STORES/RINH_STORES since they have no location/phone/seller page.
 // Single-link entries render via StoreCard's default full-card-clickable
-// variant (no siteUrl/ebayUrl set).
+// variant (no siteUrl/ebayUrl set). `featured: true` adds the accent
+// border + "AS SEEN IN OUR CRATES" badge — Recordbuilds links back to
+// DITSC from their vinyl records guide, so it earns the standout look.
+// `extra` is a second paragraph (Recordbuilds' About Us copy) rendered
+// below the main description.
 const ONLINE_FRIENDS = [
   {
     name: 'Recordbuilds',
     type: 'Vinyl Setup Builder',
     location: 'Online',
     desc: 'Pick the right setup before you buy.',
+    extra: 'Whether you’re upgrading a setup you already have or buying your very first record player, we’ve got your back. If you want to nerd out on the details, cool. If you just want a simple way to make an easy decision, also cool. Our stuff is built for both.',
+    featured: true,
     url: 'https://builder.recordbuilds.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=recordbuilds',
   },
 ];
@@ -77,6 +83,10 @@ function trackWatchReadClick(source) {
 // Extracted to eliminate duplicated map logic between MA and RI/NH sections.
 // className="store-card", all href values, and all UTM parameters are byte-identical
 // to the original inline code. Do not rename store-card — GTM may reference it.
+//
+// `store.featured` and `store.extra` are opt-in additions for the single-link
+// (default) variant only — existing MA/RI-NH store cards are untouched unless
+// they explicitly set these fields.
 
 function StoreCard({ store }) {
   // Three-button variant: Website + Discogs + eBay
@@ -142,8 +152,25 @@ function StoreCard({ store }) {
   return (
     <a href={store.url} target="_blank" rel="noopener noreferrer" className="store-card"
       onClick={() => trackStoreClick(store.name, store.url)}
-      style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)', textDecoration: 'none' }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
+      style={{
+        display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)',
+        border: store.featured ? '2px solid var(--amber)' : '1px solid var(--border)',
+        textDecoration: 'none', position: 'relative',
+      }}>
+      {store.featured && (
+        <span style={{
+          position: 'absolute', top: -10, left: 18,
+          background: 'var(--amber)', color: '#412402',
+          fontSize: 10, fontWeight: 700, letterSpacing: 0.5,
+          padding: '3px 10px', borderRadius: 100,
+        }}>
+          AS SEEN IN OUR CRATES
+        </span>
+      )}
+      <div style={{
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
+        marginBottom: 8, marginTop: store.featured ? 6 : 0,
+      }}>
         <div>
           <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
           <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>{store.type} · {store.location}</div>
@@ -151,6 +178,9 @@ function StoreCard({ store }) {
         <ExternalLink size={13} color="var(--amber)" style={{ flexShrink: 0, marginTop: 3 }} />
       </div>
       <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>{store.desc}</p>
+      {store.extra && (
+        <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '10px 0 0' }}>{store.extra}</p>
+      )}
     </a>
   );
 }
@@ -355,9 +385,12 @@ export default function Home() {
       </section>
 
       {/* ── ONLINE FRIENDS ─────────────────────────────────────────
-          New section, position 3 (after Shops We Dig, before Latest From
-          DITSC). Online-only resources, not physical stores — reuses
-          StoreCard's single-link (full-card-clickable) variant. */}
+          Position 3 (after Shops We Dig, before Latest From DITSC).
+          Online-only resources, not physical stores. Grid capped at
+          minmax(280px, 420px) instead of the store grid's minmax(260px, 1fr)
+          so a lone card stays a normal card width instead of stretching
+          full-bleed across the 1280px container — matters more now that
+          featured cards can carry a longer About Us paragraph. */}
       <section style={{ padding: '48px 24px', borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
 
@@ -370,7 +403,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 420px))', gap: 16 }}>
             {ONLINE_FRIENDS.map(store => <StoreCard key={store.name} store={store} />)}
           </div>
         </div>
