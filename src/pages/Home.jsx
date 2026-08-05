@@ -36,7 +36,7 @@ const ONLINE_FRIENDS = [
     type: 'Vinyl Setup Builder',
     location: 'Online',
     desc: 'Pick the right setup before you buy.',
-    extra: 'Whether you’re upgrading a setup you already have or buying your very first record player, we’ve got your back. If you want to nerd out on the details, cool. If you just want a simple way to make an easy decision, also cool. Our stuff is built for both.',
+    extra: 'Whether you're upgrading a setup you already have or buying your very first record player, we've got your back. If you want to nerd out on the details, cool. If you just want a simple way to make an easy decision, also cool. Our stuff is built for both.',
     featured: true,
     url: 'https://builder.recordbuilds.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=recordbuilds',
   },
@@ -229,20 +229,24 @@ export default function Home() {
             in the hero) even at 4% opacity and aria-hidden. loading="lazy" then delayed
             that "LCP" candidate's paint, which is what drove P99 LCP to ~20s. Background
             images are never LCP candidates, so this removes it from LCP scoring entirely
-            and lets the H1 become the real LCP element. 7/18/26 fix. */}
+            and lets the H1 become the real LCP element. 7/18/26 fix.
+            
+            CLS fix (8/5/26): Repositioned watermark from left: -5%, top: 50%, translateY(-50%)
+            to left: 50%, top: 0, translateX(-50%) to eliminate layout shift caused by
+            recalculation of the vertical centering transform. Pinned to top instead. */}
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
           <div
             aria-hidden="true"
             style={{
               position: 'absolute',
-              left: '-5%', top: '50%',
-              transform: 'translateY(-50%)',
-              height: '120%', width: '100%',
+              left: '50%', top: 0,
+              transform: 'translateX(-50%)',
+              height: '100%', width: '120%',
               opacity: 0.04,
               clipPath: 'inset(0 55% 0 0)',
               backgroundImage: 'url(/ditsc_banner_svg_v8.svg)',
               backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'left center',
+              backgroundPosition: 'center top',
               backgroundSize: 'auto 100%',
             }}
           />
