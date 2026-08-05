@@ -21,6 +21,21 @@ const DEALS_PREVIEW = [
 
 const VIDEO_CARD_COLORS = ['#f59e0b', '#2ec4b6', '#e63946'];
 
+// ── Online Friends ────────────────────────────────────────────
+// Online-only resources (not physical retail), kept separate from
+// MA_STORES/RINH_STORES since they have no location/phone/seller page.
+// Single-link entries render via StoreCard's default full-card-clickable
+// variant (no siteUrl/ebayUrl set).
+const ONLINE_FRIENDS = [
+  {
+    name: 'Recordbuilds',
+    type: 'Vinyl Setup Builder',
+    location: 'Online',
+    desc: 'Pick the right setup before you buy.',
+    url: 'https://builder.recordbuilds.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=recordbuilds',
+  },
+];
+
 // ── Store data ────────────────────────────────────────────────
 // MA_STORES and RINH_STORES now live in src/data/partnerStores.js,
 // the single source of truth shared with SearchResults.jsx. Add or
@@ -335,6 +350,28 @@ export default function Home() {
             }}>
               Learn more <ArrowRight size={13} />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── ONLINE FRIENDS ─────────────────────────────────────────
+          New section, position 3 (after Shops We Dig, before Latest From
+          DITSC). Online-only resources, not physical stores — reuses
+          StoreCard's single-link (full-card-clickable) variant. */}
+      <section style={{ padding: '48px 24px', borderTop: '1px solid var(--border)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+
+          <div style={{ marginBottom: 24 }}>
+            <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 8 }}>
+              PARTNER RESOURCES
+            </p>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, letterSpacing: 1, color: 'var(--text-primary)' }}>
+              ONLINE FRIENDS
+            </h2>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+            {ONLINE_FRIENDS.map(store => <StoreCard key={store.name} store={store} />)}
           </div>
         </div>
       </section>
