@@ -331,7 +331,10 @@ export default function SearchResults() {
     setInputVal(query);
     setPage(1);
     setActiveSource('all');
-    // Track search term in GA4 — feeds into artist page + blog recommendations
+    // Track search term in GA4 — feeds into artist page + blog recommendations.
+    // 'search' is the canonical search-volume event: it fires exactly once per
+    // search on every entry path (cold load of /search?q=, in-app re-search,
+    // trending chip). Report on THIS event, not view_search_results.
     window.gtag?.('event', 'search', { search_term: query });
     // Fire view_search_results manually, synchronously, right alongside 'search'.
     // GA4's automatic Enhanced Measurement site-search detection relies on a
@@ -340,6 +343,18 @@ export default function SearchResults() {
     // reliably in slow manual testing but under-fires in real traffic — 24
     // 'search' events vs 2 auto-detected 'view_search_results' in one week).
     // Firing it here removes that race entirely.
+    //
+    // REQUIRES: Enhanced Measurement -> "Site search" must stay OFF in the GA4
+    // data stream (Admin -> Data streams -> DITSC Website -> Enhanced
+    // measurement). Because /search uses ?q=, a default site-search parameter,
+    // leaving it ON makes GA4 fire its OWN view_search_results on top of this
+    // one. Verified 2026-08-10 via live /g/collect capture: a cold load of
+    // /search/?q=nas produced TWO view_search_results hits (one without _ee=1
+    // from Enhanced Measurement, one with _ee=1 from this line), while an
+    // in-app SPA search produced only one — so the inflation varied with
+    // traffic mix and corrupted search-volume trending.
+    // Do not re-enable Site search. Do not delete this line either: removing it
+    // reintroduces the under-firing race described above.
     window.gtag?.('event', 'view_search_results', { search_term: query });
     doSearch(query, 1, 'all');
   }, [query]);
