@@ -527,6 +527,41 @@ export const ARTISTS = {
     },
   },
 
+  'marvin-gaye': {
+    slug: 'marvin-gaye',
+    name: 'Marvin Gaye',
+    tagline: 'Motown\'s most fearless voice. Soul music\'s most sampled architect.',
+    genres: ['Soul', 'R&B', 'Motown'],
+    searchTerms: {
+      discogs: 'Marvin Gaye',
+      ebay: 'Marvin Gaye vinyl',
+      cdandlp: 'Marvin Gaye',
+    },
+    partnerOverride: ['GOOD TASTE Records'],
+    bio: [
+      'Marvin Gaye signed to Motown\'s Tamla label at the start of the 1960s and built one of the label\'s defining voices: "How Sweet It Is (to Be Loved by You)," "Ain\'t That Peculiar," and 1968\'s "I Heard It Through the Grapevine" (written by Norman Whitfield and Barrett Strong) became the biggest-selling single in Motown\'s history at the time. He was also the label\'s most consistent duet partner, first with Tammi Terrell on "Ain\'t No Mountain High Enough" and "You\'re All I Need to Get By," then with Diana Ross on the 1973 album Diana & Marvin.',
+      'What\'s Going On (1971) changed the terms entirely. Gaye pushed Motown to release it against resistance and became one of the first artists at the label to produce his own work, opening the door to Let\'s Get It On (1973), I Want You (1976), and Here, My Dear (1978), a raw, deeply personal record built around the end of his first marriage. These albums, along with the What\'s Going On single itself, are among the most sampled recordings in hip-hop and R&B production.',
+      'Gaye left Motown for Columbia Records in 1982 and returned immediately with "Sexual Healing" and its album Midnight Love, his biggest commercial hit and a two-time Grammy winner. He was shot and killed by his father on April 1, 1984, the day before his 45th birthday. Original Tamla pressings from the Motown years, along with Columbia\'s Midnight Love, form the backbone of Marvin Gaye collecting; the Diana & Marvin duet album is a smaller but steadily traded corner of the same catalog.',
+    ],
+    essentialRecords: [
+      { title: 'What\'s Going On', year: 1971, label: 'Tamla' },
+      { title: 'Let\'s Get It On', year: 1973, label: 'Tamla' },
+      { title: 'I Want You', year: 1976, label: 'Tamla' },
+      { title: 'Here, My Dear', year: 1978, label: 'Tamla' },
+      { title: 'Midnight Love', year: 1982, label: 'Columbia' },
+      { title: 'Diana Ross & Marvin Gaye — Diana & Marvin', year: 1973, label: 'Motown' },
+    ],
+    producerCredits: [
+      'Norman Whitfield — "I Heard It Through the Grapevine" (1968)',
+      'Marvin Gaye — self-produced, What\'s Going On (1971) onward',
+      'Marvin Gaye and Ed Townsend — Let\'s Get It On (1973)',
+    ],
+    seo: {
+      title: 'Marvin Gaye Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Marvin Gaye vinyl records across Discogs, eBay, and CDandLP. Shop What\'s Going On, Let\'s Get It On, Midnight Love, and rare Tamla and Motown pressings.',
+    },
+  },
+
 };
 
 export const GENRES = {
