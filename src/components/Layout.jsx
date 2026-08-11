@@ -66,6 +66,8 @@ export default function Layout({ children }) {
               <img
                 src="/ditsc-logo-small.webp"
                 alt="DITSC"
+                width={42}
+                height={42}
                 style={{
                   width: 42, height: 42, borderRadius: '50%',
                   objectFit: 'cover', objectPosition: 'center center',
@@ -162,6 +164,19 @@ export default function Layout({ children }) {
         @media (min-width: 901px) {
           .mobile-toggle { display: none !important; }
         }
+
+        /* CLS FIX (Aug 2026)
+           Cloudflare RUM attributed repeated layout shifts to #root>div>footer
+           (0.221 / 0.267 / 0.323) on data-driven routes: /artists, /watch-read,
+           /blog/*, /search. Root cause is not the footer itself — the footer was
+           being pushed down when async page content mounted underneath a short
+           <main>. Reserving a full-viewport minimum height on <main> keeps the
+           footer below the fold during hydration, so late-arriving content no
+           longer produces a visible shift. */
+        .site-main {
+          min-height: calc(100vh - 64px);
+        }
+
         .record-card { transition: border-color 0.3s, transform 0.3s; }
         .record-card:hover { border-color: var(--border-hover) !important; transform: translateY(-2px); }
         .view-deals-btn {
@@ -173,7 +188,7 @@ export default function Layout({ children }) {
         .view-deals-btn:hover { opacity: 0.85; }
         .store-card { transition: border-color 0.3s, transform 0.3s; text-decoration: none; }
         .store-card:hover { border-color: rgba(245,158,11,0.4) !important; transform: translateY(-3px); }
-        .footer-logo-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
+        .footer-logo-wrap { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; min-height: 52px; }
         .footer-email-link { color: var(--amber); font-size: 13px; font-family: var(--font-mono); letter-spacing: 1px; text-decoration: none; transition: opacity 0.2s; }
         .footer-email-link:hover { opacity: 0.7; }
         .filter-btn { padding: 5px 16px; border-radius: 100px; font-size: 12px; font-weight: 500; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-secondary); text-transform: capitalize; cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s; }
@@ -189,7 +204,7 @@ export default function Layout({ children }) {
       `}</style>
 
       {/* Main */}
-      <main style={{ paddingTop: 64, overflowX: 'hidden', width: '100%' }}>
+      <main className="site-main" style={{ paddingTop: 64, overflowX: 'hidden', width: '100%' }}>
         {children}
       </main>
 
@@ -205,6 +220,8 @@ export default function Layout({ children }) {
             <img
               src="/ditsc-logo-small.webp"
               alt="DITSC"
+              width={52}
+              height={52}
               style={{
                 width: 52, height: 52, borderRadius: '50%',
                 objectFit: 'cover', objectPosition: 'center center',
