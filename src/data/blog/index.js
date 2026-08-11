@@ -1,12 +1,50 @@
 // ─────────────────────────────────────────────────────────────
-//  DITSC Blog Posts
+// DITSC Blog Posts
 //  Add a new entry here to publish it at /blog/:slug.
 //  Drafts come from the scheduled blog-generator task as markdown
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
-
 export const BLOG_POSTS = {
-
+  'diana-ross-marvin-gaye-50-cent-ja-rule-sample': {
+    slug: 'diana-ross-marvin-gaye-50-cent-ja-rule-sample',
+    title: 'The Diana Ross & Marvin Gaye Record That 50 Cent and Ja Rule Both Sampled',
+    series: 'SAMPLE DNA',
+    date: '2026-08-10',
+    dateDisplay: 'August 10, 2026',
+    excerpt: '50 Cent and Ja Rule spent decades as rivals, but both reached for the same Diana Ross and Marvin Gaye duet. The story behind "Stop, Look, Listen (To Your Heart)" and the two very different records it built.',
+    body: [
+      '50 Cent and Ja Rule spent the better part of two decades as hip-hop\'s most public feud. Diss tracks, interviews, a rivalry that outlasted most beefs in the genre. And yet, at different points in their careers, both of them reached for the exact same soul record.',
+      'That record is Diana Ross and Marvin Gaye\'s "Stop, Look, Listen (To Your Heart)," the standout single off their 1973 Motown duets album, Diana & Marvin. It started life as a Stylistics song, written by Thom Bell and Linda Creed, but the Ross and Gaye version is the one that stuck around in crates and sample libraries for the next thirty years.',
+      '50 Cent\'s "Ghetto Qu\'ran (Forgive Me)," produced by Poke & Tone of Trackmasters, sampled it directly, a street-level narrative track that became one of the most talked-about records of his pre-fame run for naming names from his old Southside Jamaica, Queens crew. Ja Rule and Ashanti\'s "Mesmerize," produced by Irv Gotti a few years later, interpolated the same melody into something built for radio, a duet aimed at the charts instead of the block.',
+      'Same source, two artists who spent years trading shots at each other publicly, two records that don\'t sound remotely alike. That\'s what a well-built soul record does: it outlives the rap careers that got built arguing over who flipped it better.',
+      'Diana & Marvin is worth knowing beyond the sample, too. Motown paired Ross and Gaye somewhat reluctantly, the sessions were famously tense enough that the two mostly recorded their vocal parts separately, and the finished album still sold over a million copies worldwide and went gold in the UK. It\'s a strange, compelling artifact: two of the label\'s biggest stars, pushed together by Berry Gordy, engineered into a duet neither of them was fully sold on making.',
+      'Marvin Gaye\'s catalog is live on Digging in the Sales Crates now, pulling listings across Discogs, eBay, and CDandLP in one search. We don\'t have a dedicated Diana Ross page yet, but her catalog searches just as easily: original pressings of Diana & Marvin, Gaye\'s Motown-era solo run, and Ross\'s own solo catalog are all searchable this minute.',
+      'If you\'re chasing the sample chain, start with the source. The beef, the chart runs, the movie placements: all of it got built on top of a record neither 50 Cent nor Ja Rule wrote.',
+    ],
+    shopArtists: [
+      {
+        name: 'Marvin Gaye',
+        pageSlug: 'marvin-gaye',
+        searchTerms: {
+          discogs: 'Marvin Gaye',
+          ebay: 'Marvin Gaye vinyl',
+          cdandlp: 'Marvin Gaye',
+        },
+      },
+      {
+        name: 'Diana Ross',
+        searchTerms: {
+          discogs: 'Diana Ross',
+          ebay: 'Diana Ross vinyl',
+          cdandlp: 'Diana Ross',
+        },
+      },
+    ],
+    seo: {
+      title: 'Diana Ross & Marvin Gaye: The Sample Behind 50 Cent and Ja Rule | Digging in the Sales Crates',
+      description: 'How Diana Ross and Marvin Gaye\'s "Stop, Look, Listen (To Your Heart)" became the source for both 50 Cent\'s "Ghetto Qu\'ran" and Ja Rule\'s "Mesmerize." Shop Marvin Gaye and Diana Ross vinyl across Discogs, eBay, and CDandLP.',
+    },
+  },
   'pete-rock-vinyl-collecting-guide': {
     slug: 'pete-rock-vinyl-collecting-guide',
     title: 'Pete Rock & CL Smooth: The Sample That Still Defines Boom Bap Vinyl',
@@ -38,7 +76,6 @@ export const BLOG_POSTS = {
       description: 'How the T.R.O.Y. sample built Pete Rock\'s legacy, why Mecca and the Soul Brother and The Main Ingredient are essential, and where Soul Survivor fits in a Pete Rock vinyl collection.',
     },
   },
-
   'boogie-down-productions-vinyl-collecting-guide': {
     slug: 'boogie-down-productions-vinyl-collecting-guide',
     title: 'Collecting Boogie Down Productions: Why Criminal Minded Still Commands Crate Space',
@@ -69,7 +106,6 @@ export const BLOG_POSTS = {
       description: 'Why Criminal Minded\'s original B-Boy pressing is a collector grail, how Scott La Rock\'s death reshaped Boogie Down Productions, and why By All Means Necessary\'s 2024 reissue is the easier entry point today.',
     },
   },
-
   'mf-doom-vinyl-collecting-guide': {
     slug: 'mf-doom-vinyl-collecting-guide',
     title: 'Collecting MF DOOM on Vinyl: What\'s Worth Chasing and What to Verify First',
@@ -107,7 +143,6 @@ export const BLOG_POSTS = {
       description: 'How to spot an authentic Operation: Doomsday pressing, sort out Madvillainy\'s many editions, and find MF DOOM\'s essential alias records across Discogs, eBay, and CDandLP.',
     },
   },
-
   'wu-tang-clan-vinyl-collecting-guide': {
     slug: 'wu-tang-clan-vinyl-collecting-guide',
     title: 'Starting a Wu-Tang Vinyl Collection: 36 Chambers, Reissues and Essential Solo Albums',
@@ -148,7 +183,6 @@ export const BLOG_POSTS = {
       description: 'How to identify an original Enter the Wu-Tang (36 Chambers) pressing, which reissues are worth buying, and the essential Wu-Tang solo albums every collector should know.',
     },
   },
-
   'funkadelic-maggot-brain-reissue-2026': {
     slug: 'funkadelic-maggot-brain-reissue-2026',
     title: 'Maggot Brain Is Getting Cut From Tape Again, and That\'s a Big Deal',
@@ -178,7 +212,6 @@ export const BLOG_POSTS = {
       description: 'Funkadelic\'s Maggot Brain gets a full analog remaster from the original 1971 tapes, out September 11. What the reissue means for collectors and hip-hop\'s deepest sample lineage.',
     },
   },
-
   'fatback-band-king-tim-iii-first-rap-record': {
     slug: 'fatback-band-king-tim-iii-first-rap-record',
     title: 'The Fatback Band Cut the First Rap Record, and It Was Buried on a B-Side',
@@ -209,7 +242,6 @@ export const BLOG_POSTS = {
       description: 'Fatback Band\'s "King Tim III (Personality Jock)" beat "Rapper\'s Delight" to stores by a week, buried on a B-side. The pressing history, the story, and why the catalog belongs in your crate.',
     },
   },
-
   'original-pressings-market-premium-2026': {
     slug: 'original-pressings-market-premium-2026',
     title: 'The Money Is Moving to Originals, and the Data Proves It',
@@ -241,7 +273,6 @@ export const BLOG_POSTS = {
       description: 'Original pressings are outperforming reissues by 300-500% in 2026. What the vinyl market data means for collectors, and how to find the price spread across Discogs, eBay, and CDandLP.',
     },
   },
-
   'beats-rhymes-and-life-30th-anniversary': {
     slug: 'beats-rhymes-and-life-30th-anniversary',
     title: 'Beats, Rhymes and Life Turns 30: The Album Where Dilla Went Major',
@@ -289,7 +320,6 @@ export const BLOG_POSTS = {
       description: 'A Tribe Called Quest\'s Beats, Rhymes and Life turns 30. How J Dilla and The Ummah changed Tribe\'s sound, the Gary Burton sample behind "1nce Again," and which pressings to dig for.',
     },
   },
-
   'curtis-mayfield-super-fly-rhino-reissue': {
     slug: 'curtis-mayfield-super-fly-rhino-reissue',
     title: 'Rhino Just Recut Super Fly, and Every Sample Digger Should Care',
@@ -319,7 +349,6 @@ export const BLOG_POSTS = {
       description: 'Rhino High Fidelity\'s new Curtis Mayfield Super Fly reissue compared to the 1972 Buddah original and 2022 Run Out Groove pressing, plus why it matters to hip-hop sample diggers.',
     },
   },
-
   'roy-ayers-vibrations-reissue': {
     slug: 'roy-ayers-vibrations-reissue',
     title: 'Roy Ayers\' Vibrations Gets the Reissue Treatment It Deserves',
@@ -350,5 +379,4 @@ export const BLOG_POSTS = {
       description: 'Vampisoul reissues Roy Ayers Ubiquity\'s Vibrations on July 10. What the album\'s sampling legacy means for collectors, and what to look for in the new pressing.',
     },
   },
-
 };
