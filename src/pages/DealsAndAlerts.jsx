@@ -3,11 +3,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import { TrendingDown, Bell, BellOff, Trash2, Search, Plus } from 'lucide-react';
 import { formatPrice } from '../utils/api';
 import { trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
+import useSEO from '../hooks/useSEO';
 
 // ============================================================
 // DEALS PAGE — Curated store links + search shortcuts
 // ============================================================
 export function Deals() {
+  // SEO strings below are duplicated in scripts/prerender.mjs, which bakes
+  // them into the static HTML crawlers receive. Keep the two in sync:
+  // prerender wins for Google, this hook wins for the browser tab and GA4's
+  // page_title after client-side navigation.
+  useSEO({
+    title: 'Vinyl Deals & Price Alerts | Digging in the Sales Crates',
+    description:
+      'Current vinyl record deals, sales, and price alerts from Discogs, eBay, CDandLP, and partner record shops in Massachusetts and New England.',
+  });
+
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
 
@@ -116,6 +127,16 @@ export function Deals() {
 // ALERTS PAGE — Local price alert management
 // ============================================================
 export function Alerts() {
+  // SEO strings below are duplicated in scripts/prerender.mjs, which bakes
+  // them into the static HTML crawlers receive. Keep the two in sync:
+  // prerender wins for Google, this hook wins for the browser tab and GA4's
+  // page_title after client-side navigation.
+  useSEO({
+    title: 'Price Alerts | Digging in the Sales Crates',
+    description:
+      'Set vinyl price alerts and catch deals on the records you want across Discogs, eBay, and CDandLP.',
+  });
+
   const [alerts, setAlerts] = useState(() => {
     try { return JSON.parse(localStorage.getItem('priceAlerts') || '[]'); } catch { return []; }
   });

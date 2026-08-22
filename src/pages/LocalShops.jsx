@@ -6,6 +6,7 @@ import {
   trackApiError,
   CLICK_SOURCES,
 } from '../utils/analytics';
+import useSEO from '../hooks/useSEO';
 
 // SPECIALTIES and SPECIALTY_COLORS are commented out rather than deleted.
 // The specialty filter UI is planned for when more partner stores are onboarded
@@ -218,6 +219,16 @@ function StoreCard({ store, index }) {
 }
 
 export default function LocalShops() {
+  // SEO strings below are duplicated in scripts/prerender.mjs, which bakes
+  // them into the static HTML crawlers receive. Keep the two in sync:
+  // prerender wins for Google, this hook wins for the browser tab and GA4's
+  // page_title after client-side navigation.
+  useSEO({
+    title: 'Local Record Shops in New England | Digging in the Sales Crates',
+    description:
+      'Find independent record stores in Massachusetts and New England. Directory of local vinyl shops for crate diggers.',
+  });
+
   const [query, setQuery] = useState('');
   const [shops, setShops] = useState([]);
   const [loading, setLoading] = useState(false);

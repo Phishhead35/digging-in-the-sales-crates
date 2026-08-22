@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Upload, Sparkles, Tag, ExternalLink, Copy, CheckCheck, Trash2, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import useSEO from '../hooks/useSEO';
 
 // ============================================================
 // CLAUDE AI DEAL EXTRACTOR
@@ -226,6 +227,16 @@ function SavedBatch({ batch, onDelete }) {
 // MAIN EMAIL PARSER PAGE
 // ============================================================
 export default function EmailParser() {
+  // SEO strings below are duplicated in scripts/prerender.mjs, which bakes
+  // them into the static HTML crawlers receive. Keep the two in sync:
+  // prerender wins for Google, this hook wins for the browser tab and GA4's
+  // page_title after client-side navigation.
+  useSEO({
+    title: 'AI Email Deal Parser | Digging in the Sales Crates',
+    description:
+      'Paste any record store promo email and let AI extract every deal, discount, and promo code automatically.',
+  });
+
   const [emailText, setEmailText] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

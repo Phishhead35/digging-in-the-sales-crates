@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { track, trackStoreClick, CLICK_SOURCES } from "../utils/analytics";
+import useSEO from "../hooks/useSEO";
 
 const faqs = [
   {
@@ -177,6 +178,16 @@ function FAQItem({ q, a }) {
 }
 
 export default function FAQ() {
+  // SEO strings below are duplicated in scripts/prerender.mjs, which bakes
+  // them into the static HTML crawlers receive. Keep the two in sync:
+  // prerender wins for Google, this hook wins for the browser tab and GA4's
+  // page_title after client-side navigation.
+  useSEO({
+    title: "FAQ | Digging in the Sales Crates",
+    description:
+      "How Digging in the Sales Crates works: searching Discogs, eBay, and CDandLP at once, affiliate links, wishlists, and more.",
+  });
+
   return (
     <div
       style={{

@@ -10,6 +10,7 @@ import {
   marketplaceFromUrl,
   CLICK_SOURCES,
 } from '../utils/analytics';
+import useSEO from '../hooks/useSEO';
 
 // ── Affiliate URL builders ────────────────────────────────────
 // Extracted from the inline JSX so the href and the GA4 event always
@@ -52,6 +53,16 @@ function buildDealUrl(item) {
 const STORE_NAMES = { discogs: 'Discogs', ebay: 'eBay', cdandlp: 'CDandLP' };
 
 export default function Wishlist() {
+  // SEO strings below are duplicated in scripts/prerender.mjs, which bakes
+  // them into the static HTML crawlers receive. Keep the two in sync:
+  // prerender wins for Google, this hook wins for the browser tab and GA4's
+  // page_title after client-side navigation.
+  useSEO({
+    title: 'Vinyl Wishlist | Digging in the Sales Crates',
+    description:
+      'Save vinyl records you want to find and jump straight to live listings on Discogs, eBay, and CDandLP.',
+  });
+
   const [wishlist, setWishlist] = useState(() => {
     try { return JSON.parse(localStorage.getItem('wishlist') || '[]'); } catch { return []; }
   });
