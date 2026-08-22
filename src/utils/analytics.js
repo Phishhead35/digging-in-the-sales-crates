@@ -565,13 +565,22 @@ export function trackPageView(path, title) {
  *
  * @returns {() => void} cancel function; call it on the next route change.
  */
-export function schedulePageView(path, { settleMs = 250, maxWaitMs = 2500 } = {}) {
+export function schedulePageView(path, { settleMs = 250, maxWaitMs = 2000 } = {}) {
   if (typeof document === 'undefined') return () => {};
 
   let finished = false;
   let settleTimer = null;
   let hardTimer = null;
   let observer = null;
+  // Whether the title has changed at all yet. Critical: before the first
+  // mutation, "quiet" means "the new route has not rendered yet", NOT
+  // "the title has settled". Starting the settle countdown immediately
+  // reports the OLD page's title whenever a lazy chunk takes longer than
+  // settleMs to arrive. Measured on /local-shops (a heavy chunk): the
+  // route had not committed within 250ms, so nothing had mutated and the
+  // previous page's title was reported. Only start settling once we have
+  // actually seen a change; maxWaitMs covers the no-change case.
+  let sawMutation = false;
 
   const cleanup = () => {
     if (settleTimer) clearTimeout(settleTimer);
@@ -589,27 +598,34 @@ export function schedulePageView(path, { settleMs = 250, maxWaitMs = 2500 } = {}
     trackPageView(path, document.title);
   };
 
-  const restartSettle = () => {
+  const onMutation = () => {
+    sawMutation = true;
     if (settleTimer) clearTimeout(settleTimer);
     settleTimer = setTimeout(fire, settleMs);
   };
 
-  // Absolute backstop so a page that never settles still reports.
+  // Backstop. Covers two cases: a route whose title genuinely never
+  // changes (navigating to a page with the same title), and any future
+  // page that forgets to call useSEO. Either way we still report, just
+  // later and with whatever the title is by then.
   hardTimer = setTimeout(fire, maxWaitMs);
 
   if (typeof MutationObserver !== 'undefined' && document.head) {
     // Observe head rather than the <title> node itself: a framework that
     // replaces the element instead of mutating its text would otherwise
     // slip past the observer.
-    observer = new MutationObserver(restartSettle);
+    observer = new MutationObserver(onMutation);
     observer.observe(document.head, {
       childList: true,
       subtree: true,
       characterData: true,
     });
+  } else {
+    // No observer available: fall back to a single delayed read.
+    settleTimer = setTimeout(fire, settleMs);
   }
 
-  restartSettle();
+  // Deliberately NOT starting the settle countdown here. See sawMutation.
 
   return () => {
     finished = true;
