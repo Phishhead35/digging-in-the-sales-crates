@@ -1,9 +1,14 @@
-import React, { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { lazy, Suspense, useEffect, useRef } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import ScrollToTop from './components/ScrollToTop';
 import CanonicalTag from './components/CanonicalTag';
+import {
+  trackPageView,
+  installErrorTracking,
+  installScrollTracking,
+} from './utils/analytics';
 
 // ── Route-level code splitting ────────────────────────────────
 // Home stays eager (it's the LCP-critical landing page).
@@ -39,12 +44,58 @@ function RouteFallback() {
   return <div style={{ minHeight: '60vh' }} />;
 }
 
+// ── Analytics wiring ──────────────────────────────────────────
+// Must live INSIDE BrowserRouter to use useLocation.
+//
+// Manual page_view on every route change. GA4's Enhanced Measurement
+// "page changes based on browser history events" fires on the history
+// event itself, which happens BEFORE React re-renders and before
+// useSEO updates document.title — producing page_view rows tagged with
+// the PREVIOUS page's title. A rAF defers our call until after paint so
+// the title is correct.
+//
+// REQUIRES: Enhanced Measurement -> "Page changes based on browser
+// history events" must be turned OFF in the GA4 data stream, or every
+// SPA navigation is counted twice. See GA4-SETUP.md.
+function AnalyticsTracker() {
+  const location = useLocation();
+  const resetScrollRef = useRef(null);
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    installErrorTracking();
+    resetScrollRef.current = installScrollTracking();
+  }, []);
+
+  useEffect(() => {
+    // Skip the very first render: the gtag('config') call in index.html
+    // already fires a page_view for the initial page load. Firing again
+    // here would double-count every landing.
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const id = window.requestAnimationFrame(() => {
+      trackPageView(location.pathname + location.search, document.title);
+    });
+
+    // Re-arm scroll-depth milestones for the new page.
+    if (resetScrollRef.current) resetScrollRef.current();
+
+    return () => window.cancelAnimationFrame(id);
+  }, [location.pathname, location.search]);
+
+  return null;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <style>{globalStyle}</style>
       <ScrollToTop />
       <CanonicalTag />
+      <AnalyticsTracker />
       <Layout>
         <Suspense fallback={<RouteFallback />}>
           <Routes>

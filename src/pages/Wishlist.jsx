@@ -1,17 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Trash2, ShoppingCart, Search } from 'lucide-react';
 import { formatPrice } from '../utils/api';
+import {
+  trackStoreClick,
+  trackSelectItem,
+  trackWishlistRemove,
+  trackWishlistView,
+  marketplaceFromUrl,
+  CLICK_SOURCES,
+} from '../utils/analytics';
+
+// ── Affiliate URL builders ────────────────────────────────────
+// Extracted from the inline JSX so the href and the GA4 event always
+// use the identical string.
+//
+// BUGFIX: the CDandLP branch previously returned item.url raw, with no
+// affiliate parameters at all — every CDandLP click-through from the
+// wishlist was unmonetized. It now appends the same affiliate query
+// string SearchResults.jsx uses.
+
+const EBAY_AFFILIATE_PARAMS =
+  'mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc';
+
+const CDANDLP_AFFILIATE_PARAMS =
+  'lng=2&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation';
+
+const appendParams = (url, params) => url + (url.includes('?') ? '&' : '?') + params;
+
+function buildDealUrl(item) {
+  if (item.source === 'discogs') {
+    // Link to sell listings, not the release info page.
+    // uri is stored on the item when saved from SearchResults.
+    const isMaster = (item.uri || '').includes('/master/');
+    const idParam = isMaster ? `master_id=${item.id}` : `release_id=${item.id}`;
+    return `https://www.discogs.com/sell/list?${idParam}&sort=price&sort_order=asc`;
+  }
+  if (item.source === 'ebay') {
+    return item.url
+      ? appendParams(item.url, EBAY_AFFILIATE_PARAMS)
+      : `https://www.ebay.com/itm/${item.id}`;
+  }
+  if (item.source === 'cdandlp') {
+    return item.url
+      ? appendParams(item.url, CDANDLP_AFFILIATE_PARAMS)
+      : appendParams('https://www.cdandlp.com', CDANDLP_AFFILIATE_PARAMS);
+  }
+  return item.url || '#';
+}
+
+const STORE_NAMES = { discogs: 'Discogs', ebay: 'eBay', cdandlp: 'CDandLP' };
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState(() => {
     try { return JSON.parse(localStorage.getItem('wishlist') || '[]'); } catch { return []; }
   });
 
+  // Wishlist size is a returning-visitor signal worth trending.
+  // Fires once per page view, not on every add/remove.
+  // Empty dep array is deliberate: this is a once-per-page-view
+  // snapshot of wishlist size, not a running total that should
+  // re-fire on every add or remove.
+  useEffect(() => {
+    trackWishlistView(wishlist.length);
+  }, []);
+
   const remove = (item) => {
     const next = wishlist.filter(w => !(w.id === item.id && w.source === item.source));
     setWishlist(next);
     localStorage.setItem('wishlist', JSON.stringify(next));
+    trackWishlistRemove({ itemTitle: item.title, marketplace: item.source });
   };
 
   return (
@@ -43,7 +101,7 @@ export default function Wishlist() {
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 20 }}>
-          {wishlist.map(item => (
+          {wishlist.map((item, index) => (
             <div key={`${item.source}-${item.id}`} style={{
               background: 'var(--bg-card)', border: '1px solid var(--border)',
               borderRadius: 16, overflow: 'hidden',
@@ -81,31 +139,49 @@ export default function Wishlist() {
                   </div>
                 )}
                 <div style={{ display: 'flex', gap: 8 }}>
-                  <a
-                    href={
-                      item.source === 'discogs'
-                        ? (() => {
-                            // Bug 6 fix: link to sell listings, not release info page.
-                            // uri is stored on the item when saved from SearchResults.
-                            const isMaster = (item.uri || '').includes('/master/');
-                            const idParam = isMaster ? `master_id=${item.id}` : `release_id=${item.id}`;
-                            return `https://www.discogs.com/sell/list?${idParam}&sort=price&sort_order=asc`;
-                          })()
-                        : item.source === 'ebay'
-                        ? (item.url ? item.url + (item.url.includes('?') ? '&' : '?') + 'mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc' : `https://www.ebay.com/itm/${item.id}`)
-                        : item.url || 'https://www.cdandlp.com'
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                      padding: '8px', borderRadius: 8, fontSize: 12, fontWeight: 600,
-                      background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#000',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <ShoppingCart size={13} /> View Deals
-                  </a>
+                  {(() => {
+                    // Compute once so the href and the GA4 event can never diverge.
+                    const dealUrl = buildDealUrl(item);
+                    const storeName = STORE_NAMES[item.source] || 'Other';
+                    return (
+                      <a
+                        href={dealUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => {
+                          // Wishlist clicks are the highest-intent event on the
+                          // site: the visitor saved this record earlier and came
+                          // back for it. Previously untracked entirely.
+                          trackStoreClick({
+                            storeName,
+                            storeUrl: dealUrl,
+                            clickSource: CLICK_SOURCES.WISHLIST,
+                            itemTitle: item.title,
+                            itemPrice: item.lowest_price,
+                            itemId: item.id,
+                            position: index + 1,
+                            notify: `${storeName}: ${item.title} (wishlist)`,
+                          });
+                          trackSelectItem({
+                            itemId: item.id,
+                            itemTitle: item.title,
+                            itemPrice: item.lowest_price,
+                            marketplace: marketplaceFromUrl(dealUrl),
+                            position: index + 1,
+                            listName: 'wishlist',
+                          });
+                        }}
+                        style={{
+                          flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                          padding: '8px', borderRadius: 8, fontSize: 12, fontWeight: 600,
+                          background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#000',
+                          textDecoration: 'none',
+                        }}
+                      >
+                        <ShoppingCart size={13} /> View Deals
+                      </a>
+                    );
+                  })()}
                   <button onClick={() => remove(item)} style={{
                     padding: '8px 12px', borderRadius: 8, fontSize: 12,
                     background: 'rgba(230,57,70,0.1)', border: '1px solid rgba(230,57,70,0.3)',

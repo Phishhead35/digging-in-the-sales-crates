@@ -1,6 +1,7 @@
 import React from 'react';
 import { Star, Mail, ArrowRight } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
+import { trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
 
 export default function FeaturedPartners() {
   useSEO({
@@ -53,6 +54,13 @@ export default function FeaturedPartners() {
       </p>
       <a
         href="mailto:hello@digginginthesalescrates.com?subject=Partnership Interest"
+        onClick={() => trackStoreClick({
+          storeName: 'Partnership inquiry (featured partners CTA)',
+          storeUrl: 'mailto:hello@digginginthesalescrates.com?subject=Partnership Interest',
+          clickSource: CLICK_SOURCES.FEATURED_PARTNERS,
+          isAffiliate: false,
+          notify: 'Partnership inquiry clicked on Featured Partners page',
+        })}
         style={{
           display: 'inline-flex', alignItems: 'center', gap: 10,
           padding: '14px 28px', borderRadius: 12,

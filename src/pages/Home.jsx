@@ -5,6 +5,12 @@ import useSEO from '../hooks/useSEO';
 import useLatestVideos from '../hooks/useLatestVideos';
 import VideoCard from '../components/VideoCard';
 import { MA_STORES, RINH_STORES } from '../data/partnerStores';
+import {
+  trackStoreClick as analyticsStoreClick,
+  trackWatchReadClick,
+  trackSearchOrigin,
+  CLICK_SOURCES,
+} from '../utils/analytics';
 
 const TRENDING_SEARCHES = [
   'Eric B & Rakim', 'A Tribe Called Quest', 'Wu-Tang Clan',
@@ -48,35 +54,22 @@ const ONLINE_FRIENDS = [
 // edit a partner there, not here.
 
 // ── GA4 store click tracker ───────────────────────────────────
-// Fires store_click with both store name and the specific URL clicked.
-// Uses optional chaining so it silently no-ops if gtag isn't loaded yet.
-// Also pings ntfy.sh for an instant phone notification per click.
-// keepalive lets the request complete even as the browser leaves the page.
-const NTFY_TOPIC = 'ditsc-clicks-vk8q3zt2npw4';
-
-function notifyStoreClick(message) {
-  try {
-    fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
-      method: 'POST',
-      body: message,
-      headers: { 'X-Title': 'DITSC Store Click', 'X-Tags': 'dollar' },
-      keepalive: true,
-    }).catch(() => {});
-  } catch {
-    // Never let a notification failure break the click-through.
-  }
-}
+// All tracking now lives in src/utils/analytics.js.
+//
+// BUGFIX: the homepage version of trackStoreClick never set
+// click_source, so every homepage partner-card click landed in GA4 as
+// "(not set)" and was indistinguishable from any other store_click.
+// It now sets homepage_partner_card, and marketplace is derived from
+// the URL so a Discogs seller link, an eBay store link, and a shop's
+// own website are separable in reporting.
 
 function trackStoreClick(storeName, storeUrl) {
-  window.gtag?.('event', 'store_click', {
-    store_name: storeName,
-    store_url: storeUrl,
+  analyticsStoreClick({
+    storeName,
+    storeUrl,
+    clickSource: CLICK_SOURCES.HOMEPAGE_PARTNER,
+    notify: `${storeName} (homepage partner card)`,
   });
-  notifyStoreClick(`${storeName} (homepage partner card)`);
-}
-
-function trackWatchReadClick(source) {
-  window.gtag?.('event', 'watch_read_click', { source });
 }
 
 // ── StoreCard component ───────────────────────────────────────
@@ -195,9 +188,14 @@ export default function Home() {
     description: 'Find the lowest prices on vinyl records across Discogs, eBay, and CDandLP. Taking the Dig Out of Digging™ — search rare hip-hop, jazz, and soul LPs in seconds.',
   });
 
+  // search_origin fires on the homepage where the origin is known.
+  // The canonical 'search' event still fires once on the /search page
+  // (see SearchResults.jsx) — this is a separate, additive event so
+  // search-volume trending is not affected. Join them on search_term.
   const handleSearch = (e) => {
     e.preventDefault();
     if (query.trim()) {
+      trackSearchOrigin(query.trim(), 'homepage_box');
       startTransition(() => {
         navigate(`/search?q=${encodeURIComponent(query.trim())}`);
       });
@@ -205,6 +203,7 @@ export default function Home() {
   };
 
   const handleTrending = (term) => {
+    trackSearchOrigin(term, 'homepage_trending_chip');
     startTransition(() => {
       navigate(`/search?q=${encodeURIComponent(term)}`);
     });

@@ -6,6 +6,11 @@ import useLatestVideos from '../hooks/useLatestVideos';
 import VideoCard from '../components/VideoCard';
 import { VIDEO_SERIES } from '../data/playlists';
 import { BLOG_POSTS } from '../data/blog';
+import {
+  trackBlogPostClick,
+  trackWatchReadPlaylistClick,
+  trackWatchReadBrowseAllClick,
+} from '../utils/analytics';
 
 const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@digginginthesalescrates';
 const YOUTUBE_VIDEOS_URL = 'https://www.youtube.com/@digginginthesalescrates/videos';
@@ -21,14 +26,16 @@ const SERIES_STYLES = {
 const DEFAULT_SERIES_STYLE = { color: '#f59e0b', icon: BookOpen };
 
 // ── GA4 trackers — same event-naming convention as Blog.jsx / BlogPost.jsx ──
+// Implementations live in src/utils/analytics.js. Event names and
+// parameters unchanged.
 function trackPlaylistClick(seriesName) {
-  window.gtag?.('event', 'watch_read_playlist_click', { series_name: seriesName });
+  trackWatchReadPlaylistClick(seriesName);
 }
 function trackPostClick(slug) {
-  window.gtag?.('event', 'blog_post_click', { post_slug: slug, source: 'watch_read' });
+  trackBlogPostClick(slug, 'watch_read');
 }
 function trackBrowseAllClick(destination) {
-  window.gtag?.('event', 'watch_read_browse_all_click', { destination });
+  trackWatchReadBrowseAllClick(destination);
 }
 
 // ── Section heading helper — consistent with Home.jsx / Blog.jsx style ──

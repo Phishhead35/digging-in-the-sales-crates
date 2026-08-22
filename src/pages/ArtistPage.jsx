@@ -4,7 +4,11 @@ import { Search, ExternalLink, Disc3, ArrowRight, ArrowLeft } from 'lucide-react
 import useSEO from '../hooks/useSEO';
 import { ARTISTS, GENRES } from '../data/artists';
 import { getPartnersForArtist, getPartnersByNames } from '../data/partnerStores';
-import { notifyStoreClick } from '../utils/storeClickTracking';
+import {
+  trackStoreClick,
+  trackArtistMarketplaceClick,
+  CLICK_SOURCES,
+} from '../utils/analytics';
 import PartnerStoreCard from '../components/PartnerStoreCard';
 
 // ── Affiliate link builders ───────────────────────────────────
@@ -19,27 +23,24 @@ function cdandlpUrl(term) {
   return `https://www.cdandlp.com/en/search/?q=${encodeURIComponent(term)}&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation`;
 }
 
-// ── GA4 tracker ───────────────────────────────────────────────
-function trackClick(artistName, marketplace) {
-  window.gtag?.('event', 'artist_marketplace_click', {
-    artist_name: artistName,
-    marketplace,
-  });
+// ── GA4 trackers ──────────────────────────────────────────────
+// Implementations live in src/utils/analytics.js. Event names and
+// parameters are unchanged; a `monetized` flag is added so a future
+// regression that strips affiliate params surfaces in GA4 immediately.
+function trackClick(artistName, marketplace, url) {
+  trackArtistMarketplaceClick(artistName, marketplace, url);
 }
 
 // ── "Dig Our Partners' Crates" click tracker ──────────────────
-// Fires the same store_click GA4 event used by Home.jsx and
-// SearchResults.jsx, with its own click_source so artist-page partner
-// clicks stay separate from search and homepage clicks in reporting.
-// notifyStoreClick (ntfy.sh phone ping) lives in utils/storeClickTracking.js,
-// shared across all three pages.
+// Same store_click event as Home.jsx and SearchResults.jsx, with its
+// own click_source so artist-page partner clicks stay separate.
 function trackPartnerClick(storeName, storeUrl) {
-  window.gtag?.('event', 'store_click', {
-    store_name: storeName,
-    store_url: storeUrl,
-    click_source: 'artist_page',
+  trackStoreClick({
+    storeName,
+    storeUrl,
+    clickSource: CLICK_SOURCES.ARTIST_PARTNER,
+    notify: `${storeName} (artist page partner card)`,
   });
-  notifyStoreClick(`${storeName} (artist page partner card)`);
 }
 
 // ── Marketplace search buttons ────────────────────────────────
@@ -54,7 +55,7 @@ function SearchButtons({ artist, size = 'normal' }) {
         href={discogsUrl(artist.searchTerms.discogs)}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => trackClick(artist.name, 'discogs')}
+        onClick={() => trackClick(artist.name, 'discogs', discogsUrl(artist.searchTerms.discogs))}
         style={{
           ...btnStyle,
           display: 'inline-flex', alignItems: 'center', gap: 7,
@@ -71,7 +72,7 @@ function SearchButtons({ artist, size = 'normal' }) {
         href={ebayUrl(artist)}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => trackClick(artist.name, 'ebay')}
+        onClick={() => trackClick(artist.name, 'ebay', ebayUrl(artist))}
         style={{
           ...btnStyle,
           display: 'inline-flex', alignItems: 'center', gap: 7,
@@ -89,7 +90,7 @@ function SearchButtons({ artist, size = 'normal' }) {
         href={cdandlpUrl(artist.searchTerms.cdandlp)}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => trackClick(artist.name, 'cdandlp')}
+        onClick={() => trackClick(artist.name, 'cdandlp', cdandlpUrl(artist.searchTerms.cdandlp))}
         style={{
           ...btnStyle,
           display: 'inline-flex', alignItems: 'center', gap: 7,

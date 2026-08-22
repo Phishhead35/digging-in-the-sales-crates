@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BookOpen, ArrowRight, Disc3, TrendingUp, Radio, RefreshCw } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { BLOG_POSTS } from '../data/blog';
+import { trackBlogPostClick } from '../utils/analytics';
 
 // ── Series -> color/icon mapping for listing-card headers ──────
 // Add a new series here when the blog-generator introduces one;
@@ -16,11 +17,10 @@ const SERIES_STYLES = {
 const DEFAULT_SERIES_STYLE = { color: '#f59e0b', icon: BookOpen };
 
 // ── GA4 tracker ───────────────────────────────────────────────
+// Implementation lives in src/utils/analytics.js. Event name and
+// parameters unchanged.
 function trackPostClick(slug) {
-  window.gtag?.('event', 'blog_post_click', {
-    post_slug: slug,
-    source: 'blog_index',
-  });
+  trackBlogPostClick(slug, 'blog_index');
 }
 
 // ── Post card ─────────────────────────────────────────────────

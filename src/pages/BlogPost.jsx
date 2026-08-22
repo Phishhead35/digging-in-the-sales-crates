@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Disc3, Search, ExternalLink } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { BLOG_POSTS } from '../data/blog';
+import { trackBlogMarketplaceClick } from '../utils/analytics';
 
 // ── Affiliate link builders (same as ArtistPage.jsx) ──────────
 function discogsUrl(term) {
@@ -16,12 +17,11 @@ function cdandlpUrl(term) {
 }
 
 // ── GA4 tracker ───────────────────────────────────────────────
-function trackClick(postSlug, artistName, marketplace) {
-  window.gtag?.('event', 'blog_marketplace_click', {
-    post_slug: postSlug,
-    artist_name: artistName,
-    marketplace,
-  });
+// Implementation lives in src/utils/analytics.js. Event name and
+// parameters unchanged; a `monetized` flag is added so a regression
+// that strips affiliate params surfaces in GA4 immediately.
+function trackClick(postSlug, artistName, marketplace, url) {
+  trackBlogMarketplaceClick(postSlug, artistName, marketplace, url);
 }
 
 // ── Marketplace button ────────────────────────────────────────
@@ -37,7 +37,7 @@ function MarketplaceButton({ label, url, marketplace, postSlug, artistName }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => trackClick(postSlug, artistName, marketplace)}
+      onClick={() => trackClick(postSlug, artistName, marketplace, url)}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 6,
         padding: '8px 14px', borderRadius: 8, fontSize: 12,

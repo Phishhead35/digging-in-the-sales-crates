@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { Disc3, ArrowRight, Music } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { ARTISTS, GENRES } from '../data/artists';
+import { trackArtistPageClick } from '../utils/analytics';
 
 // ── GA4 tracker ───────────────────────────────────────────────
+// Implementation lives in src/utils/analytics.js. Event name and
+// parameters unchanged.
 function trackArtistClick(artistName) {
-  window.gtag?.('event', 'artist_page_click', {
-    artist_name: artistName,
-    source: 'artists_index',
-  });
+  trackArtistPageClick(artistName, 'artists_index');
 }
 
 // ── Artist card ───────────────────────────────────────────────

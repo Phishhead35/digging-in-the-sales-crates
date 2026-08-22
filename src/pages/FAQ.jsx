@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { track, trackStoreClick, CLICK_SOURCES } from "../utils/analytics";
 
 const faqs = [
   {
@@ -103,6 +104,14 @@ function ChevronIcon({ open }) {
 function FAQItem({ q, a }) {
   const [open, setOpen] = useState(false);
 
+  // Which questions people actually open. A question opened far more
+  // than the rest is either a content gap on the main site or a sign
+  // the answer belongs somewhere more prominent than the FAQ.
+  const toggle = () => {
+    if (!open) track('faq_open', { faq_question: q });
+    setOpen(!open);
+  };
+
   return (
     <div
       style={{
@@ -110,7 +119,7 @@ function FAQItem({ q, a }) {
       }}
     >
       <button
-        onClick={() => setOpen(!open)}
+        onClick={toggle}
         style={{
           width: "100%",
           background: "none",
@@ -223,6 +232,12 @@ export default function FAQ() {
           Still have a question?{" "}
           <a
             href="mailto:hello@digginginthesalescrates.com"
+            onClick={() => trackStoreClick({
+              storeName: 'FAQ question email',
+              storeUrl: 'mailto:hello@digginginthesalescrates.com',
+              clickSource: 'faq_page',
+              isAffiliate: false,
+            })}
             style={{ color: "#f59e0b", textDecoration: "none" }}
           >
             Drop us a line.
@@ -318,6 +333,12 @@ export default function FAQ() {
           </p>
           <a
             href="mailto:hello@digginginthesalescrates.com"
+            onClick={() => trackStoreClick({
+              storeName: 'FAQ question email',
+              storeUrl: 'mailto:hello@digginginthesalescrates.com',
+              clickSource: 'faq_page',
+              isAffiliate: false,
+            })}
             style={{
               display: "inline-block",
               background: "#f59e0b",

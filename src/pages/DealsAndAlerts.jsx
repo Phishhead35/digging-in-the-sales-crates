@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { TrendingDown, Bell, BellOff, Trash2, Search, Plus } from 'lucide-react';
 import { formatPrice } from '../utils/api';
+import { trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
 
 // ============================================================
 // DEALS PAGE — Curated store links + search shortcuts
@@ -71,6 +72,18 @@ export function Deals() {
         {curatedStores.map(({ name, url, desc, tag, affiliate }) => (
           <a key={name} href={url} target="_blank" rel={affiliate ? 'nofollow noopener noreferrer' : 'noopener noreferrer'}
             className="store-card"
+            onClick={() => trackStoreClick({
+              storeName: name,
+              storeUrl: url,
+              clickSource: CLICK_SOURCES.DEALS,
+              // `affiliate` comes from the curatedStores data, so the
+              // monetized dimension reflects what we actually declared
+              // rather than what the URL happens to look like. Turntable
+              // Lab (aff=) and Retrolife (tidd.ly) are live programs;
+              // everything else on this list is currently unmonetized.
+              isAffiliate: Boolean(affiliate),
+              notify: `${name} (deals page)`,
+            })}
             style={{
               padding: 24, borderRadius: 16, background: 'var(--bg-card)',
               border: '1px solid var(--border)',

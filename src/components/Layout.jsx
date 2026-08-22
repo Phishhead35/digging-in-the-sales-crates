@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3 } from 'lucide-react';
 import FollowUs from './FollowUs';
+import { trackNavClick, trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
 
 export default function Layout({ children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -85,7 +86,9 @@ export default function Layout({ children }) {
             {/* Desktop Nav */}
             <div className="desktop-nav" style={{ display: 'flex', gap: 2, marginLeft: 'auto', alignItems: 'center' }}>
               {navLinks.map(({ to, label, icon: Icon, comingSoon }) => (
-                <Link key={to} to={to} style={{
+                <Link key={to} to={to}
+                  onClick={() => trackNavClick(label, to, 'header_desktop')}
+                  style={{
                   display: 'flex', alignItems: 'center', gap: 6,
                   padding: '8px 12px', borderRadius: 8, fontSize: 12, fontWeight: 500,
                   color: isActive(to) ? 'var(--amber)' : 'var(--text-primary)',
@@ -131,7 +134,9 @@ export default function Layout({ children }) {
             padding: '16px 24px',
           }}>
             {navLinks.map(({ to, label, icon: Icon, comingSoon }) => (
-              <Link key={to} to={to} style={{
+              <Link key={to} to={to}
+                onClick={() => trackNavClick(label, to, 'header_mobile')}
+                style={{
                 display: 'flex', alignItems: 'center', gap: 10,
                 padding: '12px 0', color: isActive(to) ? 'var(--amber)' : 'var(--text-primary)',
                 borderBottom: '1px solid var(--border)', fontSize: 15,
@@ -236,7 +241,9 @@ export default function Layout({ children }) {
           {/* Footer nav links */}
           <div style={{ display: 'flex', gap: 20, justifyContent: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
             {navLinks.map(({ to, label }) => (
-              <Link key={to} to={to} style={{ fontSize: 11, color: 'var(--text-primary)', textDecoration: 'none' }}>
+              <Link key={to} to={to}
+                onClick={() => trackNavClick(label, to, 'footer')}
+                style={{ fontSize: 11, color: 'var(--text-primary)', textDecoration: 'none' }}>
                 {label}
               </Link>
             ))}
@@ -246,7 +253,14 @@ export default function Layout({ children }) {
             <p style={{ color: 'var(--text-primary)', fontSize: 13, marginBottom: 6 }}>
               Store owner, label, or affiliate inquiry?
             </p>
-            <a href="mailto:hello@digginginthesalescrates.com" className="footer-email-link">
+            <a href="mailto:hello@digginginthesalescrates.com" className="footer-email-link"
+              onClick={() => trackStoreClick({
+                storeName: 'Partnership inquiry (footer)',
+                storeUrl: 'mailto:hello@digginginthesalescrates.com',
+                clickSource: CLICK_SOURCES.FOOTER,
+                isAffiliate: false,
+                notify: 'Someone clicked the partnership inquiry email',
+              })}>
               hello@digginginthesalescrates.com
             </a>
           </div>

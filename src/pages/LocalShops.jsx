@@ -1,5 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import { MapPin, Clock, ExternalLink, Search, Star, Phone, ChevronDown, ChevronUp, Disc3 } from 'lucide-react';
+import {
+  trackStoreClick,
+  trackLocalShopSearch,
+  trackApiError,
+  CLICK_SOURCES,
+} from '../utils/analytics';
 
 // SPECIALTIES and SPECIALTY_COLORS are commented out rather than deleted.
 // The specialty filter UI is planned for when more partner stores are onboarded
@@ -151,6 +157,15 @@ function StoreCard({ store, index }) {
               href={store.website}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackStoreClick({
+                storeName: store.name,
+                storeUrl: store.website,
+                clickSource: CLICK_SOURCES.LOCAL_SHOPS,
+                // Google Places results are not partners and carry no
+                // affiliate or UTM params, so monetized reports 'n_a'.
+                // This is engagement data, not revenue data.
+                isAffiliate: false,
+              })}
               style={{
                 flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                 padding: '8px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600,
@@ -165,6 +180,12 @@ function StoreCard({ store, index }) {
             href={`https://www.google.com/maps/place/?q=place_id:${store.place_id}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackStoreClick({
+              storeName: store.name,
+              storeUrl: `https://www.google.com/maps/place/?q=place_id:${store.place_id}`,
+              clickSource: CLICK_SOURCES.LOCAL_SHOPS_DIRECTIONS,
+              isAffiliate: false,
+            })}
             style={{
               flex: store.website ? '0 0 auto' : 1,
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
@@ -217,10 +238,15 @@ export default function LocalShops() {
       if (!res.ok) throw new Error(`Search failed: ${res.status}`);
       const data = await res.json();
       if (data.error) throw new Error(data.error);
-      setShops(data.results || []);
+      const results = data.results || [];
+      setShops(results);
+      // Where visitors are looking for record stores. Directly useful
+      // for deciding which regions to run outreach in next.
+      trackLocalShopSearch(searchQuery, results.length);
     } catch (err) {
       setError(err.message);
       setShops([]);
+      trackApiError('google_places', err?.message?.match(/\d{3}/)?.[0], err?.message);
     } finally {
       setLoading(false);
     }

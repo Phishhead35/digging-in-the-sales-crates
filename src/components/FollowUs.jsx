@@ -1,3 +1,5 @@
+import { trackSocialClick } from '../utils/analytics';
+
 const TIKTOK_URL = "https://www.tiktok.com/@ditsc.com";
 const FACEBOOK_URL = "https://www.facebook.com/digginginthesalescrates/";
 
@@ -18,6 +20,7 @@ export default function FollowUs() {
           rel="noopener noreferrer"
           className="follow-pill follow-pill--tiktok"
           aria-label="Follow DITSC on TikTok"
+          onClick={() => trackSocialClick('tiktok', 'follow_us_section')}
         >
           <TikTokIcon />
           @ditsc.com
@@ -28,6 +31,7 @@ export default function FollowUs() {
           rel="noopener noreferrer"
           className="follow-pill follow-pill--facebook"
           aria-label="Follow DITSC on Facebook"
+          onClick={() => trackSocialClick('facebook', 'follow_us_section')}
         >
           <FacebookIcon />
           Digging in the Sales Crates

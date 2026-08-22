@@ -7,6 +7,7 @@
 
 import React from 'react';
 import { Youtube } from 'lucide-react';
+import { trackVideoClick } from '../utils/analytics';
 
 function formatPublished(dateStr) {
   if (!dateStr) return null;
@@ -70,6 +71,7 @@ export default function VideoCard({ video, color, compact = false }) {
           href={video.url}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackVideoClick(video.title, video.id, 'homepage_video_card')}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 5,
             padding: '5px 12px', borderRadius: 20,

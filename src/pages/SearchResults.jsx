@@ -3,50 +3,34 @@ import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { searchDiscogs, searchEbay, searchCDandLP, formatPrice } from '../utils/api';
 import useSEO from '../hooks/useSEO';
+import {
+  trackStoreClick,
+  trackSelectItem,
+  trackSearch,
+  trackViewSearchResults,
+  trackNoResults,
+  trackFilterChange,
+  trackPagination,
+  trackWishlistAdd,
+  trackWishlistRemove,
+  trackApiError,
+  marketplaceFromUrl,
+  CLICK_SOURCES,
+} from '../utils/analytics';
 
 // Number of results requested per page. Also used to size the loading-skeleton
 // grid below, so the skeleton's height roughly matches the real results grid's
 // height and swapping loading -> loaded doesn't cause a big layout shift (CLS).
 const RESULTS_PER_PAGE = 20;
 
-// ── GA4 store click tracker ───────────────────────────────────
-// Fires store_click when a visitor clicks through to a marketplace
-// from search results. Mirrors trackStoreClick in Home.jsx so all
-// affiliate click-throughs roll into the same GA4 event; the
-// click_source param separates search traffic from homepage partner cards.
-// Uses optional chaining so it silently no-ops if gtag isn't loaded yet.
-// Also pings ntfy.sh for an instant phone notification per click.
-// keepalive lets the request complete even as the browser leaves the page.
-const NTFY_TOPIC = 'ditsc-clicks-vk8q3zt2npw4';
+// ── GA4 tracking ──────────────────────────────────────────────
+// All tracking now lives in src/utils/analytics.js. The store_click
+// event name and its original parameters (store_name, store_url,
+// item_title, click_source) are unchanged, so existing GA4 reports keep
+// working. Price, condition, result position, marketplace, and an
+// affiliate-params-present flag are added on top.
 
-function notifyStoreClick(message) {
-  try {
-    fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
-      method: 'POST',
-      body: message,
-      headers: { 'X-Title': 'DITSC Store Click', 'X-Tags': 'dollar' },
-      keepalive: true,
-    }).catch(() => {});
-  } catch {
-    // Never let a notification failure break the click-through.
-  }
-}
-
-function trackStoreClick(storeName, storeUrl, itemTitle) {
-  window.gtag?.('event', 'store_click', {
-    store_name: storeName,
-    store_url: storeUrl,
-    item_title: itemTitle || '(none)',
-    click_source: 'search_results',
-  });
-  notifyStoreClick(
-    itemTitle && itemTitle !== 'api_source_card'
-      ? `${storeName}: ${itemTitle} (search)`
-      : `${storeName} (search page source card)`
-  );
-}
-
-function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority }) {
+function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, position, searchTerm }) {
   const thumb = result.cover_image || result.thumb || result.picture || null;
   const [imgError, setImgError] = useState(false);
 
@@ -193,7 +177,29 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority })
               className="view-deals-btn"
               onClick={() => {
                 onResultClick();
-                trackStoreClick(storeName, dealUrl, result.title);
+                trackStoreClick({
+                  storeName,
+                  storeUrl: dealUrl,
+                  clickSource: CLICK_SOURCES.SEARCH_RESULTS,
+                  itemTitle: result.title,
+                  itemPrice: result.lowest_price,
+                  itemCondition: result.lowest_condition,
+                  itemId: result.id,
+                  position,
+                  searchTerm,
+                  notify: `${storeName}: ${result.title} (search)`,
+                });
+                // Fired alongside store_click so GA4's built-in item
+                // reports populate. store_click stays the canonical count.
+                trackSelectItem({
+                  itemId: result.id,
+                  itemTitle: result.title,
+                  itemPrice: result.lowest_price,
+                  marketplace: marketplaceFromUrl(dealUrl),
+                  searchTerm,
+                  position,
+                  listName: 'search_results',
+                });
               }}
             >
               <ShoppingCart size={13} /> View Deals
@@ -262,12 +268,22 @@ export default function SearchResults() {
     setLoading(true);
     setError(null);
 
+    // Per-source counts and wall-clock latency, reported on
+    // view_search_results so you can see which marketplace is actually
+    // carrying each query and how slow the aggregate search feels.
+    const startedAt = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+    const counts = { discogs: 0, ebay: 0, cdandlp: 0 };
+
     try {
       const combined = [];
 
       if (src === 'all' || src === 'discogs') {
         const data = await searchDiscogs(q, pg, RESULTS_PER_PAGE);
         const items = (data.results || []).map(r => ({ ...r, source: 'discogs' }));
+        // searchDiscogs swallows its own errors and returns an empty
+        // result set, so an empty array here on an 'all' search is the
+        // only signal available that Discogs may have rate-limited (429).
+        counts.discogs = items.length;
         combined.push(...items);
         if (data.pagination) setTotalPages(data.pagination.pages || 1);
       }
@@ -284,9 +300,11 @@ export default function SearchResults() {
             source: 'ebay',
             url: item.viewItemURL?.[0],
           }));
+          counts.ebay = mapped.length;
           combined.push(...mapped);
         } catch (ebayErr) {
           console.warn('eBay search failed, showing Discogs only:', ebayErr);
+          trackApiError('ebay', ebayErr?.message?.match(/\d{3}/)?.[0], ebayErr?.message);
         }
       }
 
@@ -305,6 +323,7 @@ export default function SearchResults() {
             url: item.shop_url || 'https://www.cdandlp.com',
             currency: item.currency || 'EUR',
           }));
+          counts.cdandlp = mapped.length;
           combined.push(...mapped);
           if (src === 'cdandlp') {
             const nbItems = cdData?.information?.nb_items || 0;
@@ -312,13 +331,34 @@ export default function SearchResults() {
           }
         } catch (cdErr) {
           console.warn('CDandLP search failed:', cdErr);
+          trackApiError('cdandlp', cdErr?.message?.match(/\d{3}/)?.[0], cdErr?.message);
         }
       }
 
       setAllResults(combined);
       setResults(combined);
+
+      // Fire view_search_results HERE rather than in the query effect, so
+      // it can carry the real result counts and latency. 'search' still
+      // fires synchronously in the effect below and remains the canonical
+      // search-volume metric — report on that, not on this event.
+      const latencyMs = (typeof performance !== 'undefined' ? performance.now() : Date.now()) - startedAt;
+      if (src === 'all') {
+        trackViewSearchResults({
+          searchTerm: q,
+          resultCount: combined.length,
+          discogs: counts.discogs,
+          ebay: counts.ebay,
+          cdandlp: counts.cdandlp,
+          latencyMs,
+        });
+        // The single most actionable event on the site: records people
+        // wanted and the aggregator could not deliver.
+        if (combined.length === 0) trackNoResults(q, latencyMs);
+      }
     } catch (err) {
       setError(err.message);
+      trackApiError('search_aggregate', err?.message?.match(/\d{3}/)?.[0], err?.message);
     } finally {
       setLoading(false);
     }
@@ -335,27 +375,26 @@ export default function SearchResults() {
     // 'search' is the canonical search-volume event: it fires exactly once per
     // search on every entry path (cold load of /search?q=, in-app re-search,
     // trending chip). Report on THIS event, not view_search_results.
-    window.gtag?.('event', 'search', { search_term: query });
-    // Fire view_search_results manually, synchronously, right alongside 'search'.
-    // GA4's automatic Enhanced Measurement site-search detection relies on a
-    // deferred history-change listener that can lose the race if the visitor
-    // navigates away quickly after searching (confirmed via DebugView: it fires
-    // reliably in slow manual testing but under-fires in real traffic — 24
-    // 'search' events vs 2 auto-detected 'view_search_results' in one week).
-    // Firing it here removes that race entirely.
+    //
+    // view_search_results is NO LONGER fired here. It now fires inside
+    // doSearch once results resolve, so it can carry result_count,
+    // per-source counts, and search latency. That is a deliberate change:
+    // 'search' remains the synchronous, never-missed volume metric, while
+    // view_search_results becomes the richer "results actually rendered"
+    // event. A visitor who leaves before results load correctly produces
+    // a 'search' with no 'view_search_results'.
     //
     // REQUIRES: Enhanced Measurement -> "Site search" must stay OFF in the GA4
     // data stream (Admin -> Data streams -> DITSC Website -> Enhanced
     // measurement). Because /search uses ?q=, a default site-search parameter,
-    // leaving it ON makes GA4 fire its OWN view_search_results on top of this
-    // one. Verified 2026-08-10 via live /g/collect capture: a cold load of
+    // leaving it ON makes GA4 fire its OWN view_search_results on top of ours.
+    // Verified 2026-08-10 via live /g/collect capture: a cold load of
     // /search/?q=nas produced TWO view_search_results hits (one without _ee=1
-    // from Enhanced Measurement, one with _ee=1 from this line), while an
+    // from Enhanced Measurement, one with _ee=1 from our own call), while an
     // in-app SPA search produced only one — so the inflation varied with
     // traffic mix and corrupted search-volume trending.
-    // Do not re-enable Site search. Do not delete this line either: removing it
-    // reintroduces the under-firing race described above.
-    window.gtag?.('event', 'view_search_results', { search_term: query });
+    // Do not re-enable Site search.
+    trackSearch(query, 'search_page');
     doSearch(query, 1, 'all');
   }, [query]);
 
@@ -374,6 +413,7 @@ export default function SearchResults() {
   useEffect(() => {
     if (page > 1 && query && page !== prevPageRef.current) {
       prevPageRef.current = page;
+      trackPagination(page, query);
       doSearch(query, page, 'all');
     } else {
       prevPageRef.current = page;
@@ -392,9 +432,21 @@ export default function SearchResults() {
       const exists = prev.find(w => w.id === item.id && w.source === item.source);
       const next = exists ? prev.filter(w => !(w.id === item.id && w.source === item.source)) : [...prev, item];
       localStorage.setItem('wishlist', JSON.stringify(next));
+      // Wishlist adds are the strongest intent signal short of an
+      // outbound click, and were previously untracked entirely.
+      if (exists) {
+        trackWishlistRemove({ itemTitle: item.title, marketplace: item.source });
+      } else {
+        trackWishlistAdd({
+          itemTitle: item.title,
+          itemPrice: item.lowest_price,
+          marketplace: item.source,
+          searchTerm: query,
+        });
+      }
       return next;
     });
-  }, []);
+  }, [query]);
 
   const isWishlisted = (item) => wishlist.some(w => w.id === item.id && w.source === item.source);
 
@@ -428,7 +480,18 @@ export default function SearchResults() {
       <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap', alignItems: 'center' }}>
         <Filter size={14} color="var(--text-muted)" />
         {['all', 'discogs', 'ebay', 'cdandlp'].map(s => (
-          <button key={s} onClick={() => setActiveSource(s)}
+          <button key={s} onClick={() => {
+              setActiveSource(s);
+              // Which marketplace visitors actually trust enough to
+              // filter down to. Fired on the click, not in the effect,
+              // so a programmatic reset to 'all' on a new search
+              // doesn't register as a deliberate filter choice.
+              trackFilterChange(
+                s,
+                query,
+                s === 'all' ? allResults.length : allResults.filter(r => r.source === s).length
+              );
+            }}
             className={`filter-btn${activeSource === s ? ' filter-btn-active' : ''}`}>
             {s === 'all' ? 'All Sources' : s === 'cdandlp' ? 'CDandLP' : s.charAt(0).toUpperCase() + s.slice(1)}
           </button>
@@ -465,6 +528,8 @@ export default function SearchResults() {
               wishlisted={isWishlisted(r)}
               onResultClick={handleResultClick}
               priority={index === 0}
+              position={index + 1}
+              searchTerm={query}
             />
           ))}
         </div>
@@ -515,7 +580,13 @@ export default function SearchResults() {
             { name: 'CDandLP', url: 'https://www.cdandlp.com/?affilie=digginginthesalescrates&lng=2&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation', desc: 'European-heavy used marketplace with millions of vinyl listings. Great for international pressings and pricing.', tag: 'Live API' },
           ].map(({ name, url, desc, tag }) => (
             <a key={name} href={url} target="_blank" rel="noopener noreferrer" className="api-source-card"
-              onClick={() => trackStoreClick(name, url, 'api_source_card')}>
+              onClick={() => trackStoreClick({
+                storeName: name,
+                storeUrl: url,
+                clickSource: CLICK_SOURCES.SEARCH_SOURCE_CARD,
+                searchTerm: query,
+                notify: `${name} (search page source card)`,
+              })}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
                 <h3 style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-primary)' }}>{name}</h3>
                 <span style={{
