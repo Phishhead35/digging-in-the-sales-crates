@@ -535,6 +535,89 @@ export function trackPageView(path, title) {
 }
 
 /**
+ * Fires page_view once document.title has SETTLED after a route change.
+ *
+ * WHY THIS IS NOT JUST requestAnimationFrame:
+ *
+ * A single rAF fires ~16ms after the route effect, which is far too early
+ * on this app. Two things happen after that:
+ *
+ *   1. Routes are React.lazy chunks. On first visit to a route the chunk
+ *      still has to download and mount, so the page component's useSEO
+ *      has not run yet. Measured on production: title updated ~100ms
+ *      after the rAF, so page_view carried the PREVIOUS page's title.
+ *
+ *   2. useSEO's cleanup resets document.title to the generic
+ *      "Digging in the Sales Crates" when the old page unmounts, and the
+ *      new page sets its real title afterwards. So the title changes
+ *      TWICE per navigation. Firing on the first change would record the
+ *      generic fallback instead of the real title.
+ *
+ * So: watch document.head for title mutations, restart a short settle
+ * timer on every change, and only report once the title has been quiet
+ * for `settleMs`. `maxWaitMs` is a hard backstop for routes that never
+ * change the title at all (currently /faq, /deals, /wishlist,
+ * /local-shops and /alerts, none of which call useSEO).
+ *
+ * Trade-off: page_view is reported a few hundred ms later than before.
+ * A visitor who leaves inside that window is not counted. That is the
+ * right trade — a missing row beats a row attributed to the wrong page.
+ *
+ * @returns {() => void} cancel function; call it on the next route change.
+ */
+export function schedulePageView(path, { settleMs = 250, maxWaitMs = 2500 } = {}) {
+  if (typeof document === 'undefined') return () => {};
+
+  let finished = false;
+  let settleTimer = null;
+  let hardTimer = null;
+  let observer = null;
+
+  const cleanup = () => {
+    if (settleTimer) clearTimeout(settleTimer);
+    if (hardTimer) clearTimeout(hardTimer);
+    if (observer) observer.disconnect();
+    settleTimer = null;
+    hardTimer = null;
+    observer = null;
+  };
+
+  const fire = () => {
+    if (finished) return;
+    finished = true;
+    cleanup();
+    trackPageView(path, document.title);
+  };
+
+  const restartSettle = () => {
+    if (settleTimer) clearTimeout(settleTimer);
+    settleTimer = setTimeout(fire, settleMs);
+  };
+
+  // Absolute backstop so a page that never settles still reports.
+  hardTimer = setTimeout(fire, maxWaitMs);
+
+  if (typeof MutationObserver !== 'undefined' && document.head) {
+    // Observe head rather than the <title> node itself: a framework that
+    // replaces the element instead of mutating its text would otherwise
+    // slip past the observer.
+    observer = new MutationObserver(restartSettle);
+    observer.observe(document.head, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+  }
+
+  restartSettle();
+
+  return () => {
+    finished = true;
+    cleanup();
+  };
+}
+
+/**
  * Scroll-depth milestones at 25/50/75/90 percent.
  *
  * GA4's built-in scroll event only fires at 90%, which tells you almost

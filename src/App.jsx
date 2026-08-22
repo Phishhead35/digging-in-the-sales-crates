@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import ScrollToTop from './components/ScrollToTop';
 import CanonicalTag from './components/CanonicalTag';
 import {
-  trackPageView,
+  schedulePageView,
   installErrorTracking,
   installScrollTracking,
 } from './utils/analytics';
@@ -51,8 +51,14 @@ function RouteFallback() {
 // "page changes based on browser history events" fires on the history
 // event itself, which happens BEFORE React re-renders and before
 // useSEO updates document.title — producing page_view rows tagged with
-// the PREVIOUS page's title. A rAF defers our call until after paint so
-// the title is correct.
+// the PREVIOUS page's title.
+//
+// We report via schedulePageView, which waits for document.title to
+// settle before sending. A plain requestAnimationFrame is NOT enough
+// here: routes are React.lazy chunks, and useSEO's cleanup briefly
+// resets the title to a generic default between pages. See the long
+// comment on schedulePageView in utils/analytics.js for the measured
+// timings behind this.
 //
 // REQUIRES: Enhanced Measurement -> "Page changes based on browser
 // history events" must be turned OFF in the GA4 data stream, or every
@@ -76,14 +82,14 @@ function AnalyticsTracker() {
       return;
     }
 
-    const id = window.requestAnimationFrame(() => {
-      trackPageView(location.pathname + location.search, document.title);
-    });
+    const cancel = schedulePageView(location.pathname + location.search);
 
     // Re-arm scroll-depth milestones for the new page.
     if (resetScrollRef.current) resetScrollRef.current();
 
-    return () => window.cancelAnimationFrame(id);
+    // Navigating again before the title settles cancels the pending
+    // report, so a rapid click-through never files under the wrong route.
+    return cancel;
   }, [location.pathname, location.search]);
 
   return null;
