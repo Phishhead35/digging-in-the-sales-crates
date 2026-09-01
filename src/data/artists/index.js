@@ -562,6 +562,74 @@ export const ARTISTS = {
     },
   },
 
+  'dj-quik': {
+    slug: 'dj-quik',
+    name: 'DJ Quik',
+    tagline: 'Compton. He built the G-funk blueprint before anyone called it that.',
+    genres: ['Hip-Hop', 'West Coast'],
+    searchTerms: {
+      discogs: 'DJ Quik',
+      ebay: 'DJ Quik vinyl',
+      cdandlp: 'DJ Quik',
+    },
+    bio: [
+      'David Blake, known everywhere as DJ Quik, released Quik Is the Name on Profile in January 1991, almost two years before The Chronic. The whole G-funk vocabulary is already on it: the high synth lead, the rolling bassline, the live-feel drums, the party-first Compton perspective. He produced all of it himself at twenty years old.',
+      'He never stopped producing. Across Way 2 Fonky, Safe + Sound and Rhythm-al-ism he built a catalog that other West Coast records were measured against, and he spent the next three decades behind the boards for everyone from 2Pac to Jay-Z to Kendrick Lamar. Musicians who work with him tend to describe him as a bandleader more than a beatmaker.',
+      'The collecting case is straightforward: Quik has never carried the Death Row markup despite getting there first. Original Profile pressings turn up at prices that look like mistakes next to comparable West Coast titles from the same years. Condition is the real hunt, because these were records people played rather than archived.',
+    ],
+    essentialRecords: [
+      { title: 'Quik Is the Name', year: 1991, label: 'Profile' },
+      { title: 'Way 2 Fonky', year: 1992, label: 'Profile' },
+      { title: 'Safe + Sound', year: 1995, label: 'Profile' },
+      { title: 'Rhythm-al-ism', year: 1998, label: 'Profile / Arista' },
+      { title: 'Balance & Options', year: 2000, label: 'Arista' },
+      { title: 'The Book of David', year: 2011, label: 'Mad Science' },
+    ],
+    producerCredits: [
+      'DJ Quik, self-produced across his entire studio catalog',
+      'Quik Is the Name (1991), produced start to finish at age twenty',
+      'Later production for 2Pac, Snoop Dogg, Jay-Z and Kendrick Lamar',
+    ],
+    seo: {
+      title: 'DJ Quik Vinyl Records | Digging in the Sales Crates',
+      description: 'Find DJ Quik vinyl records across Discogs, eBay, and CDandLP. Shop Quik Is the Name, Way 2 Fonky, Safe + Sound, Rhythm-al-ism, and original Profile Records pressings.',
+    },
+  },
+
+  'fleetwood-mac': {
+    slug: 'fleetwood-mac',
+    name: 'Fleetwood Mac',
+    tagline: 'The best-selling record in every bin, and the deadwax decides what it is worth.',
+    genres: ['Rock', 'Pop'],
+    searchTerms: {
+      discogs: 'Fleetwood Mac',
+      ebay: 'Fleetwood Mac vinyl',
+      cdandlp: 'Fleetwood Mac',
+    },
+    bio: [
+      'Fleetwood Mac started in 1967 as a British blues band built around Peter Green, and became something else entirely once Lindsey Buckingham and Stevie Nicks joined in 1975. Both eras are worth digging. The blues records are scarcer; the Buckingham and Nicks records are everywhere, which is exactly what makes them interesting.',
+      'Rumours (1977) is the one every store has. It sold in numbers that put a copy in nearly every American household with a turntable, and that ubiquity is why it belongs in a sample digger\'s crate as much as a rock collector\'s. Bone Thugs-N-Harmony built "Wind Blow" on "The Chain," and producers have been pulling from Warner Bros. rock of this era for decades precisely because the supply is endless.',
+      'For collectors, Rumours is the clearest lesson in why pressing details matter more than catalog numbers. The US original is Warner Bros. BSK 3010, but Discogs documents multiple pressing plants under that same number, and they do not all sound alike. Two copies with identical jackets and labels can be a five dollar record and a serious one. Read the runout etchings, not the seller\'s title.',
+    ],
+    essentialRecords: [
+      { title: 'Rumours', year: 1977, label: 'Warner Bros.' },
+      { title: 'Fleetwood Mac', year: 1975, label: 'Reprise' },
+      { title: 'Tusk', year: 1979, label: 'Warner Bros.' },
+      { title: 'Mirage', year: 1982, label: 'Warner Bros.' },
+      { title: 'Tango in the Night', year: 1987, label: 'Warner Bros.' },
+      { title: 'Then Play On', year: 1969, label: 'Reprise' },
+    ],
+    producerCredits: [
+      'Fleetwood Mac, Ken Caillat and Richard Dashut, Rumours (1977)',
+      'Lindsey Buckingham, principal architect of the Tusk sessions (1979)',
+      'Sampled by Bone Thugs-N-Harmony, "Wind Blow," from "The Chain"',
+    ],
+    seo: {
+      title: 'Fleetwood Mac Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Fleetwood Mac vinyl records across Discogs, eBay, and CDandLP. Shop Rumours, Tusk, Mirage, Tango in the Night, and original Warner Bros. and Reprise pressings.',
+    },
+  },
+
 };
 
 export const GENRES = {

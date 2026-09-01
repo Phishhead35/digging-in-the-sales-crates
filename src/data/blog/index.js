@@ -24,6 +24,7 @@ export const BLOG_POSTS = {
     shopArtists: [
       {
         name: 'Fleetwood Mac',
+        pageSlug: 'fleetwood-mac',
         searchTerms: {
           discogs: 'Fleetwood Mac Rumours',
           ebay: 'Fleetwood Mac Rumours vinyl',
@@ -62,6 +63,7 @@ export const BLOG_POSTS = {
     shopArtists: [
       {
         name: 'DJ Quik',
+        pageSlug: 'dj-quik',
         searchTerms: {
           discogs: 'DJ Quik Quik Is The Name',
           ebay: 'DJ Quik Quik Is The Name vinyl',
