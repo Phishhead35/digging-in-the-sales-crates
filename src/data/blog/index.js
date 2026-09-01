@@ -5,6 +5,75 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'bone-thugs-fleetwood-mac-the-chain-sample': {
+    slug: 'bone-thugs-fleetwood-mac-the-chain-sample',
+    title: 'Bone Thugs Flipped "The Chain," and Rumours Is Still the Cheapest Grail in the Store',
+    series: 'SAMPLE DNA',
+    date: '2026-08-24',
+    dateDisplay: 'August 24, 2026',
+    excerpt: 'Bone Thugs-N-Harmony built "Wind Blow" on Fleetwood Mac\'s "The Chain." Why Rumours is the one record where a five dollar bin copy and a serious collector pressing sit in the same jacket, and why the deadwax is the only thing that tells them apart.',
+    body: [
+      'Every record store in America has a copy of Rumours in the bin. Most diggers walk past it. That is a mistake, and not for the reason you think.',
+      'Bone Thugs-N-Harmony built "Wind Blow" on Fleetwood Mac\'s "The Chain," which is a stranger pairing than it sounds until you actually listen. "The Chain" is the only track on Rumours credited to all five members, stitched together from pieces of other songs during sessions where the band was actively falling apart. That famous bass run at the end, the one everybody knows, was already a Frankenstein part before anyone thought to loop it. Bone Thugs took that tension and put Cleveland harmonies on top of it. The source was built from fragments; the flip treated it like one.',
+      'That is the argument for rock records in a hip-hop digger\'s crate. Producers were never genre purists. They were looking for four bars that felt like something, and Warner Bros. rock sold in numbers that put those bars in every thrift store in the country.',
+      'Now the collecting part, because Rumours is where cheap and expensive live in the same jacket. The US original is Warner Bros. catalog BSK 3010, 1977. Discogs documents multiple US pressing plants for that catalog number, including Los Angeles, Pitman and Jacksonville variants, and they do not all sound the same. This is the whole game with a record this mass-produced: the catalog number tells you almost nothing, and the deadwax tells you everything. Two copies with identical jackets and identical labels can be a five dollar record and a serious one.',
+      'Check the runout before you decide. Some copies carry an "RL" stamp, associated with mastering engineer Robert Ludwig, and audiophile forums have argued about which plants and which mastering house for decades. Accounts genuinely conflict, so treat any listing that advertises a grail pressing as a claim to verify yourself rather than a fact. Read the etchings, not the seller\'s title.',
+      'The practical move: buy a beater copy for five dollars to actually play, and keep a want-list entry for a specific runout you have decided you want. That is a better strategy on Rumours than on almost any other record, because supply is enormous and the price spread between variants is enormous too.',
+      'Run "Fleetwood Mac" and "Rumours" through digginginthesalescrates.com and compare Discogs, eBay and CDandLP. On a record with this many pressings in circulation, the marketplace spread is where the whole decision gets made.',
+    ],
+    shopArtists: [
+      {
+        name: 'Fleetwood Mac',
+        searchTerms: {
+          discogs: 'Fleetwood Mac Rumours',
+          ebay: 'Fleetwood Mac Rumours vinyl',
+          cdandlp: 'Fleetwood Mac Rumours',
+        },
+      },
+      {
+        name: 'Bone Thugs-N-Harmony',
+        searchTerms: {
+          discogs: 'Bone Thugs-N-Harmony',
+          ebay: 'Bone Thugs-N-Harmony vinyl',
+          cdandlp: 'Bone Thugs-N-Harmony',
+        },
+      },
+    ],
+    seo: {
+      title: 'Fleetwood Mac Rumours Pressings and the Bone Thugs "Chain" Sample | Digging in the Sales Crates',
+      description: 'Bone Thugs-N-Harmony sampled Fleetwood Mac\'s "The Chain" on "Wind Blow." How to read the deadwax on a Warner Bros. BSK 3010 pressing of Rumours, and how to compare copies across Discogs, eBay and CDandLP.',
+    },
+  },
+  'dj-quik-quik-is-the-name-g-funk': {
+    slug: 'dj-quik-quik-is-the-name-g-funk',
+    title: 'DJ Quik Made the G-Funk Blueprint a Year Before The Chronic',
+    series: 'CRATE SPOTLIGHT',
+    date: '2026-08-17',
+    dateDisplay: 'August 17, 2026',
+    excerpt: 'Quik Is the Name landed on Profile in January 1991, almost two years before The Chronic, with the whole G-funk vocabulary already in place. How to identify an original Profile pressing, and why the record still sits underpriced against its influence.',
+    body: [
+      'The standard story says G-funk starts with The Chronic in December 1992. The records say otherwise. DJ Quik\'s Quik Is the Name landed on Profile in January 1991, almost two years earlier, and it already had the whole vocabulary: the high synth lead, the rolling bassline, the live-feel drums, the party-first Compton perspective. Quik produced all of it himself, at twenty years old, on a budget the label reportedly capped around thirty thousand dollars.',
+      'That gap matters when you\'re pricing the record. Quik has never carried the collector markup that Death Row-era pressings do, despite getting there first and despite the numbers. Quik Is the Name debuted at 29 on the Billboard 200, went gold in May 1991 and platinum by July 1995. A platinum debut from the architect of a sound everyone else got credit for, and it still turns up in bins at prices that would look like a typo next to a Chronic original.',
+      'Here\'s what to actually look for. The original US LP is a 1991 Profile pressing, listed on Discogs under catalog number PRO-1402, standard black vinyl in a cardboard sleeve. Verify that number against the label itself before you pay original-pressing money, because Profile-era rap LPs get miscataloged in listings constantly and there is more than one Quik entry in the database. The spine is not the tell you want here: the UK pressing carries its own catalog number, FILER402, while still showing PRO-1402 on the spine. Condition is the real problem either way. This was a record people played, not a record people archived, so clean copies with intact sleeves are scarcer than the raw pressing count suggests.',
+      'If you just want it on the shelf, the 2017 Profile/Legacy reissue is the sane entry point. It came out that October as part of Sony\'s Certified Classics series, black vinyl with a download code, and it is widely available. Nobody is going to mistake it for an OG, but it plays, and it costs a fraction.',
+      'Then there\'s the sample lineage, which is the reason this record belongs in a serious crate regardless of price. "Tonite" is built on Kleeer, and Quik\'s whole approach to funk source material (Zapp, Ohio Players, the deeper P-Funk catalog) makes his discography a map of the same records boom-bap producers were mining three thousand miles east, used completely differently. West coast producers looped for groove. East coast producers chopped for grit. Quik sits right on that seam.',
+      'Run "DJ Quik" and "Quik Is the Name" through digginginthesalescrates.com and compare Discogs, eBay and CDandLP before you buy. On a record this underpriced relative to its influence, the spread between marketplaces is where the actual deal lives.',
+    ],
+    shopArtists: [
+      {
+        name: 'DJ Quik',
+        searchTerms: {
+          discogs: 'DJ Quik Quik Is The Name',
+          ebay: 'DJ Quik Quik Is The Name vinyl',
+          cdandlp: 'DJ Quik',
+        },
+      },
+    ],
+    seo: {
+      title: 'DJ Quik Quik Is the Name: G-Funk Before The Chronic | Digging in the Sales Crates',
+      description: 'DJ Quik\'s Quik Is the Name beat The Chronic to G-funk by almost two years. How to identify the 1991 Profile PRO-1402 original, where the 2017 reissue fits, and how to compare prices across Discogs, eBay and CDandLP.',
+    },
+  },
   'diana-ross-marvin-gaye-50-cent-ja-rule-sample': {
     slug: 'diana-ross-marvin-gaye-50-cent-ja-rule-sample',
     title: 'The Diana Ross & Marvin Gaye Record That 50 Cent and Ja Rule Both Sampled',
