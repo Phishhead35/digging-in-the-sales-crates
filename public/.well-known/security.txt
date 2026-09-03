@@ -1,0 +1,8 @@
+# Security contact information for Digging in the Sales Crates
+# https://digginginthesalescrates.com
+
+Contact: mailto:hello@digginginthesalescrates.com
+Expires: 2027-09-02T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://digginginthesalescrates.com/.well-known/security.txt
+Canonical: https://digging-in-the-sales-crates.pages.dev/.well-known/security.txt
