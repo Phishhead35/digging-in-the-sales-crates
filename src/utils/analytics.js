@@ -116,6 +116,7 @@ export function marketplaceFromUrl(url) {
   if (u.includes('ebay.com')) return 'ebay';
   if (u.includes('discogs.com')) return 'discogs';
   if (u.includes('cdandlp.com')) return 'cdandlp';
+  if (u.includes('turntablelab.com')) return 'turntablelab';
   if (u.includes('instagram.com')) return 'instagram';
   if (u.includes('facebook.com')) return 'facebook';
   if (u.includes('tiktok.com')) return 'tiktok';
@@ -309,13 +310,17 @@ export function trackSearchOrigin(searchTerm, origin) {
  * deferred history-change listener that under-fires in real traffic.
  */
 export function trackViewSearchResults(o = {}) {
-  const { searchTerm, resultCount, discogs, ebay, cdandlp, latencyMs } = o;
+  const { searchTerm, resultCount, discogs, ebay, cdandlp, turntablelab, latencyMs } = o;
   track('view_search_results', {
     search_term: searchTerm,
     result_count: resultCount,
     results_discogs: discogs,
     results_ebay: ebay,
     results_cdandlp: cdandlp,
+    // Added 2026-09-11 with the Turntable Lab source. Register
+    // `results_turntablelab` as a custom METRIC (not a dimension) in GA4
+    // Admin, same as the other three, or it stays invisible in reports.
+    results_turntablelab: turntablelab,
     search_latency_ms: Number.isFinite(Number(latencyMs)) ? Math.round(latencyMs) : undefined,
     has_results: resultCount > 0 ? 'yes' : 'no',
   });

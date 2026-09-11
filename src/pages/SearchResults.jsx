@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
-import { searchDiscogs, searchEbay, searchCDandLP, formatPrice } from '../utils/api';
+import { searchDiscogs, searchEbay, searchCDandLP, searchTurntableLab, formatPrice } from '../utils/api';
 import useSEO from '../hooks/useSEO';
 import {
   trackStoreClick,
@@ -23,6 +23,31 @@ import {
 // height and swapping loading -> loaded doesn't cause a big layout shift (CLS).
 const RESULTS_PER_PAGE = 20;
 
+// ── Source presentation ───────────────────────────────────────
+// Badge label, badge colors, and the human store name used in GA4.
+// Previously these were nested ternaries in three separate places, which
+// is why adding a fourth source meant touching three spots. One map now.
+// The `|| SOURCE_META.cdandlp` fallback below preserves the old behavior
+// exactly: anything unrecognized rendered green and read "CDANDLP".
+const SOURCE_META = {
+  discogs:      { label: 'DISCOGS',       bg: 'rgba(245,158,11,0.9)', fg: '#000', store: 'Discogs' },
+  ebay:         { label: 'EBAY',          bg: 'rgba(0,100,210,0.9)',  fg: '#fff', store: 'eBay' },
+  cdandlp:      { label: 'CDANDLP',       bg: 'rgba(0,160,100,0.9)',  fg: '#fff', store: 'CDandLP' },
+  turntablelab: { label: 'TURNTABLE LAB', bg: 'rgba(139,92,246,0.9)', fg: '#fff', store: 'Turntable Lab' },
+};
+
+// Order of the filter tabs. 'all' first, then sources in the order they
+// were added to the site.
+const SOURCES = ['all', 'discogs', 'ebay', 'cdandlp', 'turntablelab'];
+
+const SOURCE_TAB_LABEL = {
+  all: 'All Sources',
+  discogs: 'Discogs',
+  ebay: 'eBay',
+  cdandlp: 'CDandLP',
+  turntablelab: 'Turntable Lab',
+};
+
 // ── GA4 tracking ──────────────────────────────────────────────
 // All tracking now lives in src/utils/analytics.js. The store_click
 // event name and its original parameters (store_name, store_url,
@@ -33,6 +58,7 @@ const RESULTS_PER_PAGE = 20;
 function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, position, searchTerm }) {
   const thumb = result.cover_image || result.thumb || result.picture || null;
   const [imgError, setImgError] = useState(false);
+  const meta = SOURCE_META[result.source] || SOURCE_META.cdandlp;
 
   const handleWishlist = useCallback(() => {
     onWishlist(result);
@@ -81,12 +107,10 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, p
           position: 'absolute', top: 10, left: 10,
           padding: '3px 10px', borderRadius: 100, fontSize: 10, fontWeight: 600,
           fontFamily: 'var(--font-mono)', letterSpacing: 0.5,
-          background: result.source === 'discogs'
-            ? 'rgba(245,158,11,0.9)' : result.source === 'ebay'
-            ? 'rgba(0,100,210,0.9)' : 'rgba(0,160,100,0.9)',
-          color: result.source === 'discogs' ? '#000' : '#fff',
+          background: meta.bg,
+          color: meta.fg,
         }}>
-          {result.source === 'discogs' ? 'DISCOGS' : result.source === 'ebay' ? 'EBAY' : 'CDANDLP'}
+          {meta.label}
         </div>
 
         <button onClick={handleWishlist} style={{
@@ -166,9 +190,12 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, p
               ? (result.url ? result.url + (result.url.includes("?") ? "&" : "?") + "mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc" : "https://www.ebay.com/itm/" + result.id)
               : result.source === 'cdandlp'
               ? (result.url ? result.url + (result.url.includes("?") ? "&" : "?") + "lng=2&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation" : result.url || '#')
+              : result.source === 'turntablelab'
+              // Already carries aff=56122 from the Pages Function. Appending
+              // anything here would double the param, so use it as-is.
+              ? (result.url || '#')
               : result.url || '#';
-          const storeName =
-            result.source === 'discogs' ? 'Discogs' : result.source === 'ebay' ? 'eBay' : result.source === 'cdandlp' ? 'CDandLP' : 'Other';
+          const storeName = meta.store;
           return (
             <a
               href={dealUrl}
@@ -243,8 +270,8 @@ export default function SearchResults() {
       ? `"${displayQuery}" Vinyl Records | Digging in the Sales Crates`
       : 'Search Vinyl Records | Digging in the Sales Crates',
     description: displayQuery
-      ? `Compare prices for "${displayQuery}" vinyl records across Discogs, eBay, and CDandLP. Find the lowest price in seconds.`
-      : 'Search and compare vinyl record prices across Discogs, eBay, and CDandLP. Find rare hip-hop, jazz, and classic rock LPs at the lowest price.',
+      ? `Compare prices for "${displayQuery}" vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Find the lowest price in seconds.`
+      : 'Search and compare vinyl record prices across Discogs, eBay, CDandLP, and Turntable Lab. Find rare hip-hop, jazz, and classic rock LPs at the lowest price.',
   });
 
   useEffect(() => {
@@ -272,7 +299,7 @@ export default function SearchResults() {
     // view_search_results so you can see which marketplace is actually
     // carrying each query and how slow the aggregate search feels.
     const startedAt = (typeof performance !== 'undefined' ? performance.now() : Date.now());
-    const counts = { discogs: 0, ebay: 0, cdandlp: 0 };
+    const counts = { discogs: 0, ebay: 0, cdandlp: 0, turntablelab: 0 };
 
     try {
       const combined = [];
@@ -335,6 +362,26 @@ export default function SearchResults() {
         }
       }
 
+      if (src === 'all' || src === 'turntablelab') {
+        try {
+          const ttlData = await searchTurntableLab(q);
+          // The Pages Function already returns the RecordCard shape
+          // (cover_image, lowest_price, format[], genre[], affiliate url),
+          // so unlike the other sources there is nothing to map here.
+          // `source: 'turntablelab'` is set server-side; re-asserting it
+          // keeps the filter tabs working even if that ever changes.
+          const mapped = (ttlData?.results || []).map(r => ({ ...r, source: 'turntablelab' }));
+          counts.turntablelab = mapped.length;
+          combined.push(...mapped);
+          // Turntable Lab intentionally does NOT drive setTotalPages.
+          // Shopify's suggest endpoint has no page count, and letting it
+          // touch pagination would fight Discogs for control of it.
+        } catch (ttlErr) {
+          console.warn('Turntable Lab search failed:', ttlErr);
+          trackApiError('turntablelab', ttlErr?.message?.match(/\d{3}/)?.[0], ttlErr?.message);
+        }
+      }
+
       setAllResults(combined);
       setResults(combined);
 
@@ -350,6 +397,11 @@ export default function SearchResults() {
           discogs: counts.discogs,
           ebay: counts.ebay,
           cdandlp: counts.cdandlp,
+          // NOTE: analytics.js must forward this as `results_turntablelab`,
+          // and that parameter needs registering as a GA4 custom metric
+          // alongside results_discogs / results_ebay / results_cdandlp.
+          // Until then the value is collected but invisible in GA4 reports.
+          turntablelab: counts.turntablelab,
           latencyMs,
         });
         // The single most actionable event on the site: records people
@@ -479,7 +531,7 @@ export default function SearchResults() {
 
       <div style={{ display: 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap', alignItems: 'center' }}>
         <Filter size={14} color="var(--text-muted)" />
-        {['all', 'discogs', 'ebay', 'cdandlp'].map(s => (
+        {SOURCES.map(s => (
           <button key={s} onClick={() => {
               setActiveSource(s);
               // Which marketplace visitors actually trust enough to
@@ -493,7 +545,7 @@ export default function SearchResults() {
               );
             }}
             className={`filter-btn${activeSource === s ? ' filter-btn-active' : ''}`}>
-            {s === 'all' ? 'All Sources' : s === 'cdandlp' ? 'CDandLP' : s.charAt(0).toUpperCase() + s.slice(1)}
+            {SOURCE_TAB_LABEL[s]}
           </button>
         ))}
         {query && (
@@ -578,6 +630,9 @@ export default function SearchResults() {
             { name: 'Discogs', url: 'https://discogs.com/sell/list', desc: 'The definitive used vinyl marketplace. Millions of listings, condition graded, worldwide sellers.', tag: 'Live API' },
             { name: 'eBay', url: 'https://rover.ebay.com/rover/1/711-53200-19255-0/1?mpre=https%3A%2F%2Fwww.ebay.com%2Fb%2FVinyl-Records%2F306%2Fbn_1852757&campid=5339145834&mkcid=1&mkevt=1&toolid=10001&customid=ditsc', desc: 'Auctions and fixed-price listings. Best for sealed copies, graded records, and quick finds.', tag: 'Live API' },
             { name: 'CDandLP', url: 'https://www.cdandlp.com/?affilie=digginginthesalescrates&lng=2&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation', desc: 'European-heavy used marketplace with millions of vinyl listings. Great for international pressings and pricing.', tag: 'Live API' },
+            // All-genre framing is deliberate: Andrew at Turntable Lab asked
+            // specifically not to be positioned as a hip-hop-only store.
+            { name: 'Turntable Lab', url: 'https://www.turntablelab.com/?aff=56122', desc: 'New pressings, reissues, and exclusives across every genre, plus turntables and gear. Stereo and records since 1999.', tag: 'Live API' },
           ].map(({ name, url, desc, tag }) => (
             <a key={name} href={url} target="_blank" rel="noopener noreferrer" className="api-source-card"
               onClick={() => trackStoreClick({

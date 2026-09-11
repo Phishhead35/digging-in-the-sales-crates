@@ -56,6 +56,33 @@ export async function searchCDandLP(query) {
 }
 
 // ============================================================
+// TURNTABLE LAB
+// Routed through Pages Function: functions/api/search-turntablelab.js
+//
+// Affiliate ID 56122 (Affiliatly). The function appends aff=56122 to every
+// outbound product URL server-side, so nothing needs adding on this end.
+//
+// Unlike the others, this one is already normalized to the shape
+// RecordCard reads (cover_image, lowest_price, format[], genre[], etc.),
+// so SearchResults can spread the results straight in.
+//
+// Fails soft by design: the function returns { results: [] } rather than a
+// non-200 when Turntable Lab is unreachable, so a TTL outage shows an empty
+// column instead of breaking the whole search.
+// ============================================================
+
+export async function searchTurntableLab(query) {
+  try {
+    const res = await fetch(`/api/search-turntablelab?q=${encodeURIComponent(query)}`);
+    if (!res.ok) throw new Error(`Turntable Lab search failed: ${res.status}`);
+    return res.json();
+  } catch (err) {
+    console.warn('Turntable Lab search unavailable:', err.message);
+    return null;
+  }
+}
+
+// ============================================================
 // HELPERS
 // ============================================================
 
