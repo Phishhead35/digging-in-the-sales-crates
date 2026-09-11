@@ -5,6 +5,39 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'beatles-rubber-soul-2026-reissue': {
+    slug: 'beatles-rubber-soul-2026-reissue',
+    title: 'Rubber Soul Returns October 2, and the Capitol Version Is the Real Story',
+    series: 'REISSUE RADAR',
+    date: '2026-09-10',
+    dateDisplay: 'September 10, 2026',
+    excerpt: 'The Beatles reissue Rubber Soul on October 2 with a new Giles Martin stereo mix, but the box sets carry something better: the original Capitol US album, which is a genuinely different record. Which configuration actually matters, and why the mono mix is a real fork.',
+    body: [
+      'The Beatles reissue Rubber Soul on October 2, and the headline is not the new stereo mix. It is that the box sets carry the original Capitol US album, which is a genuinely different record.',
+      'American collectors know this and everyone else finds out the hard way. When Capitol issued Rubber Soul in the States in 1965, they rebuilt it. Out went "Drive My Car," "Nowhere Man," "What Goes On" and "If I Needed Someone." In came "I\'ve Just Seen A Face" and "It\'s Only Love," both pulled from Help!. Twelve tracks instead of fourteen, opening on an acoustic sprint that reframes the whole album as folk rock rather than the pop record the UK heard. If you grew up in the States with a copy your parents owned, that is the Rubber Soul in your head, and it is not the one on the Parlophone pressing.',
+      'Giles Martin and Sam Okell handled the new mix, sourced from the original four-track masters and separated using the de-mixing technology Emile de la Rey\'s team built at Peter Jackson\'s WingNut Films. That is the same toolchain behind the recent Beatles restoration work, and it is why a four-track tape can now be opened up at all.',
+      'The configurations run deep: standard 1CD and 1LP, 2CD and 2LP Special Editions, 4CD and 5LP Super Deluxe sets, and a Blu-ray with the Dolby Atmos mix. There is a limited orange vinyl pressing and a direct-to-consumer zoetrope picture disc, which is the one that will get flipped.',
+      'Here is the part that decides your purchase. The mono mix and the Capitol US album appear only in the box sets. The 2LP Special Edition gets a curated selection of session material and the single, not the alternate album. So if you want the Capitol sequence or the 1965 mono on vinyl, it is the 5LP box or nothing, and that is a real fork rather than a completist upsell.',
+      'The archival material is substantial too: 24 early session recordings including 20 previously unreleased takes, plus three unreleased home demos. One of them, a Lennon outline called "Little Girl," was reportedly not just unreleased but unrumoured, which is rare this deep into a catalog that has been picked over for sixty years.',
+      'Our practical read: preorder the configuration you actually want, because zoetrope and color variants go secondary fast and the standard black stays available. Then go find a clean original. A reissue this comprehensive tends to pull attention toward the catalog, and original Parlophone and Capitol copies are two separate hunts with two separate price curves.',
+      'Run both versions through digginginthesalescrates.com and compare the spread across Discogs, eBay and CDandLP before you commit.',
+    ],
+    shopArtists: [
+      {
+        name: 'The Beatles',
+        pageSlug: 'the-beatles',
+        searchTerms: {
+          discogs: 'The Beatles Rubber Soul',
+          ebay: 'Beatles Rubber Soul vinyl',
+          cdandlp: 'Beatles Rubber Soul',
+        },
+      },
+    ],
+    seo: {
+      title: 'Beatles Rubber Soul 2026 Reissue: Capitol US Version and Box Sets | Digging in the Sales Crates',
+      description: 'The Beatles reissue Rubber Soul on October 2, 2026 with a new Giles Martin stereo mix. Why the Capitol US album is a different record, and why the mono mix and Capitol version are box-set only.',
+    },
+  },
   'bone-thugs-fleetwood-mac-the-chain-sample': {
     slug: 'bone-thugs-fleetwood-mac-the-chain-sample',
     title: 'Bone Thugs Flipped "The Chain," and Rumours Is Still the Cheapest Grail in the Store',
