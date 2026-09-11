@@ -27,6 +27,17 @@ const DEALS_PREVIEW = [
 
 const VIDEO_CARD_COLORS = ['#f59e0b', '#2ec4b6', '#e63946'];
 
+// ── Section spacing scale ─────────────────────────────────────
+// Section padding used to be hardcoded per section at 64 / 48 / 48 / 64 / 64,
+// which read as arbitrary rather than rhythmic and left large dead bands
+// between sections (each gap is bottom padding + the next section's top
+// padding, so 48 + 64 = 112px of nothing).
+//
+// Two values now. MAJOR for the anchor sections, MINOR for the supporting
+// ones. Change the rhythm of the whole page here rather than in five places.
+const SECTION_MAJOR = '56px 24px';
+const SECTION_MINOR = '40px 24px';
+
 // ── Online Friends ────────────────────────────────────────────
 // Online-only resources (not physical retail), kept separate from
 // MA_STORES/RINH_STORES since they have no location/phone/seller page.
@@ -86,7 +97,7 @@ function StoreCard({ store }) {
   if (store.ebayUrl) {
     return (
       <div className="store-card"
-        style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+        style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
           <div>
             <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
@@ -94,7 +105,9 @@ function StoreCard({ store }) {
           </div>
         </div>
         <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '0 0 14px' }}>{store.desc}</p>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        {/* marginTop: auto pins the buttons to the card bottom so every card
+            in a row ends at the same line regardless of description length. */}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 'auto' }}>
           <a href={store.siteUrl} target="_blank" rel="noopener noreferrer"
             onClick={() => trackStoreClick(store.name, store.siteUrl)}
             style={{ fontSize: 12, color: '#0a0a0f', fontWeight: 700, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, background: 'var(--amber)' }}>
@@ -118,7 +131,7 @@ function StoreCard({ store }) {
   if (store.siteUrl) {
     return (
       <div className="store-card"
-        style={{ display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+        style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '20px', borderRadius: 14, background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
           <div>
             <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text-primary)' }}>{store.name}</div>
@@ -126,7 +139,7 @@ function StoreCard({ store }) {
           </div>
         </div>
         <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '0 0 14px' }}>{store.desc}</p>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 8, marginTop: 'auto' }}>
           <a href={store.url} target="_blank" rel="noopener noreferrer"
             onClick={() => trackStoreClick(store.name, store.url)}
             style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.08)' }}>
@@ -146,7 +159,8 @@ function StoreCard({ store }) {
     <a href={store.url} target="_blank" rel="noopener noreferrer" className="store-card"
       onClick={() => trackStoreClick(store.name, store.url)}
       style={{
-        display: 'block', padding: '20px', borderRadius: 14, background: 'var(--bg-card)',
+        display: 'flex', flexDirection: 'column', height: '100%',
+        padding: '20px', borderRadius: 14, background: 'var(--bg-card)',
         border: store.featured ? '2px solid var(--amber)' : '1px solid var(--border)',
         textDecoration: 'none', position: 'relative',
       }}>
@@ -213,11 +227,17 @@ export default function Home() {
     <div>
 
       {/* ── HERO ─────────────────────────────────────────────── */}
+      {/* minHeight was 80vh with vertically centered content, which on a tall
+          desktop screen left a large empty band under the trending pills
+          before the next section. Capped at 640px so the hero still reads as
+          a hero on a laptop but stops growing on a big monitor. Bottom
+          padding trimmed 48 -> 36 for the same reason. The H1 remains the
+          LCP element and its position is unchanged or slightly higher. */}
       <section style={{
-        minHeight: '80vh',
+        minHeight: 'min(78vh, 640px)',
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
-        padding: '60px 24px 48px',
+        padding: '56px 24px 36px',
         position: 'relative', overflow: 'hidden',
         textAlign: 'center',
       }}>
@@ -340,10 +360,10 @@ export default function Home() {
       {/* ── FEATURED STORES ("Shops We Dig") ─────────────────────────
           Phase 2 ground rule: stays in position 2, immediately after the
           hero. Layout, store-card count, and all links are unchanged. */}
-      <section style={{ padding: '64px 24px', borderTop: '1px solid var(--border)' }}>
+      <section style={{ padding: SECTION_MAJOR, borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
 
-          <div style={{ marginBottom: 36 }}>
+          <div style={{ marginBottom: 24 }}>
             <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 8 }}>
               FEATURED PARTNERS
             </p>
@@ -357,13 +377,13 @@ export default function Home() {
 
           {/* Massachusetts */}
           <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>MASSACHUSETTS</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 40 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 28 }}>
             {MA_STORES.map(store => <StoreCard key={store.name} store={store} />)}
           </div>
 
           {/* Rhode Island & New Hampshire */}
           <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>RHODE ISLAND & NEW HAMPSHIRE</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, marginBottom: 32 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, marginBottom: 24 }}>
             {RINH_STORES.map(store => <StoreCard key={store.name} store={store} />)}
           </div>
 
@@ -394,10 +414,10 @@ export default function Home() {
           so a lone card stays a normal card width instead of stretching
           full-bleed across the 1280px container — matters more now that
           featured cards can carry a longer About Us paragraph. */}
-      <section style={{ padding: '48px 24px', borderTop: '1px solid var(--border)' }}>
+      <section style={{ padding: SECTION_MINOR, borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
 
-          <div style={{ marginBottom: 24 }}>
+          <div style={{ marginBottom: 18 }}>
             <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 8 }}>
               PARTNER RESOURCES
             </p>
@@ -417,7 +437,7 @@ export default function Home() {
           second hero — three cards, a short heading, one link to Watch &
           Read. Reuses the exact Phase 1 /api/latest-videos data via the
           shared useLatestVideos hook; no new fetch, cron, or cache. */}
-      <section style={{ padding: '48px 24px', borderTop: '1px solid var(--border)' }}>
+      <section style={{ padding: SECTION_MINOR, borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
 
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
@@ -456,7 +476,7 @@ export default function Home() {
       </section>
 
       {/* ── LATEST DEALS PREVIEW ("Fresh in the Crates") ──────────── */}
-      <section style={{ padding: '64px 24px', borderTop: '1px solid var(--border)' }}>
+      <section style={{ padding: SECTION_MAJOR, borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
 
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 12, flexWrap: 'wrap', gap: 12 }}>
@@ -516,7 +536,7 @@ export default function Home() {
           SearchResults (see App.jsx). The URL is deliberately unchanged:
           /aggregator is what Google has crawled and what nav links to.
           Only the visible wording moved away from "aggregator". */}
-      <section style={{ padding: '64px 24px', borderTop: '1px solid var(--border)' }}>
+      <section style={{ padding: SECTION_MAJOR, borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', textAlign: 'center' }}>
           <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 20 }}>
             MULTI-MARKETPLACE SEARCH

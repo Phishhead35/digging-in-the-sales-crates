@@ -220,9 +220,12 @@ export default function Layout({ children }) {
       <FollowUs />
 
       {/* Footer */}
+      {/* marginTop was 80, which stacked on top of the last section's own
+          bottom padding and produced the largest gap on the page. 48 keeps
+          the footer visually separate without the canyon. */}
       <footer style={{
-        borderTop: '1px solid var(--border)', marginTop: 80,
-        padding: '40px 24px', textAlign: 'center', height: 'auto',
+        borderTop: '1px solid var(--border)', marginTop: 48,
+        padding: '36px 24px', textAlign: 'center', height: 'auto',
       }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <div className="footer-logo-wrap">
