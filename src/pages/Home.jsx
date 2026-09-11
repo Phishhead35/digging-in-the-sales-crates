@@ -185,7 +185,7 @@ export default function Home() {
 
   useSEO({
     title: 'Digging in the Sales Crates | Vinyl Record Price Comparison',
-    description: 'Find the lowest prices on vinyl records across Discogs, eBay, and CDandLP. Taking the Dig Out of Digging™ — search rare hip-hop, jazz, and soul LPs in seconds.',
+    description: 'Find the lowest prices on vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Taking the Dig Out of Digging™. Search rare hip-hop, jazz, and soul LPs in seconds.',
   });
 
   // search_origin fires on the homepage where the origin is known.
@@ -266,7 +266,7 @@ export default function Home() {
             marginBottom: 28, fontFamily: 'var(--font-mono)',
           }}>
             <TrendingDown size={13} />
-            VINYL DEAL AGGREGATOR
+            CROSS-SITE VINYL SEARCH
           </div>
 
           {/* Headline with trademark */}
@@ -292,7 +292,7 @@ export default function Home() {
             color: 'var(--text-secondary)', fontSize: 17, fontWeight: 300,
             maxWidth: 480, margin: '0 auto 40px', lineHeight: 1.7,
           }}>
-            Search Discogs, eBay, and CDandLP simultaneously. Find the lowest price on any vinyl in seconds.
+            Search Discogs, eBay, CDandLP, and Turntable Lab at once. Find the lowest price on any vinyl in seconds.
           </p>
 
           {/* Search bar */}
@@ -511,7 +511,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── AGGREGATOR CTA (final supporting CTA) ─────────────────── */}
+      {/* ── SEARCH CTA (final supporting CTA) ───────────────────────
+          Links to /aggregator, NOT /search. Both routes render
+          SearchResults (see App.jsx). The URL is deliberately unchanged:
+          /aggregator is what Google has crawled and what nav links to.
+          Only the visible wording moved away from "aggregator". */}
       <section style={{ padding: '64px 24px', borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', textAlign: 'center' }}>
           <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 20 }}>
@@ -521,7 +525,7 @@ export default function Home() {
             STOP OVERPAYING FOR RECORDS
           </h2>
           <p style={{ color: 'var(--text-primary)', fontSize: 15, maxWidth: 480, margin: '0 auto 28px', lineHeight: 1.7 }}>
-            Search Discogs, eBay, and CDandLP at the same time. Condition graded. Lowest price first. Every time.
+            Search Discogs, eBay, CDandLP, and Turntable Lab at the same time. Condition graded. Lowest price first. Every time.
           </p>
           <Link to="/aggregator" className="view-deals-btn" style={{ display: 'inline-flex', fontSize: 15, padding: '14px 32px', borderRadius: 12 }}>
             Start Digging <ArrowRight size={16} />
