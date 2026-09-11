@@ -4,6 +4,8 @@ import { ArrowLeft, ArrowRight, Disc3, Search, ExternalLink } from 'lucide-react
 import useSEO from '../hooks/useSEO';
 import { BLOG_POSTS } from '../data/blog';
 import { trackBlogMarketplaceClick } from '../utils/analytics';
+import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
+import { isMonetized } from '../config/partners';
 
 // ── Affiliate link builders (same as ArtistPage.jsx) ──────────
 function discogsUrl(term) {
@@ -32,11 +34,16 @@ const MARKETPLACE_STYLES = {
 };
 
 function MarketplaceButton({ label, url, marketplace, postSlug, artistName }) {
+  // Affiliate links get rel="sponsored" as well as nofollow. Google asks for
+  // sponsored on paid links specifically, and eBay Partner Network and the
+  // FTC both expect paid links to be identifiable. Discogs earns nothing and
+  // stays a plain link.
+  const paid = isMonetized(marketplace);
   return (
     <a
       href={url}
       target="_blank"
-      rel="noopener noreferrer"
+      rel={paid ? 'sponsored nofollow noopener noreferrer' : 'noopener noreferrer'}
       onClick={() => trackClick(postSlug, artistName, marketplace, url)}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 6,
@@ -50,6 +57,9 @@ function MarketplaceButton({ label, url, marketplace, postSlug, artistName }) {
       onMouseOut={e => e.currentTarget.style.background = 'transparent'}
     >
       {label} <ExternalLink size={11} />
+      {/* Per-link disclosure. eBay and CDandLP pay a commission; Discogs
+          does not and is deliberately never badged. */}
+      {paid && <AffiliateBadge label="aff" spaced />}
     </a>
   );
 }
@@ -66,6 +76,10 @@ function ShopArtists({ post }) {
         }}>
           SHOP THESE ARTISTS
         </p>
+        {/* This is the only monetized section on a blog post, so the notice
+            belongs here rather than at the top of the article, where it would
+            sit hundreds of words away from the links it describes. */}
+        <AffiliateDisclosure variant="compact" surface="blog" />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {post.shopArtists.map(artist => (
             <div key={artist.name} style={{
@@ -246,7 +260,7 @@ export default function BlogPost() {
               color: 'var(--text-secondary)', fontSize: 14, marginBottom: 28,
               maxWidth: 420, margin: '0 auto 28px',
             }}>
-              Search across Discogs, eBay, and CDandLP at once and find the lowest price on any record.
+              Search across Discogs, eBay, CDandLP, and Turntable Lab at once and find the lowest price on any record.
             </p>
             <Link to="/aggregator" style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,

@@ -4,6 +4,7 @@ import { TrendingDown, Bell, BellOff, Trash2, Search, Plus } from 'lucide-react'
 import { formatPrice } from '../utils/api';
 import { trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
 import useSEO from '../hooks/useSEO';
+import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
 
 // ============================================================
 // DEALS PAGE — Curated store links + search shortcuts
@@ -79,6 +80,17 @@ export function Deals() {
           Open Email Parser →
         </Link>
       </div>
+
+      {/* AFFILIATE DISCLOSURE.
+          Names only Turntable Lab and Retrolife, because those are the only
+          two cards below that pay anything. Fat Beats, Get On Down, HHV,
+          Mass Appeal, Rough Trade, Amoeba, and Bandcamp are goodwill links
+          and are deliberately NOT badged: a false disclosure misleads in the
+          other direction and is its own problem.
+
+          Kept above the grid so it is read before the first card, which is
+          what "clear and conspicuous" means in practice. */}
+      <AffiliateDisclosure variant="compact" surface="deals" />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
         {curatedStores.map(({ name, url, desc, tag, affiliate }) => (
           <a key={name} href={url} target="_blank" rel={affiliate ? 'nofollow noopener noreferrer' : 'noopener noreferrer'}
@@ -112,8 +124,12 @@ export function Deals() {
               }}>{tag}</span>
             </div>
             <p style={{ color: 'var(--text-primary)', fontSize: 13, lineHeight: 1.6 }}>{desc}</p>
-            <div style={{ marginTop: 14, display: 'flex', gap: 10 }}>
+            <div style={{ marginTop: 14, display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
               <div style={{ fontSize: 12, color: 'var(--amber)' }}>Visit store →</div>
+              {/* Same `affiliate` flag that already drives the GA4 monetized
+                  dimension on this card, so the badge and the analytics can
+                  never disagree. */}
+              {affiliate && <AffiliateBadge />}
               <div style={{ fontSize: 12, color: '#2ec4b6', marginLeft: 'auto' }}>✉ Subscribe for emails</div>
             </div>
           </a>
