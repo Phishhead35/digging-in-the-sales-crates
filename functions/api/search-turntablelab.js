@@ -42,6 +42,186 @@ const CACHE_TTL_SECONDS = 900; // 15 min. TTL inventory does not move fast.
 const UPSTREAM_TIMEOUT_MS = 6000;
 const DEFAULT_LIMIT = 20;
 
+/* ------------------------------------------------------------------ */
+/* RELEVANCE AND CATEGORY FILTERING                                     */
+/*                                                                      */
+/* WHY THIS EXISTS (added 2026-09-11)                                   */
+/* A search for "The Masterdon Committee - Funkbox Party" came back     */
+/* with two Audio-Technica cartridges and a $1,359 Rega turntable.      */
+/*                                                                      */
+/* Shopify's /search/suggest.json is a STOREFRONT SUGGESTER, not a      */
+/* catalog search. It matches loosely and fuzzily, and when nothing     */
+/* matches well it still returns its best partial guesses rather than   */
+/* an empty list. Turntable Lab sells turntables, cartridges, slipmats, */
+/* headphones, shirts and toys alongside records, so a query for a      */
+/* record TTL does not stock comes back as hardware.                    */
+/*                                                                      */
+/* Verified live 2026-09-11. Even a clean query leaks: "nas it was      */
+/* written" returned the right record plus a Nas T-shirt, an unrelated  */
+/* Hiatus Kaiyote LP, an Erasmo Carlos LP, and the same Rega turntable. */
+/*                                                                      */
+/* Two things made it newly visible rather than newly broken:           */
+/*   1. Price sorting shipped the same day, so a cheap accessory now    */
+/*      outranks a real LP instead of sitting at the bottom.            */
+/*   2. Narrower follow-up queries return fewer records from Discogs    */
+/*      and eBay, so the junk becomes a bigger share of the page.       */
+/* ------------------------------------------------------------------ */
+
+/**
+ * GATE 1: category.
+ *
+ * TTL's `type` field is an internal category code and it is RELIABLE, which
+ * makes it a much better filter than guessing from the title. Confirmed
+ * values on the live store:
+ *
+ *   music     _music-HIPHOP  _music-hiphop  _music-FUNK  _music-FUNK-ROCK
+ *   clothing  _CLOTHING-shirt  _CLOTHING-hat  _CLOTHING-bagacc-object
+ *   hardware  _STEREO  _STEREO-COMP-turntable  _STEREO-COMP-hificartridge
+ *             _EQ-HW-djcartridge  _MOBI-headphone-listening
+ *   accessory _STEREO-HIFIACC-recordmat  ..._EQ-DJACC-slipmat
+ *
+ * Case varies between products, hence the /i flag. Everything that is not a
+ * record starts with something other than `_music`.
+ */
+const MUSIC_TYPE = /^_music/i;
+
+/** Last-resort format sniff, used only when `type` is missing entirely. */
+const FORMAT_IN_TITLE = /\bvinyl\b|\blp\b|\b7"|\b12"|\bcassette\b|\bcd\b/i;
+
+function isMusicProduct(p) {
+  const t = String(p.type || p.product_type || '');
+  if (MUSIC_TYPE.test(t)) return true;
+  // Typed, but not music. Trust the store's own categorization.
+  if (t) return false;
+  // Untyped product: fall back to the title rather than dropping a record.
+  return FORMAT_IN_TITLE.test(p.title || '');
+}
+
+/**
+ * Is the SEARCHER after gear rather than a record?
+ *
+ * Someone typing "slipmat" or "Audio-Technica turntable" genuinely wants the
+ * hardware, and Turntable Lab is a real place to buy it. Gate 1 is skipped
+ * for those queries, so DITSC still answers them. Verified: "turntable" and
+ * "slipmat" keep all 10 results, while "mf doom" drops three Super7 toys.
+ */
+const GEAR_QUERY = new RegExp(
+  [
+    'turntable', 'cartridge', 'stylus', 'needle', 'slipmat', 'slip mat',
+    'headphone', 'mixer', 'speaker', 'amplifier', 'preamp', 'phono',
+    'record mat', 'shirt', 'tee\\b', 'hoodie', 'hat\\b', 'bag\\b',
+    'crate\\b', 'sleeve', 'cleaner', 'cleaning', 'brush', 'adapter',
+    'adaptor', 'stereo', 'hifi', 'hi-fi',
+  ].join('|'),
+  'i'
+);
+
+/**
+ * GATE 2: relevance.
+ *
+ * Category alone is not enough: "nas it was written" returned a real but
+ * unrelated Erasmo Carlos LP, which is correctly typed as music.
+ *
+ * MIN_QUERY_MATCH_RATIO is the share of meaningful query words a product
+ * must match. 0.5 means "Masterdon Committee Funkbox Party" (4 meaningful
+ * words) needs 2 hits, and hardware matching none is dropped, while "nas it
+ * was written" reduces to 2 meaningful words and needs only 1, so every Nas
+ * record passes. Raise it toward 1 for stricter matching and an emptier
+ * Turntable Lab column. Do not set it to 0: that is the behavior that
+ * produced the turntables.
+ */
+const MIN_QUERY_MATCH_RATIO = 0.5;
+
+const STOPWORDS = new Set([
+  'the', 'a', 'an', 'and', 'or', 'of', 'in', 'on', 'at', 'to', 'for', 'by',
+  'it', 'is', 'was', 'were', 'be', 'with', 'from', 'this', 'that',
+  // Format words carry no artist or title signal and every record has them.
+  'vinyl', 'lp', 'record', 'records', 'album', 'ep',
+]);
+
+function queryTokens(query) {
+  return String(query)
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter((t) => t.length >= 3 && !STOPWORDS.has(t));
+}
+
+function haystack(p) {
+  return [
+    p.title,
+    p.vendor,
+    p.type || p.product_type,
+    Array.isArray(p.tags) ? p.tags.join(' ') : '',
+  ].join(' ').toLowerCase();
+}
+
+function escapeRe(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Word-START matching, not substring.
+ *
+ * Substring matching would let the token "nas" match "Renaissance" and
+ * "gymnasium". Word-start still matches "Nas:" and "Nas's", and still lets a
+ * partial query like "colt" find "Coltrane", which is what people type.
+ */
+function matchesToken(hay, token) {
+  return new RegExp('\\b' + escapeRe(token)).test(hay);
+}
+
+function filterProducts(products, query) {
+  const tokens = queryTokens(query);
+  const gearWanted = GEAR_QUERY.test(query);
+  const needed = Math.max(1, Math.ceil(tokens.length * MIN_QUERY_MATCH_RATIO));
+  const phrase = String(query).toLowerCase().trim();
+
+  return products.filter((p) => {
+    if (!gearWanted && !isMusicProduct(p)) return false;
+
+    // Nothing meaningful to match on ("the", "12"). Category gate only.
+    if (tokens.length === 0) return true;
+
+    // Exact phrase in the title always wins.
+    if (String(p.title || '').toLowerCase().includes(phrase)) return true;
+
+    const hay = haystack(p);
+    let hits = 0;
+    for (const t of tokens) if (matchesToken(hay, t)) hits++;
+    return hits >= needed;
+  });
+}
+
+/**
+ * Genre from the category code rather than from tags.
+ *
+ * Tags were the wrong source. On real records they carry merchandising junk
+ * ("Get On Down", "Gift Guide - Vinyl Classics", "free mp3"), and on
+ * hardware they produced genre badges reading "Audio-Technica Cartridges".
+ * `type` carries the actual genre: _music-FUNK-ROCK -> Funk, Rock.
+ */
+const GENRE_LABELS = {
+  hiphop: 'Hip-Hop',
+  rnb: 'R&B',
+  randb: 'R&B',
+  dnb: 'Drum & Bass',
+  ost: 'Soundtrack',
+};
+
+function genreFromType(p) {
+  const t = String(p.type || p.product_type || '');
+  if (!MUSIC_TYPE.test(t)) return [];
+  return t
+    .replace(/^_music-?/i, '')
+    .split(/[-_]/)
+    .map((x) => x.trim().toLowerCase())
+    .filter(Boolean)
+    .map((x) => GENRE_LABELS[x] || x.charAt(0).toUpperCase() + x.slice(1))
+    .filter((x, i, arr) => arr.indexOf(x) === i)
+    .slice(0, 2);
+}
+
 export async function onRequestGet(context) {
   const { request } = context;
   const url = new URL(request.url);
@@ -60,9 +240,19 @@ export async function onRequestGet(context) {
       ? await searchViaSuggest(query, limit)
       : await searchViaProductsJson(query, limit);
 
+    // Shopify returns its best partial guesses even when none are good.
+    // Everything dropped here would otherwise render as a real result card,
+    // and since price sorting shipped a cheap accessory outranks a real LP.
+    const relevant = filterProducts(products, query);
+
     return json({
-      results: products.map(normalize).filter(Boolean),
+      results: relevant.map(normalize).filter(Boolean),
       source: SOURCE,
+      // Diagnostics. Harmless to expose (this is a public catalog search) and
+      // it makes "why is the Turntable Lab column empty" answerable from the
+      // network tab instead of by guesswork.
+      returned: products.length,
+      kept: relevant.length,
     });
   } catch (err) {
     // Fail soft. A dead source must never break the results page: the other
@@ -172,7 +362,11 @@ function normalize(p) {
     // and genre.slice(0,2).map(...). A string has .slice but no .join/.map,
     // so returning a string here throws a TypeError and kills the card.
     format: guessFormat(p),
-    genre: pickGenre(p),
+    // `type` first, tags only as a fallback. See genreFromType for why.
+    genre: (() => {
+      const fromType = genreFromType(p);
+      return fromType.length ? fromType : pickGenre(p);
+    })(),
 
     source: SOURCE,
     uri: null,
