@@ -10,6 +10,8 @@ import {
   CLICK_SOURCES,
 } from '../utils/analytics';
 import PartnerStoreCard from '../components/PartnerStoreCard';
+import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
+import { isMonetized } from '../config/partners';
 
 // ── Affiliate link builders ───────────────────────────────────
 function discogsUrl(term) {
@@ -44,66 +46,95 @@ function trackPartnerClick(storeName, storeUrl) {
 }
 
 // ── Marketplace search buttons ────────────────────────────────
+//
+// AFFILIATE DISCLOSURE lives here rather than on the page, because this
+// component renders TWICE (hero and bottom CTA). Putting it here means every
+// instance of the button row carries its own notice, which is what the FTC's
+// "close to the link" requirement actually asks for. A single notice at the
+// top of the page would sit several screens away from the second button row.
+//
+// Which buttons get a badge is decided by src/config/partners.js, never
+// hardcoded here. eBay and CDandLP pay a commission. DISCOGS DOES NOT, and
+// is deliberately left unbadged: claiming a commission that does not exist
+// misleads in the opposite direction and is its own problem.
 function SearchButtons({ artist, size = 'normal' }) {
   const btnStyle = size === 'large'
     ? { padding: '14px 24px', fontSize: 14, borderRadius: 10 }
     : { padding: '10px 18px', fontSize: 13, borderRadius: 8 };
 
+  // Paid links get rel="sponsored" alongside nofollow. Google asks for
+  // sponsored specifically on paid links, and eBay Partner Network expects
+  // paid links to be identifiable.
+  const relFor = (key) =>
+    isMonetized(key) ? 'sponsored nofollow noopener noreferrer' : 'noopener noreferrer';
+
   return (
-    <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-      <a
-        href={discogsUrl(artist.searchTerms.discogs)}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => trackClick(artist.name, 'discogs', discogsUrl(artist.searchTerms.discogs))}
-        style={{
-          ...btnStyle,
-          display: 'inline-flex', alignItems: 'center', gap: 7,
-          background: 'var(--amber)',
-          color: '#0a0a0f', fontWeight: 700, textDecoration: 'none',
-          transition: 'opacity 0.2s',
-        }}
-        onMouseOver={e => e.currentTarget.style.opacity = '0.85'}
-        onMouseOut={e => e.currentTarget.style.opacity = '1'}
-      >
-        <Search size={14} /> Discogs
-      </a>
-      <a
-        href={ebayUrl(artist)}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => trackClick(artist.name, 'ebay', ebayUrl(artist))}
-        style={{
-          ...btnStyle,
-          display: 'inline-flex', alignItems: 'center', gap: 7,
-          border: '1px solid rgba(245,158,11,0.4)',
-          background: 'rgba(245,158,11,0.08)',
-          color: 'var(--amber)', fontWeight: 600, textDecoration: 'none',
-          transition: 'border-color 0.2s, background 0.2s',
-        }}
-        onMouseOver={e => { e.currentTarget.style.borderColor = 'rgba(245,158,11,0.7)'; e.currentTarget.style.background = 'rgba(245,158,11,0.14)'; }}
-        onMouseOut={e => { e.currentTarget.style.borderColor = 'rgba(245,158,11,0.4)'; e.currentTarget.style.background = 'rgba(245,158,11,0.08)'; }}
-      >
-        <Search size={14} /> eBay
-      </a>
-      <a
-        href={cdandlpUrl(artist.searchTerms.cdandlp)}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => trackClick(artist.name, 'cdandlp', cdandlpUrl(artist.searchTerms.cdandlp))}
-        style={{
-          ...btnStyle,
-          display: 'inline-flex', alignItems: 'center', gap: 7,
-          border: '1px solid rgba(245,158,11,0.4)',
-          background: 'transparent',
-          color: 'var(--amber)', fontWeight: 600, textDecoration: 'none',
-          transition: 'border-color 0.2s',
-        }}
-        onMouseOver={e => e.currentTarget.style.borderColor = 'rgba(245,158,11,0.7)'}
-        onMouseOut={e => e.currentTarget.style.borderColor = 'rgba(245,158,11,0.4)'}
-      >
-        <Search size={14} /> CDandLP
-      </a>
+    <div>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+        <a
+          href={discogsUrl(artist.searchTerms.discogs)}
+          target="_blank"
+          rel={relFor('discogs')}
+          onClick={() => trackClick(artist.name, 'discogs', discogsUrl(artist.searchTerms.discogs))}
+          style={{
+            ...btnStyle,
+            display: 'inline-flex', alignItems: 'center', gap: 7,
+            background: 'var(--amber)',
+            color: '#0a0a0f', fontWeight: 700, textDecoration: 'none',
+            transition: 'opacity 0.2s',
+          }}
+          onMouseOver={e => e.currentTarget.style.opacity = '0.85'}
+          onMouseOut={e => e.currentTarget.style.opacity = '1'}
+        >
+          <Search size={14} /> Discogs
+          {/* No badge. Discogs has no affiliate program. */}
+        </a>
+        <a
+          href={ebayUrl(artist)}
+          target="_blank"
+          rel={relFor('ebay')}
+          onClick={() => trackClick(artist.name, 'ebay', ebayUrl(artist))}
+          style={{
+            ...btnStyle,
+            display: 'inline-flex', alignItems: 'center', gap: 7,
+            border: '1px solid rgba(245,158,11,0.4)',
+            background: 'rgba(245,158,11,0.08)',
+            color: 'var(--amber)', fontWeight: 600, textDecoration: 'none',
+            transition: 'border-color 0.2s, background 0.2s',
+          }}
+          onMouseOver={e => { e.currentTarget.style.borderColor = 'rgba(245,158,11,0.7)'; e.currentTarget.style.background = 'rgba(245,158,11,0.14)'; }}
+          onMouseOut={e => { e.currentTarget.style.borderColor = 'rgba(245,158,11,0.4)'; e.currentTarget.style.background = 'rgba(245,158,11,0.08)'; }}
+        >
+          <Search size={14} /> eBay
+          {isMonetized('ebay') && <AffiliateBadge label="aff" spaced />}
+        </a>
+        <a
+          href={cdandlpUrl(artist.searchTerms.cdandlp)}
+          target="_blank"
+          rel={relFor('cdandlp')}
+          onClick={() => trackClick(artist.name, 'cdandlp', cdandlpUrl(artist.searchTerms.cdandlp))}
+          style={{
+            ...btnStyle,
+            display: 'inline-flex', alignItems: 'center', gap: 7,
+            border: '1px solid rgba(245,158,11,0.4)',
+            background: 'transparent',
+            color: 'var(--amber)', fontWeight: 600, textDecoration: 'none',
+            transition: 'border-color 0.2s',
+          }}
+          onMouseOver={e => e.currentTarget.style.borderColor = 'rgba(245,158,11,0.7)'}
+          onMouseOut={e => e.currentTarget.style.borderColor = 'rgba(245,158,11,0.4)'}
+        >
+          <Search size={14} /> CDandLP
+          {isMonetized('cdandlp') && <AffiliateBadge label="aff" spaced />}
+        </a>
+      </div>
+
+      {/* Names only the partners that actually pay on this surface, and
+          renders nothing at all if none of them do. Generated from
+          partners.js, so it cannot drift out of sync with the badges above. */}
+      <div style={{ marginTop: 12 }}>
+        <AffiliateDisclosure variant="compact" surface="artist" />
+      </div>
     </div>
   );
 }
@@ -314,7 +345,7 @@ export default function ArtistPage({ type = 'artist' }) {
           </div>
 
           <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 16 }}>
-            Click any record to search it on DITSC across all three marketplaces.
+            Click any record to search it on DITSC across all four marketplaces.
           </p>
         </div>
       </section>
@@ -401,7 +432,7 @@ export default function ArtistPage({ type = 'artist' }) {
               color: 'var(--text-secondary)', fontSize: 14, marginBottom: 28,
               maxWidth: 420, margin: '0 auto 28px',
             }}>
-              Search all three marketplaces at once and find the lowest price on any {artist.name} record.
+              Search all four marketplaces at once and find the lowest price on any {artist.name} record.
             </p>
             <SearchButtons artist={artist} size="large" />
           </div>
