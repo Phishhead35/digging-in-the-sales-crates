@@ -85,19 +85,82 @@ function priceForRanking(result) {
 }
 
 /**
- * Cheapest first, with unpriced results LAST.
+ * Cheapest first, among results that actually have a price.
  *
- * Records with no price render "Price varies". Left to a naive numeric
- * sort those become 0 or NaN and float to the top, burying every result
- * that actually has a price.
+ * Records with no price render "Price varies". Left to a naive numeric sort
+ * those become 0 or NaN and float to the top, burying every result that does
+ * have a price, so they are pulled out before this comparator ever runs.
  */
 function byPriceAsc(a, b) {
-  const pa = priceForRanking(a);
-  const pb = priceForRanking(b);
-  if (pa === null && pb === null) return 0;
-  if (pa === null) return 1;
-  if (pb === null) return -1;
-  return pa - pb;
+  return priceForRanking(a) - priceForRanking(b);
+}
+
+// ── Why unpriced results are interleaved, not appended ────────
+//
+// The first version of this sort pushed every unpriced result to the end of
+// the list. That is correct in the narrow sense (you cannot rank a price you
+// do not have) and wrong in practice, because it buries an entire source.
+//
+// Discogs /database/search returns RELEASES, not listings. There is no
+// lowest_price on a release, so every Discogs card renders "View Deals" and
+// carries no number. Under append-last, all 20 Discogs results landed behind
+// every eBay, CDandLP and Turntable Lab result, on page 2 and beyond.
+// Discogs is the deepest catalog on the site and often the cheapest copy once
+// you click through. Hiding it is a worse outcome than the source-grouped
+// ordering this sort replaced.
+//
+// So: priced results are ranked cheapest first and keep the top slot, and
+// unpriced results are woven in at a fixed cadence. A visitor scanning the
+// first screen sees the genuinely cheapest listings AND a Discogs entry,
+// which is the honest picture. Nothing is hidden and nothing is promoted.
+//
+// UNPRICED_CADENCE = 3 puts one unpriced card after every three priced ones,
+// so roughly a quarter of each screen is catalog matches. Raise it to show
+// fewer of them, lower it to show more. Do not set it below 1.
+const UNPRICED_CADENCE = 3;
+
+/**
+ * Rank the combined result set.
+ *
+ * Priced results: cheapest first, USD-normalized.
+ * Unpriced results: original arrival order preserved (Discogs returns its own
+ * relevance ranking, and re-sorting it alphabetically would be worse than
+ * leaving it alone).
+ *
+ * Returns a NEW array. Does not mutate the input.
+ */
+function rankResults(list) {
+  const priced = [];
+  const unpriced = [];
+
+  for (const r of list) {
+    (priceForRanking(r) === null ? unpriced : priced).push(r);
+  }
+
+  // Nothing to weave: one bucket is empty, so the answer is the other bucket.
+  if (priced.length === 0) return unpriced;
+  if (unpriced.length === 0) return priced.sort(byPriceAsc);
+
+  priced.sort(byPriceAsc);
+
+  const out = [];
+  let pi = 0;
+  let ui = 0;
+
+  while (pi < priced.length || ui < unpriced.length) {
+    for (let n = 0; n < UNPRICED_CADENCE && pi < priced.length; n++) {
+      out.push(priced[pi++]);
+    }
+    if (ui < unpriced.length) out.push(unpriced[ui++]);
+
+    // Priced list exhausted: dump the remaining unpriced results and stop,
+    // rather than looping one at a time.
+    if (pi >= priced.length) {
+      while (ui < unpriced.length) out.push(unpriced[ui++]);
+    }
+  }
+
+  return out;
 }
 
 // ── GA4 tracking ──────────────────────────────────────────────
@@ -436,13 +499,18 @@ export default function SearchResults() {
         }
       }
 
-      // Sort once, here, so both the full list and every filtered view
+      // Rank once, here, so both the full list and every filtered view
       // inherit the order. The activeSource effect below only filters,
       // it never reorders.
-      combined.sort(byPriceAsc);
+      //
+      // Note this replaces the earlier `combined.sort(byPriceAsc)`. That
+      // sorted in place and sent unpriced results to the back; rankResults
+      // returns a new array with them woven through instead. See the comment
+      // block above UNPRICED_CADENCE for why.
+      const ranked = rankResults(combined);
 
-      setAllResults(combined);
-      setResults(combined);
+      setAllResults(ranked);
+      setResults(ranked);
 
       // Fire view_search_results HERE rather than in the query effect, so
       // it can carry the real result counts and latency. 'search' still
