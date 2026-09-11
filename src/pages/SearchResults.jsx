@@ -48,6 +48,58 @@ const SOURCE_TAB_LABEL = {
   turntablelab: 'Turntable Lab',
 };
 
+// ── Price normalization and sorting ───────────────────────────
+// Results arrive source by source (Discogs, then eBay, then CDandLP, then
+// Turntable Lab) and used to render in that order, so page position
+// reflected which API answered first rather than which copy was cheapest.
+// On a price-comparison site that is the wrong default.
+//
+// CURRENCY: display and ranking are handled separately and deliberately.
+//   - DISPLAY uses the result's own currency, so a CDandLP record shows
+//     EUR 15.00 rather than a wrong $15.00. That was a live bug: RecordCard
+//     called formatPrice() with no currency argument, so every EUR price
+//     rendered with a dollar sign.
+//   - RANKING converts to USD with the approximate rates below. Sort order
+//     only needs to be roughly right to be useful; a few percent of drift
+//     never reorders anything that matters. A displayed price in the wrong
+//     currency, by contrast, is simply false.
+//
+// These rates are for RANKING ONLY. Refresh them occasionally. Do not wire
+// them into anything the visitor sees, and do not add a live FX lookup to
+// the search path for this: it buys nothing and adds a dependency that can
+// fail mid-search.
+const FX_TO_USD = {
+  USD: 1,
+  EUR: 1.08,
+  GBP: 1.27,
+};
+
+/** Approximate USD value for ranking. null when there is no usable price. */
+function priceForRanking(result) {
+  const raw = Number(result.lowest_price);
+  if (!Number.isFinite(raw) || raw <= 0) return null;
+  const code = String(result.currency || 'USD').toUpperCase();
+  const rate = FX_TO_USD[code];
+  // Unknown currency: rank at face value rather than dropping the result.
+  return raw * (rate === undefined ? 1 : rate);
+}
+
+/**
+ * Cheapest first, with unpriced results LAST.
+ *
+ * Records with no price render "Price varies". Left to a naive numeric
+ * sort those become 0 or NaN and float to the top, burying every result
+ * that actually has a price.
+ */
+function byPriceAsc(a, b) {
+  const pa = priceForRanking(a);
+  const pb = priceForRanking(b);
+  if (pa === null && pb === null) return 0;
+  if (pa === null) return 1;
+  if (pb === null) return -1;
+  return pa - pb;
+}
+
 // ── GA4 tracking ──────────────────────────────────────────────
 // All tracking now lives in src/utils/analytics.js. The store_click
 // event name and its original parameters (store_name, store_url,
@@ -161,7 +213,9 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, p
             <div>
               <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>from </span>
               <span style={{ fontSize: 18, fontWeight: 700, color: 'var(--amber)', fontFamily: 'var(--font-mono)' }}>
-                {formatPrice(result.lowest_price)}
+                {/* Pass the currency through. Without it CDandLP's EUR
+                    prices rendered with a dollar sign. */}
+                {formatPrice(result.lowest_price, result.currency || 'USD')}
               </span>
               {result.lowest_condition && (
                 <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 6 }}>
@@ -381,6 +435,11 @@ export default function SearchResults() {
           trackApiError('turntablelab', ttlErr?.message?.match(/\d{3}/)?.[0], ttlErr?.message);
         }
       }
+
+      // Sort once, here, so both the full list and every filtered view
+      // inherit the order. The activeSource effect below only filters,
+      // it never reorders.
+      combined.sort(byPriceAsc);
 
       setAllResults(combined);
       setResults(combined);
