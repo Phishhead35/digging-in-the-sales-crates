@@ -11,6 +11,8 @@ import {
   CLICK_SOURCES,
 } from '../utils/analytics';
 import useSEO from '../hooks/useSEO';
+import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
+import { isMonetized } from '../config/partners';
 
 // ── Affiliate URL builders ────────────────────────────────────
 // Extracted from the inline JSX so the href and the GA4 event always
@@ -50,7 +52,26 @@ function buildDealUrl(item) {
   return item.url || '#';
 }
 
-const STORE_NAMES = { discogs: 'Discogs', ebay: 'eBay', cdandlp: 'CDandLP' };
+// BUGFIX: turntablelab was missing here, so every Turntable Lab click from
+// the wishlist reported storeName "Other" in GA4 and could not be attributed
+// to the program. buildDealUrl needs no branch for it: the Pages Function
+// already returns a URL carrying aff=56122, and the fallthrough returns
+// item.url unchanged. Appending anything would double the param.
+const STORE_NAMES = {
+  discogs: 'Discogs',
+  ebay: 'eBay',
+  cdandlp: 'CDandLP',
+  turntablelab: 'Turntable Lab',
+};
+
+// Matches SOURCE_META in SearchResults.jsx. Was a nested ternary that had no
+// turntablelab case, so TTL saved records rendered with CDandLP's green badge.
+const SOURCE_BADGE = {
+  discogs:      { bg: 'rgba(245,158,11,0.9)', fg: '#000' },
+  ebay:         { bg: 'rgba(0,100,210,0.9)',  fg: '#fff' },
+  cdandlp:      { bg: 'rgba(0,160,100,0.9)',  fg: '#fff' },
+  turntablelab: { bg: 'rgba(139,92,246,0.9)', fg: '#fff' },
+};
 
 export default function Wishlist() {
   // SEO strings below are duplicated in scripts/prerender.mjs, which bakes
@@ -111,6 +132,12 @@ export default function Wishlist() {
           </Link>
         </div>
       ) : (
+        <>
+        {/* Names the marketplaces on this page that actually pay a
+            commission. Above the grid, before the first View Deals button.
+            An empty wishlist renders nothing to disclose, so this sits
+            inside the non-empty branch. */}
+        <AffiliateDisclosure variant="compact" surface="wishlist" />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 20 }}>
           {wishlist.map((item, index) => (
             <div key={`${item.source}-${item.id}`} style={{
@@ -127,16 +154,14 @@ export default function Wishlist() {
                     </div>
                   </div>
                 )}
-                {/* Bug 5 fix: three-source badge matching SearchResults */}
+                {/* Four-source badge matching SearchResults. The cdandlp
+                    fallback preserves the old behavior exactly: anything
+                    unrecognized rendered green. */}
                 <div style={{
                   position: 'absolute', top: 10, left: 10,
                   padding: '3px 10px', borderRadius: 100, fontSize: 10, fontWeight: 700,
-                  background: item.source === 'discogs'
-                    ? 'rgba(245,158,11,0.9)'
-                    : item.source === 'ebay'
-                    ? 'rgba(0,100,210,0.9)'
-                    : 'rgba(0,160,100,0.9)',
-                  color: item.source === 'discogs' ? '#000' : '#fff',
+                  background: (SOURCE_BADGE[item.source] || SOURCE_BADGE.cdandlp).bg,
+                  color: (SOURCE_BADGE[item.source] || SOURCE_BADGE.cdandlp).fg,
                   fontFamily: 'var(--font-mono)',
                 }}>
                   {item.source?.toUpperCase()}
@@ -201,10 +226,19 @@ export default function Wishlist() {
                     <Trash2 size={14} />
                   </button>
                 </div>
+
+                {/* Per-link disclosure, driven by partners.js. Discogs saves
+                    earn nothing and are deliberately not badged. */}
+                {isMonetized(item.source) && (
+                  <div style={{ marginTop: 10, display: 'flex', justifyContent: 'flex-end' }}>
+                    <AffiliateBadge />
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </div>
+        </>
       )}
     </div>
   );

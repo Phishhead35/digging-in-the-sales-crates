@@ -3,6 +3,8 @@ import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { searchDiscogs, searchEbay, searchCDandLP, searchTurntableLab, formatPrice } from '../utils/api';
 import useSEO from '../hooks/useSEO';
+import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
+import { isMonetized } from '../config/partners';
 import {
   trackStoreClick,
   trackSelectItem,
@@ -351,6 +353,21 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, p
           );
         })()}
       </div>
+
+      {/* AFFILIATE DISCLOSURE, per card.
+          Rendered only when src/config/partners.js says this source actually
+          earns a commission, so the badge can never claim one that does not
+          exist. Discogs is unmonetized and gets nothing here, deliberately.
+          Sits directly under the View Deals button because the FTC requires
+          disclosure close to the link, not only in the footer. */}
+      {isMonetized(result.source) && (
+        <div style={{
+          padding: '0 16px 12px',
+          display: 'flex', justifyContent: 'flex-end',
+        }}>
+          <AffiliateBadge />
+        </div>
+      )}
     </div>
   );
 }
@@ -698,6 +715,12 @@ export default function SearchResults() {
       )}
 
       {!loading && results.length > 0 && (
+        <>
+        {/* Names the marketplaces on this page that actually pay a
+            commission. Generated from partners.js, so it stays true when a
+            program is added or dropped. Placed above the grid, before the
+            first link, not after it. */}
+        <AffiliateDisclosure variant="compact" surface="search" />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(220px, 100%), 1fr))', gap: 20 }}>
           {results.map((r, index) => (
             <RecordCard
@@ -712,6 +735,7 @@ export default function SearchResults() {
             />
           ))}
         </div>
+        </>
       )}
 
       {!loading && !error && results.length === 0 && query && (
