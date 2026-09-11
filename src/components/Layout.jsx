@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3 } from 'lucide-react';
 import FollowUs from './FollowUs';
+import { AffiliateDisclosure } from './AffiliateDisclosure';
 import { trackNavClick, trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
 
 export default function Layout({ children }) {
@@ -275,8 +276,20 @@ export default function Layout({ children }) {
             © 2026 Digging in the Sales Crates. Find your perfect record.
           </p>
           <p style={{ color: 'var(--text-primary)', fontSize: 11, marginTop: 6 }}>
-            Pricing data via Discogs &amp; eBay. Not affiliated with, sponsored by, or endorsed by any listed marketplace or store.
+            Listing and pricing data via Discogs, eBay, CDandLP &amp; Turntable Lab. Not affiliated with, sponsored by, or endorsed by any listed marketplace or store.
           </p>
+
+          {/* SITE-WIDE AFFILIATE DISCLOSURE.
+              This is the baseline only. The FTC requires disclosure close to
+              the link, so a footer line alone is NOT sufficient: the per-link
+              badges on search results, the deals page, the wishlist, and blog
+              posts are what actually satisfy that. Do not remove those on the
+              grounds that this exists.
+
+              The partner names in this sentence are generated from
+              src/config/partners.js, so adding or dropping a program updates
+              this text without anyone editing prose. */}
+          <AffiliateDisclosure variant="footer" />
         </div>
       </footer>
     </div>
