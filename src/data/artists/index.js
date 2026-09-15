@@ -694,6 +694,87 @@ export const ARTISTS = {
     },
   },
 
+  'prince': {
+    slug: 'prince',
+    name: 'Prince',
+    tagline: 'He played everything, owned everything, and outran every label he signed to.',
+    genres: ['Funk', 'Rock', 'Pop'],
+    searchTerms: {
+      discogs: 'Prince',
+      ebay: 'Prince vinyl LP record',
+      cdandlp: 'Prince',
+    },
+    // Warner, Rhino and the estate's NPG imprint keep the catalog in
+    // constant reissue, including the 2025 fortieth anniversary editions.
+    // Confident yes.
+    amazonEligible: true,
+    bio: [
+      'Prince wrote, produced, arranged and mostly performed his own records from the start, and the catalog reflects a musician who never stopped moving. The Warner Bros. run from Dirty Mind in 1980 through Sign o\' the Times in 1987 covers minimal new wave funk, a stadium soundtrack, psychedelia and a sprawling double album in seven years.',
+      'Original US pressings from that run are plentiful, which is good news for diggers. Purple Rain sold in the tens of millions, and 1999 and Around the World in a Day both went multi-platinum, so clean originals of the biggest titles still turn up in ordinary bins at ordinary prices. The scarcity sits elsewhere: the early Warner albums from before the breakthrough, promo and picture-disc variants, the Paisley Park era side projects, and the posthumous vault releases.',
+      'Expect catalog-number inconsistency across the Warner titles. Multiple US plants handled the big sellers, and the label, sleeve and spine numbers do not always agree on the same copy. Around the World in a Day turns up as 25286-1, as 9 25286-1 and as WB 1-25286 depending on where you look, and none of those is wrong. Canadian, European, Japanese and Australian pressings circulate widely alongside the US ones, and the estate has kept remasters and anniversary editions coming since 2016, which keeps supply moving on the catalog titles.',
+    ],
+    essentialRecords: [
+      { title: 'Dirty Mind', year: 1980, label: 'Warner Bros.' },
+      { title: 'Controversy', year: 1981, label: 'Warner Bros.' },
+      { title: '1999', year: 1982, label: 'Warner Bros.' },
+      { title: 'Purple Rain', year: 1984, label: 'Warner Bros.' },
+      { title: 'Around the World in a Day', year: 1985, label: 'Paisley Park / Warner Bros.' },
+      { title: 'Parade', year: 1986, label: 'Paisley Park / Warner Bros.' },
+      { title: 'Sign o\' the Times', year: 1987, label: 'Paisley Park / Warner Bros.' },
+    ],
+    producerCredits: [
+      'Prince, producer on every record listed above',
+      'The Revolution, billed from 1999 (1982) through Parade (1986)',
+      'Bernie Grundman, mastering, Around the World in a Day (1985)',
+    ],
+    seo: {
+      title: 'Prince Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Prince vinyl records across Discogs, eBay, and CDandLP. Shop Purple Rain, 1999, Dirty Mind, Around the World in a Day, and Paisley Park era pressings.',
+    },
+  },
+
+  'tool': {
+    slug: 'tool',
+    name: 'Tool',
+    tagline: 'Late to vinyl, heavily bootlegged, and worth getting right the first time.',
+    genres: ['Rock', 'Progressive Metal'],
+    searchTerms: {
+      // 'Tool' alone is a hardware query on eBay and a weak one on CDandLP.
+      // Both are scoped deliberately. Discogs files the band as Tool (2)
+      // and resolves the bare name correctly.
+      discogs: 'Tool',
+      ebay: 'Tool band vinyl LP record',
+      cdandlp: 'Tool Lateralus Aenima',
+    },
+    // Deliberately NOT amazonEligible. Amazon's third-party marketplace is
+    // one of the channels unofficial Tool pressings move through, and this
+    // page's whole point is steering people away from those. Flip it to
+    // true if the RCA-distributed reissues justify it later.
+    amazonEligible: false,
+    bio: [
+      'Tool built one of the most devoted audiences in rock while treating physical releases as objects rather than product. Undertow arrived in 1993, \u00c6nima in 1996, Lateralus in 2001, 10,000 Days in 2006 and Fear Inoculum in 2019, a pace that gave every record years to settle into the catalog before the next one landed.',
+      'The vinyl history is the collecting story. Several albums reached vinyl long after their CD release. Lateralus came out in 2001 and did not get an official vinyl pressing until 2005, a four-sided picture disc in a plastic gatefold. Fear Inoculum had no official vinyl at all until 2022, when an ultra deluxe five-LP boxset appeared at shows in February and a standard three-LP followed that August. That gap between demand and legitimate supply is exactly the vacuum bootleggers fill.',
+      'Expect to sort through unofficial pressings on any Tool search. Discogs flags a large number of Lateralus and \u00c6nima releases as unofficial, many of them European and cosmetically convincing. Buy from sellers who photograph the dead wax, confirm the release carries a real Volcano or Tool Dissectional catalog number, and treat a picture disc priced well under the market as a warning rather than a find. Legitimate copies are expensive, so the cheap one is usually cheap for a reason.',
+    ],
+    essentialRecords: [
+      { title: 'Opiate', year: 1992, label: 'Zoo Entertainment' },
+      { title: 'Undertow', year: 1993, label: 'Zoo Entertainment' },
+      { title: '\u00c6nima', year: 1996, label: 'Zoo Entertainment / Volcano' },
+      { title: 'Lateralus', year: 2001, label: 'Volcano' },
+      { title: '10,000 Days', year: 2006, label: 'Tool Dissectional / Volcano' },
+      { title: 'Fear Inoculum', year: 2019, label: 'Tool Dissectional / Volcano / RCA' },
+    ],
+    producerCredits: [
+      'Sylvia Massy, Undertow (1993)',
+      'David Bottrill, \u00c6nima (1996), Lateralus (2001) and 10,000 Days (2006)',
+      'Joe Barresi, Fear Inoculum (2019)',
+    ],
+    seo: {
+      title: 'Tool Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Tool vinyl records across Discogs, eBay, and CDandLP. Shop Lateralus, \u00c6nima, Undertow, 10,000 Days, and Fear Inoculum pressings, and learn to spot the bootlegs.',
+    },
+  },
+
 };
 
 export const GENRES = {

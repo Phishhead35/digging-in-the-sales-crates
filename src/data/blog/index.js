@@ -5,6 +5,40 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'prince-around-the-world-in-a-day-crate-guide': {
+    slug: 'prince-around-the-world-in-a-day-crate-guide',
+    title: 'Prince Buried the Follow-Up to Purple Rain on Purpose',
+    series: 'CRATE SPOTLIGHT',
+    date: '2026-09-15',
+    dateDisplay: 'September 15, 2026',
+    excerpt: 'Prince followed Purple Rain with a psychedelic left turn, released with no lead single and almost no publicity at his own request. It went to number one anyway. Why a double platinum album is still one of the cheapest serious records in the bins.',
+    body: [
+      'Prince had the biggest record in America and chose to walk away from it. Purple Rain was still on the charts when Around the World in a Day arrived on April 22, 1985, and almost nothing about the release made commercial sense.',
+      'Warner Bros. put it out with minimal publicity at Prince\'s own request. No lead single. He wanted the album taken in full before anyone zeroed in on a track, so the label held the singles back nearly a month. Coming off a soundtrack that had sold in the tens of millions, that is close to unheard of.',
+      'It worked anyway. The album went to number one on the Billboard 200 and was certified double platinum by July 2, 1985, roughly ten weeks after release. “Raspberry Beret” reached number two and “Pop Life” reached number seven. Critics were split, some of them harshly, and the record has spent forty years being reassessed upward.',
+      'The sessions are the part collectors tend to miss. Recording ran from February to December 1984, and some of it predates the Purple Rain sessions entirely. This was not a panicked follow-up written after the fact. It was already partly finished while the movie was still building. The title track grew out of a demo by David Coleman, brother of Revolution keyboardist Lisa Coleman, which is why the album opens with finger cymbals and oud instead of a guitar.',
+      'For the crate, the 1985 US original is a Paisley Park pressing through Warner Bros., catalog 25286, in a gatefold with a printed flap. Expect variation. The number turns up as 25286-1, as 9 25286-1 and as WB 1-25286 depending on where you look, and there are multiple US plants plus Canadian, European, Japanese and Australian pressings in circulation. Bernie Grundman mastered it, which matters if you care what the lacquer sounded like. Doug Henders painted the cover, and the psychedelic sleeve drew endless Sgt. Pepper comparisons that Prince flatly rejected in a 1985 Rolling Stone interview.',
+      'Here is the market read. This is a double platinum album, so originals are common, and common is good news when the record is this underrated. Right now the search turns up thirty-two results across eBay, Discogs and Turntable Lab, with US originals starting around fourteen dollars and a first-press copy listed in the high teens. The fortieth anniversary remaster that landed in November 2025 added fresh supply on top of that.',
+      'An album this good at that price is not a bargain that lasts forever. Reassessment eventually reaches the bins.',
+      'Run it through digginginthesalescrates.com and compare the spread across Discogs, eBay and CDandLP before you commit.',
+    ],
+    shopArtists: [
+      {
+        name: 'Prince',
+        pageSlug: 'prince',
+        searchTerms: {
+          discogs: 'Prince Around The World In A Day',
+          ebay: 'Prince Around the World in a Day vinyl',
+          cdandlp: 'Prince Around The World In A Day',
+        },
+      },
+    ],
+    seo: {
+      title: 'Prince Around the World in a Day: Collecting the 1985 Paisley Park LP | Digging in the Sales Crates',
+      description: 'Prince released Around the World in a Day with no lead single and minimal publicity, and it still hit number one. Pressing variants, the Bernie Grundman mastering, and why originals are still cheap.',
+    },
+  },
+
   'beatles-rubber-soul-2026-reissue': {
     slug: 'beatles-rubber-soul-2026-reissue',
     title: 'Rubber Soul Returns October 2, and the Capitol Version Is the Real Story',
