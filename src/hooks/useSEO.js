@@ -32,7 +32,7 @@ export default function useSEO({ title, description }) {
       document.title = 'Digging in the Sales Crates';
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) {
-        metaDesc.setAttribute('content', 'Find the best vinyl deals across Discogs, eBay, and CDandLP. Search, compare prices, and score rare records.');
+        metaDesc.setAttribute('content', 'Find the best vinyl deals across Discogs, eBay, CDandLP, and Turntable Lab. Search, compare prices, and score rare records.');
       }
     };
   }, [title, description]);

@@ -34,6 +34,16 @@
 //  from BLOG_POSTS) are UNCHANGED — still generated, still in the
 //  sitemap, still indexed. Watch & Read is additive, not a
 //  replacement of the blog's URLs or SEO data.
+//
+//  SOURCE COUNT SYNC (2026-09-11): Turntable Lab became the fourth
+//  live search source alongside Discogs, eBay, and CDandLP. Every
+//  description/content string below that named the three sources
+//  now names four, matching the same sweep already done in
+//  Home.jsx, Layout.jsx, ArtistPage.jsx, Artists.jsx, and
+//  BlogPost.jsx. This is the pair to useSEO.js: the two files
+//  duplicate these strings on purpose (one sets the live meta tag,
+//  this one bakes it into the static HTML crawlers see), so they
+//  get edited together or crawlers and browsers disagree.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -140,7 +150,7 @@ async function main() {
   const navLinks =
     '<ul>' +
     [
-      ['/aggregator', 'Search vinyl across Discogs, eBay & CDandLP'],
+      ['/aggregator', 'Search vinyl across Discogs, eBay, CDandLP & Turntable Lab'],
       ['/deals', 'Current vinyl deals & price alerts'],
       ['/email-parser', 'AI email deal parser'],
       ['/artists', 'Artist & genre pages'],
@@ -157,36 +167,36 @@ async function main() {
       path: '/',
       title: `${SITE} | Vinyl Record Price Comparison`,
       description:
-        'Find the lowest prices on vinyl records across Discogs, eBay, and CDandLP. Taking the Dig Out of Digging™ — search rare hip-hop, jazz, and soul LPs in seconds.',
+        'Find the lowest prices on vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Taking the Dig Out of Digging™ — search rare hip-hop, jazz, and soul LPs in seconds.',
       content:
         h1(SITE) +
-        p('Taking the Dig Out of Digging. Free vinyl record price comparison: search Discogs, eBay, and CDandLP simultaneously and find the lowest price on any record in seconds. No sign-up required.') +
+        p('Taking the Dig Out of Digging. Free vinyl record price comparison: search Discogs, eBay, CDandLP, and Turntable Lab simultaneously and find the lowest price on any record in seconds. No sign-up required.') +
         navLinks,
     },
     {
       path: '/aggregator',
       title: `Search Vinyl Records | ${SITE}`,
       description:
-        'Search vinyl records across Discogs, eBay, and CDandLP at once. Compare condition, price, and seller, then buy on the marketplace you prefer.',
+        'Search vinyl records across Discogs, eBay, CDandLP, and Turntable Lab at once. Compare condition, price, and seller, then buy on the marketplace you prefer.',
       content:
         h1('Search Vinyl Records') +
-        p('Search any artist, album, or label and see live listings from Discogs, eBay, and CDandLP side by side, sorted by price.'),
+        p('Search any artist, album, or label and see live listings from Discogs, eBay, CDandLP, and Turntable Lab side by side, sorted by price.'),
     },
     {
       path: '/search',
       canonical: '/aggregator',
       title: `Search Vinyl Records | ${SITE}`,
       description:
-        'Search vinyl records across Discogs, eBay, and CDandLP at once. Compare condition, price, and seller, then buy on the marketplace you prefer.',
+        'Search vinyl records across Discogs, eBay, CDandLP, and Turntable Lab at once. Compare condition, price, and seller, then buy on the marketplace you prefer.',
       content:
         h1('Search Vinyl Records') +
-        p('Search any artist, album, or label and see live listings from Discogs, eBay, and CDandLP side by side, sorted by price.'),
+        p('Search any artist, album, or label and see live listings from Discogs, eBay, CDandLP, and Turntable Lab side by side, sorted by price.'),
     },
     {
       path: '/deals',
       title: `Vinyl Deals & Price Alerts | ${SITE}`,
       description:
-        'Current vinyl record deals, sales, and price alerts from Discogs, eBay, CDandLP, and partner record shops in Massachusetts and New England.',
+        'Current vinyl record deals, sales, and price alerts from Discogs, eBay, CDandLP, Turntable Lab, and partner record shops in Massachusetts and New England.',
       content:
         h1('Vinyl Deals & Price Alerts') +
         p('Hand-picked vinyl deals and marketplace sales, updated regularly, plus offers from local partner record shops.'),
@@ -195,14 +205,14 @@ async function main() {
       path: '/wishlist',
       title: `Vinyl Wishlist | ${SITE}`,
       description:
-        'Save vinyl records you want to find and jump straight to live listings on Discogs, eBay, and CDandLP.',
+        'Save vinyl records you want to find and jump straight to live listings on Discogs, eBay, CDandLP, and Turntable Lab.',
       content: h1('Your Vinyl Wishlist') + p('Track the records you want and check live marketplace listings anytime.'),
     },
     {
       path: '/alerts',
       title: `Price Alerts | ${SITE}`,
       description:
-        'Set vinyl price alerts and catch deals on the records you want across Discogs, eBay, and CDandLP.',
+        'Set vinyl price alerts and catch deals on the records you want across Discogs, eBay, CDandLP, and Turntable Lab.',
       content: h1('Price Alerts') + p('Get notified when the records you want hit your target price.'),
     },
     {
@@ -237,7 +247,7 @@ async function main() {
       path: '/faq',
       title: `FAQ | ${SITE}`,
       description:
-        'How Digging in the Sales Crates works: searching Discogs, eBay, and CDandLP at once, affiliate links, wishlists, and more.',
+        'How Digging in the Sales Crates works: searching Discogs, eBay, CDandLP, and Turntable Lab at once, affiliate links, wishlists, and more.',
       content:
         h1('Frequently Asked Questions') +
         p('How the site works, where listings come from, and how affiliate links keep the tool free.'),
@@ -300,7 +310,7 @@ async function main() {
             .join('') +
           '</ul>'
         : '') +
-      p('Compare live listings for these records on Discogs, eBay, and CDandLP:') +
+      p('Compare live listings for these records on Discogs, eBay, CDandLP, and Turntable Lab:') +
       a('/aggregator', `Search ${entry.name} vinyl`),
   });
   pages.push(...artistEntries.map((e) => artistPage(e, 'artists')));
