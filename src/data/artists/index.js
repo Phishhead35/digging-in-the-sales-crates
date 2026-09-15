@@ -2,6 +2,16 @@
 //  DITSC Artist & Genre Data
 //  Add a new entry here + a route in App.jsx to publish a page.
 //  searchTerms drive the Discogs / eBay / CDandLP buttons.
+//
+//  amazonEligible: true turns on an Amazon Associates search button for
+//  this artist, on both the artist page and any blog post that lists them
+//  in shopArtists. Only set it when Amazon's vinyl catalog clearly carries
+//  the artist — reissues through a major label or a real reissue house
+//  (Get On Down, Craft Recordings, UMe, Rhino, and similar). Amazon's
+//  catalog skews new pressings and reissues, so a search link on a small
+//  or deep-crates label is more likely to land on nothing, or on unrelated
+//  merch, than to convert. amazonSearchTerm overrides the default
+//  "<name> vinyl" query, same idea as ebayUrlOverride above it.
 // ─────────────────────────────────────────────────────────────
 
 export const ARTISTS = {
@@ -17,6 +27,12 @@ export const ARTISTS = {
       cdandlp: 'Ol Dirty Bastard',
     },
     ebayUrlOverride: 'https://www.ebay.com/sch/i.html?_nkw=Old+Dirty+Bastard+vinyl&_sacat=0&_from=R40&_trksid=m570.l1313&mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc',
+    // Reissues of Return to the 36 Chambers circulate widely (Get On Down's
+    // Wu-Tang reissue series covers exactly this era). The apostrophe in
+    // "Ol'" caused enough trouble for eBay to need a plain-text override
+    // above, so Amazon gets the same plain-text term rather than testing it.
+    amazonEligible: true,
+    amazonSearchTerm: 'Old Dirty Bastard vinyl',
     bio: [
       'Ol\' Dirty Bastard — born Russell Tyrone Jones — was the most unpredictable member of the Wu-Tang Clan, and that\'s saying something. His 1995 debut, Return to the 36 Chambers: The Dirty Version, hit like nothing else in rap: no rules, no filters, pure Brooklyn chaos over RZA\'s grimy Staten Island production.',
       'His second album, Nigga Please (1999), showed a different side — smoother in places, still unmistakably ODB. He died in 2004 at 35. His records are collected hard because nobody sounded like him, and nobody ever will.',
@@ -47,6 +63,9 @@ export const ARTISTS = {
       ebay: 'J Dilla vinyl',
       cdandlp: 'J Dilla',
     },
+    // Donuts has stayed in active vinyl print through Stones Throw for
+    // years. One of the safest bets on this whole list.
+    amazonEligible: true,
     bio: [
       'James Dewitt Yancey — J Dilla — redefined what a drum machine could feel like. Working out of Detroit through the 1990s and early 2000s, he produced for A Tribe Called Quest, Common, Erykah Badu, and D\'Angelo before most fans knew his name.',
       'His solo output, especially Donuts (2006), finished hours before his death, stands as one of the most influential records in hip-hop history. A 31-track collage built entirely from samples, released on Stones Throw Records.',
@@ -82,6 +101,8 @@ export const ARTISTS = {
       ebay: 'Cannibal Ox vinyl',
       cdandlp: 'Cannibal Ox',
     },
+    // Not eligible. The Cold Vein's original Definitive Jux pressing is
+    // deep-crates territory, and most of the catalog hasn't been reissued.
     bio: [
       'Cannibal Ox is Vast Aire and Vordul Mega — a Harlem rap duo whose 2001 debut The Cold Vein, produced entirely by El-P, is considered one of the most important underground hip-hop albums ever made. Dark, cinematic, and claustrophobic in the best way.',
       'Original pressings of The Cold Vein on Definitive Jux are the grail. Reissues exist, but collectors want the original. The duo released Blade of the Ronin in 2015 and a handful of follow-ups, but The Cold Vein is what the market chases.',
@@ -110,6 +131,8 @@ export const ARTISTS = {
       ebay: 'Fatback Band vinyl',
       cdandlp: 'Fatback Band',
     },
+    // Not eligible. Spring Records catalog, no evidence of a real Amazon-
+    // scale reissue presence, same bar as Cannibal Ox and The Moments.
     bio: [
       'The Fatback Band formed in Brooklyn in 1970 and spent the next 15 years cranking out some of the most sample-rich funk and soul in the canon. Bill Curtis kept the drum grooves tight; the horns did the rest.',
       'Their catalog is a goldmine for diggers. "I Found Lovin\'," "King Tim III" (one of the earliest hip-hop recordings on wax), and their Spring/Perception label records are all in demand. Easy to find, easy to spend an afternoon getting lost in.',
@@ -140,6 +163,9 @@ export const ARTISTS = {
       ebay: 'Michael Jackson vinyl',
       cdandlp: 'Michael Jackson',
     },
+    // Epic/Legacy keeps this catalog in heavy vinyl print. As safe a bet
+    // as this list has.
+    amazonEligible: true,
     bio: [
       'Michael Jackson\'s Thriller (1982) is the best-selling album of all time and one of the most collected records on the planet. Original pressings on Epic, Japanese pressings, picture discs, and promo copies all command serious prices — and they move fast.',
       'His catalog from Off the Wall (1979) through Dangerous (1991) covers the peak of his creative run, and each album has its own collector submarket. Japanese and German pressings are particularly sought after for audio quality.',
@@ -170,6 +196,9 @@ export const ARTISTS = {
       ebay: 'MF DOOM vinyl',
       cdandlp: 'MF DOOM',
     },
+    // Madvillainy, MM..FOOD, and Operation: Doomsday have all had official
+    // reissue runs, and demand since 2020 has kept them in circulation.
+    amazonEligible: true,
     bio: [
       'Daniel Dumile — MF DOOM, Viktor Vaughn, King Geedorah, Metal Fingers — was the most meticulous wordsmith in underground hip-hop. Born in London and raised on Long Island, he returned to music in 1999 with a metal mask and Operation: Doomsday, one of the most original debut albums in rap history.',
       'His 2004 collaboration with Madlib, Madvillainy on Stones Throw, is widely considered the greatest underground hip-hop record ever made. MM..FOOD followed the same year. His catalog under multiple aliases is dense, rewarding, and endlessly re-listenable.',
@@ -205,6 +234,8 @@ export const ARTISTS = {
       ebay: 'Beatles vinyl pressing',
       cdandlp: 'The Beatles',
     },
+    // UMe's reissue program keeps this catalog permanently in print.
+    amazonEligible: true,
     bio: [
       'No catalog attracts more collector attention than The Beatles. UK Parlophone originals from 1963–1966 are the grail — first pressings identified by specific matrix etchings, label variations, and sleeve conditions that collectors have documented obsessively for decades.',
       'The mono vs. stereo debate is central to Beatles collecting. Early albums were mixed in mono first, and many collectors argue the mono versions are the definitive ones. Original UK mono pressings of Rubber Soul, Revolver, and Sgt. Pepper\'s command serious premiums over their stereo counterparts.',
@@ -239,6 +270,8 @@ export const ARTISTS = {
       ebay: 'The Moments vinyl soul',
       cdandlp: 'The Moments',
     },
+    // Not eligible. All Platinum/Stang is a small soul singles label with
+    // no real Amazon-scale reissue presence, same bar as Fatback Band.
     bio: [
       'The Moments were a New Jersey soul vocal group who recorded for Sylvia Robinson\'s All Platinum / Stang label through the 1970s. Smooth, unhurried harmonies over classic soul arrangements — this is Sunday afternoon music.',
       '"Love on a Two-Way Street" (1970) is their signature and a deeply sampled track. "Sexy Mama" and "Dolly My Love" rounded out their run of charting singles. Stang 45s are the format of choice for collectors — affordable entry point, huge catalog to explore.',
@@ -269,6 +302,11 @@ export const ARTISTS = {
       cdandlp: '2Pac',
     },
     ebayUrlOverride: 'https://www.ebay.com/sch/i.html?_nkw=2Pac+Tupac+vinyl&_sacat=0&_from=R40&_trksid=m570.l1313&mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc',
+    // Interscope/Death Row catalog reissues are widely available. Search
+    // term matches the "2Pac" phrasing already used everywhere else on
+    // this entry rather than the page's display name.
+    amazonEligible: true,
+    amazonSearchTerm: '2Pac vinyl',
     bio: [
       'Tupac Shakur released five studio albums before his death at 25 in September 1996, and the posthumous catalog has kept coming ever since. His 1995 album Me Against the World — recorded while he was incarcerated — debuted at number one on the Billboard 200 and remains one of the most emotionally direct rap records ever made.',
       'All Eyez on Me (1996), his Death Row debut, was a double album that moved in two directions at once: raw West Coast party rap on disc one, dense introspective writing on disc two. The Don Killuminati: The 7 Day Theory — released under the Makaveli alias just two months after his death — hits differently knowing the timeline.',
@@ -305,6 +343,9 @@ export const ARTISTS = {
       ebay: 'Naughty by Nature vinyl',
       cdandlp: 'Naughty by Nature',
     },
+    // Not flagged yet. Tommy Boy has reissued some of this catalog, but
+    // not confidently enough to call it "clearly carried." Worth checking
+    // Amazon directly and flipping to true if you find real stock.
     bio: [
       'Naughty by Nature — Treach, Vin Rock, and DJ Kay Gee — came out of East Orange, New Jersey in 1991 with one of the most immediate debut singles in hip-hop history. "O.P.P." flipped the Jackson 5\'s "ABC" into a street anthem that spent 18 weeks on the Billboard Hot 100. The self-titled debut on Tommy Boy is a stone classic.',
       '19 Naughty III (1993) pushed harder: "Hip Hop Hooray" became the crossover moment, but the deep cuts — "The Hood Comes First," "Daddy Was a Street Corner" — showed the range. Poverty\'s Paradise (1995) won the Grammy for Best Rap Album and remains underrated relative to what came before it.',
@@ -339,6 +380,9 @@ export const ARTISTS = {
       ebay: 'Wu-Tang Clan vinyl',
       cdandlp: 'Wu-Tang Clan',
     },
+    // 36 Chambers and the group's landmark solo albums have a well-
+    // documented, active reissue history. Confident yes.
+    amazonEligible: true,
     bio: [
       'The Wu-Tang Clan released Enter the Wu-Tang (36 Chambers) on Loud Records in 1993 and changed hip-hop permanently. Nine MCs from Staten Island, production from RZA built on chopped soul samples and martial arts movie audio — raw, cinematic, and unlike anything else in the game. Original Loud pressings are among the most sought-after records in hip-hop collecting.',
       'Wu-Tang Forever (1997) arrived as a double album and debuted at number one. The production had evolved: bigger, more layered, still unmistakably RZA. The W (2000) and Iron Flag (2001) followed. Each member\'s solo output added another layer to one of the most interconnected catalogs in rap — GZA\'s Liquid Swords, Raekwon\'s Only Built 4 Cuban Linx, Ghostface\'s Ironman, Method Man\'s Tical.',
@@ -375,6 +419,8 @@ export const ARTISTS = {
       ebay: 'Madonna vinyl',
       cdandlp: 'Madonna',
     },
+    // Sire/Rhino has kept this catalog in active reissue. Confident yes.
+    amazonEligible: true,
     bio: [
       'Madonna\'s Sire Records catalog — from her 1983 debut through Like a Prayer (1989) — is one of the most actively traded pop catalogs in the vinyl market. Original Sire pressings, especially UK and German editions, command premiums over domestic US copies. Her 12" single catalog is enormous and widely collected: "Holiday," "Lucky Star," "Material Girl," "Like a Virgin," and dozens more.',
       'Like a Prayer (1989) is the critical and commercial peak for collectors. The original Sire pressing with the prayer book insert intact is the one to find. The album\'s production — Patrick Leonard and Prince each contributed — holds up as one of the best-sounding pop records of the decade.',
@@ -411,6 +457,9 @@ export const ARTISTS = {
       ebay: 'John Coltrane vinyl',
       cdandlp: 'John Coltrane',
     },
+    // Blue Note, Atlantic, and Impulse! all run active reissue programs
+    // (Craft Recordings among them) covering this exact catalog.
+    amazonEligible: true,
     bio: [
       'John Coltrane recorded for three labels that define jazz collecting: Blue Note, Atlantic, and Impulse!. Each era sounds different, and each era\'s original pressings are chased hard. Blue Train (1958) is the Blue Note grail; originals with the deep groove and 47 West 63rd Street address routinely outperform reissues by 300 to 500 percent.',
       'The Atlantic years gave us Giant Steps and My Favorite Things; look for bullseye labels on the earliest pressings. The Impulse! era (A Love Supreme through the late spiritual work) is the most affordable entry point, with orange-and-black spine originals still surfacing at fair prices. RVG stamps in the dead wax mean Rudy Van Gelder cut the master.',
@@ -441,6 +490,9 @@ export const ARTISTS = {
       ebay: 'Eric B Rakim vinyl',
       cdandlp: 'Eric B Rakim',
     },
+    // Not flagged yet. Paid in Full is a landmark record that may well have
+    // a real reissue on Amazon, but I don't have solid enough footing to
+    // call it "clearly." Worth checking directly before flipping to true.
     bio: [
       'Rakim rewrote the rules of MCing: internal rhyme schemes, laid-back delivery, complexity that made everything before it sound simple. Over Eric B.\'s James Brown-heavy production, the duo cut four albums between 1987 and 1992 that anchor any Golden Era collection.',
       'Paid in Full (1987) is the essential document. Original Fourth & Broadway pressings are getting scarce in clean condition, and the earlier Zakia 12" of "Eric B. Is President" b/w "My Melody" (1986) is the real grail; original Zakia copies command serious money. The Coldcut "Seven Minutes of Madness" remix 12" of "Paid in Full" is its own collecting lane.',
@@ -470,6 +522,8 @@ export const ARTISTS = {
       ebay: 'Boogie Down Productions vinyl',
       cdandlp: 'Boogie Down Productions',
     },
+    // Not flagged yet. Criminal Minded may have a real reissue in
+    // circulation, but same reasoning as Eric B. & Rakim: check first.
     bio: [
       'Boogie Down Productions formed in the South Bronx in 1986 around KRS-One and DJ Scott La Rock. Their 1987 debut, Criminal Minded, is one of hip-hop\'s foundational records: raw, minimal, and built from James Brown breaks and dancehall reggae inflections that few rap records were using yet. Scott La Rock was murdered months after its release, at just 25 years old.',
       'KRS-One kept the group going, and By All Means Necessary (1988) turned BDP into hip-hop\'s most visible political voice. Its cover, a direct nod to a famous Malcolm X photograph, signaled the shift; "My Philosophy" and "Stop the Violence" became genre-defining statements. Ghetto Music: The Blueprint of Hip Hop and Edutainment followed, cementing KRS-One\'s reputation as "The Teacher."',
@@ -503,6 +557,8 @@ export const ARTISTS = {
       ebay: 'Pete Rock vinyl',
       cdandlp: 'Pete Rock',
     },
+    // Not flagged yet. Mecca and the Soul Brother may have a real reissue
+    // in circulation, but same reasoning as Eric B. & Rakim: check first.
     bio: [
       'Pete Rock is half of Pete Rock & CL Smooth and one of hip-hop\'s most influential producers, full stop. "They Reminisce Over You (T.R.O.Y.)," released April 2, 1992 as an Elektra 12" ahead of the album, is his signature: a tribute to Trouble T Roy of Heavy D & the Boyz, built from a loop of Tom Scott and The California Dreamers\' 1967 cover of Jefferson Airplane\'s "Today." Pete Rock flipped that same source two more times on the same album, on "Return of the Mecca" and "Skinz" — three different chops of one loop, and none of them sound repetitive.',
       'Mecca and the Soul Brother, the album built around T.R.O.Y., dropped June 9, 1992 on Elektra and is a cornerstone of golden-era boom bap: dense soul horns, drums mixed loud and dry. The Main Ingredient followed on November 8, 1994, also on Elektra — a tighter, moodier record and the duo\'s final album together, still underrated relative to Mecca.',
@@ -538,6 +594,9 @@ export const ARTISTS = {
       cdandlp: 'Marvin Gaye',
     },
     partnerOverride: ['GOOD TASTE Records'],
+    // Motown/Universal runs one of the most active reissue programs in
+    // soul music, and What's Going On is a perennial vinyl reissue title.
+    amazonEligible: true,
     bio: [
       'Marvin Gaye signed to Motown\'s Tamla label at the start of the 1960s and built one of the label\'s defining voices: "How Sweet It Is (to Be Loved by You)," "Ain\'t That Peculiar," and 1968\'s "I Heard It Through the Grapevine" (written by Norman Whitfield and Barrett Strong) became the biggest-selling single in Motown\'s history at the time. He was also the label\'s most consistent duet partner, first with Tammi Terrell on "Ain\'t No Mountain High Enough" and "You\'re All I Need to Get By," then with Diana Ross on the 1973 album Diana & Marvin.',
       'What\'s Going On (1971) changed the terms entirely. Gaye pushed Motown to release it against resistance and became one of the first artists at the label to produce his own work, opening the door to Let\'s Get It On (1973), I Want You (1976), and Here, My Dear (1978), a raw, deeply personal record built around the end of his first marriage. These albums, along with the What\'s Going On single itself, are among the most sampled recordings in hip-hop and R&B production.',
@@ -572,6 +631,8 @@ export const ARTISTS = {
       ebay: 'DJ Quik vinyl',
       cdandlp: 'DJ Quik',
     },
+    // Not eligible. Profile Records catalog, no strong evidence of an
+    // Amazon-scale reissue presence.
     bio: [
       'David Blake, known everywhere as DJ Quik, released Quik Is the Name on Profile in January 1991, almost two years before The Chronic. The whole G-funk vocabulary is already on it: the high synth lead, the rolling bassline, the live-feel drums, the party-first Compton perspective. He produced all of it himself at twenty years old.',
       'He never stopped producing. Across Way 2 Fonky, Safe + Sound and Rhythm-al-ism he built a catalog that other West Coast records were measured against, and he spent the next three decades behind the boards for everyone from 2Pac to Jay-Z to Kendrick Lamar. Musicians who work with him tend to describe him as a bandleader more than a beatmaker.',
@@ -606,6 +667,9 @@ export const ARTISTS = {
       ebay: 'Fleetwood Mac vinyl',
       cdandlp: 'Fleetwood Mac',
     },
+    // Warner/Rhino keeps Rumours and the surrounding catalog in constant
+    // vinyl reissue. Confident yes.
+    amazonEligible: true,
     bio: [
       'Fleetwood Mac started in 1967 as a British blues band built around Peter Green, and became something else entirely once Lindsey Buckingham and Stevie Nicks joined in 1975. Both eras are worth digging. The blues records are scarcer; the Buckingham and Nicks records are everywhere, which is exactly what makes them interesting.',
       'Rumours (1977) is the one every store has. It sold in numbers that put a copy in nearly every American household with a turntable, and that ubiquity is why it belongs in a sample digger\'s crate as much as a rock collector\'s. Bone Thugs-N-Harmony built "Wind Blow" on "The Chain," and producers have been pulling from Warner Bros. rock of this era for decades precisely because the supply is endless.',
@@ -633,6 +697,11 @@ export const ARTISTS = {
 };
 
 export const GENRES = {
+
+  // Neither genre page below is flagged amazonEligible. A broad genre-name
+  // search ("golden era hip hop vinyl") is a far worse Amazon query than a
+  // specific artist name; it's much more likely to return unrelated
+  // inventory than a real result worth linking to.
 
   'golden-era-hip-hop': {
     slug: 'golden-era-hip-hop',

@@ -11,7 +11,7 @@ import {
 } from '../utils/analytics';
 import PartnerStoreCard from '../components/PartnerStoreCard';
 import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
-import { isMonetized } from '../config/partners';
+import { isMonetized, buildPartnerUrl } from '../config/partners';
 
 // ── Affiliate link builders ───────────────────────────────────
 function discogsUrl(term) {
@@ -23,6 +23,15 @@ function ebayUrl(artist) {
 }
 function cdandlpUrl(term) {
   return `https://www.cdandlp.com/en/search/?q=${encodeURIComponent(term)}&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation`;
+}
+// Amazon has no per-item catalog lookup worth maintaining here, so this is a
+// plain search URL through buildPartnerUrl, which appends the tracking tag
+// from partners.js. Term defaults to "<artist name> vinyl"; an artist entry
+// can set amazonSearchTerm in src/data/artists.js to override it (useful
+// when the plain name pulls in an unrelated same-named act).
+function amazonUrl(artist) {
+  const term = artist.amazonSearchTerm || `${artist.name} vinyl`;
+  return buildPartnerUrl('amazon', `/s?k=${encodeURIComponent(term)}`);
 }
 
 // ── GA4 trackers ──────────────────────────────────────────────
@@ -57,6 +66,15 @@ function trackPartnerClick(storeName, storeUrl) {
 // hardcoded here. eBay and CDandLP pay a commission. DISCOGS DOES NOT, and
 // is deliberately left unbadged: claiming a commission that does not exist
 // misleads in the opposite direction and is its own problem.
+//
+// AMAZON is conditional on top of that. partners.js turns the Amazon
+// program on site-wide, but the button itself only renders when
+// artist.amazonEligible is true in src/data/artists.js. Amazon's vinyl
+// catalog skews new pressings and reissues, so a search link on an obscure
+// or library-only artist page is more likely to land on nothing, or worse,
+// on an unrelated product, than to convert. Flip amazonEligible per artist
+// as you confirm Amazon actually carries them, rather than showing the
+// button everywhere and hoping.
 function SearchButtons({ artist, size = 'normal' }) {
   const btnStyle = size === 'large'
     ? { padding: '14px 24px', fontSize: 14, borderRadius: 10 }
@@ -127,11 +145,38 @@ function SearchButtons({ artist, size = 'normal' }) {
           <Search size={14} /> CDandLP
           {isMonetized('cdandlp') && <AffiliateBadge label="aff" spaced />}
         </a>
+        {artist.amazonEligible && isMonetized('amazon') && (
+          <a
+            href={amazonUrl(artist)}
+            target="_blank"
+            rel={relFor('amazon')}
+            onClick={() => trackClick(artist.name, 'amazon', amazonUrl(artist))}
+            style={{
+              ...btnStyle,
+              display: 'inline-flex', alignItems: 'center', gap: 7,
+              border: '1px solid rgba(255,153,0,0.4)',
+              background: 'rgba(255,153,0,0.08)',
+              color: '#ff9900', fontWeight: 600, textDecoration: 'none',
+              transition: 'border-color 0.2s, background 0.2s',
+            }}
+            onMouseOver={e => { e.currentTarget.style.borderColor = 'rgba(255,153,0,0.7)'; e.currentTarget.style.background = 'rgba(255,153,0,0.14)'; }}
+            onMouseOut={e => { e.currentTarget.style.borderColor = 'rgba(255,153,0,0.4)'; e.currentTarget.style.background = 'rgba(255,153,0,0.08)'; }}
+          >
+            <Search size={14} /> Amazon
+            <AffiliateBadge label="aff" spaced />
+          </a>
+        )}
       </div>
 
       {/* Names only the partners that actually pay on this surface, and
           renders nothing at all if none of them do. Generated from
-          partners.js, so it cannot drift out of sync with the badges above. */}
+          partners.js, so it cannot drift out of sync with the badges above.
+          When artist.amazonEligible is true, this also carries Amazon's own
+          required disclosure sentence automatically, via
+          requiresOwnDisclosureOnSurface in partners.js. When it's false, the
+          Amazon button above doesn't render, so there is nothing on this
+          particular page for that sentence to attach to even though Amazon
+          is live on the 'artist' surface generally. */}
       <div style={{ marginTop: 12 }}>
         <AffiliateDisclosure variant="compact" surface="artist" />
       </div>

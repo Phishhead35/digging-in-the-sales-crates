@@ -5,7 +5,7 @@ import useSEO from '../hooks/useSEO';
 import { BLOG_POSTS } from '../data/blog';
 import { trackBlogMarketplaceClick } from '../utils/analytics';
 import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
-import { isMonetized } from '../config/partners';
+import { isMonetized, buildPartnerUrl } from '../config/partners';
 
 // ── Affiliate link builders (same as ArtistPage.jsx) ──────────
 function discogsUrl(term) {
@@ -16,6 +16,12 @@ function ebayUrl(term) {
 }
 function cdandlpUrl(term) {
   return `https://www.cdandlp.com/en/search/?q=${encodeURIComponent(term)}&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation`;
+}
+// Same plain-search approach as ArtistPage.jsx: no per-item Amazon catalog
+// lookup, just a tracked search URL. term defaults to "<name> vinyl" but a
+// shopArtists entry can set amazonSearchTerm to override it.
+function amazonUrl(term) {
+  return buildPartnerUrl('amazon', `/s?k=${encodeURIComponent(term)}`);
 }
 
 // ── GA4 tracker ───────────────────────────────────────────────
@@ -31,6 +37,7 @@ const MARKETPLACE_STYLES = {
   discogs: { color: 'var(--amber)', border: '1px solid rgba(245,158,11,0.4)' },
   ebay: { color: '#60a5fa', border: '1px solid rgba(96,165,250,0.4)' },
   cdandlp: { color: '#4ade80', border: '1px solid rgba(74,222,128,0.4)' },
+  amazon: { color: '#ff9900', border: '1px solid rgba(255,153,0,0.4)' },
 };
 
 function MarketplaceButton({ label, url, marketplace, postSlug, artistName }) {
@@ -57,8 +64,8 @@ function MarketplaceButton({ label, url, marketplace, postSlug, artistName }) {
       onMouseOut={e => e.currentTarget.style.background = 'transparent'}
     >
       {label} <ExternalLink size={11} />
-      {/* Per-link disclosure. eBay and CDandLP pay a commission; Discogs
-          does not and is deliberately never badged. */}
+      {/* Per-link disclosure. eBay, CDandLP, and Amazon pay a commission;
+          Discogs does not and is deliberately never badged. */}
       {paid && <AffiliateBadge label="aff" spaced />}
     </a>
   );
@@ -78,7 +85,10 @@ function ShopArtists({ post }) {
         </p>
         {/* This is the only monetized section on a blog post, so the notice
             belongs here rather than at the top of the article, where it would
-            sit hundreds of words away from the links it describes. */}
+            sit hundreds of words away from the links it describes. Carries
+            Amazon's own required sentence automatically, via
+            requiresOwnDisclosureOnSurface('blog') in partners.js, whenever
+            at least one artist below has amazonEligible: true. */}
         <AffiliateDisclosure variant="compact" surface="blog" />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {post.shopArtists.map(artist => (
@@ -120,6 +130,16 @@ function ShopArtists({ post }) {
                   url={cdandlpUrl(artist.searchTerms.cdandlp)}
                   postSlug={post.slug} artistName={artist.name}
                 />
+                {/* Same catalog-confidence gate as ArtistPage.jsx: only
+                    artists explicitly marked amazonEligible in
+                    src/data/blog get an Amazon button. */}
+                {artist.amazonEligible && isMonetized('amazon') && (
+                  <MarketplaceButton
+                    label="Amazon" marketplace="amazon"
+                    url={amazonUrl(artist.amazonSearchTerm || `${artist.name} vinyl`)}
+                    postSlug={post.slug} artistName={artist.name}
+                  />
+                )}
               </div>
             </div>
           ))}

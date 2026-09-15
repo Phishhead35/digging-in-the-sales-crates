@@ -55,10 +55,14 @@ export const PARTNERS = [
     status: 'live',
     network: 'Amazon Associates',
     monetized: 'yes',
-    // Amazon links currently live in social posts, not on the site.
-    // BLOCKER before adding any: digginginthesalescrates.com must be
-    // declared as a site in the Associates account first.
-    surfaces: [],
+    // digginginthesalescrates.com was declared and approved in the
+    // Associates account on 2026-09-15. Live on artist and blog pages, but
+    // ONLY on the individual artist entries that carry amazonEligible: true
+    // in src/data/artists.js and each blog post's shopArtists list. That
+    // flag, not this surfaces array, is what decides which specific search
+    // links render, because Amazon's catalog is thin on obscure and library
+    // pressings and a search link landing on nothing is worse than no link.
+    surfaces: ['artist', 'blog'],
     base: 'https://www.amazon.com',
     params: { tag: 'josephnicho03-20' },
     disclose: true,
@@ -216,10 +220,9 @@ export function monetizedOnSurface(surface) {
  * Only Amazon does today. Amazon's Operating Agreement requires its own
  * sentence, and the generic "we may earn a commission" line does not satisfy
  * it. Wiring this through config rather than hardcoding it into pages means
- * the day Amazon links go live on artist and blog pages, adding those
- * surfaces to Amazon's entry above turns the sentence on everywhere at once.
- * Nobody has to remember, and it can never appear on a page with no Amazon
- * link on it.
+ * adding or removing an Amazon surface turns the sentence on or off
+ * everywhere at once. Nobody has to remember, and it can never appear on a
+ * page with no Amazon link on it.
  */
 export function requiresOwnDisclosureOnSurface(surface) {
   return monetizedOnSurface(surface).some((p) => p.requiresOwnDisclosure);
