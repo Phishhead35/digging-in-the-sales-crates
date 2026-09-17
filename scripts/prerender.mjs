@@ -109,6 +109,12 @@ function renderPage(template, page) {
   if (page.ogType) {
     html = replaceMeta(html, 'property', 'og:type', page.ogType);
   }
+  // Internal/personal pages: override the template's "index, follow".
+  // Google can only read this tag on pages robots.txt does NOT block
+  // (/email-parser). On /wishlist and /alerts it is belt-and-braces.
+  if (page.noindex) {
+    html = replaceMeta(html, 'name', 'robots', 'noindex, follow');
+  }
 
   // canonical + JSON-LD go just before </head>.
   // CanonicalTag.jsx updates (not duplicates) an existing canonical link.
@@ -203,6 +209,7 @@ async function main() {
     },
     {
       path: '/wishlist',
+      noindex: true, // kept out of sitemap.xml, see sitemap block
       title: `Vinyl Wishlist | ${SITE}`,
       description:
         'Save vinyl records you want to find and jump straight to live listings on Discogs, eBay, CDandLP, and Turntable Lab.',
@@ -210,6 +217,7 @@ async function main() {
     },
     {
       path: '/alerts',
+      noindex: true, // kept out of sitemap.xml, see sitemap block
       title: `Price Alerts | ${SITE}`,
       description:
         'Set vinyl price alerts and catch deals on the records you want across Discogs, eBay, CDandLP, and Turntable Lab.',
@@ -217,6 +225,7 @@ async function main() {
     },
     {
       path: '/email-parser',
+      noindex: true, // kept out of sitemap.xml, see sitemap block
       title: `AI Email Deal Parser | ${SITE}`,
       description:
         'Paste any record store promo email and let AI extract every deal, discount, and promo code automatically.',
@@ -382,6 +391,11 @@ async function main() {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     pages
       .filter((pg) => !pg.canonical) // skip /search (canonical → /aggregator)
+      // Skip internal/personal pages (noindex: true). /wishlist and /alerts
+      // are Disallowed in robots.txt; listing them here triggered the
+      // Sep 16, 2026 "Blocked by robots.txt" Search Console warning.
+      // /email-parser is an internal tool and should never be submitted.
+      .filter((pg) => !pg.noindex)
       .map(
         (pg) =>
           `  <url>\n    <loc>${BASE}${urlPath(pg.path)}</loc>\n` +
