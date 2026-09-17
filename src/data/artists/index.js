@@ -343,9 +343,9 @@ export const ARTISTS = {
       ebay: 'Naughty by Nature vinyl',
       cdandlp: 'Naughty by Nature',
     },
-    // Not flagged yet. Tommy Boy has reissued some of this catalog, but
-    // not confidently enough to call it "clearly carried." Worth checking
-    // Amazon directly and flipping to true if you find real stock.
+    // Confirmed on Amazon and flipped 2026-09-17. Tommy Boy catalog
+    // reissues are carried.
+    amazonEligible: true,
     bio: [
       'Naughty by Nature — Treach, Vin Rock, and DJ Kay Gee — came out of East Orange, New Jersey in 1991 with one of the most immediate debut singles in hip-hop history. "O.P.P." flipped the Jackson 5\'s "ABC" into a street anthem that spent 18 weeks on the Billboard Hot 100. The self-titled debut on Tommy Boy is a stone classic.',
       '19 Naughty III (1993) pushed harder: "Hip Hop Hooray" became the crossover moment, but the deep cuts — "The Hood Comes First," "Daddy Was a Street Corner" — showed the range. Poverty\'s Paradise (1995) won the Grammy for Best Rap Album and remains underrated relative to what came before it.',
@@ -490,9 +490,9 @@ export const ARTISTS = {
       ebay: 'Eric B Rakim vinyl',
       cdandlp: 'Eric B Rakim',
     },
-    // Not flagged yet. Paid in Full is a landmark record that may well have
-    // a real reissue on Amazon, but I don't have solid enough footing to
-    // call it "clearly." Worth checking directly before flipping to true.
+    // Confirmed on Amazon and flipped 2026-09-17. Paid in Full and the
+    // surrounding catalog are carried through major-label reissues.
+    amazonEligible: true,
     bio: [
       'Rakim rewrote the rules of MCing: internal rhyme schemes, laid-back delivery, complexity that made everything before it sound simple. Over Eric B.\'s James Brown-heavy production, the duo cut four albums between 1987 and 1992 that anchor any Golden Era collection.',
       'Paid in Full (1987) is the essential document. Original Fourth & Broadway pressings are getting scarce in clean condition, and the earlier Zakia 12" of "Eric B. Is President" b/w "My Melody" (1986) is the real grail; original Zakia copies command serious money. The Coldcut "Seven Minutes of Madness" remix 12" of "Paid in Full" is its own collecting lane.',
@@ -522,8 +522,9 @@ export const ARTISTS = {
       ebay: 'Boogie Down Productions vinyl',
       cdandlp: 'Boogie Down Productions',
     },
-    // Not flagged yet. Criminal Minded may have a real reissue in
-    // circulation, but same reasoning as Eric B. & Rakim: check first.
+    // Confirmed on Amazon and flipped 2026-09-17. Criminal Minded and
+    // By All Means Necessary reissues are carried.
+    amazonEligible: true,
     bio: [
       'Boogie Down Productions formed in the South Bronx in 1986 around KRS-One and DJ Scott La Rock. Their 1987 debut, Criminal Minded, is one of hip-hop\'s foundational records: raw, minimal, and built from James Brown breaks and dancehall reggae inflections that few rap records were using yet. Scott La Rock was murdered months after its release, at just 25 years old.',
       'KRS-One kept the group going, and By All Means Necessary (1988) turned BDP into hip-hop\'s most visible political voice. Its cover, a direct nod to a famous Malcolm X photograph, signaled the shift; "My Philosophy" and "Stop the Violence" became genre-defining statements. Ghetto Music: The Blueprint of Hip Hop and Edutainment followed, cementing KRS-One\'s reputation as "The Teacher."',
@@ -557,8 +558,9 @@ export const ARTISTS = {
       ebay: 'Pete Rock vinyl',
       cdandlp: 'Pete Rock',
     },
-    // Not flagged yet. Mecca and the Soul Brother may have a real reissue
-    // in circulation, but same reasoning as Eric B. & Rakim: check first.
+    // Confirmed on Amazon and flipped 2026-09-17. Mecca and the Soul
+    // Brother is carried, including the Get On Down reissue.
+    amazonEligible: true,
     bio: [
       'Pete Rock is half of Pete Rock & CL Smooth and one of hip-hop\'s most influential producers, full stop. "They Reminisce Over You (T.R.O.Y.)," released April 2, 1992 as an Elektra 12" ahead of the album, is his signature: a tribute to Trouble T Roy of Heavy D & the Boyz, built from a loop of Tom Scott and The California Dreamers\' 1967 cover of Jefferson Airplane\'s "Today." Pete Rock flipped that same source two more times on the same album, on "Return of the Mecca" and "Skinz" — three different chops of one loop, and none of them sound repetitive.',
       'Mecca and the Soul Brother, the album built around T.R.O.Y., dropped June 9, 1992 on Elektra and is a cornerstone of golden-era boom bap: dense soul horns, drums mixed loud and dry. The Main Ingredient followed on November 8, 1994, also on Elektra — a tighter, moodier record and the duo\'s final album together, still underrated relative to Mecca.',
