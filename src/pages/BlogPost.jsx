@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Disc3, Search, ExternalLink } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { BLOG_POSTS } from '../data/blog';
+import { ARTISTS } from '../data/artists';
 import { trackBlogMarketplaceClick } from '../utils/analytics';
 import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
 import { isMonetized, buildPartnerUrl } from '../config/partners';
@@ -22,6 +23,30 @@ function cdandlpUrl(term) {
 // shopArtists entry can set amazonSearchTerm to override it.
 function amazonUrl(term) {
   return buildPartnerUrl('amazon', `/s?k=${encodeURIComponent(term)}`);
+}
+
+// ── Amazon eligibility resolution ─────────────────────────────
+// Eligibility is a property of the ARTIST, not of an individual post, so it
+// is read from src/data/artists via pageSlug rather than being restated on
+// every shopArtists entry. Before this, a post had to repeat
+// amazonEligible: true itself, no post ever did, and the Amazon button was
+// dead site-wide on /blog while working fine on /artists.
+//
+// A shopArtists entry can still override, and `??` means an explicit
+// amazonEligible: false on the post wins over a true on the artist. That
+// matters for a post about, say, a bootleg-heavy pressing where the Amazon
+// listing would be the wrong place to send someone.
+//
+// Artists with no pageSlug, or a pageSlug with no matching ARTISTS entry,
+// resolve to not eligible rather than throwing.
+function resolveAmazon(artist) {
+  const fromArtist = artist.pageSlug ? ARTISTS[artist.pageSlug] : undefined;
+  const eligible = artist.amazonEligible ?? fromArtist?.amazonEligible ?? false;
+  const term =
+    artist.amazonSearchTerm ||
+    fromArtist?.amazonSearchTerm ||
+    `${artist.name} vinyl`;
+  return { eligible: eligible === true, term };
 }
 
 // ── GA4 tracker ───────────────────────────────────────────────
@@ -87,11 +112,14 @@ function ShopArtists({ post }) {
             belongs here rather than at the top of the article, where it would
             sit hundreds of words away from the links it describes. Carries
             Amazon's own required sentence automatically, via
-            requiresOwnDisclosureOnSurface('blog') in partners.js, whenever
-            at least one artist below has amazonEligible: true. */}
+            requiresOwnDisclosureOnSurface('blog') in partners.js. Note that
+            eligibility now resolves from the artist record (see
+            resolveAmazon), not from a flag repeated on the post. */}
         <AffiliateDisclosure variant="compact" surface="blog" />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          {post.shopArtists.map(artist => (
+          {post.shopArtists.map(artist => {
+            const amazon = resolveAmazon(artist);
+            return (
             <div key={artist.name} style={{
               padding: '18px 20px', borderRadius: 12,
               background: 'var(--bg-card)', border: '1px solid var(--border)',
@@ -130,19 +158,20 @@ function ShopArtists({ post }) {
                   url={cdandlpUrl(artist.searchTerms.cdandlp)}
                   postSlug={post.slug} artistName={artist.name}
                 />
-                {/* Same catalog-confidence gate as ArtistPage.jsx: only
-                    artists explicitly marked amazonEligible in
-                    src/data/blog get an Amazon button. */}
-                {artist.amazonEligible && isMonetized('amazon') && (
+                {/* Same catalog-confidence gate as ArtistPage.jsx, but the
+                    flag is now read from the artist record via pageSlug, so
+                    /blog and /artists cannot disagree. See resolveAmazon. */}
+                {amazon.eligible && isMonetized('amazon') && (
                   <MarketplaceButton
                     label="Amazon" marketplace="amazon"
-                    url={amazonUrl(artist.amazonSearchTerm || `${artist.name} vinyl`)}
+                    url={amazonUrl(amazon.term)}
                     postSlug={post.slug} artistName={artist.name}
                   />
                 )}
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -633,8 +633,9 @@ export const ARTISTS = {
       ebay: 'DJ Quik vinyl',
       cdandlp: 'DJ Quik',
     },
-    // Not eligible. Profile Records catalog, no strong evidence of an
-    // Amazon-scale reissue presence.
+    // Confirmed on Amazon and flipped 2026-09-17. Quik Is the Name has
+    // circulating reissues, overriding the earlier Profile-catalog doubt.
+    amazonEligible: true,
     bio: [
       'David Blake, known everywhere as DJ Quik, released Quik Is the Name on Profile in January 1991, almost two years before The Chronic. The whole G-funk vocabulary is already on it: the high synth lead, the rolling bassline, the live-feel drums, the party-first Compton perspective. He produced all of it himself at twenty years old.',
       'He never stopped producing. Across Way 2 Fonky, Safe + Sound and Rhythm-al-ism he built a catalog that other West Coast records were measured against, and he spent the next three decades behind the boards for everyone from 2Pac to Jay-Z to Kendrick Lamar. Musicians who work with him tend to describe him as a bandleader more than a beatmaker.',
