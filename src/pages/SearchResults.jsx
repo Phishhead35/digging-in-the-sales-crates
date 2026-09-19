@@ -1,7 +1,8 @@
 import artistDictionary from '../data/artistDictionary.json';
-import { fuzzyMatchArtist, fuzzyMatchArtistTypeahead } from '../utils/fuzzyMatch';
+import { fuzzyMatchArtist } from '../utils/fuzzyMatch';
 import SearchSuggestion from '../components/SearchSuggestion';
 import SearchTypeahead from '../components/SearchTypeahead';
+import useSearchTypeahead from '../hooks/useSearchTypeahead';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
@@ -399,13 +400,10 @@ export default function SearchResults() {
   const [searchSuggestion, setSearchSuggestion] = useState(null);
   const lastSearchedRef = useRef('');
 
-  // Live "as you type" suggestions, shown BEFORE the person hits search.
-  // Separate from searchSuggestion above, which only appears AFTER a
-  // zero-result search comes back.
-  const [typeaheadSuggestions, setTypeaheadSuggestions] = useState([]);
-  const [typeaheadOpen, setTypeaheadOpen] = useState(false);
-  const [typeaheadActiveIndex, setTypeaheadActiveIndex] = useState(-1);
-  const typeaheadDebounceRef = useRef(null);
+  // Live "as you type" suggestions, shared with the homepage search box
+  // via useSearchTypeahead. Separate from searchSuggestion above, which
+  // only appears AFTER a zero-result search comes back.
+  const typeahead = useSearchTypeahead(inputVal);
 
   const toTitleCase = (str) =>
     str.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -435,52 +433,15 @@ export default function SearchResults() {
     sessionStorage.setItem('searchScrollPos', window.scrollY.toString());
   };
 
-  // Debounced typeahead: wait 250ms after the person stops typing before
-  // recalculating matches, so it's not running fuzzy-match on every
-  // keystroke while they're still mid-word. Only kicks in at 3+ characters,
-  // since 1-2 character queries match almost everything and the dropdown
-  // would just be noise.
-  useEffect(() => {
-    if (typeaheadDebounceRef.current) clearTimeout(typeaheadDebounceRef.current);
-
-    if (inputVal.trim().length < 3) {
-      setTypeaheadSuggestions([]);
-      setTypeaheadOpen(false);
-      return;
-    }
-
-    typeaheadDebounceRef.current = setTimeout(() => {
-      const matches = fuzzyMatchArtistTypeahead(inputVal, artistDictionary.artists, 5, 55);
-      setTypeaheadSuggestions(matches);
-      setTypeaheadOpen(matches.length > 0);
-      setTypeaheadActiveIndex(-1);
-    }, 250);
-
-    return () => clearTimeout(typeaheadDebounceRef.current);
-  }, [inputVal]);
-
   const handleTypeaheadSelect = (canonicalForm) => {
     setInputVal(canonicalForm);
-    setTypeaheadOpen(false);
-    setTypeaheadSuggestions([]);
+    typeahead.close();
     navigate(`/search?q=${encodeURIComponent(canonicalForm)}`);
   };
 
   const handleSearchKeyDown = (e) => {
-    if (!typeaheadOpen || typeaheadSuggestions.length === 0) return;
-
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setTypeaheadActiveIndex(i => (i + 1) % typeaheadSuggestions.length);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setTypeaheadActiveIndex(i => (i <= 0 ? typeaheadSuggestions.length - 1 : i - 1));
-    } else if (e.key === 'Enter' && typeaheadActiveIndex >= 0) {
-      e.preventDefault();
-      handleTypeaheadSelect(typeaheadSuggestions[typeaheadActiveIndex].artist.canonicalForm);
-    } else if (e.key === 'Escape') {
-      setTypeaheadOpen(false);
-    }
+    const selected = typeahead.handleKeyDown(e);
+    if (selected) handleTypeaheadSelect(selected);
   };
 
   // FIX: doSearch no longer depends on source at all.
@@ -687,7 +648,7 @@ export default function SearchResults() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setTypeaheadOpen(false);
+    typeahead.close();
     if (inputVal.trim()) {
       navigate(`/search?q=${encodeURIComponent(inputVal.trim())}`);
     }
@@ -726,8 +687,8 @@ export default function SearchResults() {
             <input
               type="text" value={inputVal} onChange={e => setInputVal(e.target.value)}
               onKeyDown={handleSearchKeyDown}
-              onFocus={() => { if (typeaheadSuggestions.length > 0) setTypeaheadOpen(true); }}
-              onBlur={() => setTypeaheadOpen(false)}
+              onFocus={typeahead.openIfHasSuggestions}
+              onBlur={typeahead.close}
               placeholder="Search records..."
               className="search-input"
               autoComplete="off"
@@ -737,12 +698,12 @@ export default function SearchResults() {
                 borderRadius: '10px 0 0 10px', color: 'var(--text-primary)', fontSize: 15, outline: 'none',
               }}
             />
-            {typeaheadOpen && (
+            {typeahead.isOpen && (
               <SearchTypeahead
-                suggestions={typeaheadSuggestions}
-                activeIndex={typeaheadActiveIndex}
+                suggestions={typeahead.suggestions}
+                activeIndex={typeahead.activeIndex}
                 onSelect={handleTypeaheadSelect}
-                onHover={setTypeaheadActiveIndex}
+                onHover={typeahead.setActiveIndex}
               />
             )}
           </div>

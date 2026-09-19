@@ -3,7 +3,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Search, TrendingDown, Star, ArrowRight, Disc3, ExternalLink } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import useLatestVideos from '../hooks/useLatestVideos';
+import useSearchTypeahead from '../hooks/useSearchTypeahead';
 import VideoCard from '../components/VideoCard';
+import SearchTypeahead from '../components/SearchTypeahead';
 import { MA_STORES, RINH_STORES } from '../data/partnerStores';
 import {
   trackStoreClick as analyticsStoreClick,
@@ -196,6 +198,7 @@ export default function Home() {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
   const videos = useLatestVideos();
+  const typeahead = useSearchTypeahead(query);
 
   useSEO({
     title: 'Digging in the Sales Crates | Vinyl Record Price Comparison',
@@ -208,12 +211,27 @@ export default function Home() {
   // search-volume trending is not affected. Join them on search_term.
   const handleSearch = (e) => {
     e.preventDefault();
+    typeahead.close();
     if (query.trim()) {
       trackSearchOrigin(query.trim(), 'homepage_box');
       startTransition(() => {
         navigate(`/search?q=${encodeURIComponent(query.trim())}`);
       });
     }
+  };
+
+  const handleTypeaheadSelect = (canonicalForm) => {
+    setQuery(canonicalForm);
+    typeahead.close();
+    trackSearchOrigin(canonicalForm, 'homepage_box');
+    startTransition(() => {
+      navigate(`/search?q=${encodeURIComponent(canonicalForm)}`);
+    });
+  };
+
+  const handleSearchKeyDown = (e) => {
+    const selected = typeahead.handleKeyDown(e);
+    if (selected) handleTypeaheadSelect(selected);
   };
 
   const handleTrending = (term) => {
@@ -328,7 +346,11 @@ export default function Home() {
                   placeholder="Artist, album, or label..."
                   value={query}
                   onChange={e => setQuery(e.target.value)}
+                  onKeyDown={handleSearchKeyDown}
+                  onFocus={typeahead.openIfHasSuggestions}
+                  onBlur={typeahead.close}
                   autoFocus
+                  autoComplete="off"
                   className="search-input"
                   style={{
                     width: '100%', padding: '18px 18px 18px 48px',
@@ -338,6 +360,14 @@ export default function Home() {
                     outline: 'none', transition: 'border-color 0.2s',
                   }}
                 />
+                {typeahead.isOpen && (
+                  <SearchTypeahead
+                    suggestions={typeahead.suggestions}
+                    activeIndex={typeahead.activeIndex}
+                    onSelect={handleTypeaheadSelect}
+                    onHover={typeahead.setActiveIndex}
+                  />
+                )}
               </div>
               <button type="submit" className="dig-btn">DIG</button>
             </div>
