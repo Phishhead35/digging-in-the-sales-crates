@@ -1,16 +1,15 @@
 import React from 'react';
 
 const SearchSuggestion = ({
-  originalQuery,
-  suggestedArtist,
-  similarity,
+  suggestion,
   onSuggestionClick
 }) => {
-  if (!suggestedArtist) return null;
+  if (!suggestion || !suggestion.artist) return null;
 
+  const { artist, similarity } = suggestion;
   const handleClick = () => {
-    if (onSuggestionClick) {
-      onSuggestionClick(suggestedArtist.canonicalForm);
+    if (onSuggestionClick && artist.canonicalForm) {
+      onSuggestionClick(artist.canonicalForm);
     }
   };
 
@@ -67,7 +66,7 @@ const SearchSuggestion = ({
           e.target.style.backgroundColor = '#f59e0b';
         }}
       >
-        Search for "{suggestedArtist.canonicalForm}"
+        Search for "{artist.canonicalForm}"
       </button>
       <p
         style={{
