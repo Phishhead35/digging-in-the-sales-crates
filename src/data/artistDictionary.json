@@ -1,0 +1,1156 @@
+{
+  "artists": [
+    {
+      "name": "Nas",
+      "aliases": ["Nasir Jones", "N.A.S"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Nas"
+    },
+    {
+      "name": "The Notorious B.I.G.",
+      "aliases": ["Biggie", "Biggie Smalls", "Christopher Wallace"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "The Notorious B.I.G."
+    },
+    {
+      "name": "Wu-Tang Clan",
+      "aliases": ["Wu Tang Clan", "36 Chambers"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Wu-Tang Clan"
+    },
+    {
+      "name": "OutKast",
+      "aliases": ["Outkast", "Andre 3000", "Big Boi"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "OutKast"
+    },
+    {
+      "name": "Kendrick Lamar",
+      "aliases": ["K-Dot", "Kung Fu Kenny"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Kendrick Lamar"
+    },
+    {
+      "name": "Jay-Z",
+      "aliases": ["Hov", "Jay Z", "Shawn Corey Carter"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Jay-Z"
+    },
+    {
+      "name": "Dr. Dre",
+      "aliases": ["Dre", "Andre Young"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Dr. Dre"
+    },
+    {
+      "name": "Tupac Shakur",
+      "aliases": ["2Pac", "Pac", "Makaveli"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Tupac Shakur"
+    },
+    {
+      "name": "The Wu-Tang 36 Chambers",
+      "aliases": ["36 Chambers", "Wu-Tang 36 Chambers"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Wu-Tang Clan"
+    },
+    {
+      "name": "Rakim",
+      "aliases": ["Eric B. and Rakim", "William Michael Griffin Jr."],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Rakim"
+    },
+    {
+      "name": "Gang Starr",
+      "aliases": ["Guru", "DJ Premier"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Gang Starr"
+    },
+    {
+      "name": "A Tribe Called Quest",
+      "aliases": ["ATCQ", "Tribe Called Quest"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "A Tribe Called Quest"
+    },
+    {
+      "name": "De La Soul",
+      "aliases": ["De La"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "De La Soul"
+    },
+    {
+      "name": "MF DOOM",
+      "aliases": ["MF Doom", "MFDoom", "Doom", "Viktor Vaughn"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "MF DOOM"
+    },
+    {
+      "name": "J Dilla",
+      "aliases": ["Jay Dee", "Donuts", "James Yancey"],
+      "genres": ["hip-hop", "midwest"],
+      "canonicalForm": "J Dilla"
+    },
+    {
+      "name": "Madlib",
+      "aliases": ["Otis Jackson Jr.", "MadGibbs"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Madlib"
+    },
+    {
+      "name": "Nujabes",
+      "aliases": ["Jun Seba", "Samurai Champloo"],
+      "genres": ["hip-hop", "jazz-hop"],
+      "canonicalForm": "Nujabes"
+    },
+    {
+      "name": "MOS DEF",
+      "aliases": ["Mos Def", "Yasin Bey", "Dante Smith"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Mos Def"
+    },
+    {
+      "name": "Talib Kweli",
+      "aliases": ["Talib"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Talib Kweli"
+    },
+    {
+      "name": "Black Sheep",
+      "aliases": ["Dres", "Mr. Lawnge"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Black Sheep"
+    },
+    {
+      "name": "Slick Rick",
+      "aliases": ["MC Ricky D"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Slick Rick"
+    },
+    {
+      "name": "KRS-One",
+      "aliases": ["KRS1", "Kris Parker", "The Teacher"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "KRS-One"
+    },
+    {
+      "name": "Grandmaster Flash",
+      "aliases": ["Flash", "Joseph Saddler"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Grandmaster Flash"
+    },
+    {
+      "name": "Run-DMC",
+      "aliases": ["Run DMC", "Aerosmith"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Run-DMC"
+    },
+    {
+      "name": "LL Cool J",
+      "aliases": ["LL Cool J", "James Todd Smith"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "LL Cool J"
+    },
+    {
+      "name": "Public Enemy",
+      "aliases": ["Chuck D", "Flavor Flav"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Public Enemy"
+    },
+    {
+      "name": "Marvin Gaye",
+      "aliases": ["Marvin Pentz Gay Jr."],
+      "genres": ["soul", "r-and-b"],
+      "canonicalForm": "Marvin Gaye"
+    },
+    {
+      "name": "Stevie Wonder",
+      "aliases": ["Stevland Hardaway Judkins"],
+      "genres": ["soul", "funk"],
+      "canonicalForm": "Stevie Wonder"
+    },
+    {
+      "name": "Aretha Franklin",
+      "aliases": ["Queen of Soul"],
+      "genres": ["soul", "r-and-b"],
+      "canonicalForm": "Aretha Franklin"
+    },
+    {
+      "name": "Otis Redding",
+      "aliases": ["Otis"],
+      "genres": ["soul", "r-and-b"],
+      "canonicalForm": "Otis Redding"
+    },
+    {
+      "name": "Sam Cooke",
+      "aliases": ["The King of Soul"],
+      "genres": ["soul", "r-and-b"],
+      "canonicalForm": "Sam Cooke"
+    },
+    {
+      "name": "James Brown",
+      "aliases": ["JB", "The Godfather of Soul"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "James Brown"
+    },
+    {
+      "name": "Funkadelic",
+      "aliases": ["George Clinton"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Funkadelic"
+    },
+    {
+      "name": "Parliament",
+      "aliases": ["Parliament-Funkadelic", "George Clinton"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Parliament"
+    },
+    {
+      "name": "Earth, Wind & Fire",
+      "aliases": ["EWF", "Maurice White"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Earth, Wind & Fire"
+    },
+    {
+      "name": "Curtis Mayfield",
+      "aliases": ["Curtis", "The Impressions"],
+      "genres": ["soul", "funk"],
+      "canonicalForm": "Curtis Mayfield"
+    },
+    {
+      "name": "Isaac Hayes",
+      "aliases": ["Ike Hayes"],
+      "genres": ["soul", "funk"],
+      "canonicalForm": "Isaac Hayes"
+    },
+    {
+      "name": "Al Green",
+      "aliases": ["Reverend Al Green"],
+      "genres": ["soul", "r-and-b"],
+      "canonicalForm": "Al Green"
+    },
+    {
+      "name": "Donny Hathaway",
+      "aliases": ["Donny"],
+      "genres": ["soul", "r-and-b"],
+      "canonicalForm": "Donny Hathaway"
+    },
+    {
+      "name": "Roberta Flack",
+      "aliases": ["Roberta"],
+      "genres": ["soul", "r-and-b"],
+      "canonicalForm": "Roberta Flack"
+    },
+    {
+      "name": "Sly and the Family Stone",
+      "aliases": ["Sly Stone", "Sly"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Sly and the Family Stone"
+    },
+    {
+      "name": "Herbie Hancock",
+      "aliases": ["Herbie"],
+      "genres": ["jazz", "funk"],
+      "canonicalForm": "Herbie Hancock"
+    },
+    {
+      "name": "Miles Davis",
+      "aliases": ["Miles", "Prince of Darkness"],
+      "genres": ["jazz", "modal"],
+      "canonicalForm": "Miles Davis"
+    },
+    {
+      "name": "John Coltrane",
+      "aliases": ["Coltrane", "Trane"],
+      "genres": ["jazz", "modal"],
+      "canonicalForm": "John Coltrane"
+    },
+    {
+      "name": "Thelonious Monk",
+      "aliases": ["Monk", "Round Midnight"],
+      "genres": ["jazz", "bebop"],
+      "canonicalForm": "Thelonious Monk"
+    },
+    {
+      "name": "Bill Evans",
+      "aliases": ["Evans"],
+      "genres": ["jazz", "modal"],
+      "canonicalForm": "Bill Evans"
+    },
+    {
+      "name": "Keith Jarrett",
+      "aliases": ["Jarrett"],
+      "genres": ["jazz", "modal"],
+      "canonicalForm": "Keith Jarrett"
+    },
+    {
+      "name": "Chick Corea",
+      "aliases": ["Chick"],
+      "genres": ["jazz", "fusion"],
+      "canonicalForm": "Chick Corea"
+    },
+    {
+      "name": "Wayne Shorter",
+      "aliases": ["Wayne"],
+      "genres": ["jazz", "modal"],
+      "canonicalForm": "Wayne Shorter"
+    },
+    {
+      "name": "Charlie Parker",
+      "aliases": ["Bird", "Yardbird"],
+      "genres": ["jazz", "bebop"],
+      "canonicalForm": "Charlie Parker"
+    },
+    {
+      "name": "Dizzy Gillespie",
+      "aliases": ["Dizzy"],
+      "genres": ["jazz", "bebop"],
+      "canonicalForm": "Dizzy Gillespie"
+    },
+    {
+      "name": "Sonny Rollins",
+      "aliases": ["Sonny"],
+      "genres": ["jazz", "modal"],
+      "canonicalForm": "Sonny Rollins"
+    },
+    {
+      "name": "Chet Baker",
+      "aliases": ["Chet"],
+      "genres": ["jazz", "cool"],
+      "canonicalForm": "Chet Baker"
+    },
+    {
+      "name": "Stan Getz",
+      "aliases": ["Stan"],
+      "genres": ["jazz", "bossa-nova"],
+      "canonicalForm": "Stan Getz"
+    },
+    {
+      "name": "Bud Powell",
+      "aliases": ["Bud"],
+      "genres": ["jazz", "bebop"],
+      "canonicalForm": "Bud Powell"
+    },
+    {
+      "name": "Art Blakey",
+      "aliases": ["Art", "The Jazz Messengers"],
+      "genres": ["jazz", "hard-bop"],
+      "canonicalForm": "Art Blakey"
+    },
+    {
+      "name": "Horace Silver",
+      "aliases": ["Horace"],
+      "genres": ["jazz", "hard-bop"],
+      "canonicalForm": "Horace Silver"
+    },
+    {
+      "name": "Roy Ayers",
+      "aliases": ["Ayers"],
+      "genres": ["jazz", "funk"],
+      "canonicalForm": "Roy Ayers"
+    },
+    {
+      "name": "Mtume",
+      "aliases": ["James Forman"],
+      "genres": ["jazz", "funk"],
+      "canonicalForm": "Mtume"
+    },
+    {
+      "name": "The Beatles",
+      "aliases": ["Beatles"],
+      "genres": ["rock", "pop"],
+      "canonicalForm": "The Beatles"
+    },
+    {
+      "name": "Led Zeppelin",
+      "aliases": ["Zeppelin"],
+      "genres": ["rock", "blues-rock"],
+      "canonicalForm": "Led Zeppelin"
+    },
+    {
+      "name": "The Rolling Stones",
+      "aliases": ["Rolling Stones", "Stones"],
+      "genres": ["rock", "blues-rock"],
+      "canonicalForm": "The Rolling Stones"
+    },
+    {
+      "name": "Pink Floyd",
+      "aliases": ["Pink Floyd"],
+      "genres": ["rock", "progressive"],
+      "canonicalForm": "Pink Floyd"
+    },
+    {
+      "name": "David Bowie",
+      "aliases": ["Bowie", "Ziggy Stardust"],
+      "genres": ["rock", "glam"],
+      "canonicalForm": "David Bowie"
+    },
+    {
+      "name": "The Who",
+      "aliases": ["Who"],
+      "genres": ["rock", "rock-opera"],
+      "canonicalForm": "The Who"
+    },
+    {
+      "name": "Queen",
+      "aliases": ["Freddie Mercury"],
+      "genres": ["rock", "pop"],
+      "canonicalForm": "Queen"
+    },
+    {
+      "name": "Jimi Hendrix",
+      "aliases": ["Hendrix", "The Jimi Hendrix Experience"],
+      "genres": ["rock", "blues-rock"],
+      "canonicalForm": "Jimi Hendrix"
+    },
+    {
+      "name": "Bob Dylan",
+      "aliases": ["Dylan"],
+      "genres": ["rock", "folk"],
+      "canonicalForm": "Bob Dylan"
+    },
+    {
+      "name": "Eric Clapton",
+      "aliases": ["Clapton", "Cream"],
+      "genres": ["rock", "blues-rock"],
+      "canonicalForm": "Eric Clapton"
+    },
+    {
+      "name": "The Grateful Dead",
+      "aliases": ["Grateful Dead", "Dead"],
+      "genres": ["rock", "jam"],
+      "canonicalForm": "The Grateful Dead"
+    },
+    {
+      "name": "Fleetwood Mac",
+      "aliases": ["Fleetwood"],
+      "genres": ["rock", "pop"],
+      "canonicalForm": "Fleetwood Mac"
+    },
+    {
+      "name": "Tom Waits",
+      "aliases": ["Waits"],
+      "genres": ["rock", "alternative"],
+      "canonicalForm": "Tom Waits"
+    },
+    {
+      "name": "Neil Young",
+      "aliases": ["Young"],
+      "genres": ["rock", "folk"],
+      "canonicalForm": "Neil Young"
+    },
+    {
+      "name": "Joni Mitchell",
+      "aliases": ["Mitchell"],
+      "genres": ["rock", "folk"],
+      "canonicalForm": "Joni Mitchell"
+    },
+    {
+      "name": "Prince",
+      "aliases": ["Prince Rogers Nelson"],
+      "genres": ["funk", "rock"],
+      "canonicalForm": "Prince"
+    },
+    {
+      "name": "Michael Jackson",
+      "aliases": ["MJ", "King of Pop"],
+      "genres": ["pop", "funk"],
+      "canonicalForm": "Michael Jackson"
+    },
+    {
+      "name": "Madonna",
+      "aliases": ["Madonna Veronica Ciccone"],
+      "genres": ["pop", "electronic"],
+      "canonicalForm": "Madonna"
+    },
+    {
+      "name": "Chaka Khan",
+      "aliases": ["Chaka"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Chaka Khan"
+    },
+    {
+      "name": "Nile Rodgers",
+      "aliases": ["Nile", "Chic"],
+      "genres": ["funk", "disco"],
+      "canonicalForm": "Nile Rodgers"
+    },
+    {
+      "name": "Donna Summer",
+      "aliases": ["Summer", "Queen of Disco"],
+      "genres": ["disco", "pop"],
+      "canonicalForm": "Donna Summer"
+    },
+    {
+      "name": "Bootsy Collins",
+      "aliases": ["Bootsy"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Bootsy Collins"
+    },
+    {
+      "name": "Bernie Worrell",
+      "aliases": ["Bernie"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Bernie Worrell"
+    },
+    {
+      "name": "Carl Craig",
+      "aliases": ["Carl"],
+      "genres": ["electronic", "techno"],
+      "canonicalForm": "Carl Craig"
+    },
+    {
+      "name": "Juan Atkins",
+      "aliases": ["Juan"],
+      "genres": ["electronic", "techno"],
+      "canonicalForm": "Juan Atkins"
+    },
+    {
+      "name": "Derrick May",
+      "aliases": ["Derrick"],
+      "genres": ["electronic", "techno"],
+      "canonicalForm": "Derrick May"
+    },
+    {
+      "name": "Fatboy Slim",
+      "aliases": ["Fatboy"],
+      "genres": ["electronic", "big-beat"],
+      "canonicalForm": "Fatboy Slim"
+    },
+    {
+      "name": "The Prodigy",
+      "aliases": ["Prodigy"],
+      "genres": ["electronic", "big-beat"],
+      "canonicalForm": "The Prodigy"
+    },
+    {
+      "name": "Daft Punk",
+      "aliases": ["Daft"],
+      "genres": ["electronic", "house"],
+      "canonicalForm": "Daft Punk"
+    },
+    {
+      "name": "Burial",
+      "aliases": ["Burial Will"],
+      "genres": ["electronic", "dubstep"],
+      "canonicalForm": "Burial"
+    },
+    {
+      "name": "Aphex Twin",
+      "aliases": ["Richard D. James"],
+      "genres": ["electronic", "ambient"],
+      "canonicalForm": "Aphex Twin"
+    },
+    {
+      "name": "Brian Eno",
+      "aliases": ["Eno"],
+      "genres": ["electronic", "ambient"],
+      "canonicalForm": "Brian Eno"
+    },
+    {
+      "name": "Kraftwerk",
+      "aliases": ["Kraftwerk"],
+      "genres": ["electronic", "synth-pop"],
+      "canonicalForm": "Kraftwerk"
+    },
+    {
+      "name": "Boards of Canada",
+      "aliases": ["BoC"],
+      "genres": ["electronic", "ambient"],
+      "canonicalForm": "Boards of Canada"
+    },
+    {
+      "name": "Massive Attack",
+      "aliases": ["Attack"],
+      "genres": ["electronic", "trip-hop"],
+      "canonicalForm": "Massive Attack"
+    },
+    {
+      "name": "Portishead",
+      "aliases": ["Portishead"],
+      "genres": ["electronic", "trip-hop"],
+      "canonicalForm": "Portishead"
+    },
+    {
+      "name": "DJ Shadow",
+      "aliases": ["Shadow"],
+      "genres": ["hip-hop", "instrumental"],
+      "canonicalForm": "DJ Shadow"
+    },
+    {
+      "name": "Guru",
+      "aliases": ["Guru Gang Starr"],
+      "genres": ["hip-hop", "jazz-hop"],
+      "canonicalForm": "Guru"
+    },
+    {
+      "name": "Fatback Band",
+      "aliases": ["Fatback"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Fatback Band"
+    },
+    {
+      "name": "Kool and the Gang",
+      "aliases": ["Kool"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Kool and the Gang"
+    },
+    {
+      "name": "Mandrill",
+      "aliases": ["Mandrill"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Mandrill"
+    },
+    {
+      "name": "War",
+      "aliases": ["War"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "War"
+    },
+    {
+      "name": "Rare Earth",
+      "aliases": ["Rare"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Rare Earth"
+    },
+    {
+      "name": "Ohio Players",
+      "aliases": ["Ohio"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Ohio Players"
+    },
+    {
+      "name": "Zapp and Roger",
+      "aliases": ["Zapp"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Zapp and Roger"
+    },
+    {
+      "name": "The Gap Band",
+      "aliases": ["Gap"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "The Gap Band"
+    },
+    {
+      "name": "Cameo",
+      "aliases": ["Cameo"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Cameo"
+    },
+    {
+      "name": "Roger Troutman",
+      "aliases": ["Roger"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Roger Troutman"
+    },
+    {
+      "name": "Zapp Troutman",
+      "aliases": ["Zapp", "Roger Troutman"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Zapp and Roger"
+    },
+    {
+      "name": "Midnight Star",
+      "aliases": ["Midnight"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Midnight Star"
+    },
+    {
+      "name": "Lakeside",
+      "aliases": ["Lakeside"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Lakeside"
+    },
+    {
+      "name": "Shalamar",
+      "aliases": ["Shalamar"],
+      "genres": ["funk", "soul"],
+      "canonicalForm": "Shalamar"
+    },
+    {
+      "name": "The Spinners",
+      "aliases": ["Spinners"],
+      "genres": ["soul", "r-and-b"],
+      "canonicalForm": "The Spinners"
+    },
+    {
+      "name": "The Temptations",
+      "aliases": ["Temptations"],
+      "genres": ["soul", "r-and-b"],
+      "canonicalForm": "The Temptations"
+    },
+    {
+      "name": "The Supremes",
+      "aliases": ["Supremes", "Diana Ross"],
+      "genres": ["soul", "pop"],
+      "canonicalForm": "The Supremes"
+    },
+    {
+      "name": "Boyz II Men",
+      "aliases": ["Boyz II Men"],
+      "genres": ["r-and-b", "soul"],
+      "canonicalForm": "Boyz II Men"
+    },
+    {
+      "name": "New Edition",
+      "aliases": ["New Ed"],
+      "genres": ["r-and-b", "soul"],
+      "canonicalForm": "New Edition"
+    },
+    {
+      "name": "Jodeci",
+      "aliases": ["Jodeci"],
+      "genres": ["r-and-b", "soul"],
+      "canonicalForm": "Jodeci"
+    },
+    {
+      "name": "Ginuwine",
+      "aliases": ["Ginuwine"],
+      "genres": ["r-and-b", "soul"],
+      "canonicalForm": "Ginuwine"
+    },
+    {
+      "name": "Usher",
+      "aliases": ["Usher Raymond"],
+      "genres": ["r-and-b", "pop"],
+      "canonicalForm": "Usher"
+    },
+    {
+      "name": "Aaliyah",
+      "aliases": ["Aaliyah Haughton"],
+      "genres": ["r-and-b", "pop"],
+      "canonicalForm": "Aaliyah"
+    },
+    {
+      "name": "Erykah Badu",
+      "aliases": ["Erykah", "Erica Abi Wright"],
+      "genres": ["neo-soul", "r-and-b"],
+      "canonicalForm": "Erykah Badu"
+    },
+    {
+      "name": "Lauryn Hill",
+      "aliases": ["Lauryn"],
+      "genres": ["hip-hop", "neo-soul"],
+      "canonicalForm": "Lauryn Hill"
+    },
+    {
+      "name": "D'Angelo",
+      "aliases": ["D'Angelo Archer"],
+      "genres": ["neo-soul", "r-and-b"],
+      "canonicalForm": "D'Angelo"
+    },
+    {
+      "name": "Musiq Soulchild",
+      "aliases": ["Musiq"],
+      "genres": ["neo-soul", "r-and-b"],
+      "canonicalForm": "Musiq Soulchild"
+    },
+    {
+      "name": "Common",
+      "aliases": ["Common Sense", "Lonnie Rashid Lynn"],
+      "genres": ["hip-hop", "neo-soul"],
+      "canonicalForm": "Common"
+    },
+    {
+      "name": "Robert Glasper",
+      "aliases": ["Glasper"],
+      "genres": ["jazz", "neo-soul"],
+      "canonicalForm": "Robert Glasper"
+    },
+    {
+      "name": "Bilal",
+      "aliases": ["Bilal Oliver"],
+      "genres": ["neo-soul", "r-and-b"],
+      "canonicalForm": "Bilal"
+    },
+    {
+      "name": "Jill Scott",
+      "aliases": ["Jill"],
+      "genres": ["neo-soul", "r-and-b"],
+      "canonicalForm": "Jill Scott"
+    },
+    {
+      "name": "Angie Stone",
+      "aliases": ["Angie"],
+      "genres": ["neo-soul", "r-and-b"],
+      "canonicalForm": "Angie Stone"
+    },
+    {
+      "name": "Floetry",
+      "aliases": ["Floetry"],
+      "genres": ["neo-soul", "r-and-b"],
+      "canonicalForm": "Floetry"
+    },
+    {
+      "name": "Drake",
+      "aliases": ["Aubrey Graham"],
+      "genres": ["hip-hop", "r-and-b"],
+      "canonicalForm": "Drake"
+    },
+    {
+      "name": "J. Cole",
+      "aliases": ["Cole", "Jermaine Cole"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "J. Cole"
+    },
+    {
+      "name": "Kanye West",
+      "aliases": ["Ye", "Kanye"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Kanye West"
+    },
+    {
+      "name": "Travis Scott",
+      "aliases": ["Travis", "Jacques Berman Webster"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Travis Scott"
+    },
+    {
+      "name": "The Weeknd",
+      "aliases": ["Weeknd", "Abel Tesfaye"],
+      "genres": ["r-and-b", "pop"],
+      "canonicalForm": "The Weeknd"
+    },
+    {
+      "name": "Frank Ocean",
+      "aliases": ["Frank"],
+      "genres": ["hip-hop", "neo-soul"],
+      "canonicalForm": "Frank Ocean"
+    },
+    {
+      "name": "Childish Gambino",
+      "aliases": ["Gambino", "Donald Glover"],
+      "genres": ["hip-hop", "pop"],
+      "canonicalForm": "Childish Gambino"
+    },
+    {
+      "name": "Tyler, the Creator",
+      "aliases": ["Tyler"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Tyler, the Creator"
+    },
+    {
+      "name": "Earl Sweatshirt",
+      "aliases": ["Earl"],
+      "genres": ["hip-hop", "experimental"],
+      "canonicalForm": "Earl Sweatshirt"
+    },
+    {
+      "name": "Mac Miller",
+      "aliases": ["Mac"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Mac Miller"
+    },
+    {
+      "name": "Chance the Rapper",
+      "aliases": ["Chance"],
+      "genres": ["hip-hop", "midwest"],
+      "canonicalForm": "Chance the Rapper"
+    },
+    {
+      "name": "Vince Staples",
+      "aliases": ["Vince"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Vince Staples"
+    },
+    {
+      "name": "Schoolboy Q",
+      "aliases": ["Q", "Quincy Matthew Hanley"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Schoolboy Q"
+    },
+    {
+      "name": "Pusha T",
+      "aliases": ["Pusha", "Terrence Thornton"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Pusha T"
+    },
+    {
+      "name": "Lil Wayne",
+      "aliases": ["Wayne", "Dwayne Michael Carter Jr."],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "Lil Wayne"
+    },
+    {
+      "name": "Young Thug",
+      "aliases": ["Thug", "Jeffery Lamar Williams"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "Young Thug"
+    },
+    {
+      "name": "Future",
+      "aliases": ["Nayvadius Wilburn"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "Future"
+    },
+    {
+      "name": "Gucci Mane",
+      "aliases": ["Gucci", "Radric Davis"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "Gucci Mane"
+    },
+    {
+      "name": "Rick Ross",
+      "aliases": ["Ross", "William Leonard Roberts II"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "Rick Ross"
+    },
+    {
+      "name": "T.I.",
+      "aliases": ["T.I.", "Tip Harris"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "T.I."
+    },
+    {
+      "name": "UGK",
+      "aliases": ["Underground Kingz"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "UGK"
+    },
+    {
+      "name": "DJ Screw",
+      "aliases": ["Screw", "Robert Earl Davis Jr."],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "DJ Screw"
+    },
+    {
+      "name": "Slim Thug",
+      "aliases": ["Slim"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "Slim Thug"
+    },
+    {
+      "name": "Paul Wall",
+      "aliases": ["Wall"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "Paul Wall"
+    },
+    {
+      "name": "Slim Dunkin",
+      "aliases": ["Dunkin"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "Slim Dunkin"
+    },
+    {
+      "name": "The Clipse",
+      "aliases": ["Clipse", "Pusha T", "Malice"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "The Clipse"
+    },
+    {
+      "name": "Dipset",
+      "aliases": ["Diplomats", "Cam'ron"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Dipset"
+    },
+    {
+      "name": "The Game",
+      "aliases": ["Game", "Jayceon Taylor"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "The Game"
+    },
+    {
+      "name": "50 Cent",
+      "aliases": ["Fifty", "Curtis Jackson"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "50 Cent"
+    },
+    {
+      "name": "Eminem",
+      "aliases": ["Slim Shady", "Marshall Mathers"],
+      "genres": ["hip-hop", "midwest"],
+      "canonicalForm": "Eminem"
+    },
+    {
+      "name": "D12",
+      "aliases": ["Dirty Dozen"],
+      "genres": ["hip-hop", "midwest"],
+      "canonicalForm": "D12"
+    },
+    {
+      "name": "Royce da 5'9",
+      "aliases": ["Royce"],
+      "genres": ["hip-hop", "midwest"],
+      "canonicalForm": "Royce da 5'9"
+    },
+    {
+      "name": "Black Eyed Peas",
+      "aliases": ["BEP"],
+      "genres": ["hip-hop", "pop"],
+      "canonicalForm": "Black Eyed Peas"
+    },
+    {
+      "name": "Missy Elliott",
+      "aliases": ["Missy", "Melissa Arnette Elliott"],
+      "genres": ["hip-hop", "r-and-b"],
+      "canonicalForm": "Missy Elliott"
+    },
+    {
+      "name": "Timbaland",
+      "aliases": ["Timbaland", "Tim Mosley"],
+      "genres": ["hip-hop", "r-and-b"],
+      "canonicalForm": "Timbaland"
+    },
+    {
+      "name": "Ludacris",
+      "aliases": ["Luda", "Christopher Brian Bridges"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "Ludacris"
+    },
+    {
+      "name": "Nelly",
+      "aliases": ["Nelly", "Cornell Iral Haynes Jr."],
+      "genres": ["hip-hop", "midwest"],
+      "canonicalForm": "Nelly"
+    },
+    {
+      "name": "OutKast",
+      "aliases": ["Outkast", "Andre 3000", "Big Boi"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "OutKast"
+    },
+    {
+      "name": "Three 6 Mafia",
+      "aliases": ["Three Six"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "Three 6 Mafia"
+    },
+    {
+      "name": "8Ball & MJG",
+      "aliases": ["8Ball", "MJG"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "8Ball & MJG"
+    },
+    {
+      "name": "Project Pat",
+      "aliases": ["Pat"],
+      "genres": ["hip-hop", "southern"],
+      "canonicalForm": "Project Pat"
+    },
+    {
+      "name": "Bone Thugs-N-Harmony",
+      "aliases": ["Bone", "Bone Thugs"],
+      "genres": ["hip-hop", "midwest"],
+      "canonicalForm": "Bone Thugs-N-Harmony"
+    },
+    {
+      "name": "Spice 1",
+      "aliases": ["Spice"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Spice 1"
+    },
+    {
+      "name": "Too Short",
+      "aliases": ["Short"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Too Short"
+    },
+    {
+      "name": "E-40",
+      "aliases": ["E40", "Earl Stevens"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "E-40"
+    },
+    {
+      "name": "Mac Dre",
+      "aliases": ["Dre", "Andre Hicks"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Mac Dre"
+    },
+    {
+      "name": "Souls of Mischief",
+      "aliases": ["Souls"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Souls of Mischief"
+    },
+    {
+      "name": "Hieroglyphics",
+      "aliases": ["Hiero"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Hieroglyphics"
+    },
+    {
+      "name": "Del the Funky Homosapien",
+      "aliases": ["Del"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Del the Funky Homosapien"
+    },
+    {
+      "name": "Living Legends",
+      "aliases": ["Legends"],
+      "genres": ["hip-hop", "west-coast"],
+      "canonicalForm": "Living Legends"
+    },
+    {
+      "name": "RZA",
+      "aliases": ["Prince Paul", "Robert Diggs"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "RZA"
+    },
+    {
+      "name": "GZA",
+      "aliases": ["The Genius", "Gary Grice"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "GZA"
+    },
+    {
+      "name": "ODB",
+      "aliases": ["Old Dirty Bastard", "Russel Jones"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "ODB"
+    },
+    {
+      "name": "Ghostface Killah",
+      "aliases": ["Ghost", "Tony Starks"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Ghostface Killah"
+    },
+    {
+      "name": "Raekwon",
+      "aliases": ["Chef", "Corey Woods"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Raekwon"
+    },
+    {
+      "name": "Method Man",
+      "aliases": ["Meth", "Clifford Smith"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Method Man"
+    },
+    {
+      "name": "Inspectah Deck",
+      "aliases": ["Deck", "Jason Hunter"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Inspectah Deck"
+    },
+    {
+      "name": "Cappadonna",
+      "aliases": ["Cappa", "Darryl Hill"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Cappadonna"
+    },
+    {
+      "name": "U-God",
+      "aliases": ["Shaoliin", "Lamont Hawkins"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "U-God"
+    },
+    {
+      "name": "Masta Killa",
+      "aliases": ["Masta", "Elgin Turner"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Masta Killa"
+    },
+    {
+      "name": "Black Sheep",
+      "aliases": ["Dres", "Mr. Lawnge"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "Black Sheep"
+    },
+    {
+      "name": "Tribe Called Quest",
+      "aliases": ["ATCQ", "Quest"],
+      "genres": ["hip-hop", "east-coast"],
+      "canonicalForm": "A Tribe Called Quest"
+    }
+  ]
+}

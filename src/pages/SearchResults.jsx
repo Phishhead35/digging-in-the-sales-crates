@@ -1,3 +1,6 @@
+import artistDictionary from '../data/artistDictionary.json';
+import { fuzzyMatchArtist } from '../utils/fuzzyMatch';
+import SearchSuggestion from '../components/SearchSuggestion';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
@@ -392,6 +395,7 @@ export default function SearchResults() {
   // activeSource drives the UI immediately (button highlight, no delay).
   // deferredSource drives the actual fetch — React defers it until after paint.
   const [activeSource, setActiveSource] = useState('all');
+  const [searchSuggestion, setSearchSuggestion] = useState(null);
   const lastSearchedRef = useRef('');
 
   const toTitleCase = (str) =>
@@ -528,6 +532,14 @@ export default function SearchResults() {
 
       setAllResults(ranked);
       setResults(ranked);
+
+      // Fuzzy match when all sources return zero results
+      if (combined.length === 0) {
+        const suggestion = fuzzyMatchArtist(q, artistDictionary.artists, 70);
+        setSearchSuggestion(suggestion);
+      } else {
+        setSearchSuggestion(null);
+      }
 
       // Fire view_search_results HERE rather than in the query effect, so
       // it can carry the real result counts and latency. 'search' still
@@ -739,11 +751,24 @@ export default function SearchResults() {
       )}
 
       {!loading && !error && results.length === 0 && query && (
-        <div style={{ textAlign: 'center', padding: '80px 24px', color: 'var(--text-muted)' }}>
-          <div style={{ fontSize: 48, marginBottom: 16 }}>🕳️</div>
-          <div style={{ fontSize: 18, marginBottom: 8, color: 'var(--text-secondary)' }}>No results found</div>
-          <div style={{ fontSize: 14 }}>Try a different search term or check your API configuration.</div>
-        </div>
+        <>
+          {searchSuggestion && (
+            <SearchSuggestion
+              suggestion={searchSuggestion}
+              onSuggestionClick={(suggestedName) => {
+                setInputVal(suggestedName);
+                doSearch(suggestedName, 1, 'all');
+                // Optional: Track suggestion click in GA4
+                // trackSearchSuggestionClick(query, suggestedName, searchSuggestion.similarity);
+              }}
+            />
+          )}
+          <div style={{ textAlign: 'center', padding: '80px 24px', color: 'var(--text-muted)' }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>🕳️</div>
+            <div style={{ fontSize: 18, marginBottom: 8, color: 'var(--text-secondary)' }}>No results found</div>
+            <div style={{ fontSize: 14 }}>Try a different search term or check your API configuration.</div>
+          </div>
+        </>
       )}
 
       {!loading && totalPages > 1 && (
