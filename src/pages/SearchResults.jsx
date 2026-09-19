@@ -1,6 +1,7 @@
 import artistDictionary from '../data/artistDictionary.json';
-import { fuzzyMatchArtist } from '../utils/fuzzyMatch';
+import { fuzzyMatchArtist, fuzzyMatchArtistTop } from '../utils/fuzzyMatch';
 import SearchSuggestion from '../components/SearchSuggestion';
+import SearchTypeahead from '../components/SearchTypeahead';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
@@ -398,6 +399,14 @@ export default function SearchResults() {
   const [searchSuggestion, setSearchSuggestion] = useState(null);
   const lastSearchedRef = useRef('');
 
+  // Live "as you type" suggestions, shown BEFORE the person hits search.
+  // Separate from searchSuggestion above, which only appears AFTER a
+  // zero-result search comes back.
+  const [typeaheadSuggestions, setTypeaheadSuggestions] = useState([]);
+  const [typeaheadOpen, setTypeaheadOpen] = useState(false);
+  const [typeaheadActiveIndex, setTypeaheadActiveIndex] = useState(-1);
+  const typeaheadDebounceRef = useRef(null);
+
   const toTitleCase = (str) =>
     str.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
@@ -424,6 +433,54 @@ export default function SearchResults() {
 
   const handleResultClick = () => {
     sessionStorage.setItem('searchScrollPos', window.scrollY.toString());
+  };
+
+  // Debounced typeahead: wait 250ms after the person stops typing before
+  // recalculating matches, so it's not running fuzzy-match on every
+  // keystroke while they're still mid-word. Only kicks in at 3+ characters,
+  // since 1-2 character queries match almost everything and the dropdown
+  // would just be noise.
+  useEffect(() => {
+    if (typeaheadDebounceRef.current) clearTimeout(typeaheadDebounceRef.current);
+
+    if (inputVal.trim().length < 3) {
+      setTypeaheadSuggestions([]);
+      setTypeaheadOpen(false);
+      return;
+    }
+
+    typeaheadDebounceRef.current = setTimeout(() => {
+      const matches = fuzzyMatchArtistTop(inputVal, artistDictionary.artists, 5, 60);
+      setTypeaheadSuggestions(matches);
+      setTypeaheadOpen(matches.length > 0);
+      setTypeaheadActiveIndex(-1);
+    }, 250);
+
+    return () => clearTimeout(typeaheadDebounceRef.current);
+  }, [inputVal]);
+
+  const handleTypeaheadSelect = (canonicalForm) => {
+    setInputVal(canonicalForm);
+    setTypeaheadOpen(false);
+    setTypeaheadSuggestions([]);
+    navigate(`/search?q=${encodeURIComponent(canonicalForm)}`);
+  };
+
+  const handleSearchKeyDown = (e) => {
+    if (!typeaheadOpen || typeaheadSuggestions.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setTypeaheadActiveIndex(i => (i + 1) % typeaheadSuggestions.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setTypeaheadActiveIndex(i => (i <= 0 ? typeaheadSuggestions.length - 1 : i - 1));
+    } else if (e.key === 'Enter' && typeaheadActiveIndex >= 0) {
+      e.preventDefault();
+      handleTypeaheadSelect(typeaheadSuggestions[typeaheadActiveIndex].artist.canonicalForm);
+    } else if (e.key === 'Escape') {
+      setTypeaheadOpen(false);
+    }
   };
 
   // FIX: doSearch no longer depends on source at all.
@@ -630,6 +687,7 @@ export default function SearchResults() {
 
   const handleSearch = (e) => {
     e.preventDefault();
+    setTypeaheadOpen(false);
     if (inputVal.trim()) {
       navigate(`/search?q=${encodeURIComponent(inputVal.trim())}`);
     }
@@ -667,14 +725,26 @@ export default function SearchResults() {
             <Search size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', pointerEvents: 'none', zIndex: 1 }} />
             <input
               type="text" value={inputVal} onChange={e => setInputVal(e.target.value)}
+              onKeyDown={handleSearchKeyDown}
+              onFocus={() => { if (typeaheadSuggestions.length > 0) setTypeaheadOpen(true); }}
+              onBlur={() => setTypeaheadOpen(false)}
               placeholder="Search records..."
               className="search-input"
+              autoComplete="off"
               style={{
                 width: '100%', padding: '14px 14px 14px 42px',
                 background: 'var(--bg-card)', border: '1px solid var(--border)', borderRight: 'none',
                 borderRadius: '10px 0 0 10px', color: 'var(--text-primary)', fontSize: 15, outline: 'none',
               }}
             />
+            {typeaheadOpen && (
+              <SearchTypeahead
+                suggestions={typeaheadSuggestions}
+                activeIndex={typeaheadActiveIndex}
+                onSelect={handleTypeaheadSelect}
+                onHover={setTypeaheadActiveIndex}
+              />
+            )}
           </div>
           <button type="submit" style={{
             padding: '14px 24px', background: 'linear-gradient(135deg, #f59e0b, #d97706)',
