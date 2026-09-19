@@ -1,5 +1,5 @@
 import artistDictionary from '../data/artistDictionary.json';
-import { fuzzyMatchArtist, fuzzyMatchArtistTop } from '../utils/fuzzyMatch';
+import { fuzzyMatchArtist, fuzzyMatchArtistTypeahead } from '../utils/fuzzyMatch';
 import SearchSuggestion from '../components/SearchSuggestion';
 import SearchTypeahead from '../components/SearchTypeahead';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
@@ -450,7 +450,7 @@ export default function SearchResults() {
     }
 
     typeaheadDebounceRef.current = setTimeout(() => {
-      const matches = fuzzyMatchArtistTop(inputVal, artistDictionary.artists, 5, 60);
+      const matches = fuzzyMatchArtistTypeahead(inputVal, artistDictionary.artists, 5, 55);
       setTypeaheadSuggestions(matches);
       setTypeaheadOpen(matches.length > 0);
       setTypeaheadActiveIndex(-1);

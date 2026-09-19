@@ -112,9 +112,74 @@ export const fuzzyMatchArtistTop = (query, artistList, limit = 3, threshold = 60
   return matches.slice(0, limit);
 };
 
+// Fuzzy match tuned for LIVE TYPING (typeahead), not a finished query.
+// fuzzyMatchArtist / fuzzyMatchArtistTop compare the full query against the
+// full artist name, which works well for a completed (if misspelled) search
+// but badly for a partial one: a 9-character partial string like "ol dirtey"
+// scores low against a 17-character full name like "Ol' Dirty Bastard"
+// simply because 8 characters haven't been typed yet, not because anything
+// is actually wrong. This function instead compares the typed string against
+// an equal-length SLICE of each candidate, so partial input is judged only
+// against the part of the name it could plausibly match so far.
+export const fuzzyMatchArtistTypeahead = (query, artistList, limit = 5, threshold = 55) => {
+  const trimmedQuery = query.trim().toLowerCase();
+  if (trimmedQuery.length < 2) return [];
+
+  const scoreCandidate = (candidateName) => {
+    const candidate = candidateName.toLowerCase();
+
+    // Exact prefix (person is typing the name correctly) always wins.
+    if (candidate.startsWith(trimmedQuery)) return 100;
+
+    // Contains the typed string anywhere (e.g. typed "dirty" mid-name).
+    if (trimmedQuery.length >= 4 && candidate.includes(trimmedQuery)) return 95;
+
+    // Otherwise: compare against an equal-length slice of the candidate,
+    // so a partially-typed, slightly-misspelled prefix still scores well.
+    const slice = candidate.slice(0, trimmedQuery.length);
+    const distance = levenshteinDistance(trimmedQuery, slice);
+    return Math.round(((trimmedQuery.length - distance) / trimmedQuery.length) * 100);
+  };
+
+  const matches = [];
+
+  for (const artist of artistList) {
+    let best = scoreCandidate(artist.name);
+
+    if (artist.aliases && artist.aliases.length > 0) {
+      for (const alias of artist.aliases) {
+        const aliasScore = scoreCandidate(alias);
+        if (aliasScore > best) best = aliasScore;
+      }
+    }
+
+    if (best >= threshold) {
+      matches.push({
+        artist,
+        similarity: best,
+        matchType: best === 100 ? 'exact' : 'fuzzy',
+      });
+    }
+  }
+
+  matches.sort((a, b) => b.similarity - a.similarity);
+
+  // Dedupe in case name and an alias both scored (shouldn't happen given
+  // the best-of logic above, but cheap insurance).
+  const seen = new Set();
+  const deduped = matches.filter(m => {
+    if (seen.has(m.artist.canonicalForm)) return false;
+    seen.add(m.artist.canonicalForm);
+    return true;
+  });
+
+  return deduped.slice(0, limit);
+};
+
 export default {
   levenshteinDistance,
   calculateSimilarity,
   fuzzyMatchArtist,
-  fuzzyMatchArtistTop
+  fuzzyMatchArtistTop,
+  fuzzyMatchArtistTypeahead
 };
