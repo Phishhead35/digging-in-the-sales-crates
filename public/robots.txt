@@ -1,9 +1,5 @@
 User-agent: *
 Allow: /
 
-# Block personal/utility pages from indexing
-Disallow: /wishlist
-Disallow: /alerts
-
 # Sitemap location
 Sitemap: https://digginginthesalescrates.com/sitemap.xml
