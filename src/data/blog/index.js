@@ -5,6 +5,38 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'blondie-heart-of-glass-missy-elliott-work-it': {
+    slug: 'blondie-heart-of-glass-missy-elliott-work-it',
+    title: 'Heart of Glass Became Work It, and Parallel Lines Is Still a Ten Dollar Record',
+    series: 'SAMPLE DNA',
+    date: '2026-09-21',
+    dateDisplay: 'September 21, 2026',
+    excerpt: 'Timbaland built the rhythm bed of Missy Elliott\'s "Work It" on the intro synth from Blondie\'s "Heart of Glass." Why the Blondie side of that lineage is still a ten dollar record, and which runtime on the label tells you what you are actually buying.',
+    body: [
+      'Play the first four seconds of "Work It" and you are listening to Blondie. Timbaland built the rhythm bed of Missy Elliott\'s 2002 single on the intro synth pattern from "Heart of Glass," and once you hear it you cannot unhear it. It is not a chopped flip buried under new drums. It is the hook, sitting in front.',
+      'What makes it a real Sample DNA record is that Timbaland did not stop there. "Work It" stacks Run-DMC\'s "Peter Piper," Rock Master Scott and the Dynamic Three\'s "Request Line" and the Harry Simeone Chorale\'s "Little Drummer Boy" on top of the Blondie line. Four records, three decades, one beat. Under Construction was Missy at her most openly nostalgic, and she and Timbaland built the album\'s biggest single out of a new wave band from CBGB.',
+      'The Blondie side of that lineage is where the value sits. Parallel Lines landed September 8, 1978 on Chrysalis, catalog CHR 1192, cut at the Record Plant in New York with Mike Chapman producing. "Heart of Glass" was the album\'s disco experiment, tracked under the working title "Once I Had a Love (The Disco Song)," and the band nearly treated it as a throwaway. It became their first American number one instead, and the Library of Congress added the album to the National Recording Registry in 2024.',
+      'Here is the part that matters if you are buying. There are two "Heart of Glass" runtimes in circulation on the LP. Original pressings carry the 3:54 album version. Later pressings swapped in the longer disco version at roughly 5:50, reportedly from March 1979 onward. Do not take a seller\'s word for which one you are getting. Read the runtime printed on the label, because on this record the timing is the fastest tell you have.',
+      'Then check the price, because it is absurd. Original US Chrysalis copies of Parallel Lines start around ten dollars across the marketplaces we search. Autoamerican, the 1980 follow-up that gave us "Rapture," turns up from five. This is a band in the Rock and Roll Hall of Fame with an album in the National Recording Registry, and clean domestic originals cost less than lunch. Fleetwood Mac is the only other record we have written about where the gap between cultural weight and bin price runs this wide.',
+      'Search "Blondie Parallel Lines" and "Blondie Autoamerican" on digginginthesalescrates.com and buy the one with the runtime you want.',
+    ],
+    shopArtists: [
+      {
+        name: 'Blondie',
+        pageSlug: 'blondie',
+        searchTerms: {
+          discogs: 'Blondie Parallel Lines',
+          ebay: 'Blondie Parallel Lines vinyl',
+          cdandlp: 'Blondie Parallel Lines',
+        },
+      },
+    ],
+    seo: {
+      title: 'Blondie Heart of Glass to Missy Elliott Work It: Collecting Parallel Lines | Digging in the Sales Crates',
+      description: 'Timbaland sampled Blondie\'s "Heart of Glass" for Missy Elliott\'s "Work It." Which Parallel Lines pressing you want, the 3:54 versus 5:50 runtime fork, and why US originals are still around ten dollars.',
+    },
+  },
+
   'prince-around-the-world-in-a-day-crate-guide': {
     slug: 'prince-around-the-world-in-a-day-crate-guide',
     title: 'Prince Buried the Follow-Up to Purple Rain on Purpose',

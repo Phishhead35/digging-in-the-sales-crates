@@ -1,6 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 //  DITSC Artist & Genre Data
-//  Add a new entry here + a route in App.jsx to publish a page.
+//  Add a new entry here to publish a page. No App.jsx change is needed:
+//  /artists/:slug and /genres/:slug are dynamic routes.
 //  searchTerms drive the Discogs / eBay / CDandLP buttons.
 //
 //  amazonEligible: true turns on an Amazon Associates search button for
@@ -778,6 +779,86 @@ export const ARTISTS = {
     },
   },
 
+  'blondie': {
+    slug: 'blondie',
+    name: 'Blondie',
+    tagline: 'CBGB to the top of the Hot 100, and hip-hop has been sampling them ever since.',
+    genres: ['Rock', 'New Wave', 'Punk'],
+    searchTerms: {
+      // 'Blondie' alone pulls the comic strip, dolls and hair products on
+      // eBay, so that one is scoped. Discogs and CDandLP both resolve the
+      // bare band name correctly.
+      discogs: 'Blondie',
+      ebay: 'Blondie vinyl LP record',
+      cdandlp: 'Blondie',
+    },
+    // Capitol/UMe keep Parallel Lines and the surrounding Chrysalis catalog
+    // in constant reissue, which is exactly the major-label-reissue case
+    // this flag is for. Confident yes.
+    amazonEligible: true,
+    bio: [
+      'Blondie came out of the same downtown New York scene as the Ramones and Television, then did the thing none of their peers managed: they kept the art-damaged instincts and sold records anyway. Parallel Lines arrived September 8, 1978 on Chrysalis, catalog CHR 1192, cut at the Record Plant with Mike Chapman producing, and it turned a CBGB band into a global act. The Library of Congress added it to the National Recording Registry in 2024.',
+      'For crate diggers the draw is the sample lineage. Timbaland built the rhythm bed of Missy Elliott\'s "Work It" on the intro synth from "Heart of Glass," and "Rapture" put a rapped verse on top of a number one pop single in 1981, with Fab 5 Freddy and Grandmaster Flash named in the lyric. Blondie were paying attention to what was happening uptown while most of their scene was not.',
+      'The market is the surprise. Original US Chrysalis pressings of the big titles are plentiful and cheap, often under fifteen dollars for a clean copy, which is unusual for a band carrying this much cultural weight. One real collector detail on Parallel Lines: there are two "Heart of Glass" runtimes in circulation on the LP. Original pressings carry the 3:54 album version, and later pressings reportedly swapped in the roughly 5:50 disco version from March 1979 onward. Read the runtime printed on the label rather than trusting the seller. European, Canadian, Japanese and Australian pressings circulate widely alongside the US ones.',
+    ],
+    essentialRecords: [
+      { title: 'Parallel Lines', year: 1978, label: 'Chrysalis' },
+      { title: 'Blondie', year: 1976, label: 'Private Stock' },
+      { title: 'Plastic Letters', year: 1978, label: 'Chrysalis' },
+      { title: 'Eat to the Beat', year: 1979, label: 'Chrysalis' },
+      { title: 'Autoamerican', year: 1980, label: 'Chrysalis' },
+      { title: 'The Hunter', year: 1982, label: 'Chrysalis' },
+    ],
+    producerCredits: [
+      'Richard Gottehrer, Blondie (1976) and Plastic Letters (1978)',
+      'Mike Chapman, Parallel Lines (1978) through The Hunter (1982)',
+      'Robert Fripp, guest guitar on "Fade Away and Radiate," Parallel Lines (1978)',
+      'Sampled by Missy Elliott and Timbaland, "Work It," from "Heart of Glass"',
+    ],
+    seo: {
+      title: 'Blondie Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Blondie vinyl records across Discogs, eBay, and CDandLP. Shop Parallel Lines, Autoamerican, Eat to the Beat and original Chrysalis pressings, and learn which Heart of Glass runtime you are buying.',
+    },
+  },
+
+  'gravediggaz': {
+    slug: 'gravediggaz',
+    name: 'Gravediggaz',
+    tagline: 'Four Tommy Boy castoffs invented horrorcore, and RZA was in the group before most people knew his name.',
+    genres: ['Hip-Hop', 'Horrorcore', 'Wu-Tang'],
+    searchTerms: {
+      discogs: 'Gravediggaz',
+      ebay: 'Gravediggaz vinyl LP',
+      cdandlp: 'Gravediggaz',
+    },
+    // Left false deliberately. 6 Feet Deep is genuinely in print through
+    // reissue channels (Turntable Lab stocks the 2LP new), which is the
+    // case for flipping this to true, but Amazon's own catalog for a Gee
+    // Street title was NOT verified. Check an Amazon search before
+    // switching it on.
+    amazonEligible: false,
+    bio: [
+      'Gravediggaz were Prince Paul, RZA, Frukwan and Poetic, four artists who had all been dropped or sidelined by Tommy Boy and turned that grievance into a record. 6 Feet Deep landed August 9, 1994 on Gee Street and effectively invented horrorcore as a commercial proposition, though calling it a horror record undersells it. The graveyard imagery is a vehicle for satire aimed squarely at the industry that had just discarded them, and the jokes land.',
+      'The production split is what collectors care about. Prince Paul handled the majority of the album and RZA produced three tracks, including "Nowhere to Run, Nowhere to Hide." This was 1994, the same year as the early Wu-Tang solo run, so 6 Feet Deep sits inside RZA\'s most productive stretch and almost never gets counted in it. Prince Paul and Frukwan had both come out of Stetsasonic, which explains the record\'s crate-dug looseness underneath the grime.',
+      'Supply is good right now, which is not always true of 1994 hip-hop. The album has been repressed repeatedly, including Record Store Day and limited colored variants, so there is a real in-print entry point alongside the original Gee Street US pressing. Two things to check. The European edition was issued under a different and deliberately provocative title, so some European copies look like a separate record entirely and get priced as though they are. And several reissues carry label imprints other than Gee Street, so confirm which pressing a listing actually describes before paying original-pressing money for it.',
+    ],
+    essentialRecords: [
+      { title: '6 Feet Deep', year: 1994, label: 'Gee Street' },
+      { title: 'The Pick, the Sickle and the Shovel', year: 1997, label: 'Gee Street / V2' },
+      { title: 'Nowhere to Run, Nowhere to Hide (12")', year: 1994, label: 'Gee Street' },
+      { title: 'Diary of a Madman (12")', year: 1994, label: 'Gee Street' },
+    ],
+    producerCredits: [
+      'Prince Paul, the majority of 6 Feet Deep (1994)',
+      'RZA, three tracks on 6 Feet Deep (1994), including "Nowhere to Run, Nowhere to Hide"',
+      'Prince Paul and Frukwan, previously members of Stetsasonic',
+      'Poetic, group member through The Pick, the Sickle and the Shovel (1997); died 2001',
+    ],
+    seo: {
+      title: 'Gravediggaz Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Gravediggaz vinyl records across Discogs, eBay, and CDandLP. Shop 6 Feet Deep original Gee Street pressings and reissues, plus The Pick, the Sickle and the Shovel.',
+    },
+  },
 };
 
 export const GENRES = {
