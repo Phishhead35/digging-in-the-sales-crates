@@ -34,6 +34,30 @@
 //   localStorage.setItem('ditsc_debug', '1')
 // Every tracked event then logs to console with its full payload.
 // Turn off with localStorage.removeItem('ditsc_debug').
+//
+// -- INTERNAL TRAFFIC ------------------------------------------
+// Mark this browser as yours, once, by visiting:
+//   https://digginginthesalescrates.com/?ditsc_internal=1
+// Undo with ?ditsc_internal=0
+//
+// Every event from a flagged browser then carries traffic_type=internal,
+// which is the parameter GA4's built-in Internal Traffic data filter
+// matches on. Do this on every device you browse or test from.
+//
+// REQUIRES, or this does nothing: GA4 Admin -> Data Settings -> Data
+// Filters -> Internal Traffic must be switched from "Testing" to
+// "Active". It ships in Testing mode, which tags events but still
+// counts them. Data filters are NOT retroactive.
+//
+// Why a flag and not an IP rule: Joe sits on the Lynn/Swampscott town
+// line, so his sessions geolocate to Swampscott, Lynn or West Lynn
+// depending on ISP routing, and a residential IP is not stable. A
+// localStorage flag follows the browser rather than the network, works
+// on mobile, and survives an IP change. City-based exclusion is not an
+// option at all: GA4 internal-traffic rules accept IPs only, and Lynn
+// is a real city of ~101k people four miles from the Salem, Marblehead
+// and Beverly partner stores, so filtering it would hide the exact
+// Massachusetts audience the local-shop cards exist to reach.
 
 export const NTFY_TOPIC = 'ditsc-clicks-vk8q3zt2npw4';
 
@@ -42,6 +66,46 @@ export const NTFY_TOPIC = 'ditsc-clicks-vk8q3zt2npw4';
 const isDebug = () => {
   try {
     return localStorage.getItem('ditsc_debug') === '1';
+  } catch {
+    return false;
+  }
+};
+
+const INTERNAL_KEY = 'ditsc_internal';
+
+// Process ?ditsc_internal= once, at module load, before any event fires.
+// Wrapped in a try/catch that swallows everything: a browser with storage
+// disabled (Safari private mode, some embedded webviews) must still load
+// the site and send normal events.
+(function initInternalFlag() {
+  try {
+    if (typeof window === 'undefined') return;
+    const raw = new URLSearchParams(window.location.search).get(INTERNAL_KEY);
+    if (raw === null) return;
+    if (raw === '0' || raw === 'false') {
+      localStorage.removeItem(INTERNAL_KEY);
+      // eslint-disable-next-line no-console
+      console.log('%c[DITSC] internal flag CLEARED', 'color:#f59e0b;font-weight:bold');
+      return;
+    }
+    localStorage.setItem(INTERNAL_KEY, '1');
+    // eslint-disable-next-line no-console
+    console.log(
+      '%c[DITSC] internal flag SET - events from this browser are tagged traffic_type=internal',
+      'color:#f59e0b;font-weight:bold'
+    );
+  } catch {
+    // Storage unavailable. Fall through: this browser cannot be flagged,
+    // which is a reporting inconvenience and never a page error.
+  }
+})();
+
+// Read per event rather than cached, matching isDebug. A localStorage read
+// is microseconds, and caching would mean a flag set from the console
+// mid-session silently did nothing until reload.
+const isInternal = () => {
+  try {
+    return localStorage.getItem(INTERNAL_KEY) === '1';
   } catch {
     return false;
   }
@@ -74,6 +138,10 @@ const cleanParams = (params) => {
 export function track(eventName, params = {}) {
   try {
     const payload = cleanParams(params);
+    // Tagged before the debug log so the console shows exactly what GA4
+    // receives, and set here rather than in cleanParams so no caller can
+    // overwrite it with its own params.
+    if (isInternal()) payload.traffic_type = 'internal';
     if (isDebug()) {
       // eslint-disable-next-line no-console
       console.log('%c[DITSC GA4]', 'color:#f59e0b;font-weight:bold', eventName, payload);
@@ -117,6 +185,10 @@ export function marketplaceFromUrl(url) {
   if (u.includes('discogs.com')) return 'discogs';
   if (u.includes('cdandlp.com')) return 'cdandlp';
   if (u.includes('turntablelab.com')) return 'turntablelab';
+  // Live affiliate as of 2026-09-21. Previously rolled up into
+  // 'partner_site', which made its clicks indistinguishable from the
+  // Massachusetts shop cards in the Marketplace dimension.
+  if (u.includes('recordbuilds.com')) return 'recordbuilds';
   if (u.includes('instagram.com')) return 'instagram';
   if (u.includes('facebook.com')) return 'facebook';
   if (u.includes('tiktok.com')) return 'tiktok';
@@ -169,6 +241,24 @@ export function isMonetized(url) {
     return 'yes';
   }
 
+  // KNOWN GAP 2026-09-21. Recordbuilds is a LIVE affiliate, but the
+  // homepage card points at
+  //   builder.recordbuilds.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=recordbuilds
+  // with no affiliate parameter, so it falls through to 'utm_only' below.
+  // That classification is CORRECT: it produced all 3 utm_only clicks in
+  // the week of Sep 14-20 and every one of them was unpaid.
+  //
+  // Fix the URL first, then add the rule here so it reports 'yes':
+  //   if (u.includes('recordbuilds.com')) {
+  //     return u.includes('<affiliate-param>=') ? 'yes' : 'NO_LEAK';
+  //   }
+  //
+  // Do NOT instead pass isAffiliate:true on the homepage card. That
+  // override reports 'yes' while the URL is still missing its parameter,
+  // hiding the exact leak this dimension exists to catch.
+  //
+  // Retro Life needs the same treatment once its domain is confirmed; it
+  // is also a live affiliate and currently reports as 'partner_site'.
   return u.includes('utm_source=') ? 'utm_only' : 'n_a';
 }
 
