@@ -48,6 +48,13 @@ export default function Layout({ children }) {
     { to: '/faq',                label: 'FAQ',               icon: HelpCircle },
   ];
 
+  // Footer-only links. Kept out of navLinks on purpose: the desktop header
+  // already holds nine items and an extra one risks overflowing at the
+  // narrow end of the desktop breakpoint (901px+).
+  const footerOnlyLinks = [
+    { to: '/about', label: 'About' },
+  ];
+
   const isActive = (to) => {
     if (to === '/') return location.pathname === '/';
     return location.pathname.startsWith(to);
@@ -248,7 +255,7 @@ export default function Layout({ children }) {
 
           {/* Footer nav links */}
           <div style={{ display: 'flex', gap: 20, justifyContent: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
-            {navLinks.map(({ to, label }) => (
+            {[...navLinks, ...footerOnlyLinks].map(({ to, label }) => (
               <Link key={to} to={to}
                 onClick={() => trackNavClick(label, to, 'footer')}
                 style={{ fontSize: 11, color: 'var(--text-primary)', textDecoration: 'none' }}>

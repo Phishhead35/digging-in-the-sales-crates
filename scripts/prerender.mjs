@@ -163,6 +163,7 @@ async function main() {
       ['/watch-read', 'Watch & Read: DITSC videos and written stories'],
       ['/local-shops', 'New England record shop directory'],
       ['/faq', 'FAQ'],
+      ['/about', 'About Digging in the Sales Crates'],
     ]
       .map(([href, text]) => `<li>${a(href, text)}</li>`)
       .join('') +
@@ -260,6 +261,44 @@ async function main() {
       content:
         h1('Frequently Asked Questions') +
         p('How the site works, where listings come from, and how affiliate links keep the tool free.'),
+    },
+    {
+      // About page. SEO strings mirror useSEO in src/pages/About.jsx; keep in sync.
+      // The JSON-LD tells search engines and AI answer tools who built the
+      // site and why, which is most of this page's SEO job.
+      path: '/about',
+      title: `About | ${SITE}`,
+      description:
+        'Why Joe Nicholas built Digging in the Sales Crates: 30 years of collecting records, too many browser tabs, and a free search across Discogs, eBay, CDandLP, and Turntable Lab.',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        name: `About ${SITE}`,
+        url: `${BASE}/about/`,
+        about: {
+          '@type': 'Organization',
+          name: SITE,
+          url: BASE,
+          slogan: 'Taking the Dig Out of Digging',
+          founder: { '@type': 'Person', name: 'Joe Nicholas' },
+          sameAs: [
+            'https://www.tiktok.com/@ditsc.com',
+            'https://www.facebook.com/digginginthesalescrates/',
+            'https://www.youtube.com/@digginginthesalescrates',
+          ],
+        },
+        mainEntity: {
+          '@type': 'Person',
+          name: 'Joe Nicholas',
+          description: 'Record collector for almost 30 years and creator of Digging in the Sales Crates.',
+        },
+      },
+      content:
+        h1('About Digging in the Sales Crates') +
+        p("Every record has a story. Let's hear this one.") +
+        p("I'm Joe Nicholas, and I've been collecting records for almost 30 years. I built Digging in the Sales Crates because I was tired of switching between browser tabs to compare sellers, so I pulled the sites I used most into one search. Today one search checks Discogs, eBay, CDandLP, and Turntable Lab at the same time.") +
+        p('DITSC also makes videos and articles about the stories behind the records: samples, flips, reissues, and why a record is worth owning. The search tool and site are free with no account needed, and This Week in the Sales Crates is a free weekly newsletter.') +
+        `<p>${a('/aggregator', 'Search vinyl prices')} · ${a('/watch-read', 'Watch & Read')}</p>`,
     },
     {
       // Phase 2, new. /blog and /blog/:slug (below) are unchanged and still

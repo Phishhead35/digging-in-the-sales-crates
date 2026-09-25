@@ -22,6 +22,7 @@ const EmailParser = lazy(() => import('./pages/EmailParser'));
 const LocalShops = lazy(() => import('./pages/LocalShops'));
 const FeaturedPartners = lazy(() => import('./pages/FeaturedPartners'));
 const FAQ = lazy(() => import('./pages/FAQ'));
+const About = lazy(() => import('./pages/About'));
 const ArtistPage = lazy(() => import('./pages/ArtistPage'));
 const Artists = lazy(() => import('./pages/Artists'));
 const Blog = lazy(() => import('./pages/Blog'));
@@ -115,6 +116,7 @@ export default function App() {
             <Route path="/local-shops" element={<LocalShops />} />
             <Route path="/featured-partners" element={<FeaturedPartners />} />
             <Route path="/faq" element={<FAQ />} />
+            <Route path="/about" element={<About />} />
             <Route path="/artists" element={<Artists />} />
             <Route path="/artists/:slug" element={<ArtistPage type="artist" />} />
             <Route path="/genres/:slug" element={<ArtistPage type="genre" />} />
