@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3 } from 'lucide-react';
+import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3, Info } from 'lucide-react';
 import FollowUs from './FollowUs';
 import { AffiliateDisclosure } from './AffiliateDisclosure';
 import { trackNavClick, trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
@@ -46,13 +46,7 @@ export default function Layout({ children }) {
     { to: '/local-shops',        label: "Where's My Shop?",  icon: MapPin },
     { to: '/wishlist',           label: 'Wishlist',          icon: Heart },
     { to: '/faq',                label: 'FAQ',               icon: HelpCircle },
-  ];
-
-  // Footer-only links. Kept out of navLinks on purpose: the desktop header
-  // already holds nine items and an extra one risks overflowing at the
-  // narrow end of the desktop breakpoint (901px+).
-  const footerOnlyLinks = [
-    { to: '/about', label: 'About' },
+    { to: '/about',              label: 'About',             icon: Info },
   ];
 
   const isActive = (to) => {
@@ -173,12 +167,24 @@ export default function Layout({ children }) {
 
       {/* Responsive styles */}
       <style>{`
-        @media (max-width: 900px) {
+        /* Header breakpoints, measured Sep 25 2026 with the real fonts.
+           The ten desktop links with icons need about 1640px; without
+           icons they need about 1215px. Below 1240px the hamburger takes
+           over. (Before this change the header switched at 900px and the
+           last links, FAQ included, were clipped off-screen on common
+           1280 and 1366 laptops.) */
+        @media (max-width: 1639px) {
+          .desktop-nav a { padding: 8px 9px !important; }
+          .desktop-nav a svg { display: none !important; }
+        }
+        @media (max-width: 1239px) {
           .desktop-nav { display: none !important; }
           .mobile-toggle { display: block !important; }
+        }
+        @media (max-width: 900px) {
           .nav-logo-text { font-size: 15px !important; letter-spacing: 1px !important; }
         }
-        @media (min-width: 901px) {
+        @media (min-width: 1240px) {
           .mobile-toggle { display: none !important; }
         }
 
@@ -255,7 +261,7 @@ export default function Layout({ children }) {
 
           {/* Footer nav links */}
           <div style={{ display: 'flex', gap: 20, justifyContent: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
-            {[...navLinks, ...footerOnlyLinks].map(({ to, label }) => (
+            {navLinks.map(({ to, label }) => (
               <Link key={to} to={to}
                 onClick={() => trackNavClick(label, to, 'footer')}
                 style={{ fontSize: 11, color: 'var(--text-primary)', textDecoration: 'none' }}>

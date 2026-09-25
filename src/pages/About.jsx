@@ -45,7 +45,9 @@ const styles = {
     padding: "4rem 1.5rem 3rem",
   },
   heroInner: {
-    maxWidth: "720px",
+    // 672 = the body column's 720px minus its 24px side padding, so the
+    // headline lines up with the paragraphs below it.
+    maxWidth: "672px",
     margin: "0 auto",
   },
   h1: {
