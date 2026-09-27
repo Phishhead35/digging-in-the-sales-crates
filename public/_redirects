@@ -1,1 +1,16 @@
+# Newsletter short links (302 so destinations can change later without browser caching)
+/tiktok   https://fromthesalescrates.beehiiv.com/subscribe?utm_source=tiktok&utm_medium=bio&utm_campaign=newsletter_signup 302
+/tiktok/  https://fromthesalescrates.beehiiv.com/subscribe?utm_source=tiktok&utm_medium=bio&utm_campaign=newsletter_signup 302
+/yt       https://fromthesalescrates.beehiiv.com/subscribe?utm_source=youtube&utm_medium=description&utm_campaign=newsletter_signup 302
+/yt/      https://fromthesalescrates.beehiiv.com/subscribe?utm_source=youtube&utm_medium=description&utm_campaign=newsletter_signup 302
+/ig       https://fromthesalescrates.beehiiv.com/subscribe?utm_source=instagram&utm_medium=bio&utm_campaign=newsletter_signup 302
+/ig/      https://fromthesalescrates.beehiiv.com/subscribe?utm_source=instagram&utm_medium=bio&utm_campaign=newsletter_signup 302
+/fb       https://fromthesalescrates.beehiiv.com/subscribe?utm_source=facebook&utm_medium=bio&utm_campaign=newsletter_signup 302
+/fb/      https://fromthesalescrates.beehiiv.com/subscribe?utm_source=facebook&utm_medium=bio&utm_campaign=newsletter_signup 302
+/pin      https://fromthesalescrates.beehiiv.com/subscribe?utm_source=pinterest&utm_medium=bio&utm_campaign=newsletter_signup 302
+/pin/     https://fromthesalescrates.beehiiv.com/subscribe?utm_source=pinterest&utm_medium=bio&utm_campaign=newsletter_signup 302
+/email    https://fromthesalescrates.beehiiv.com/subscribe?utm_source=email_signature&utm_medium=signature&utm_campaign=newsletter_signup 302
+/email/   https://fromthesalescrates.beehiiv.com/subscribe?utm_source=email_signature&utm_medium=signature&utm_campaign=newsletter_signup 302
+
+# SPA fallback (must stay LAST; first match wins)
 /* /index.html 200
