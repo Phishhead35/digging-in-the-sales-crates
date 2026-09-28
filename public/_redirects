@@ -11,6 +11,8 @@
 /pin/     https://fromthesalescrates.beehiiv.com/subscribe?utm_source=pinterest&utm_medium=bio&utm_campaign=newsletter_signup 302
 /email    https://fromthesalescrates.beehiiv.com/subscribe?utm_source=email_signature&utm_medium=signature&utm_campaign=newsletter_signup 302
 /email/   https://fromthesalescrates.beehiiv.com/subscribe?utm_source=email_signature&utm_medium=signature&utm_campaign=newsletter_signup 302
+/newsletter   https://fromthesalescrates.beehiiv.com/subscribe?utm_source=direct&utm_medium=shared_link&utm_campaign=newsletter_signup 302
+/newsletter/  https://fromthesalescrates.beehiiv.com/subscribe?utm_source=direct&utm_medium=shared_link&utm_campaign=newsletter_signup 302
 
 # SPA fallback (must stay LAST; first match wins)
 /* /index.html 200
