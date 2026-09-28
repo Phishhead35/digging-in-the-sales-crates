@@ -859,6 +859,88 @@ export const ARTISTS = {
       description: 'Find Gravediggaz vinyl records across Discogs, eBay, and CDandLP. Shop 6 Feet Deep original Gee Street pressings and reissues, plus The Pick, the Sickle and the Shovel.',
     },
   },
+  'isaac-hayes': {
+    slug: 'isaac-hayes',
+    name: 'Isaac Hayes',
+    tagline: 'He stretched soul until it became something else, and two generations of producers have been quarrying it ever since.',
+    genres: ['Soul', 'Funk', 'Soundtrack'],
+    searchTerms: {
+      discogs: 'Isaac Hayes',
+      ebay: 'Isaac Hayes vinyl LP record',
+      cdandlp: 'Isaac Hayes',
+    },
+    // Craft Recordings and Concord keep the Stax/Enterprise catalog in constant
+    // reissue, including a 180g AAA Small Batch cut of Hot Buttered Soul. A real
+    // reissue house on a major catalog. Confident yes.
+    amazonEligible: true,
+    bio: [
+      'Isaac Hayes rebuilt soul on his own terms at Enterprise, the Stax subsidiary that gave him room to ignore the three-minute single. Hot Buttered Soul arrived in June 1969 with four tracks across forty-five minutes, taking "By the Time I Get to Phoenix" and "Walk On By" and stretching them past the point where they were still cover versions. Shaft followed in 1971 and won him an Academy Award. Black Moses came the same year and sprawled across two LPs.',
+      'Hip-hop has been in this catalog for decades, and rarely through the famous tracks. The Dust Brothers built "The Sounds of Science" on Paul\'s Boutique around "Walk From Regio\'s," a cue buried in the Shaft soundtrack rather than the theme. Ghostface Killah took "Going in Circles" off Black Moses for "Malcolm." Both flips came from deep inside double albums, which is the useful lesson: the value here is in the track lists, not the covers.',
+      'Two things to check before you buy. Hot Buttered Soul has plant variants: Discogs documents distinct Pitman and Monarch pressings of the 1969 Enterprise release under the same catalog number, ENS-1001, so on a record pressed this heavily the runout tells you more than the jacket does. And Black Moses, ENS-2-5003, came in a sleeve that unfolds into a cross-shaped poster, which buyers hung on the wall. The market is now full of listings for the discs with no cover and the cover with no discs, sold separately as art. Read the listing text before you pay for a complete copy.',
+    ],
+    essentialRecords: [
+      { title: 'Hot Buttered Soul', year: 1969, label: 'Enterprise' },
+      { title: 'Shaft', year: 1971, label: 'Enterprise' },
+      { title: 'Black Moses', year: 1971, label: 'Enterprise' },
+      { title: '...To Be Continued', year: 1970, label: 'Enterprise' },
+      { title: 'The Isaac Hayes Movement', year: 1970, label: 'Enterprise' },
+      { title: 'Joy', year: 1973, label: 'Enterprise' },
+      { title: 'Tough Guys', year: 1974, label: 'Enterprise' },
+    ],
+    producerCredits: [
+      'Isaac Hayes, writer, arranger and producer across the Enterprise run',
+      'Sampled by the Beastie Boys, "The Sounds of Science," from "Walk From Regio\'s" on Shaft',
+      'Sampled by Ghostface Killah, "Malcolm," from "Going in Circles" on Black Moses',
+      '"Going in Circles" is itself a cover; the original is The Friends of Distinction, Grazin\' (1969)',
+    ],
+    seo: {
+      title: 'Isaac Hayes Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Isaac Hayes vinyl records across Discogs, eBay, and CDandLP. Shop Hot Buttered Soul, Shaft, Black Moses and original Enterprise pressings, and learn which Hot Buttered Soul plant variant you are buying.',
+    },
+  },
+
+  'gang-starr': {
+    slug: 'gang-starr',
+    name: 'Gang Starr',
+    tagline: 'Guru and Premier, and the cleanest argument in rap that the break matters more than the genre it came from.',
+    genres: ['Hip-Hop', 'Golden Era', 'Jazz Rap'],
+    searchTerms: {
+      // 'Gangstarr' as one word is a common misspelling. Discogs files the group
+      // as Gang Starr and resolves the correct spelling cleanly.
+      discogs: 'Gang Starr',
+      ebay: 'Gang Starr vinyl LP record',
+      cdandlp: 'Gang Starr',
+    },
+    // Moment of Truth and The Ownerz were major-label releases and the catalog
+    // is broadly back in print, with multiple current 2LP and 3LP editions in
+    // retail. Less certain than a Warner rock catalog, so revisit if the Amazon
+    // results look thin.
+    amazonEligible: true,
+    bio: [
+      'Gang Starr was Guru on the microphone and DJ Premier behind the board, and across five albums they made the most consistent case in rap for treating a record collection as raw material rather than a genre allegiance. Step in the Arena in 1991 and Daily Operation in 1992 set the template; Moment of Truth in 1998 is the one most people name first. Guru died in 2010, and Premier assembled One of the Best Yet from unreleased vocals in 2019.',
+      'Premier is the reason this catalog belongs on a site about digging. "Beyond Comprehension," on Step in the Arena, is built on The Band\'s "Up on Cripple Creek," a 1969 Americana record that nobody was mining for breaks. That is the whole Premier method: the source does not have to be funk, or even be any good by its own lights, as long as four bars of it hit. "Jazz Thing," cut for the Mo\' Better Blues soundtrack in 1990, made the argument out loud.',
+      'Supply is unusually friendly here. A good share of the catalog is currently in print on 2LP and 3LP, so there is a real entry point at normal retail prices alongside the original Chrysalis pressings of Step in the Arena and Daily Operation. That combination is rare for golden-era rap, where the usual choice is an expensive original or nothing. Check whether a listing describes an original Chrysalis pressing or one of the recent reissues before paying original money.',
+    ],
+    essentialRecords: [
+      { title: 'Step in the Arena', year: 1991, label: 'Chrysalis' },
+      { title: 'Daily Operation', year: 1992, label: 'Chrysalis' },
+      { title: 'Hard to Earn', year: 1994, label: 'Chrysalis' },
+      { title: 'Moment of Truth', year: 1998, label: 'Noo Trybe / Virgin' },
+      { title: 'No More Mr. Nice Guy', year: 1989, label: 'Wild Pitch' },
+      { title: 'The Ownerz', year: 2003, label: 'Virgin' },
+      { title: 'One of the Best Yet', year: 2019, label: 'Gang Starr Enterprises' },
+    ],
+    producerCredits: [
+      'DJ Premier, producer across the catalog',
+      'Guru, vocals; died 2010',
+      '"Beyond Comprehension" built on The Band, "Up on Cripple Creek" (1969)',
+      '"Jazz Thing," recorded for the Mo\' Better Blues soundtrack (1990)',
+    ],
+    seo: {
+      title: 'Gang Starr Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Gang Starr vinyl records across Discogs, eBay, and CDandLP. Shop Step in the Arena, Daily Operation, Moment of Truth and Hard to Earn, on original Chrysalis pressings and current reissues.',
+    },
+  },
 };
 
 export const GENRES = {

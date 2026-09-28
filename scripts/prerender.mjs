@@ -56,6 +56,13 @@ const ROOT = path.resolve(__dirname, '..');
 const BUILD = path.join(ROOT, 'build');
 const BASE = 'https://digginginthesalescrates.com';
 const SITE = 'Digging in the Sales Crates';
+// This Week in the Sales Crates signup. Kept in sync with NEWSLETTER_URL in
+// src/pages/BlogPost.jsx: that one renders the live button, this one bakes the
+// crawler-readable link, so they get edited together (same pairing note as
+// useSEO.js above).
+const NEWSLETTER_URL =
+  'https://fromthesalescrates.beehiiv.com/subscribe' +
+  '?utm_source=website&utm_medium=blog&utm_campaign=newsletter_signup';
 
 // The one place that decides the public URL shape for a route path.
 // Matches the directory+index.html structure written below (outDir),
@@ -406,7 +413,8 @@ async function main() {
         `<article>${h1(post.title)}` +
         `<p><em>${esc(post.series || '')} · ${esc(post.dateDisplay || post.date)}</em></p>` +
         (post.body || []).map(p).join('') +
-        `</article><p>${a('/blog', '← All posts')} · ${a('/aggregator', 'Search vinyl prices')}</p>`,
+        `</article><p>${a(NEWSLETTER_URL, 'Join This Week in the Sales Crates, our free weekly newsletter')}</p>` +
+        `<p>${a('/blog', '← All posts')} · ${a('/aggregator', 'Search vinyl prices')}</p>`,
     }))
   );
 

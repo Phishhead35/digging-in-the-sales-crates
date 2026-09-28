@@ -5,6 +5,40 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'isaac-hayes-beastie-boys-ghostface-sample-dig': {
+    slug: 'isaac-hayes-beastie-boys-ghostface-sample-dig',
+    title: 'The Beastie Boys and Ghostface Went Digging in the Same Catalog, Twelve Years Apart',
+    series: 'CRATE SPOTLIGHT',
+    date: '2026-09-28',
+    dateDisplay: 'September 28, 2026',
+    excerpt: 'The Dust Brothers took "Walk From Regio\'s" off Shaft for Paul\'s Boutique. Ghostface took "Going in Circles" off Black Moses. Neither reached for the obvious record, and Isaac Hayes originals still start under ten dollars.',
+    body: [
+      'Two different eras of hip-hop went looking for something in Isaac Hayes, and neither one reached for the obvious record.',
+      'In 1989 the Dust Brothers built "The Sounds of Science" on Paul\'s Boutique around "Walk From Regio\'s," a cue buried deep in the Shaft soundtrack rather than the theme everybody knows. Twelve years later Ghostface Killah took "Going in Circles" off Black Moses for "Malcolm." One flip came from a double-LP film score, the other from a double-LP sprawl with a novelty sleeve. Neither is a greatest-hits pick. Both reward the kind of digging that reads track lists instead of covers.',
+      'The entry point is still Hot Buttered Soul, released June 1969 on Enterprise, Stax\'s subsidiary imprint. Four tracks across forty-five minutes. Hayes took "By the Time I Get to Phoenix" and "Walk On By" and stretched them until they became something else, and in doing so he invented the template for symphonic soul that producers have been quarrying ever since. It is a foundational record that still sits in ordinary bins at ordinary prices.',
+      'Now the collecting part, because Hayes rewards attention on exactly one axis: which copy you are holding.',
+      'Hot Buttered Soul has plant variants. Discogs documents distinct Pitman and Monarch pressings of the 1969 Enterprise release under the same catalog number, ENS-1001. Same jacket, same label, different plant, and on a record this heavily pressed the runout tells you more than the sleeve does. It is the Rumours lesson again: read the etchings, not the seller\'s title.',
+      'Black Moses is a trap, and the sleeve is why. The original 1971 Enterprise pressing, ENS-2-5003, came in a sleeve that unfolds into a cross-shaped poster of Hayes, on the theory that buyers would hang it on the wall. Plenty of them did. Search the title today and you will find listings for the discs with no cover, and listings for the cover with no discs, sold separately as art. Read the listing text carefully before you buy a complete copy, because a lot of what looks cheap is half a record.',
+      'Shaft, ENS-2-5002, is the easy one. Originals turn up around six dollars.',
+      'Search "Isaac Hayes Hot Buttered Soul," "Isaac Hayes Black Moses" and "Isaac Hayes Shaft" on digginginthesalescrates.com. Originals start under ten dollars across all three, which for a catalog this deeply sampled is the bargain of the week.',
+    ],
+    shopArtists: [
+      {
+        name: 'Isaac Hayes',
+        pageSlug: 'isaac-hayes',
+        searchTerms: {
+          discogs: 'Isaac Hayes Hot Buttered Soul',
+          ebay: 'Isaac Hayes Hot Buttered Soul vinyl',
+          cdandlp: 'Isaac Hayes Hot Buttered Soul',
+        },
+      },
+    ],
+    seo: {
+      title: 'Isaac Hayes Sampled by Beastie Boys and Ghostface: Collecting Hot Buttered Soul, Shaft and Black Moses | Digging in the Sales Crates',
+      description: 'The Dust Brothers sampled "Walk From Regio\'s" from Shaft; Ghostface sampled "Going in Circles" from Black Moses. Which Hot Buttered Soul plant variant to look for, why Black Moses sleeves and discs sell separately, and why originals are still under ten dollars.',
+    },
+  },
+
   'blondie-heart-of-glass-missy-elliott-work-it': {
     slug: 'blondie-heart-of-glass-missy-elliott-work-it',
     title: 'Heart of Glass Became Work It, and Parallel Lines Is Still a Ten Dollar Record',

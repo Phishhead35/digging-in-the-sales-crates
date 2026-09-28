@@ -519,6 +519,17 @@ export function trackBlogMarketplaceClick(postSlug, artistName, marketplace, url
   });
 }
 
+// Newsletter signup. The beehiiv URL carries its own UTM parameters, so
+// beehiiv attributes the subscriber on its side; this event is the DITSC-side
+// half, which is what tells you WHICH post drove the click. Pass a
+// CLICK_SOURCES value rather than a raw string.
+export function trackNewsletterClick(source, postSlug) {
+  track('newsletter_signup_click', {
+    source,
+    post_slug: postSlug,
+  });
+}
+
 export function trackWatchReadClick(source) {
   track('watch_read_click', { source });
 }
