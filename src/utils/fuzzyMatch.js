@@ -121,7 +121,7 @@ export const fuzzyMatchArtistTop = (query, artistList, limit = 3, threshold = 60
 // is actually wrong. This function instead compares the typed string against
 // an equal-length SLICE of each candidate, so partial input is judged only
 // against the part of the name it could plausibly match so far.
-export const fuzzyMatchArtistTypeahead = (query, artistList, limit = 5, threshold = 55) => {
+export const fuzzyMatchArtistTypeahead = (query, artistList, limit = 5, threshold = 70) => {
   const trimmedQuery = query.trim().toLowerCase();
   if (trimmedQuery.length < 2) return [];
 

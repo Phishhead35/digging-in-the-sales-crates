@@ -28,7 +28,7 @@ export default function useSearchTypeahead(value) {
     }
 
     debounceRef.current = setTimeout(() => {
-      const matches = fuzzyMatchArtistTypeahead(value, artistDictionary.artists, 5, 55);
+      const matches = fuzzyMatchArtistTypeahead(value, artistDictionary.artists, 5, 70);
       setSuggestions(matches);
       setIsOpen(matches.length > 0);
       setActiveIndex(-1);
