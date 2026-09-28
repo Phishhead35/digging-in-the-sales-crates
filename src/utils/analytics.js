@@ -521,12 +521,15 @@ export function trackBlogMarketplaceClick(postSlug, artistName, marketplace, url
 
 // Newsletter signup. The beehiiv URL carries its own UTM parameters, so
 // beehiiv attributes the subscriber on its side; this event is the DITSC-side
-// half, which is what tells you WHICH post drove the click. Pass a
-// CLICK_SOURCES value rather than a raw string.
-export function trackNewsletterClick(source, postSlug) {
+// half, which is what tells you WHICH post or artist page drove the click.
+// Pass a CLICK_SOURCES value rather than a raw string. postSlug and
+// artistName are optional and dropped when empty, so pass only what applies.
+// Fired from src/components/NewsletterCta.jsx, About.jsx and FollowUs.jsx.
+export function trackNewsletterClick(source, postSlug, artistName) {
   track('newsletter_signup_click', {
     source,
     post_slug: postSlug,
+    artist_name: artistName,
   });
 }
 
@@ -796,6 +799,11 @@ export const CLICK_SOURCES = {
   ARTIST_PAGE: 'artist_page',
   ARTIST_PARTNER: 'artist_page_partner_card',
   BLOG_POST: 'blog_post',
+  BLOG_INDEX: 'blog_index',
+  WATCH_READ: 'watch_read',
+  ABOUT: 'about_page',
+  HOMEPAGE_NEWSLETTER: 'homepage_newsletter',
+  FOLLOW_US: 'follow_us_section',
   WISHLIST: 'wishlist',
   DEALS: 'deals_page',
   LOCAL_SHOPS: 'local_shops',

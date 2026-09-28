@@ -1,7 +1,11 @@
-import { trackSocialClick } from '../utils/analytics';
+import { Mail } from 'lucide-react';
+import { trackSocialClick, trackNewsletterClick, CLICK_SOURCES } from '../utils/analytics';
+import { newsletterUrl } from './NewsletterCta';
 
 const TIKTOK_URL = "https://www.tiktok.com/@ditsc.com";
 const FACEBOOK_URL = "https://www.facebook.com/digginginthesalescrates/";
+// Shows on every page, so it carries its own utm_medium (footer).
+const NEWSLETTER_URL = newsletterUrl("footer");
 
 export default function FollowUs() {
   return (
@@ -35,6 +39,21 @@ export default function FollowUs() {
         >
           <FacebookIcon />
           Digging in the Sales Crates
+        </a>
+        {/* Amber styling is inline because index.css only defines the
+            TikTok and Facebook pill colors. Move it to a
+            .follow-pill--newsletter rule there if you prefer. */}
+        <a
+          href={NEWSLETTER_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="follow-pill follow-pill--newsletter"
+          aria-label="Join the free DITSC weekly newsletter"
+          onClick={() => trackNewsletterClick(CLICK_SOURCES.FOLLOW_US)}
+          style={{ background: 'var(--amber)', color: '#0a0a0f', fontWeight: 600 }}
+        >
+          <Mail size={14} aria-hidden="true" />
+          Free weekly newsletter
         </a>
       </div>
     </div>

@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { track } from "../utils/analytics";
+import { track, trackNewsletterClick, CLICK_SOURCES } from "../utils/analytics";
 import useSEO from "../hooks/useSEO";
+import { newsletterUrl } from "../components/NewsletterCta";
 
 // ── Links waiting on setup ─────────────────────────────────────
-// Paste the WEBSITE Beehiiv signup link here (its own form/source,
-// separate from the social-platform forms, so site signups are
-// attributed on their own). While empty, the newsletter button
-// does not render, so this page can ship before the forms exist.
-const NEWSLETTER_URL = "";
+// Built by the shared helper in src/components/NewsletterCta.jsx, so
+// the beehiiv address lives in one place. utm_medium=about separates
+// About-page signups from the blog, footer and other placements in
+// beehiiv. Set to "" to hide the button.
+const NEWSLETTER_URL = newsletterUrl("about");
 
 // Buy Me a Coffee page. Same rule: empty means the support block
 // is hidden entirely.
@@ -165,8 +166,9 @@ export default function About() {
       "Why Joe Nicholas built Digging in the Sales Crates: 30 years of collecting records, too many browser tabs, and a free search across Discogs, eBay, CDandLP, and Turntable Lab.",
   });
 
-  const onNewsletter = () =>
-    track("newsletter_click", { click_source: "about_page", destination: NEWSLETTER_URL });
+  // Same newsletter_signup_click event every other placement fires, so
+  // all newsletter clicks report together in GA4.
+  const onNewsletter = () => trackNewsletterClick(CLICK_SOURCES.ABOUT);
   const onSupport = () =>
     track("support_click", { click_source: "about_page", destination: SUPPORT_URL });
 

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { BookOpen, ArrowRight, Disc3, TrendingUp, Radio, RefreshCw } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { BLOG_POSTS } from '../data/blog';
-import { trackBlogPostClick } from '../utils/analytics';
+import { trackBlogPostClick, CLICK_SOURCES } from '../utils/analytics';
+import NewsletterCta from '../components/NewsletterCta';
 
 // ── Series -> color/icon mapping for listing-card headers ──────
 // Add a new series here when the blog-generator introduces one;
@@ -181,6 +182,16 @@ export default function Blog() {
           )}
         </div>
       </section>
+
+      {/* ── NEWSLETTER ───────────────────────────────────────── */}
+      {/* Below the post grid, for readers who scrolled the whole list.
+          utm_medium=blog_index keeps it separate from the per-post CTA. */}
+      <NewsletterCta
+        medium="blog_index"
+        source={CLICK_SOURCES.BLOG_INDEX}
+        maxWidth={1280}
+        sectionStyle={{ padding: '48px 24px', borderTop: '1px solid var(--border)' }}
+      />
 
     </div>
   );

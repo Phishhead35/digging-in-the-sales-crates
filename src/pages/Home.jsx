@@ -6,6 +6,7 @@ import useLatestVideos from '../hooks/useLatestVideos';
 import useSearchTypeahead from '../hooks/useSearchTypeahead';
 import VideoCard from '../components/VideoCard';
 import SearchTypeahead from '../components/SearchTypeahead';
+import NewsletterCta from '../components/NewsletterCta';
 import { MA_STORES, RINH_STORES } from '../data/partnerStores';
 import {
   trackStoreClick as analyticsStoreClick,
@@ -560,6 +561,17 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── NEWSLETTER ────────────────────────────────────────────
+          After Fresh in the Crates (the newsletter also rounds up store
+          sales) and before the final search CTA, so search stays the last
+          ask. Uses Home's own borderTop/MINOR rhythm, not the blog layout. */}
+      <NewsletterCta
+        medium="homepage"
+        source={CLICK_SOURCES.HOMEPAGE_NEWSLETTER}
+        maxWidth={1280}
+        sectionStyle={{ padding: SECTION_MINOR, borderTop: '1px solid var(--border)' }}
+      />
 
       {/* ── SEARCH CTA (final supporting CTA) ───────────────────────
           Links to /aggregator, NOT /search. Both routes render

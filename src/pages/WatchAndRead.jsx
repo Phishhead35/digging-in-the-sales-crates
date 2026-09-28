@@ -4,12 +4,14 @@ import { Youtube, BookOpen, Disc3, TrendingUp, Radio, RefreshCw, ArrowRight, Ext
 import useSEO from '../hooks/useSEO';
 import useLatestVideos from '../hooks/useLatestVideos';
 import VideoCard from '../components/VideoCard';
+import NewsletterCta from '../components/NewsletterCta';
 import { VIDEO_SERIES } from '../data/playlists';
 import { BLOG_POSTS } from '../data/blog';
 import {
   trackBlogPostClick,
   trackWatchReadPlaylistClick,
   trackWatchReadBrowseAllClick,
+  CLICK_SOURCES,
 } from '../utils/analytics';
 
 const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@digginginthesalescrates';
@@ -245,6 +247,15 @@ export default function WatchAndRead() {
           )}
         </div>
       </section>
+
+      {/* ── NEWSLETTER ───────────────────────────────────────── */}
+      {/* The newsletter recaps these same series, so this is the page where
+          the ask fits best. Sits after the stories, before Browse All. */}
+      <NewsletterCta
+        medium="watch_read"
+        source={CLICK_SOURCES.WATCH_READ}
+        maxWidth={1280}
+      />
 
       {/* ── 4. BROWSE ALL ────────────────────────────────────── */}
       <section style={{ padding: '40px 24px' }}>

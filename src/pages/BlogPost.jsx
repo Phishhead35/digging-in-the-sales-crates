@@ -1,11 +1,12 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Disc3, Search, ExternalLink, Mail } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Disc3, Search, ExternalLink } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { BLOG_POSTS } from '../data/blog';
 import { ARTISTS } from '../data/artists';
-import { trackBlogMarketplaceClick, trackNewsletterClick, CLICK_SOURCES } from '../utils/analytics';
+import { trackBlogMarketplaceClick, CLICK_SOURCES } from '../utils/analytics';
 import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
+import NewsletterCta from '../components/NewsletterCta';
 import { isMonetized, buildPartnerUrl } from '../config/partners';
 
 // ── Affiliate link builders (same as ArtistPage.jsx) ──────────
@@ -178,72 +179,6 @@ function ShopArtists({ post }) {
   );
 }
 
-// ── Newsletter signup ─────────────────────────────────────────
-// This Week in the Sales Crates, delivered by beehiiv.
-// Renders on every post. Set `newsletterCta: false` on an individual entry in
-// src/data/blog/index.js to suppress it for that post only.
-//
-// The beehiiv URL carries utm_source/utm_medium/utm_campaign, so attribution
-// happens on the beehiiv side and needs no GA4 change here. If this link is
-// ever reused outside blog posts, change utm_medium so the two placements stay
-// distinguishable in beehiiv's reporting.
-const NEWSLETTER_URL =
-  'https://fromthesalescrates.beehiiv.com/subscribe' +
-  '?utm_source=website&utm_medium=blog&utm_campaign=newsletter_signup';
-
-function NewsletterCta({ post }) {
-  if (post?.newsletterCta === false) return null;
-  return (
-    <section style={{ padding: '48px 24px', borderBottom: '1px solid var(--border)' }}>
-      <div style={{ maxWidth: 760, margin: '0 auto' }}>
-        <div style={{
-          padding: '28px 32px', borderRadius: 16,
-          background: 'var(--bg-card)', border: '1px solid var(--border)',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          gap: 24, flexWrap: 'wrap',
-        }}>
-          <div style={{ minWidth: 240, flex: '1 1 300px' }}>
-            <p style={{
-              color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)',
-              letterSpacing: 2, marginBottom: 10, marginTop: 0,
-            }}>
-              FREE WEEKLY NEWSLETTER
-            </p>
-            <h2 style={{
-              fontFamily: 'var(--font-display)', fontSize: 28,
-              letterSpacing: 1, margin: '0 0 8px',
-            }}>
-              THIS WEEK IN THE SALES CRATES
-            </h2>
-            <p style={{
-              color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, margin: 0,
-            }}>
-              Sample connections, reissue alerts and market finds, once a week. Free, and unsubscribe anytime.
-            </p>
-          </div>
-          <a
-            href={NEWSLETTER_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              padding: '14px 28px', borderRadius: 12, fontSize: 15,
-              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-              color: '#000', fontWeight: 700, textDecoration: 'none',
-              transition: 'opacity 0.2s', flexShrink: 0, whiteSpace: 'nowrap',
-            }}
-            onClick={() => trackNewsletterClick(CLICK_SOURCES.BLOG_POST, post?.slug)}
-            onMouseOver={e => e.currentTarget.style.opacity = '0.85'}
-            onMouseOut={e => e.currentTarget.style.opacity = '1'}
-          >
-            <Mail size={16} /> Join Our Free Weekly Newsletter
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ── 404 / not found ───────────────────────────────────────────
 function NotFound() {
   return (
@@ -352,7 +287,18 @@ export default function BlogPost() {
       <ShopArtists post={post} />
 
       {/* ── NEWSLETTER ───────────────────────────────────────── */}
-      <NewsletterCta post={post} />
+      {/* Shared component (src/components/NewsletterCta.jsx). Set
+          newsletterCta: false on an entry in src/data/blog/index.js to hide
+          it on that post only. utm_medium stays 'blog' to match the
+          crawler-readable copy in scripts/prerender.mjs. */}
+      {post.newsletterCta !== false && (
+        <NewsletterCta
+          medium="blog"
+          source={CLICK_SOURCES.BLOG_POST}
+          postSlug={post.slug}
+          maxWidth={760}
+        />
+      )}
 
       {/* ── CTA BOTTOM ───────────────────────────────────────── */}
       <section style={{ padding: '64px 24px' }}>

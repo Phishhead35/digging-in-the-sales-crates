@@ -10,6 +10,7 @@ import {
   CLICK_SOURCES,
 } from '../utils/analytics';
 import PartnerStoreCard from '../components/PartnerStoreCard';
+import NewsletterCta from '../components/NewsletterCta';
 import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
 import { isMonetized, buildPartnerUrl } from '../config/partners';
 
@@ -452,6 +453,17 @@ export default function ArtistPage({ type = 'artist' }) {
           </div>
         </section>
       )}
+
+      {/* ── NEWSLETTER ───────────────────────────────────────── */}
+      {/* Deliberately ABOVE the bottom CTA, so the marketplace buttons stay
+          the last and strongest ask on the page. Genre pages render through
+          this same component and get it too. */}
+      <NewsletterCta
+        medium="artist_page"
+        source={CLICK_SOURCES.ARTIST_PAGE}
+        artistName={artist.name}
+        maxWidth={900}
+      />
 
       {/* ── CTA BOTTOM ───────────────────────────────────────── */}
       <section style={{ padding: '64px 24px' }}>
