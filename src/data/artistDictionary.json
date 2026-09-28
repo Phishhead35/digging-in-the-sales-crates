@@ -2066,7 +2066,6 @@
     {
       "name": "RZA",
       "aliases": [
-        "Prince Paul",
         "Robert Diggs"
       ],
       "genres": [
@@ -2074,6 +2073,19 @@
         "east-coast"
       ],
       "canonicalForm": "RZA"
+    },
+    {
+      "name": "Prince Paul",
+      "aliases": [
+        "Paul Huston",
+        "Handsome Boy Modeling School",
+        "Stetsasonic"
+      ],
+      "genres": [
+        "hip-hop",
+        "east-coast"
+      ],
+      "canonicalForm": "Prince Paul"
     },
     {
       "name": "GZA",
@@ -2207,6 +2219,140 @@
         "east-coast"
       ],
       "canonicalForm": "A Tribe Called Quest"
+    },
+    {
+      "name": "Gravediggaz",
+      "aliases": [
+        "Grave Diggaz",
+        "Gravediggers",
+        "6 Feet Deep",
+        "Frukwan"
+      ],
+      "genres": [
+        "hip-hop",
+        "east-coast"
+      ],
+      "canonicalForm": "Gravediggaz"
+    },
+    {
+      "name": "Blondie",
+      "aliases": [
+        "Debbie Harry",
+        "Deborah Harry",
+        "Parallel Lines"
+      ],
+      "genres": [
+        "rock",
+        "pop"
+      ],
+      "canonicalForm": "Blondie"
+    },
+    {
+      "name": "Eric B. & Rakim",
+      "aliases": [
+        "Eric B & Rakim",
+        "Eric B and Rakim",
+        "Eric B",
+        "Paid in Full"
+      ],
+      "genres": [
+        "hip-hop",
+        "east-coast"
+      ],
+      "canonicalForm": "Eric B. & Rakim"
+    },
+    {
+      "name": "DJ Quik",
+      "aliases": [
+        "Quik",
+        "Quik Is the Name",
+        "David Blake"
+      ],
+      "genres": [
+        "hip-hop",
+        "west-coast"
+      ],
+      "canonicalForm": "DJ Quik"
+    },
+    {
+      "name": "Pete Rock",
+      "aliases": [
+        "Pete Rock & CL Smooth",
+        "Pete Rock and CL Smooth",
+        "Soul Brother #1"
+      ],
+      "genres": [
+        "hip-hop",
+        "east-coast"
+      ],
+      "canonicalForm": "Pete Rock"
+    },
+    {
+      "name": "Boogie Down Productions",
+      "aliases": [
+        "BDP",
+        "Criminal Minded",
+        "By All Means Necessary"
+      ],
+      "genres": [
+        "hip-hop",
+        "east-coast"
+      ],
+      "canonicalForm": "Boogie Down Productions"
+    },
+    {
+      "name": "Naughty by Nature",
+      "aliases": [
+        "Naughty By Nature",
+        "NBN",
+        "Treach"
+      ],
+      "genres": [
+        "hip-hop",
+        "east-coast"
+      ],
+      "canonicalForm": "Naughty by Nature"
+    },
+    {
+      "name": "Cannibal Ox",
+      "aliases": [
+        "Can Ox",
+        "Vast Aire",
+        "Vordul Mega",
+        "The Cold Vein"
+      ],
+      "genres": [
+        "hip-hop",
+        "east-coast"
+      ],
+      "canonicalForm": "Cannibal Ox"
+    },
+    {
+      "name": "Tool",
+      "aliases": [
+        "Tool band",
+        "Maynard James Keenan",
+        "Lateralus"
+      ],
+      "genres": [
+        "rock",
+        "progressive",
+        "alternative"
+      ],
+      "canonicalForm": "Tool"
+    },
+    {
+      "name": "The Moments",
+      "aliases": [
+        "Moments",
+        "Ray Goodman & Brown",
+        "Love on a Two-Way Street"
+      ],
+      "genres": [
+        "soul",
+        "r-and-b"
+      ],
+      "canonicalForm": "The Moments"
     }
   ]
 }
