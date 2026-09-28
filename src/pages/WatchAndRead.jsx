@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Youtube, BookOpen, Disc3, TrendingUp, Radio, RefreshCw, ArrowRight, ExternalLink, PlayCircle } from 'lucide-react';
+import { Youtube, BookOpen, Disc3, TrendingUp, Radio, RefreshCw, ArrowRight, ExternalLink, PlayCircle, Mail } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import useLatestVideos from '../hooks/useLatestVideos';
 import VideoCard from '../components/VideoCard';
-import NewsletterCta from '../components/NewsletterCta';
+import { newsletterUrl } from '../components/NewsletterCta';
 import { VIDEO_SERIES } from '../data/playlists';
 import { BLOG_POSTS } from '../data/blog';
 import {
   trackBlogPostClick,
   trackWatchReadPlaylistClick,
   trackWatchReadBrowseAllClick,
+  trackNewsletterClick,
   CLICK_SOURCES,
 } from '../utils/analytics';
 
@@ -38,6 +39,60 @@ function trackPostClick(slug) {
 }
 function trackBrowseAllClick(destination) {
   trackWatchReadBrowseAllClick(destination);
+}
+
+// ── Hero newsletter card ─────────────────────────────────────
+// Compact signup that sits to the right of the WATCH & READ title and wraps
+// underneath it on narrow screens. Built here rather than with the full-width
+// NewsletterCta so the shared component (blog posts, artist pages, homepage,
+// blog index) stays untouched. Same URL helper, same GA4 event, same
+// utm_medium=watch_read as the bottom band it replaced, so beehiiv and GA4
+// numbers continue on one line.
+const NEWSLETTER_URL = newsletterUrl('watch_read');
+
+function HeroNewsletterCard() {
+  return (
+    <div style={{
+      flex: '0 1 380px',
+      padding: '22px 24px', borderRadius: 16,
+      background: 'var(--bg-card)', border: '1px solid rgba(245,158,11,0.3)',
+    }}>
+      <p style={{
+        color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)',
+        letterSpacing: 2, margin: '0 0 8px',
+      }}>
+        FREE WEEKLY NEWSLETTER
+      </p>
+      <h2 style={{
+        fontFamily: 'var(--font-display)', fontSize: 24,
+        letterSpacing: 1, lineHeight: 1.05, margin: '0 0 8px',
+      }}>
+        THIS WEEK IN THE SALES CRATES
+      </h2>
+      <p style={{
+        color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6, margin: '0 0 16px',
+      }}>
+        This week's videos and stories, plus the best record-store sales, once a week. Free, and unsubscribe anytime.
+      </p>
+      <a
+        href={NEWSLETTER_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => trackNewsletterClick(CLICK_SOURCES.WATCH_READ)}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: 8,
+          padding: '12px 22px', borderRadius: 10, fontSize: 14,
+          background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+          color: '#000', fontWeight: 700, textDecoration: 'none',
+          transition: 'opacity 0.2s', whiteSpace: 'nowrap',
+        }}
+        onMouseOver={e => e.currentTarget.style.opacity = '0.85'}
+        onMouseOut={e => e.currentTarget.style.opacity = '1'}
+      >
+        <Mail size={15} /> Join the Free Newsletter
+      </a>
+    </div>
+  );
 }
 
 // ── Section heading helper — consistent with Home.jsx / Blog.jsx style ──
@@ -168,7 +223,14 @@ export default function WatchAndRead() {
         borderBottom: '1px solid var(--border)',
         background: 'linear-gradient(180deg, rgba(245,158,11,0.04) 0%, transparent 100%)',
       }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+        {/* Two columns: title block left, newsletter card right. flexWrap
+            drops the card under the title when the row gets too narrow. */}
+        <div style={{
+          maxWidth: 1280, margin: '0 auto',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          gap: 32, flexWrap: 'wrap',
+        }}>
+          <div style={{ flex: '1 1 420px', minWidth: 0 }}>
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             padding: '5px 14px', borderRadius: 100,
@@ -194,6 +256,9 @@ export default function WatchAndRead() {
           }}>
             Videos, stories, and recurring series from DITSC.
           </p>
+          </div>
+
+          <HeroNewsletterCard />
         </div>
       </section>
 
@@ -247,15 +312,6 @@ export default function WatchAndRead() {
           )}
         </div>
       </section>
-
-      {/* ── NEWSLETTER ───────────────────────────────────────── */}
-      {/* The newsletter recaps these same series, so this is the page where
-          the ask fits best. Sits after the stories, before Browse All. */}
-      <NewsletterCta
-        medium="watch_read"
-        source={CLICK_SOURCES.WATCH_READ}
-        maxWidth={1280}
-      />
 
       {/* ── 4. BROWSE ALL ────────────────────────────────────── */}
       <section style={{ padding: '40px 24px' }}>
