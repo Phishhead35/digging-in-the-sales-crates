@@ -14,5 +14,11 @@
 /newsletter   https://fromthesalescrates.beehiiv.com/subscribe?utm_source=direct&utm_medium=shared_link&utm_campaign=newsletter_signup 302
 /newsletter/  https://fromthesalescrates.beehiiv.com/subscribe?utm_source=direct&utm_medium=shared_link&utm_campaign=newsletter_signup 302
 
+# Pinterest profile short links (302 so the destination can change later)
+/shop        https://www.pinterest.com/digginginthesalescrates/  302
+/shop/       https://www.pinterest.com/digginginthesalescrates/  302
+/pinterest   https://www.pinterest.com/digginginthesalescrates/  302
+/pinterest/  https://www.pinterest.com/digginginthesalescrates/  302
+
 # SPA fallback (must stay LAST; first match wins)
 /* /index.html 200
