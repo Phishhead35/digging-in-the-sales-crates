@@ -326,7 +326,7 @@ export default function BlogPost() {
             }}>
               Search across Discogs, eBay, CDandLP, and Turntable Lab at once and find the lowest price on any record.
             </p>
-            <Link to="/aggregator" style={{
+            <Link to="/search" style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               padding: '14px 32px', borderRadius: 12, fontSize: 15,
               background: 'linear-gradient(135deg, #f59e0b, #d97706)',

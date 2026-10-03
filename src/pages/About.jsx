@@ -212,7 +212,7 @@ export default function About() {
         </p>
         <p style={styles.p}>
           Today one{" "}
-          <Link to="/aggregator" style={styles.inlineLink}>
+          <Link to="/search" style={styles.inlineLink}>
             search
           </Link>{" "}
           checks Discogs, eBay, CDandLP, and Turntable Lab at the same time.

@@ -8,23 +8,23 @@ const faqs = [
     items: [
       {
         q: "What is Digging in the Sales Crates?",
-        a: "Digging in the Sales Crates is a free vinyl price aggregator. You search for a record once and we pull live listings from Discogs, eBay, and CDandLP at the same time, so you can compare prices across all three without jumping between tabs. The tagline says it best: Taking the Dig Out of Digging."
+        a: "Digging in the Sales Crates is a free vinyl price search. You search for a record once and we check Discogs, eBay, CDandLP, and Turntable Lab at the same time, so you can compare prices across all four without jumping between tabs. The tagline says it best: Taking the Dig Out of Digging."
       },
       {
         q: "Can I buy records directly on this site?",
-        a: "No. We don't sell records. When you find a listing you like, you click through to the retailer (Discogs, eBay, or CDandLP) and buy it there. We're the finder, not the seller."
+        a: "No. We don't sell records. When you find a listing you like, you click through to the retailer (Discogs, eBay, CDandLP, or Turntable Lab) and buy it there. We're the finder, not the seller."
       },
       {
         q: "Is it free to use?",
         a: "Yes, completely free. No account required, no paywalls, no subscription. Just search and dig."
       },
       {
-        q: "How does the price aggregator work?",
-        a: "When you search for a record, we query Discogs, eBay, and CDandLP simultaneously and display the results in one place. Listings are live and pulled in real time from each platform. Prices, conditions, and availability are exactly what those sellers are showing right now."
+        q: "How does the price search work?",
+        a: "When you search for a record, we query Discogs, eBay, CDandLP, and Turntable Lab simultaneously and display the results in one place. Listings are live and pulled in real time from each platform. Prices, conditions, and availability are exactly what those sellers are showing right now."
       },
       {
         q: "Where do the prices come from?",
-        a: "Directly from the source platforms via their APIs. Discogs, eBay, and CDandLP each supply their own listing data. We don't set or alter any prices."
+        a: "Directly from the source platforms. Discogs, eBay, CDandLP, and Turntable Lab each supply their own listing data. We don't set or alter any prices."
       },
     ]
   },
@@ -37,7 +37,7 @@ const faqs = [
       },
       {
         q: "Can I filter results by condition or format?",
-        a: "Yes. On the search results page you can filter by source platform (Discogs, eBay, CDandLP), and results display the condition grade listed by each seller. More filter options are on the roadmap."
+        a: "Yes. On the search results page you can filter by source platform (Discogs, eBay, CDandLP, Turntable Lab), and results display the condition grade listed by each seller. More filter options are on the roadmap."
       },
       {
         q: "Can I save records I'm hunting for?",
@@ -185,7 +185,7 @@ export default function FAQ() {
   useSEO({
     title: "FAQ | Digging in the Sales Crates",
     description:
-      "How Digging in the Sales Crates works: searching Discogs, eBay, and CDandLP at once, affiliate links, wishlists, and more.",
+      "How Digging in the Sales Crates works: searching Discogs, eBay, CDandLP, and Turntable Lab at once, affiliate links, wishlists, and more.",
   });
 
   return (

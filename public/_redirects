@@ -20,5 +20,10 @@
 /pinterest   https://www.pinterest.com/digginginthesalescrates/  302
 /pinterest/  https://www.pinterest.com/digginginthesalescrates/  302
 
+# /aggregator retired 2026-10-01; /search is the one search URL.
+# 301 (permanent) so Google moves its signals to /search/.
+/aggregator   /search/  301
+/aggregator/  /search/  301
+
 # SPA fallback (must stay LAST; first match wins)
 /* /index.html 200

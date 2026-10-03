@@ -44,6 +44,18 @@
 //  duplicate these strings on purpose (one sets the live meta tag,
 //  this one bakes it into the static HTML crawlers see), so they
 //  get edited together or crawlers and browsers disagree.
+//
+//  /search CONSOLIDATION (2026-10-01): /aggregator is retired. /search
+//  is the one search URL: it is what every search box already used,
+//  and "aggregator" meant nothing to visitors. /aggregator is no longer
+//  generated here; public/_redirects 301s it to /search/, and every
+//  crawler link below points at /search instead.
+//
+//  INTERNAL LINK SLASHES (2026-10-01): the a() helper now runs every
+//  internal href through urlPath(), so crawler links point straight at
+//  the trailing-slash URL instead of costing Googlebot a 308 hop.
+//  This is the same fix applied to canonicals and the sitemap on
+//  2026-07-28, extended to the links inside page content.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -142,8 +154,12 @@ function renderPage(template, page) {
   return html;
 }
 
+// Internal links (starting with "/") go through urlPath() so they match
+// the trailing-slash URL the host actually serves. External links and
+// anything else pass through untouched.
+const linkHref = (href) => (href.startsWith('/') ? urlPath(href) : href);
 const a = (href, text) =>
-  `<a href="${esc(href)}" style="color:#f59e0b">${esc(text)}</a>`;
+  `<a href="${esc(linkHref(href))}" style="color:#f59e0b">${esc(text)}</a>`;
 const p = (text) => `<p>${esc(text)}</p>`;
 const h1 = (text) => `<h1>${esc(text)}</h1>`;
 
@@ -163,7 +179,7 @@ async function main() {
   const navLinks =
     '<ul>' +
     [
-      ['/aggregator', 'Search vinyl across Discogs, eBay, CDandLP & Turntable Lab'],
+      ['/search', 'Search vinyl across Discogs, eBay, CDandLP & Turntable Lab'],
       ['/deals', 'Current vinyl deals & price alerts'],
       ['/email-parser', 'AI email deal parser'],
       ['/artists', 'Artist & genre pages'],
@@ -188,17 +204,11 @@ async function main() {
         navLinks,
     },
     {
-      path: '/aggregator',
-      title: `Search Vinyl Records | ${SITE}`,
-      description:
-        'Search vinyl records across Discogs, eBay, CDandLP, and Turntable Lab at once. Compare condition, price, and seller, then buy on the marketplace you prefer.',
-      content:
-        h1('Search Vinyl Records') +
-        p('Search any artist, album, or label and see live listings from Discogs, eBay, CDandLP, and Turntable Lab side by side, sorted by price.'),
-    },
-    {
+      // The one search URL. /aggregator was retired 2026-10-01 and now
+      // 301s here (see public/_redirects). /search used to carry
+      // canonical: '/aggregator' and was kept out of the sitemap; both
+      // of those are gone, so it is now a normal indexed page.
       path: '/search',
-      canonical: '/aggregator',
       title: `Search Vinyl Records | ${SITE}`,
       description:
         'Search vinyl records across Discogs, eBay, CDandLP, and Turntable Lab at once. Compare condition, price, and seller, then buy on the marketplace you prefer.',
@@ -305,7 +315,7 @@ async function main() {
         p("Every record has a story. Let's hear this one.") +
         p("I'm Joe Nicholas, and I've been collecting records for almost 30 years. I built Digging in the Sales Crates because I was tired of switching between browser tabs to compare sellers, so I pulled the sites I used most into one search. Today one search checks Discogs, eBay, CDandLP, and Turntable Lab at the same time.") +
         p('DITSC also makes videos and articles about the stories behind the records: samples, flips, reissues, and why a record is worth owning. The search tool and site are free with no account needed, and This Week in the Sales Crates is a free weekly newsletter.') +
-        `<p>${a('/aggregator', 'Search vinyl prices')} · ${a('/watch-read', 'Watch & Read')}</p>`,
+        `<p>${a('/search', 'Search vinyl prices')} · ${a('/watch-read', 'Watch & Read')}</p>`,
     },
     {
       // Phase 2, new. /blog and /blog/:slug (below) are unchanged and still
@@ -366,7 +376,7 @@ async function main() {
           '</ul>'
         : '') +
       p('Compare live listings for these records on Discogs, eBay, CDandLP, and Turntable Lab:') +
-      a('/aggregator', `Search ${entry.name} vinyl`),
+      a('/search', `Search ${entry.name} vinyl`),
   });
   pages.push(...artistEntries.map((e) => artistPage(e, 'artists')));
   pages.push(...genreEntries.map((e) => artistPage(e, 'genres')));
@@ -414,7 +424,7 @@ async function main() {
         `<p><em>${esc(post.series || '')} · ${esc(post.dateDisplay || post.date)}</em></p>` +
         (post.body || []).map(p).join('') +
         `</article><p>${a(NEWSLETTER_URL, 'Join This Week in the Sales Crates, our free weekly newsletter')}</p>` +
-        `<p>${a('/blog', '← All posts')} · ${a('/aggregator', 'Search vinyl prices')}</p>`,
+        `<p>${a('/blog', '← All posts')} · ${a('/search', 'Search vinyl prices')}</p>`,
     }))
   );
 
@@ -437,7 +447,7 @@ async function main() {
     '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     pages
-      .filter((pg) => !pg.canonical) // skip /search (canonical → /aggregator)
+      .filter((pg) => !pg.canonical) // skip any page that canonicals elsewhere (none today)
       // Skip internal/personal pages (noindex: true). /wishlist and /alerts
       // are Disallowed in robots.txt; listing them here triggered the
       // Sep 16, 2026 "Blocked by robots.txt" Search Console warning.

@@ -218,7 +218,7 @@ export default function Artists() {
           }}>
             Search any artist, album, or label directly across Discogs, eBay, CDandLP, and Turntable Lab.
           </p>
-          <Link to="/aggregator" style={{
+          <Link to="/search" style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '14px 32px', borderRadius: 12, fontSize: 15,
             background: 'linear-gradient(135deg, #f59e0b, #d97706)',

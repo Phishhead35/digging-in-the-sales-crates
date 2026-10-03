@@ -574,10 +574,8 @@ export default function Home() {
       />
 
       {/* ── SEARCH CTA (final supporting CTA) ───────────────────────
-          Links to /aggregator, NOT /search. Both routes render
-          SearchResults (see App.jsx). The URL is deliberately unchanged:
-          /aggregator is what Google has crawled and what nav links to.
-          Only the visible wording moved away from "aggregator". */}
+          Links to /search, the one search URL. /aggregator was retired
+          2026-10-01 and 301s to /search/ (see public/_redirects). */}
       <section style={{ padding: SECTION_MAJOR, borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', textAlign: 'center' }}>
           <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 20 }}>
@@ -589,7 +587,7 @@ export default function Home() {
           <p style={{ color: 'var(--text-primary)', fontSize: 15, maxWidth: 480, margin: '0 auto 28px', lineHeight: 1.7 }}>
             Search Discogs, eBay, CDandLP, and Turntable Lab at the same time. Condition graded. Lowest price first. Every time.
           </p>
-          <Link to="/aggregator" className="view-deals-btn" style={{ display: 'inline-flex', fontSize: 15, padding: '14px 32px', borderRadius: 12 }}>
+          <Link to="/search" className="view-deals-btn" style={{ display: 'inline-flex', fontSize: 15, padding: '14px 32px', borderRadius: 12 }}>
             Start Digging <ArrowRight size={16} />
           </Link>
         </div>

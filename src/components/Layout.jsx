@@ -34,11 +34,9 @@ export default function Layout({ children }) {
   // the Phase 2 SEO decision to avoid any redirect/broken-link risk.
   const navLinks = [
     { to: '/',                   label: 'Home',              icon: Home },
-    // Label only. The /aggregator PATH is unchanged on purpose: it is the
-    // URL Google has crawled and the one every internal link points at.
-    // Renaming the route would mean a 301 and another Search Console
-    // validation cycle, right after clearing nine redirect errors.
-    { to: '/aggregator',         label: 'Vinyl Search',      icon: Search },
+    // /search is the one search URL (2026-10-01). /aggregator was retired
+    // and 301s to /search/ via public/_redirects.
+    { to: '/search',             label: 'Vinyl Search',      icon: Search },
     { to: '/artists',            label: 'Artists',           icon: Disc3 },
     { to: '/deals',              label: 'Deals',             icon: TrendingDown },
     { to: '/watch-read',         label: 'Watch & Read',      icon: BookOpen },

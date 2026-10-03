@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useRef } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import ScrollToTop from './components/ScrollToTop';
@@ -43,6 +43,15 @@ const globalStyle = `
 // the footer from jumping up during the (brief) load.
 function RouteFallback() {
   return <div style={{ minHeight: '60vh' }} />;
+}
+
+// /aggregator was retired 2026-10-01. A hard load never reaches this,
+// because public/_redirects 301s /aggregator to /search/ at the edge.
+// This only catches an in-app navigation to the old path (an old link
+// cached in a tab, for example) and keeps any ?q= search with it.
+function AggregatorRedirect() {
+  const { search } = useLocation();
+  return <Navigate to={`/search${search}`} replace />;
 }
 
 // ── Analytics wiring ──────────────────────────────────────────
@@ -108,7 +117,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<SearchResults />} />
-            <Route path="/aggregator" element={<SearchResults />} />
+            <Route path="/aggregator" element={<AggregatorRedirect />} />
             <Route path="/deals" element={<Deals />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/alerts" element={<Alerts />} />
