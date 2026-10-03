@@ -19,12 +19,15 @@ export async function searchDiscogs(query, page = 1, perPage = 20) {
     const res = await fetch(`/api/search-discogs?${params}`);
     if (!res.ok) {
       console.warn(`Discogs search failed: ${res.status}`);
-      return { results: [], pagination: { pages: 1 } };
+      // `error` lets SearchResults tell "Discogs refused" (show a notice,
+      // log it to GA4) apart from "Discogs has nothing for this search".
+      // Before 2026-10-03 both looked identical: an empty list.
+      return { results: [], pagination: { pages: 1 }, error: res.status };
     }
     return res.json();
   } catch (err) {
     console.warn('Discogs unavailable:', err.message);
-    return { results: [], pagination: { pages: 1 } };
+    return { results: [], pagination: { pages: 1 }, error: 'network' };
   }
 }
 

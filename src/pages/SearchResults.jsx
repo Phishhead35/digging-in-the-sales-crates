@@ -398,6 +398,10 @@ export default function SearchResults() {
   // deferredSource drives the actual fetch — React defers it until after paint.
   const [activeSource, setActiveSource] = useState('all');
   const [searchSuggestion, setSearchSuggestion] = useState(null);
+  // True when Discogs refused this search (usually a 429 rate limit).
+  // Drives the "Discogs is busy" notice so a missing Discogs column is
+  // never mistaken for "Discogs has nothing".
+  const [discogsDown, setDiscogsDown] = useState(false);
   const lastSearchedRef = useRef('');
 
   // Live "as you type" suggestions, shared with the homepage search box
@@ -450,6 +454,7 @@ export default function SearchResults() {
     if (!q) return;
     setLoading(true);
     setError(null);
+    setDiscogsDown(false);
 
     // Per-source counts and wall-clock latency, reported on
     // view_search_results so you can see which marketplace is actually
@@ -463,9 +468,17 @@ export default function SearchResults() {
       if (src === 'all' || src === 'discogs') {
         const data = await searchDiscogs(q, pg, RESULTS_PER_PAGE);
         const items = (data.results || []).map(r => ({ ...r, source: 'discogs' }));
-        // searchDiscogs swallows its own errors and returns an empty
-        // result set, so an empty array here on an 'all' search is the
-        // only signal available that Discogs may have rate-limited (429).
+        // searchDiscogs never throws. On failure it returns an empty list
+        // plus `error` (the HTTP status, or 'network'). Since 2026-10-03
+        // that failure is shown to the visitor and logged as api_error,
+        // instead of silently looking like "Discogs has no results".
+        // The server function already retries a 429 once and falls back to
+        // a saved copy when it has one, so reaching this branch means
+        // Discogs refused AND there was nothing saved for this search.
+        if (data.error) {
+          setDiscogsDown(true);
+          trackApiError('discogs', String(data.error), `Discogs search failed: ${data.error}`);
+        }
         counts.discogs = items.length;
         combined.push(...items);
         if (data.pagination) setTotalPages(data.pagination.pages || 1);
@@ -741,6 +754,32 @@ export default function SearchResults() {
           </span>
         )}
       </div>
+
+      {/* Discogs refused this search (usually its rate limit). Shown on the
+          All and Discogs tabs only. White text on purpose, not muted. */}
+      {!loading && discogsDown && query && (activeSource === 'all' || activeSource === 'discogs') && (
+        <div role="status" style={{
+          display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap',
+          padding: '12px 16px', marginBottom: 20, borderRadius: 10,
+          border: '1px solid rgba(245,158,11,0.5)', background: 'rgba(245,158,11,0.08)',
+          color: '#fff', fontSize: 14, lineHeight: 1.5,
+        }}>
+          <AlertCircle size={18} color="var(--amber)" style={{ flexShrink: 0 }} />
+          <span style={{ flex: 1, minWidth: 200 }}>
+            Discogs is busy right now, so its records are missing from these results. Everything else is live.
+          </span>
+          <button
+            type="button"
+            onClick={() => doSearch(query, page, 'all')}
+            style={{
+              padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+              background: 'var(--amber)', color: '#000', border: 'none', cursor: 'pointer',
+            }}
+          >
+            Try again
+          </button>
+        </div>
+      )}
 
       {loading && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(220px, 100%), 1fr))', gap: 20 }}>

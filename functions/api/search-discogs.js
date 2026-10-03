@@ -6,6 +6,17 @@ const KV_TTL_SECONDS = 21600; // 6 hours — bumped from 30 min. Vinyl search re
 // meaningfully hour to hour, and a longer TTL means far fewer live Discogs calls during a
 // traffic spike (viral post), which is what triggered the 429s in the first place.
 
+const STALE_TTL_SECONDS = 2592000; // 30 days. A second, long-lived copy of every successful
+// search, used ONLY when Discogs refuses a request (see "stale fallback" below). Added
+// 2026-10-03 after Discogs returned 429 on every fresh search while this whole project had made
+// about 31 outbound calls in 24 hours. Discogs counts its 60/minute limit by network address,
+// and Cloudflare's outbound addresses are shared with other sites, so we can be throttled by
+// traffic that isn't ours. A slightly old result beats an empty Discogs column.
+
+const RETRY_DELAY_MS = 1500; // One retry on 429 after this pause. Discogs uses a rolling
+// 60-second window, so a short wait sometimes clears it. Only one retry: a 429 that survives
+// it is a real throttle, and hammering it just extends the window.
+
 const ERROR_TTL_SECONDS = 60; // Cache a 429/error response briefly so a rate-limit event doesn't
 // cascade — every repeat search for the same term in this window gets served the cached error
 // instantly instead of re-hitting Discogs and adding to the pile-on.
@@ -40,6 +51,18 @@ export async function onRequestGet(context) {
     const normalizedQuery = query.toLowerCase().trim();
     const kvKey = `discogs:${normalizedQuery}:${page}:${perPage}`;
     const errorKvKey = `discogs-error:${normalizedQuery}:${page}:${perPage}`;
+    const staleKvKey = `discogs-stale:${normalizedQuery}:${page}:${perPage}`;
+
+    // Stale fallback: when Discogs refuses, serve the last good copy if we have one.
+    // Same JSON shape as a live result, so the page needs no special handling;
+    // X-Cache: STALE marks it for anyone checking the response.
+    const serveStale = async () => {
+      const stale = await env.DITSC_CACHE.get(staleKvKey);
+      if (!stale) return null;
+      return new Response(stale, {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'X-Cache': 'STALE' },
+      });
+    };
 
     // Check KV cache — globally consistent, no cold-edge-node misses
     const cached = await env.DITSC_CACHE.get(kvKey);
@@ -54,6 +77,8 @@ export async function onRequestGet(context) {
     // Discogs and extending the rate-limit window.
     const cachedError = await env.DITSC_CACHE.get(errorKvKey);
     if (cachedError) {
+      const staleResponse = await serveStale();
+      if (staleResponse) return staleResponse;
       const parsed = JSON.parse(cachedError);
       return new Response(JSON.stringify(parsed.body), {
         status: parsed.status,
@@ -71,15 +96,19 @@ export async function onRequestGet(context) {
       per_page: perPage,
     });
 
-    const res = await fetch(
-      `https://api.discogs.com/database/search?${params}`,
-      {
+    const callDiscogs = () =>
+      fetch(`https://api.discogs.com/database/search?${params}`, {
         headers: {
           Authorization: `Discogs token=${token}`,
           'User-Agent': 'DiggingInTheSalesCrates/1.0',
         },
-      }
-    );
+      });
+
+    let res = await callDiscogs();
+    if (res.status === 429) {
+      await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+      res = await callDiscogs();
+    }
 
     if (!res.ok) {
       const err = await res.text();
@@ -94,6 +123,9 @@ export async function onRequestGet(context) {
         )
       );
 
+      const staleResponse = await serveStale();
+      if (staleResponse) return staleResponse;
+
       return new Response(JSON.stringify(errorPayload), {
         status: res.status,
         headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
@@ -105,7 +137,10 @@ export async function onRequestGet(context) {
 
     // Write to KV with TTL — fire-and-forget so we don't add latency
     context.waitUntil(
-      env.DITSC_CACHE.put(kvKey, dataStr, { expirationTtl: KV_TTL_SECONDS })
+      Promise.all([
+        env.DITSC_CACHE.put(kvKey, dataStr, { expirationTtl: KV_TTL_SECONDS }),
+        env.DITSC_CACHE.put(staleKvKey, dataStr, { expirationTtl: STALE_TTL_SECONDS }),
+      ])
     );
 
     return new Response(dataStr, {
