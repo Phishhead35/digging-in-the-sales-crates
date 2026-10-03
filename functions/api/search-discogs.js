@@ -17,6 +17,15 @@ const RETRY_DELAY_MS = 1500; // One retry on 429 after this pause. Discogs uses 
 // 60-second window, so a short wait sometimes clears it. Only one retry: a 429 that survives
 // it is a real throttle, and hammering it just extends the window.
 
+// Backup route (added 2026-10-03). When Discogs answers this Cloudflare function with a 429,
+// the same search is sent to a small Supabase Edge Function that calls Discogs from Supabase's
+// network instead of Cloudflare's shared addresses. Supabase project: ditsc-discogs-relay.
+// It only runs when DISCOGS_RELAY_KEY is set in Cloudflare (same value as RELAY_KEY in the
+// Supabase project's Edge Function secrets). Unset = this route is skipped entirely, so the
+// function behaves exactly as before.
+const RELAY_URL = 'https://wdujcqnbhoagospopmvl.supabase.co/functions/v1/discogs-search';
+const RELAY_TIMEOUT_MS = 8000; // A slow backup is worse than a fast "busy" notice.
+
 const ERROR_TTL_SECONDS = 60; // Cache a 429/error response briefly so a rate-limit event doesn't
 // cascade — every repeat search for the same term in this window gets served the cached error
 // instantly instead of re-hitting Discogs and adding to the pile-on.
@@ -104,10 +113,35 @@ export async function onRequestGet(context) {
         },
       });
 
+    // Returns the relay's Response, or null if the relay is not configured,
+    // times out, or cannot be reached. Never throws.
+    const callRelay = async () => {
+      if (!env.DISCOGS_RELAY_KEY) return null;
+      try {
+        const relayParams = new URLSearchParams({ q: query, page: page, per_page: perPage });
+        return await fetch(`${RELAY_URL}?${relayParams}`, {
+          headers: { 'x-relay-key': env.DISCOGS_RELAY_KEY },
+          signal: AbortSignal.timeout(RELAY_TIMEOUT_MS),
+        });
+      } catch (relayErr) {
+        return null;
+      }
+    };
+
+    // Order on a 429: backup route first (different network, so it is the
+    // likeliest to succeed and costs no waiting), then one direct retry after
+    // RETRY_DELAY_MS only if the backup route did not come back OK.
+    let via = 'direct';
     let res = await callDiscogs();
     if (res.status === 429) {
-      await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
-      res = await callDiscogs();
+      const relayRes = await callRelay();
+      if (relayRes && relayRes.ok) {
+        res = relayRes;
+        via = 'relay';
+      } else {
+        await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+        res = await callDiscogs();
+      }
     }
 
     if (!res.ok) {
@@ -144,7 +178,7 @@ export async function onRequestGet(context) {
     );
 
     return new Response(dataStr, {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': 'MISS' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json', 'X-Cache': via === 'relay' ? 'RELAY' : 'MISS' },
     });
 
   } catch (err) {
