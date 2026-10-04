@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { track, trackNewsletterClick, CLICK_SOURCES } from "../utils/analytics";
 import useSEO from "../hooks/useSEO";
 import { newsletterUrl } from "../components/NewsletterCta";
+import { ABOUT } from "../data/about";
 
 // ── Links waiting on setup ─────────────────────────────────────
 // Built by the shared helper in src/components/NewsletterCta.jsx, so
@@ -15,22 +16,10 @@ const NEWSLETTER_URL = newsletterUrl("about");
 // is hidden entirely.
 const SUPPORT_URL = "";
 
-// Where the family record collections came from. Order here is the
-// order the cards render.
-const EARLY_CRATES = [
-  {
-    who: "Mom's records",
-    what: "Jazz, R&B, soul, and funk, with plenty of Beatles in the rotation.",
-  },
-  {
-    who: "My uncle's records",
-    what: "He DJed on his college radio station, so through him I heard a lot of 80s new wave, punk, and metal.",
-  },
-  {
-    who: "Dad's records",
-    what: "Prog rock and classic rock. King Crimson, Frank Zappa (still not sure what genre he really belongs in), and a steady run of the classics.",
-  },
-];
+// Page text (bio, the three family crates, section copy) lives in
+// src/data/about.js since 2026-10-04, so the static HTML crawlers read
+// (scripts/prerender.mjs) carries the full bio, not a shorter summary.
+// Edit the words there; layout and styling stay here.
 
 const AMBER = "#f59e0b";
 
@@ -156,6 +145,19 @@ const styles = {
   },
 };
 
+// Renders one paragraph's "parts": plain text, an internal link, or italics.
+function Parts({ parts }) {
+  return parts.map((part, i) => {
+    if (typeof part === "string") return <React.Fragment key={i}>{part}</React.Fragment>;
+    if (part.em) return <em key={i}>{part.em}</em>;
+    return (
+      <Link key={i} to={part.href} style={styles.inlineLink}>
+        {part.text}
+      </Link>
+    );
+  });
+}
+
 export default function About() {
   // SEO strings below are duplicated in scripts/prerender.mjs, which bakes
   // them into the static HTML crawlers receive (plus the AboutPage/Person
@@ -176,25 +178,20 @@ export default function About() {
     <div style={styles.page}>
       <header style={styles.hero}>
         <div style={styles.heroInner}>
-          <h1 style={styles.h1}>About Digging in the Sales Crates</h1>
-          <p style={styles.mission}>Every record has a story. Let's hear this one.</p>
+          <h1 style={styles.h1}>{ABOUT.title}</h1>
+          <p style={styles.mission}>{ABOUT.mission}</p>
         </div>
       </header>
 
       <main style={styles.body}>
-        <p style={styles.p}>
-          I'm Joe Nicholas, and I've been collecting records for almost 30 years. Before that
-          it was CDs. I got into vinyl because I wanted to learn how to DJ and make beats. I
-          never really learned either one, but I stayed for the sound. Records have a warmth
-          that CDs always missed.
-        </p>
-        <p style={styles.p}>
-          The music was around long before I started buying it. Three collections shaped what
-          I listen to, and probably why this site covers so much ground.
-        </p>
+        {ABOUT.intro.map((parts, i) => (
+          <p key={i} style={styles.p}>
+            <Parts parts={parts} />
+          </p>
+        ))}
 
         <div style={styles.crateGrid}>
-          {EARLY_CRATES.map((c) => (
+          {ABOUT.crates.map((c) => (
             <div key={c.who} style={styles.crate}>
               <p style={styles.crateWho}>{c.who}</p>
               <p style={styles.crateWhat}>{c.what}</p>
@@ -202,47 +199,16 @@ export default function About() {
           ))}
         </div>
 
-        <h2 style={styles.h2}>Why I built it</h2>
-        <p style={styles.p}>
-          I wanted as many sellers as possible in front of me when I searched for a record.
-          Instead I was jumping between browser tabs, checking one site, then the next, then
-          the next. So I built a search that pulled the sites I used most into one place.
-          Then it hit me that I probably wasn't the only person who hated doing this, so I
-          built a website around it.
-        </p>
-        <p style={styles.p}>
-          Today one{" "}
-          <Link to="/search" style={styles.inlineLink}>
-            search
-          </Link>{" "}
-          checks Discogs, eBay, CDandLP, and Turntable Lab at the same time.
-        </p>
-
-        <h2 style={styles.h2}>More than a search box</h2>
-        <p style={styles.p}>
-          Along the way DITSC grew into something bigger than price comparison. I make videos
-          and write articles about the stories behind the records: where a sample came from,
-          who flipped it, and why a reissue matters. Plenty of sites can tell you what a
-          record is and what it costs. I want to tell you why it's worth owning. You can
-          find all of it on{" "}
-          <Link to="/watch-read" style={styles.inlineLink}>
-            Watch &amp; Read
-          </Link>
-          .
-        </p>
-
-        <h2 style={styles.h2}>Free, no sign-up</h2>
-        <p style={styles.p}>
-          The search tool and everything on this site are free, with no account needed. If
-          you want the stories delivered, <em>This Week in the Sales Crates</em> is a free
-          weekly newsletter. It covers the week's Wu-Wednesday, Sample DNA, and Throwback
-          Thursday picks, plus the best sales I've spotted from record stores. It's optional;
-          the site works exactly the same whether you subscribe or not.
-        </p>
-        <p style={styles.p}>
-          Some store links earn a small commission, which never changes what shows up or what
-          order it shows up in.
-        </p>
+        {ABOUT.sections.map((section) => (
+          <React.Fragment key={section.heading}>
+            <h2 style={styles.h2}>{section.heading}</h2>
+            {section.paragraphs.map((parts, i) => (
+              <p key={i} style={styles.p}>
+                <Parts parts={parts} />
+              </p>
+            ))}
+          </React.Fragment>
+        ))}
 
         {(NEWSLETTER_URL || SUPPORT_URL) && (
           <div style={styles.ctaRow}>
@@ -278,11 +244,11 @@ export default function About() {
           </p>
         )}
 
-        <p style={styles.signoff}>See you in the crates.</p>
+        <p style={styles.signoff}>{ABOUT.signoff}</p>
         <p style={styles.p}>
-          Questions or a record story of your own?{" "}
-          <a href="mailto:hello@digginginthesalescrates.com" style={styles.inlineLink}>
-            hello@digginginthesalescrates.com
+          {ABOUT.contactLead}{" "}
+          <a href={`mailto:${ABOUT.email}`} style={styles.inlineLink}>
+            {ABOUT.email}
           </a>
         </p>
       </main>

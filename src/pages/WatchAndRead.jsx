@@ -208,7 +208,7 @@ function StoryCard({ post }) {
 export default function WatchAndRead() {
   useSEO({
     title: 'Watch & Read | Digging in the Sales Crates',
-    description: 'Videos, stories, and recurring series from DITSC — the latest YouTube uploads, weekly playlist series, and written vinyl-collecting guides.',
+    description: 'Videos, stories, and recurring series from DITSC: the latest YouTube uploads, weekly playlist series, and written vinyl-collecting guides.',
   });
 
   const videos = useLatestVideos();

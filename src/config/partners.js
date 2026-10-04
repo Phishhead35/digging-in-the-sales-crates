@@ -76,7 +76,10 @@ export const PARTNERS = [
     status: 'live',
     network: 'eBay Partner Network',
     monetized: 'yes',
-    surfaces: ['search', 'wishlist', 'blog', 'artist'],
+    // 'home' added 2026-10-04: the Planet Records card in Shops We Dig has
+    // an eBay store button carrying this campid, so the homepage needs the
+    // eBay disclosure too (it had none before).
+    surfaces: ['home', 'search', 'wishlist', 'blog', 'artist'],
     params: {
       mkevt: '1',
       mkcid: '1',
@@ -125,7 +128,9 @@ export const PARTNERS = [
     advertiserId: '83661',
     publisherId: '2823694',
     monetized: 'yes',
-    surfaces: ['home', 'deals'],
+    // 'home' removed 2026-10-04: Joe confirmed Retrolife appears only on
+    // the Deals page, not the homepage.
+    surfaces: ['deals'],
     // Awin shortlink currently live on the Deals page. The long form below
     // is the same tracking link unshortened; both credit publisher 2823694
     // against advertiser 83661. The shortlink is what ships, because it is

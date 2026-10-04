@@ -8,6 +8,8 @@ import VideoCard from '../components/VideoCard';
 import SearchTypeahead from '../components/SearchTypeahead';
 import NewsletterCta from '../components/NewsletterCta';
 import { MA_STORES, RINH_STORES } from '../data/partnerStores';
+import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
+import { isMonetized } from '../config/partners';
 import {
   trackStoreClick as analyticsStoreClick,
   trackWatchReadClick,
@@ -20,13 +22,11 @@ const TRENDING_SEARCHES = [
   'J Dilla', 'Pete Rock', 'Nas Illmatic', 'De La Soul',
 ];
 
-// Latest deals preview — static placeholder, replace with live data from your API
-const DEALS_PREVIEW = [
-  { title: 'Herbie Hancock – Head Hunters', store: 'Discogs', price: '$12.99', was: '$24.99', condition: 'VG+' },
-  { title: 'Gang Starr – Step in the Arena', store: 'Discogs', price: '$18.50', was: '$32.00', condition: 'VG' },
-  { title: 'A Tribe Called Quest – Midnight Marauders', store: 'eBay', price: '$21.00', was: '$40.00', condition: 'NM' },
-  { title: 'MF DOOM – Mm..Food', store: 'ADamnShame', price: '$29.99', was: '$55.00', condition: 'VG+' },
-];
+// "Fresh in the Crates" used to render a hardcoded DEALS_PREVIEW array of
+// four made-up deals (invented prices like "$12.99, was $24.99") presented
+// as real. Removed 2026-10-04. The section now points to the Deals page and
+// the Friday newsletter. Next step (Joe's call): feed it from the weekly
+// deal log the newsletter workflow already builds, so it shows real sales.
 
 const VIDEO_CARD_COLORS = ['#f59e0b', '#2ec4b6', '#e63946'];
 
@@ -121,10 +121,14 @@ function StoreCard({ store }) {
             style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'rgba(245,158,11,0.08)' }}>
             Discogs →
           </a>
-          <a href={store.ebayUrl} target="_blank" rel="noopener noreferrer"
+          {/* eBay store links carry the eBay Partner Network campid, so they
+              earn a commission: badge it and mark the link sponsored, the
+              same as eBay links everywhere else (2026-10-04). */}
+          <a href={store.ebayUrl} target="_blank" rel="sponsored nofollow noopener noreferrer"
             onClick={() => trackStoreClick(store.name, store.ebayUrl)}
-            style={{ fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'transparent' }}>
+            style={{ display: 'inline-flex', alignItems: 'center', fontSize: 12, color: 'var(--amber)', fontWeight: 600, textDecoration: 'none', padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(245,158,11,0.4)', background: 'transparent' }}>
             eBay →
+            {isMonetized('ebay') && <AffiliateBadge spaced />}
           </a>
         </div>
       </div>
@@ -404,6 +408,14 @@ export default function Home() {
             <p style={{ color: 'var(--text-primary)', fontSize: 15, marginTop: 8, maxWidth: 560 }}>
               Hand-picked independent stores worth your time and money. These are the real ones.
             </p>
+            {/* Disclosure for the affiliate links in this section (today, the
+                eBay store button on Planet Records). Built from partners.js,
+                so it names exactly the programs linked on the homepage and
+                disappears if none are. Added 2026-10-04: the homepage had no
+                disclosure at all before. */}
+            <div style={{ marginTop: 10, maxWidth: 560 }}>
+              <AffiliateDisclosure variant="compact" surface="home" />
+            </div>
           </div>
 
           {/* Massachusetts */}
@@ -528,36 +540,28 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Phase 2: these cards are still static data (see DEALS_PREVIEW
-              above), so no "updated X ago" timestamp is added — that would be
-              misleading. This disclosure line makes the static nature
-              explicit instead. Remove/replace only once this section is
-              wired to a live data source. */}
-          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 24, maxWidth: 560 }}>
-            Recent vinyl deals worth checking out. Prices and availability may change.
-          </p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 14 }}>
-            {DEALS_PREVIEW.map((deal) => (
-              <div key={deal.title} style={{
-                background: 'var(--bg-card)', border: '1px solid var(--border)',
-                borderRadius: 12, padding: '16px 18px',
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
-              }}>
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {deal.title}
-                  </div>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                    {deal.store} · {deal.condition}
-                  </div>
-                </div>
-                <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--amber)' }}>{deal.price}</div>
-                  <div style={{ fontSize: 10, color: 'var(--text-muted)', textDecoration: 'line-through' }}>{deal.was}</div>
-                </div>
-              </div>
-            ))}
+          {/* Pointer, not product cards: until this section reads real deal
+              data, it sends people to the two places that have it. The
+              newsletter signup sits right below this section. */}
+          <div style={{
+            background: 'var(--bg-card)', border: '1px solid var(--border)',
+            borderRadius: 12, padding: '22px 24px', marginTop: 12,
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            gap: 20, flexWrap: 'wrap',
+          }}>
+            <p style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1.6, margin: 0, maxWidth: 640, flex: '1 1 320px' }}>
+              Real sales, checked by hand. The Deals page has the stores and sales we trust
+              right now, and every Friday the free newsletter rounds up the best record sales
+              we found that week.
+            </p>
+            <Link to="/deals" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              padding: '12px 22px', borderRadius: 10, fontSize: 14,
+              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+              color: '#000', fontWeight: 700, textDecoration: 'none', flexShrink: 0,
+            }}>
+              Browse the Deals page <ArrowRight size={14} />
+            </Link>
           </div>
         </div>
       </section>

@@ -61,6 +61,16 @@
 //  src/data/guides.js, the same file GuidePage.jsx renders from, so
 //  this HTML and the live page share one copy of the text. Adding a
 //  guide there adds its static HTML and sitemap entry here.
+//
+//  FULL CRAWLER CONTENT (2026-10-04): the FAQ, About, homepage, Local
+//  Shops and Watch & Read pages used to give crawlers one or two
+//  sentences while visitors saw full pages. Each now carries the same
+//  words people see, read from the same files the site renders from:
+//  src/data/faq.js, src/data/about.js, src/data/partnerStores.js,
+//  src/data/playlists.js and src/data/blog. Affiliate disclosures on
+//  home, search, deals, artist and blog pages are built from
+//  src/config/partners.js, the same rules the visible notices follow.
+//  Rule: never put text here that a visitor can't see on that page.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -82,6 +92,10 @@ const NEWSLETTER_URL =
   '?utm_source=website&utm_medium=blog&utm_campaign=newsletter_signup';
 // Guide pages use utm_medium=guide, matching newsletterUrl('guide') in
 // GuidePage.jsx.
+// About page uses utm_medium=about, matching newsletterUrl('about') in About.jsx.
+const NEWSLETTER_ABOUT_URL =
+  'https://fromthesalescrates.beehiiv.com/subscribe' +
+  '?utm_source=website&utm_medium=about&utm_campaign=newsletter_signup';
 const NEWSLETTER_GUIDE_URL =
   'https://fromthesalescrates.beehiiv.com/subscribe' +
   '?utm_source=website&utm_medium=guide&utm_campaign=newsletter_signup';
@@ -179,10 +193,35 @@ const h1 = (text) => `<h1>${esc(text)}</h1>`;
 // or the newsletter link.
 const guidePart = (part) => {
   if (typeof part === 'string') return esc(part);
+  if (part.em) return `<em>${esc(part.em)}</em>`;
   if (part.newsletter) return a(NEWSLETTER_GUIDE_URL, part.text);
   return a(part.href, part.text);
 };
 const guideParts = (parts) => parts.map(guidePart).join('');
+// ── Affiliate disclosure, mirroring <AffiliateDisclosure surface=...> ──
+// Same rule as the visible notice: name only the monetized partners that
+// partners.js says appear on this surface, add Amazon's own sentence only
+// where Amazon links appear, and render nothing where nothing earns.
+// AMAZON_SENTENCE must match AMAZON_DISCLOSURE_TEXT in
+// src/components/AffiliateDisclosure.jsx (a JSX file Node can't import).
+const AMAZON_SENTENCE = 'As an Amazon Associate I earn from qualifying purchases.';
+const listNames = (names) =>
+  names.length <= 1
+    ? names.join('')
+    : names.length === 2
+      ? `${names[0]} and ${names[1]}`
+      : `${names.slice(0, -1).join(', ')}, and ${names[names.length - 1]}`;
+let PARTNER_CFG = null; // set in main() from src/config/partners.js
+const disclosure = (surface) => {
+  if (!PARTNER_CFG) return '';
+  const partners = PARTNER_CFG.monetizedOnSurface(surface);
+  if (partners.length === 0) return '';
+  const amazon = PARTNER_CFG.requiresOwnDisclosureOnSurface(surface) ? ` ${AMAZON_SENTENCE}` : '';
+  return p(
+    `Links to ${listNames(partners.map((x) => x.name))} are affiliate links. If you buy through them we may earn a commission, at no extra cost to you. It never changes what we show you or how results are ordered.${amazon}`
+  );
+};
+
 const guideBlocks = (blocks) =>
   blocks
     .map((block) =>
@@ -202,6 +241,28 @@ async function main() {
   const { BLOG_POSTS } = await loadDataModule('src/data/blog/index.js');
   const { ARTISTS, GENRES } = await loadDataModule('src/data/artists/index.js');
   const { GUIDES } = await loadDataModule('src/data/guides.js');
+  const { FAQS } = await loadDataModule('src/data/faq.js');
+  const { ABOUT } = await loadDataModule('src/data/about.js');
+  const { MA_STORES, RINH_STORES } = await loadDataModule('src/data/partnerStores.js');
+  const { VIDEO_SERIES } = await loadDataModule('src/data/playlists.js');
+  PARTNER_CFG = await loadDataModule('src/config/partners.js');
+
+  // Latest YouTube uploads, as the live site serves them (the Worker
+  // refreshes this list every 6 hours). Read once at build time, so the
+  // crawler copy is as fresh as the last deploy. Any failure just leaves
+  // the list out; it can never break the build.
+  let latestVideos = [];
+  try {
+    const res = await fetch(`${BASE}/api/latest-videos`, { signal: AbortSignal.timeout(5000) });
+    if (res.ok) {
+      const data = await res.json();
+      latestVideos = (Array.isArray(data.videos) ? data.videos : [])
+        .filter((v) => v && v.url && v.title)
+        .slice(0, 6);
+    }
+  } catch (err) {
+    console.warn(`(latest videos not added to /watch-read: ${err.message})`);
+  }
 
   const pages = [];
 
@@ -230,10 +291,27 @@ async function main() {
       path: '/',
       title: `${SITE} | Vinyl Record Price Comparison`,
       description:
-        'Find the lowest prices on vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Taking the Dig Out of Digging™ — search rare hip-hop, jazz, and soul LPs in seconds.',
+        'Find the lowest prices on vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Taking the Dig Out of Digging™. Search rare hip-hop, jazz, and soul LPs in seconds.',
       content:
         h1(SITE) +
         p('Taking the Dig Out of Digging. Free vinyl record price comparison: search Discogs, eBay, CDandLP, and Turntable Lab simultaneously and find the lowest price on any record in seconds. No sign-up required.') +
+        // Shops We Dig, the same partner stores the homepage shows.
+        '<h2>Shops We Dig</h2>' +
+        p('Hand-picked independent stores worth your time and money. These are the real ones.') +
+        disclosure('home') +
+        [['Massachusetts', MA_STORES], ['Rhode Island & New Hampshire', RINH_STORES]]
+          .map(
+            ([region, stores]) =>
+              `<h3>${esc(region)}</h3><ul>` +
+              stores
+                .map((st) => `<li><strong>${esc(st.name)}</strong> (${esc(st.type)}, ${esc(st.location)}). ${esc(st.desc)}</li>`)
+                .join('') +
+              '</ul>'
+          )
+          .join('') +
+        p('Own a record store? Get your shop in front of serious collectors: hello@digginginthesalescrates.com') +
+        '<h2>Stop Overpaying for Records</h2>' +
+        p('Search Discogs, eBay, CDandLP, and Turntable Lab at the same time. Condition graded. Lowest price first. Every time.') +
         navLinks,
     },
     {
@@ -247,7 +325,8 @@ async function main() {
         'Search vinyl records across Discogs, eBay, CDandLP, and Turntable Lab at once. Compare condition, price, and seller, then buy on the marketplace you prefer.',
       content:
         h1('Search Vinyl Records') +
-        p('Search any artist, album, or label and see live listings from Discogs, eBay, CDandLP, and Turntable Lab side by side, sorted by price.'),
+        p('Search any artist, album, or label and see live listings from Discogs, eBay, CDandLP, and Turntable Lab side by side, sorted by price.') +
+        disclosure('search'),
     },
     {
       path: '/deals',
@@ -256,7 +335,8 @@ async function main() {
         'Current vinyl record deals, sales, and price alerts from Discogs, eBay, CDandLP, Turntable Lab, and partner record shops in Massachusetts and New England.',
       content:
         h1('Vinyl Deals & Price Alerts') +
-        p('Hand-picked vinyl deals and marketplace sales, updated regularly, plus offers from local partner record shops.'),
+        p('Hand-picked vinyl deals and marketplace sales, updated regularly, plus offers from local partner record shops.') +
+        disclosure('deals'),
     },
     {
       path: '/wishlist',
@@ -272,7 +352,9 @@ async function main() {
       title: `Price Alerts | ${SITE}`,
       description:
         'Set vinyl price alerts and catch deals on the records you want across Discogs, eBay, CDandLP, and Turntable Lab.',
-      content: h1('Price Alerts') + p('Get notified when the records you want hit your target price.'),
+      // Matches the page since 2026-10-04: alerts are saved in the browser
+      // and nothing sends notifications.
+      content: h1('Price Alerts') + p('Save records and target prices, then check them with one tap.'),
     },
     {
       path: '/email-parser',
@@ -291,8 +373,14 @@ async function main() {
       description:
         'Find independent record stores in Massachusetts and New England. Directory of local vinyl shops for crate diggers.',
       content:
-        h1('Local Record Shops') +
-        p('A directory of independent record stores across Massachusetts and New England. Support your local crate.'),
+        // Describes what this page actually does: a live map search. The
+        // partner store directory is on the homepage, so it is linked
+        // there rather than repeated here (visitors don't see it on this
+        // page, and crawler text must match what visitors see).
+        h1('Find Record Shops Near You') +
+        p('Discover independent vinyl shops in your area. Enter your city, neighborhood, or zip code to get started.') +
+        p('Each result links to the shop and gives you directions.') +
+        `<p>${a('/', 'See the partner shops we dig in Massachusetts, Rhode Island, and New Hampshire')}</p>`,
     },
     {
       // Hidden from Google 2026-10-04 until the page has real copy (who it
@@ -312,9 +400,28 @@ async function main() {
       title: `FAQ | ${SITE}`,
       description:
         'How Digging in the Sales Crates works: searching Discogs, eBay, CDandLP, and Turntable Lab at once, affiliate links, wishlists, and more.',
+      // Every question and answer, from src/data/faq.js (the same text the
+      // page shows), plus FAQPage JSON-LD so search engines and AI
+      // assistants can quote the answers directly.
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: FAQS.flatMap((section) =>
+          section.items.map((item) => ({
+            '@type': 'Question',
+            name: item.q,
+            acceptedAnswer: { '@type': 'Answer', text: item.a },
+          }))
+        ),
+      },
       content:
         h1('Frequently Asked Questions') +
-        p('How the site works, where listings come from, and how affiliate links keep the tool free.'),
+        p('Everything you need to know about how Digging in the Sales Crates works. Still have a question? Email hello@digginginthesalescrates.com') +
+        FAQS.map(
+          (section) =>
+            `<h2>${esc(section.category)}</h2>` +
+            section.items.map((item) => `<h3>${esc(item.q)}</h3>` + p(item.a)).join('')
+        ).join(''),
     },
     {
       // About page. SEO strings mirror useSEO in src/pages/About.jsx; keep in sync.
@@ -347,12 +454,25 @@ async function main() {
           description: 'Record collector for almost 30 years and creator of Digging in the Sales Crates.',
         },
       },
+      // The full bio from src/data/about.js, the same text the page shows
+      // (this used to be a shorter summary).
       content:
-        h1('About Digging in the Sales Crates') +
-        p("Every record has a story. Let's hear this one.") +
-        p("I'm Joe Nicholas, and I've been collecting records for almost 30 years. I built Digging in the Sales Crates because I was tired of switching between browser tabs to compare sellers, so I pulled the sites I used most into one search. Today one search checks Discogs, eBay, CDandLP, and Turntable Lab at the same time.") +
-        p('DITSC also makes videos and articles about the stories behind the records: samples, flips, reissues, and why a record is worth owning. The search tool and site are free with no account needed, and This Week in the Sales Crates is a free weekly newsletter.') +
-        `<p>${a('/search', 'Search vinyl prices')} · ${a('/watch-read', 'Watch & Read')}</p>`,
+        h1(ABOUT.title) +
+        p(ABOUT.mission) +
+        ABOUT.intro.map((parts) => `<p>${guideParts(parts)}</p>`).join('') +
+        '<ul>' +
+        ABOUT.crates.map((c) => `<li><strong>${esc(c.who)}</strong>: ${esc(c.what)}</li>`).join('') +
+        '</ul>' +
+        ABOUT.sections
+          .map(
+            (sec) =>
+              `<h2>${esc(sec.heading)}</h2>` +
+              sec.paragraphs.map((parts) => `<p>${guideParts(parts)}</p>`).join('')
+          )
+          .join('') +
+        `<p>${a(NEWSLETTER_ABOUT_URL, 'Get the free newsletter')}</p>` +
+        p(ABOUT.signoff) +
+        `<p>${esc(ABOUT.contactLead)} ${a(`mailto:${ABOUT.email}`, ABOUT.email)}</p>`,
     },
     {
       // Phase 2, new. /blog and /blog/:slug (below) are unchanged and still
@@ -360,12 +480,30 @@ async function main() {
       path: '/watch-read',
       title: `Watch & Read | ${SITE}`,
       description:
-        'Videos, stories, and recurring series from DITSC — the latest YouTube uploads, weekly playlist series, and written vinyl-collecting guides.',
+        'Videos, stories, and recurring series from DITSC: the latest YouTube uploads, weekly playlist series, and written vinyl-collecting guides.',
       content:
+        // Same three sections the page shows: latest uploads (as served
+        // by /api/latest-videos at build time), the weekly series from
+        // src/data/playlists.js, and the written stories.
         h1('Watch & Read') +
         p('Videos, stories, and recurring series from DITSC.') +
-        p('Latest YouTube uploads, weekly series like Sample DNA and Wu-Tang Wednesday, and written vinyl-collecting guides.') +
-        `<p>${a('/blog', 'Browse written stories')} · ${a('https://www.youtube.com/@digginginthesalescrates', 'Visit the YouTube channel')}</p>`,
+        (latestVideos.length
+          ? '<h2>Latest from DITSC</h2><ul>' +
+            latestVideos.map((v) => `<li>${a(v.url, v.title)}</li>`).join('') +
+            '</ul>'
+          : '') +
+        '<h2>Recurring Video Series</h2><ul>' +
+        VIDEO_SERIES.map(
+          (sr) => `<li>${a(sr.playlistUrl, sr.name)}: ${esc(sr.description || '')}</li>`
+        ).join('') +
+        '</ul>' +
+        '<h2>Written Stories</h2><ul>' +
+        Object.values(BLOG_POSTS)
+          .sort((x, y) => (x.date < y.date ? 1 : -1))
+          .map((post) => `<li>${a(`/blog/${post.slug}`, post.title)}</li>`)
+          .join('') +
+        '</ul>' +
+        `<p>${a('/blog', 'Read all stories')} · ${a('https://www.youtube.com/@digginginthesalescrates', 'Visit the DITSC YouTube channel')}</p>`,
     },
   ];
   pages.push(...STATIC_PAGES);
@@ -433,7 +571,8 @@ async function main() {
           '</ul>'
         : '') +
       p('Compare live listings for these records on Discogs, eBay, CDandLP, and Turntable Lab:') +
-      a('/search', `Search ${entry.name} vinyl`),
+      a('/search', `Search ${entry.name} vinyl`) +
+      disclosure('artist'),
   });
   pages.push(...artistEntries.map((e) => artistPage(e, 'artists')));
   pages.push(...genreEntries.map((e) => artistPage(e, 'genres')));
@@ -480,7 +619,9 @@ async function main() {
         `<article>${h1(post.title)}` +
         `<p><em>${esc(post.series || '')} · ${esc(post.dateDisplay || post.date)}</em></p>` +
         (post.body || []).map(p).join('') +
-        `</article><p>${a(NEWSLETTER_URL, 'Join This Week in the Sales Crates, our free weekly newsletter')}</p>` +
+        `</article>` +
+        disclosure('blog') +
+        `<p>${a(NEWSLETTER_URL, 'Join This Week in the Sales Crates, our free weekly newsletter')}</p>` +
         `<p>${a('/blog', '← All posts')} · ${a('/search', 'Search vinyl prices')}</p>`,
     }))
   );
