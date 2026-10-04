@@ -132,6 +132,24 @@ const GEAR_QUERY = new RegExp(
  */
 const MIN_QUERY_MATCH_RATIO = 0.5;
 
+/**
+ * Floor on the number of words that must match (added 2026-10-04).
+ *
+ * The ratio alone let a two-word search like "suzanne vega" pass anything
+ * matching ONE word, so it pulled in Suzanne Kraft, Alan Vega, Louie Vega
+ * and Death in Vegas. With this floor, a two-word search must match both
+ * words. Effect by number of meaningful words:
+ *   1 word  -> 1 hit (unchanged)
+ *   2 words -> 2 hits (was 1)
+ *   3 words -> 2 hits (unchanged)
+ *   4 words -> 2 hits (unchanged)
+ *   5 words -> 3 hits (unchanged)
+ * "nas it was written" reduces to "nas" + "written", so it now needs both,
+ * which keeps It Was Written and drops other Nas titles. The exact-phrase
+ * rule in filterProducts still passes any title containing the full query.
+ */
+const MIN_QUERY_MATCH_FLOOR = 2;
+
 const STOPWORDS = new Set([
   'the', 'a', 'an', 'and', 'or', 'of', 'in', 'on', 'at', 'to', 'for', 'by',
   'it', 'is', 'was', 'were', 'be', 'with', 'from', 'this', 'that',
@@ -174,7 +192,10 @@ function matchesToken(hay, token) {
 function filterProducts(products, query) {
   const tokens = queryTokens(query);
   const gearWanted = GEAR_QUERY.test(query);
-  const needed = Math.max(1, Math.ceil(tokens.length * MIN_QUERY_MATCH_RATIO));
+  const needed = Math.max(
+    Math.min(tokens.length, MIN_QUERY_MATCH_FLOOR),
+    Math.ceil(tokens.length * MIN_QUERY_MATCH_RATIO)
+  );
   const phrase = String(query).toLowerCase().trim();
 
   return products.filter((p) => {

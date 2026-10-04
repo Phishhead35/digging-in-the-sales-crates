@@ -185,9 +185,10 @@ export function marketplaceFromUrl(url) {
   if (u.includes('discogs.com')) return 'discogs';
   if (u.includes('cdandlp.com')) return 'cdandlp';
   if (u.includes('turntablelab.com')) return 'turntablelab';
-  // Live affiliate as of 2026-09-21. Previously rolled up into
+  // Its own marketplace value since 2026-09-21. Previously rolled up into
   // 'partner_site', which made its clicks indistinguishable from the
-  // Massachusetts shop cards in the Marketplace dimension.
+  // Massachusetts shop cards in the Marketplace dimension. Recordbuilds is a
+  // reciprocal link swap, not an affiliate (see isMonetized below).
   if (u.includes('recordbuilds.com')) return 'recordbuilds';
   if (u.includes('instagram.com')) return 'instagram';
   if (u.includes('facebook.com')) return 'facebook';
@@ -241,24 +242,16 @@ export function isMonetized(url) {
     return 'yes';
   }
 
-  // KNOWN GAP 2026-09-21. Recordbuilds is a LIVE affiliate, but the
-  // homepage card points at
-  //   builder.recordbuilds.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=recordbuilds
-  // with no affiliate parameter, so it falls through to 'utm_only' below.
-  // That classification is CORRECT: it produced all 3 utm_only clicks in
-  // the week of Sep 14-20 and every one of them was unpaid.
-  //
-  // Fix the URL first, then add the rule here so it reports 'yes':
-  //   if (u.includes('recordbuilds.com')) {
-  //     return u.includes('<affiliate-param>=') ? 'yes' : 'NO_LEAK';
-  //   }
-  //
-  // Do NOT instead pass isAffiliate:true on the homepage card. That
-  // override reports 'yes' while the URL is still missing its parameter,
-  // hiding the exact leak this dimension exists to catch.
-  //
-  // Retro Life needs the same treatment once its domain is confirmed; it
-  // is also a live affiliate and currently reports as 'partner_site'.
+  // Recordbuilds (resolved 2026-10-04). It was logged as a live affiliate on
+  // 2026-09-21, and its homepage card reported 'utm_only'. Rereading the
+  // email thread showed it is a reciprocal link swap: DITSC is listed in
+  // their cheap vinyl guide, they get the homepage card, and no commission
+  // was ever part of it. So a click to it is deliberately unmonetized, the
+  // same as Fat Beats, and must not show up in the weekly leak check.
+  // If Recordbuilds ever does start an affiliate program, change this to:
+  //   return u.includes('<affiliate-param>=') ? 'yes' : 'NO_LEAK';
+  if (u.includes('recordbuilds.com')) return 'not_affiliate';
+
   return u.includes('utm_source=') ? 'utm_only' : 'n_a';
 }
 

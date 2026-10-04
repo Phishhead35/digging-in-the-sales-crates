@@ -139,8 +139,10 @@ function renderPage(template, page) {
     html = replaceMeta(html, 'property', 'og:type', page.ogType);
   }
   // Internal/personal pages: override the template's "index, follow".
-  // Google can only read this tag on pages robots.txt does NOT block
-  // (/email-parser). On /wishlist and /alerts it is belt-and-braces.
+  // This tag is what keeps /wishlist, /alerts and /email-parser out of
+  // Google. robots.txt blocks none of them (as of 2026-10-04 it is just
+  // "Allow: /" plus the sitemap), which is what you want: Google can only
+  // obey a noindex tag on a page it is allowed to crawl.
   if (page.noindex) {
     html = replaceMeta(html, 'name', 'robots', 'noindex, follow');
   }
@@ -215,6 +217,8 @@ async function main() {
       ['/local-shops', 'New England record shop directory'],
       ['/faq', 'FAQ'],
       ['/about', 'About Digging in the Sales Crates'],
+      // Guide pages, from src/data/guides.js (2026-10-04).
+      ...GUIDES.map((g) => [g.path, g.title]),
     ]
       .map(([href, text]) => `<li>${a(href, text)}</li>`)
       .join('') +
@@ -496,10 +500,12 @@ async function main() {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     pages
       .filter((pg) => !pg.canonical) // skip any page that canonicals elsewhere (none today)
-      // Skip internal/personal pages (noindex: true). /wishlist and /alerts
-      // are Disallowed in robots.txt; listing them here triggered the
-      // Sep 16, 2026 "Blocked by robots.txt" Search Console warning.
-      // /email-parser is an internal tool and should never be submitted.
+      // Skip internal/personal pages (noindex: true): /wishlist, /alerts
+      // and /email-parser. Listing them here back when robots.txt blocked
+      // them triggered the Sep 16, 2026 "Blocked by robots.txt" Search
+      // Console warning. robots.txt no longer blocks anything, but these
+      // pages still carry noindex, so submitting them would only produce
+      // "Excluded by noindex" rows.
       .filter((pg) => !pg.noindex)
       .map(
         (pg) =>

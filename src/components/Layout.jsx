@@ -4,6 +4,7 @@ import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Sta
 import FollowUs from './FollowUs';
 import { AffiliateDisclosure } from './AffiliateDisclosure';
 import { trackNavClick, trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
+import { GUIDES } from '../data/guides';
 
 export default function Layout({ children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -264,6 +265,25 @@ export default function Layout({ children }) {
                 onClick={() => trackNavClick(label, to, 'footer')}
                 style={{ fontSize: 11, color: 'var(--text-primary)', textDecoration: 'none' }}>
                 {label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Guide pages (2026-10-04). Built from src/data/guides.js, so a
+              new guide shows up here automatically. Puts every guide one
+              click from any page, for visitors and for crawlers. */}
+          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
+            <span style={{
+              fontSize: 10, color: 'var(--amber)', fontFamily: 'var(--font-mono)',
+              letterSpacing: 2,
+            }}>
+              GUIDES
+            </span>
+            {GUIDES.map((g) => (
+              <Link key={g.slug} to={g.path}
+                onClick={() => trackNavClick(g.title, g.path, 'footer')}
+                style={{ fontSize: 11, color: 'var(--text-primary)', textDecoration: 'none' }}>
+                {g.title}
               </Link>
             ))}
           </div>
