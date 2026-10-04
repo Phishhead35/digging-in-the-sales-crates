@@ -9,6 +9,7 @@ import {
   installErrorTracking,
   installScrollTracking,
 } from './utils/analytics';
+import { GUIDES } from './data/guides';
 
 // ── Route-level code splitting ────────────────────────────────
 // Home stays eager (it's the LCP-critical landing page).
@@ -31,6 +32,9 @@ const BlogPost = lazy(() => import('./pages/BlogPost'));
 // content nav destination. /blog and /blog/:slug stay live and indexed
 // (see prerender.mjs) — they're just no longer linked from primary nav.
 const WatchAndRead = lazy(() => import('./pages/WatchAndRead'));
+// Guide pages (2026-10-03): one component, one route per entry in
+// src/data/guides.js. Adding a guide there adds its route here too.
+const GuidePage = lazy(() => import('./pages/GuidePage'));
 
 // box-sizing is set in index.css; overflow-x and img/video/iframe rules are kept here
 // because they use !important to override any inline styles set by third-party scripts.
@@ -132,6 +136,9 @@ export default function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/watch-read" element={<WatchAndRead />} />
+            {GUIDES.map((g) => (
+              <Route key={g.slug} path={g.path} element={<GuidePage slug={g.slug} />} />
+            ))}
           </Routes>
         </Suspense>
       </Layout>

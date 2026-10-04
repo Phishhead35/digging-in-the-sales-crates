@@ -56,6 +56,11 @@
 //  the trailing-slash URL instead of costing Googlebot a 308 hop.
 //  This is the same fix applied to canonicals and the sitemap on
 //  2026-07-28, extended to the links inside page content.
+//
+//  GUIDE PAGES (2026-10-03): short answer-first pages read from
+//  src/data/guides.js, the same file GuidePage.jsx renders from, so
+//  this HTML and the live page share one copy of the text. Adding a
+//  guide there adds its static HTML and sitemap entry here.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -75,6 +80,11 @@ const SITE = 'Digging in the Sales Crates';
 const NEWSLETTER_URL =
   'https://fromthesalescrates.beehiiv.com/subscribe' +
   '?utm_source=website&utm_medium=blog&utm_campaign=newsletter_signup';
+// Guide pages use utm_medium=guide, matching newsletterUrl('guide') in
+// GuidePage.jsx.
+const NEWSLETTER_GUIDE_URL =
+  'https://fromthesalescrates.beehiiv.com/subscribe' +
+  '?utm_source=website&utm_medium=guide&utm_campaign=newsletter_signup';
 
 // The one place that decides the public URL shape for a route path.
 // Matches the directory+index.html structure written below (outDir),
@@ -163,6 +173,23 @@ const a = (href, text) =>
 const p = (text) => `<p>${esc(text)}</p>`;
 const h1 = (text) => `<h1>${esc(text)}</h1>`;
 
+// Guide "parts" (see src/data/guides.js): plain text, an internal link,
+// or the newsletter link.
+const guidePart = (part) => {
+  if (typeof part === 'string') return esc(part);
+  if (part.newsletter) return a(NEWSLETTER_GUIDE_URL, part.text);
+  return a(part.href, part.text);
+};
+const guideParts = (parts) => parts.map(guidePart).join('');
+const guideBlocks = (blocks) =>
+  blocks
+    .map((block) =>
+      block.type === 'ul'
+        ? '<ul>' + block.items.map((item) => `<li>${guideParts(item)}</li>`).join('') + '</ul>'
+        : `<p>${guideParts(block.parts)}</p>`
+    )
+    .join('');
+
 // ── Main ──
 async function main() {
   const template = await fs.readFile(path.join(BUILD, 'index.html'), 'utf8');
@@ -172,6 +199,7 @@ async function main() {
 
   const { BLOG_POSTS } = await loadDataModule('src/data/blog/index.js');
   const { ARTISTS, GENRES } = await loadDataModule('src/data/artists/index.js');
+  const { GUIDES } = await loadDataModule('src/data/guides.js');
 
   const pages = [];
 
@@ -332,6 +360,26 @@ async function main() {
     },
   ];
   pages.push(...STATIC_PAGES);
+
+  // ── Guide pages ──
+  for (const guide of GUIDES) {
+    pages.push({
+      path: guide.path,
+      title: guide.seoTitle,
+      description: guide.description,
+      ogType: 'article',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: guide.title,
+        description: guide.description,
+        url: BASE + urlPath(guide.path),
+        author: { '@type': 'Person', name: 'Joe Nicholas' },
+        publisher: { '@type': 'Organization', name: SITE, url: BASE },
+      },
+      content: h1(guide.title) + guideBlocks(guide.blocks),
+    });
+  }
 
   // ── Artists index ──
   const artistEntries = Object.values(ARTISTS);

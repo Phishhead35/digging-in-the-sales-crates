@@ -802,6 +802,7 @@ export const CLICK_SOURCES = {
   BLOG_INDEX: 'blog_index',
   WATCH_READ: 'watch_read',
   ABOUT: 'about_page',
+  GUIDE_PAGE: 'guide_page',
   HOMEPAGE_NEWSLETTER: 'homepage_newsletter',
   FOLLOW_US: 'follow_us_section',
   WISHLIST: 'wishlist',
