@@ -1,7 +1,7 @@
 {
   "short_name": "Sales Crates",
   "name": "Digging in the Sales Crates",
-  "description": "Find the best vinyl deals across Discogs, eBay, and top independent record stores.",
+  "description": "Search Discogs, eBay, CDandLP, and Turntable Lab at once to find the best vinyl deals.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0f",

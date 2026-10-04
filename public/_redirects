@@ -25,5 +25,9 @@
 /aggregator   /search/  301
 /aggregator/  /search/  301
 
+# /sitemap_index.xml used to fall through to the SPA and return the homepage
+# with a 200. Some crawlers probe this name; send them to the real sitemap.
+/sitemap_index.xml  /sitemap.xml  301
+
 # SPA fallback (must stay LAST; first match wins)
 /* /index.html 200

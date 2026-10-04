@@ -210,8 +210,9 @@ async function main() {
     '<ul>' +
     [
       ['/search', 'Search vinyl across Discogs, eBay, CDandLP & Turntable Lab'],
-      ['/deals', 'Current vinyl deals & price alerts'],
-      ['/email-parser', 'AI email deal parser'],
+      // /email-parser removed from this list 2026-10-04 (internal tool, not
+      // in the visible nav; the page itself still exists with noindex).
+      ['/deals', 'Current vinyl deals'],
       ['/artists', 'Artist & genre pages'],
       ['/watch-read', 'Watch & Read: DITSC videos and written stories'],
       ['/local-shops', 'New England record shop directory'],
@@ -294,7 +295,11 @@ async function main() {
         p('A directory of independent record stores across Massachusetts and New England. Support your local crate.'),
     },
     {
+      // Hidden from Google 2026-10-04 until the page has real copy (who it
+      // is for, that it is free, how to reach out). The page still works for
+      // anyone who clicks to it. Remove noindex when the copy ships.
       path: '/featured-partners',
+      noindex: true, // kept out of sitemap.xml, see sitemap block
       title: `Partner With Us | ${SITE}`,
       description:
         'Get your record store in front of serious vinyl collectors. Partner with Digging in the Sales Crates.',
@@ -501,7 +506,7 @@ async function main() {
     pages
       .filter((pg) => !pg.canonical) // skip any page that canonicals elsewhere (none today)
       // Skip internal/personal pages (noindex: true): /wishlist, /alerts
-      // and /email-parser. Listing them here back when robots.txt blocked
+      // and /email-parser, plus /featured-partners until it has real copy. Listing them here back when robots.txt blocked
       // them triggered the Sep 16, 2026 "Blocked by robots.txt" Search
       // Console warning. robots.txt no longer blocks anything, but these
       // pages still carry noindex, so submitting them would only produce

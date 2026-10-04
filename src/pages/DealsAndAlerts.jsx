@@ -150,7 +150,7 @@ export function Alerts() {
   useSEO({
     title: 'Price Alerts | Digging in the Sales Crates',
     description:
-      'Set vinyl price alerts and catch deals on the records you want across Discogs, eBay, and CDandLP.',
+      'Save the records you want with a target price, then check Discogs, eBay, CDandLP, and Turntable Lab in one tap.',
   });
 
   const [alerts, setAlerts] = useState(() => {
@@ -194,7 +194,10 @@ export function Alerts() {
             PRICE <span style={{ color: 'var(--amber)' }}>ALERTS</span>
           </h1>
           <p style={{ color: 'var(--text-secondary)' }}>
-            Track records and get notified when prices drop.
+            {/* Was "get notified when prices drop". Nothing checks prices or
+                sends notifications yet (alerts live in this browser only, see
+                the note under the form), so the line says what it does. */}
+            Save records and target prices, then check them with one tap.
           </p>
         </div>
         <button onClick={() => setAdding(!adding)} style={{

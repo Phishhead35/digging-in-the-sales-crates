@@ -50,7 +50,7 @@ export const ARTISTS = {
     producerCredits: ['RZA', 'Wu-Tang Clan production family'],
     seo: {
       title: 'Ol\' Dirty Bastard Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Ol\' Dirty Bastard vinyl records across Discogs, eBay, and CDandLP. Shop Return to the 36 Chambers, Nigga Please, and rare Wu-Tang pressings.',
+      description: 'Find Ol\' Dirty Bastard vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Return to the 36 Chambers, Nigga Please, and rare Wu-Tang pressings.',
     },
   },
 
@@ -88,7 +88,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'J Dilla Vinyl Records | Digging in the Sales Crates',
-      description: 'Find J Dilla vinyl records across Discogs, eBay, and CDandLP. Shop Donuts, Ruff Draft, Slum Village, and rare Stones Throw pressings.',
+      description: 'Find J Dilla vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Donuts, Ruff Draft, Slum Village, and rare Stones Throw pressings.',
     },
   },
 
@@ -118,7 +118,7 @@ export const ARTISTS = {
     producerCredits: ['El-P'],
     seo: {
       title: 'Cannibal Ox Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Cannibal Ox vinyl records across Discogs, eBay, and CDandLP. Shop The Cold Vein, Blade of the Ronin, and rare Definitive Jux pressings.',
+      description: 'Find Cannibal Ox vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop The Cold Vein, Blade of the Ronin, and rare Definitive Jux pressings.',
     },
   },
 
@@ -150,7 +150,7 @@ export const ARTISTS = {
     producerCredits: ['Bill Curtis'],
     seo: {
       title: 'Fatback Band Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Fatback Band vinyl records across Discogs, eBay, and CDandLP. Shop rare funk and soul 45s and LPs from the Spring Records catalog.',
+      description: 'Find Fatback Band vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop rare funk and soul 45s and LPs from the Spring Records catalog.',
     },
   },
 
@@ -183,7 +183,7 @@ export const ARTISTS = {
     producerCredits: ['Quincy Jones', 'Rod Temperton', 'Bill Bottrell'],
     seo: {
       title: 'Michael Jackson Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Michael Jackson vinyl records across Discogs, eBay, and CDandLP. Shop Thriller, Off the Wall, Bad, and rare Japanese pressings.',
+      description: 'Find Michael Jackson vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Thriller, Off the Wall, Bad, and rare Japanese pressings.',
     },
   },
 
@@ -221,7 +221,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'MF DOOM Vinyl Records | Digging in the Sales Crates',
-      description: 'Find MF DOOM vinyl records across Discogs, eBay, and CDandLP. Shop Madvillainy, Operation: Doomsday, MM..FOOD, and rare Fondle \'Em pressings.',
+      description: 'Find MF DOOM vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Madvillainy, Operation: Doomsday, MM..FOOD, and rare Fondle \'Em pressings.',
     },
   },
 
@@ -257,7 +257,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'The Beatles Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Beatles vinyl records across Discogs, eBay, and CDandLP. Shop UK Parlophone originals, mono pressings, Apple Records, and rare first pressings.',
+      description: 'Find Beatles vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop UK Parlophone originals, mono pressings, Apple Records, and rare first pressings.',
     },
   },
 
@@ -288,7 +288,7 @@ export const ARTISTS = {
     producerCredits: ['Sylvia Robinson'],
     seo: {
       title: 'The Moments Vinyl Records | Digging in the Sales Crates',
-      description: 'Find The Moments vinyl records across Discogs, eBay, and CDandLP. Shop Love on a Two-Way Street, Stang 45s, and classic All Platinum soul.',
+      description: 'Find The Moments vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Love on a Two-Way Street, Stang 45s, and classic All Platinum soul.',
     },
   },
 
@@ -330,7 +330,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Tupac Shakur Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Tupac Shakur vinyl records across Discogs, eBay, and CDandLP. Shop 2Pac\'s Death Row pressings, Me Against the World, All Eyez on Me, and Makaveli.',
+      description: 'Find Tupac Shakur vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop 2Pac\'s Death Row pressings, Me Against the World, All Eyez on Me, and Makaveli.',
     },
   },
 
@@ -367,7 +367,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Naughty by Nature Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Naughty by Nature vinyl records across Discogs, eBay, and CDandLP. Shop O.P.P., Hip Hop Hooray, and Tommy Boy pressings from one of NJ\'s finest.',
+      description: 'Find Naughty by Nature vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop O.P.P., Hip Hop Hooray, and Tommy Boy pressings from one of NJ\'s finest.',
     },
   },
 
@@ -406,7 +406,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Wu-Tang Clan Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Wu-Tang Clan vinyl records across Discogs, eBay, and CDandLP. Shop 36 Chambers, Wu-Tang Forever, and rare Loud Records pressings.',
+      description: 'Find Wu-Tang Clan vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop 36 Chambers, Wu-Tang Forever, and rare Loud Records pressings.',
     },
   },
 
@@ -444,7 +444,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Madonna Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Madonna vinyl records across Discogs, eBay, and CDandLP. Shop Like a Prayer, Like a Virgin, rare Sire pressings, and her massive 12" single catalog.',
+      description: 'Find Madonna vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Like a Prayer, Like a Virgin, rare Sire pressings, and her massive 12" single catalog.',
     },
   },
 
@@ -477,7 +477,7 @@ export const ARTISTS = {
     producerCredits: ['Alfred Lion (Blue Note)', 'Nesuhi Ertegun (Atlantic)', 'Bob Thiele (Impulse!)', 'Rudy Van Gelder (engineer)'],
     seo: {
       title: 'John Coltrane Vinyl Records | Digging in the Sales Crates',
-      description: 'Find John Coltrane vinyl across Discogs, eBay, and CDandLP. Shop Blue Train, Giant Steps, A Love Supreme, and original Blue Note, Atlantic, and Impulse! pressings.',
+      description: 'Find John Coltrane vinyl across Discogs, eBay, CDandLP, and Turntable Lab. Shop Blue Train, Giant Steps, A Love Supreme, and original Blue Note, Atlantic, and Impulse! pressings.',
     },
   },
 
@@ -509,7 +509,7 @@ export const ARTISTS = {
     producerCredits: ['Eric B.', 'Rakim', 'Large Professor (uncredited, Let the Rhythm Hit \'Em)'],
     seo: {
       title: 'Eric B. & Rakim Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Eric B. & Rakim vinyl across Discogs, eBay, and CDandLP. Shop Paid in Full, Follow the Leader, and the rare Zakia 12" pressings.',
+      description: 'Find Eric B. & Rakim vinyl across Discogs, eBay, CDandLP, and Turntable Lab. Shop Paid in Full, Follow the Leader, and the rare Zakia 12" pressings.',
     },
   },
 
@@ -545,7 +545,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Boogie Down Productions Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Boogie Down Productions and KRS-One vinyl across Discogs, eBay, and CDandLP. Shop Criminal Minded, By All Means Necessary, and rare B-Boy Records pressings.',
+      description: 'Find Boogie Down Productions and KRS-One vinyl across Discogs, eBay, CDandLP, and Turntable Lab. Shop Criminal Minded, By All Means Necessary, and rare B-Boy Records pressings.',
     },
   },
 
@@ -582,7 +582,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Pete Rock Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Pete Rock and Pete Rock & CL Smooth vinyl across Discogs, eBay, and CDandLP. Shop Mecca and the Soul Brother, T.R.O.Y., and rare Elektra pressings.',
+      description: 'Find Pete Rock and Pete Rock & CL Smooth vinyl across Discogs, eBay, CDandLP, and Turntable Lab. Shop Mecca and the Soul Brother, T.R.O.Y., and rare Elektra pressings.',
     },
   },
 
@@ -620,7 +620,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Marvin Gaye Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Marvin Gaye vinyl records across Discogs, eBay, and CDandLP. Shop What\'s Going On, Let\'s Get It On, Midnight Love, and rare Tamla and Motown pressings.',
+      description: 'Find Marvin Gaye vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop What\'s Going On, Let\'s Get It On, Midnight Love, and rare Tamla and Motown pressings.',
     },
   },
 
@@ -657,7 +657,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'DJ Quik Vinyl Records | Digging in the Sales Crates',
-      description: 'Find DJ Quik vinyl records across Discogs, eBay, and CDandLP. Shop Quik Is the Name, Way 2 Fonky, Safe + Sound, Rhythm-al-ism, and original Profile Records pressings.',
+      description: 'Find DJ Quik vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Quik Is the Name, Way 2 Fonky, Safe + Sound, Rhythm-al-ism, and original Profile Records pressings.',
     },
   },
 
@@ -694,7 +694,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Fleetwood Mac Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Fleetwood Mac vinyl records across Discogs, eBay, and CDandLP. Shop Rumours, Tusk, Mirage, Tango in the Night, and original Warner Bros. and Reprise pressings.',
+      description: 'Find Fleetwood Mac vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Rumours, Tusk, Mirage, Tango in the Night, and original Warner Bros. and Reprise pressings.',
     },
   },
 
@@ -733,7 +733,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Prince Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Prince vinyl records across Discogs, eBay, and CDandLP. Shop Purple Rain, 1999, Dirty Mind, Around the World in a Day, and Paisley Park era pressings.',
+      description: 'Find Prince vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Purple Rain, 1999, Dirty Mind, Around the World in a Day, and Paisley Park era pressings.',
     },
   },
 
@@ -775,7 +775,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Tool Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Tool vinyl records across Discogs, eBay, and CDandLP. Shop Lateralus, \u00c6nima, Undertow, 10,000 Days, and Fear Inoculum pressings, and learn to spot the bootlegs.',
+      description: 'Find Tool vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Lateralus, \u00c6nima, Undertow, 10,000 Days, and Fear Inoculum pressings, and learn to spot the bootlegs.',
     },
   },
 
@@ -817,7 +817,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Blondie Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Blondie vinyl records across Discogs, eBay, and CDandLP. Shop Parallel Lines, Autoamerican, Eat to the Beat and original Chrysalis pressings, and learn which Heart of Glass runtime you are buying.',
+      description: 'Find Blondie vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Parallel Lines, Autoamerican, Eat to the Beat and original Chrysalis pressings, and learn which Heart of Glass runtime you are buying.',
     },
   },
 
@@ -856,7 +856,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Gravediggaz Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Gravediggaz vinyl records across Discogs, eBay, and CDandLP. Shop 6 Feet Deep original Gee Street pressings and reissues, plus The Pick, the Sickle and the Shovel.',
+      description: 'Find Gravediggaz vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop 6 Feet Deep original Gee Street pressings and reissues, plus The Pick, the Sickle and the Shovel.',
     },
   },
   'isaac-hayes': {
@@ -895,7 +895,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Isaac Hayes Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Isaac Hayes vinyl records across Discogs, eBay, and CDandLP. Shop Hot Buttered Soul, Shaft, Black Moses and original Enterprise pressings, and learn which Hot Buttered Soul plant variant you are buying.',
+      description: 'Find Isaac Hayes vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Hot Buttered Soul, Shaft, Black Moses and original Enterprise pressings, and learn which Hot Buttered Soul plant variant you are buying.',
     },
   },
 
@@ -938,7 +938,7 @@ export const ARTISTS = {
     ],
     seo: {
       title: 'Gang Starr Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Gang Starr vinyl records across Discogs, eBay, and CDandLP. Shop Step in the Arena, Daily Operation, Moment of Truth and Hard to Earn, on original Chrysalis pressings and current reissues.',
+      description: 'Find Gang Starr vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Step in the Arena, Daily Operation, Moment of Truth and Hard to Earn, on original Chrysalis pressings and current reissues.',
     },
   },
 };
@@ -952,7 +952,9 @@ export const GENRES = {
 
   'golden-era-hip-hop': {
     slug: 'golden-era-hip-hop',
-    name: 'Golden Era Hip-Hop Vinyl',
+    // Name has no trailing "Vinyl": page headings and link text already add
+    // "Vinyl Records" after it (fixed 2026-10-04, was doubling the word).
+    name: 'Golden Era Hip-Hop',
     tagline: '1988–1998. The decade that built the canon.',
     genres: ['Hip-Hop'],
     searchTerms: {
@@ -980,13 +982,14 @@ export const GENRES = {
     producerCredits: [],
     seo: {
       title: 'Golden Era Hip-Hop Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Golden Era hip-hop vinyl across Discogs, eBay, and CDandLP. Shop rare pressings of Nas, Biggie, Wu-Tang, Gang Starr, and more.',
+      description: 'Find Golden Era hip-hop vinyl across Discogs, eBay, CDandLP, and Turntable Lab. Shop rare pressings of Nas, Biggie, Wu-Tang, Gang Starr, and more.',
     },
   },
 
   'japanese-jazz': {
     slug: 'japanese-jazz',
-    name: 'Japanese Jazz Vinyl',
+    // Same as above: no trailing "Vinyl" in the name (fixed 2026-10-04).
+    name: 'Japanese Jazz',
     tagline: 'Tokyo pressings. The audiophile\'s holy grail.',
     genres: ['Jazz'],
     searchTerms: {
@@ -1010,7 +1013,7 @@ export const GENRES = {
     producerCredits: [],
     seo: {
       title: 'Japanese Jazz Vinyl Records | Digging in the Sales Crates',
-      description: 'Find Japanese jazz vinyl pressings across Discogs, eBay, and CDandLP. Shop King Records, CBS/Sony Japan, and Toshiba EMI audiophile pressings.',
+      description: 'Find Japanese jazz vinyl pressings across Discogs, eBay, CDandLP, and Turntable Lab. Shop King Records, CBS/Sony Japan, and Toshiba EMI audiophile pressings.',
     },
   },
 

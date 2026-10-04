@@ -71,7 +71,7 @@ const faqs = [
       },
       {
         q: "Can I set up price alerts for specific records?",
-        a: "Price alert functionality is coming. For now, the Wishlist lets you save records so you can quickly re-run searches and check for new listings or price drops."
+        a: "Not yet. There's no automatic alert that emails you when a price drops. For now, save records to your Wishlist and re-run the search whenever you want to check for new listings or lower prices. The free weekly newsletter also rounds up the best sales we find."
       },
     ]
   },
