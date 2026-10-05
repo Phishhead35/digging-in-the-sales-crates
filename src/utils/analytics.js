@@ -796,6 +796,7 @@ export const CLICK_SOURCES = {
   WATCH_READ: 'watch_read',
   ABOUT: 'about_page',
   GUIDE_PAGE: 'guide_page',
+  BUNDLE_PAGE: 'bundle_page',
   HOMEPAGE_NEWSLETTER: 'homepage_newsletter',
   FOLLOW_US: 'follow_us_section',
   WISHLIST: 'wishlist',

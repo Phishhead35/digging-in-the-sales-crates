@@ -62,6 +62,10 @@
 //  this HTML and the live page share one copy of the text. Adding a
 //  guide there adds its static HTML and sitemap entry here.
 //
+//  BUNDLE PAGES (2026-10-05): /bundle (indexed) and /bundle/thanks
+//  (noindex, kept out of the sitemap), read from src/data/bundle.js, the
+//  same file BundlePage.jsx renders from.
+//
 //  FULL CRAWLER CONTENT (2026-10-04): the FAQ, About, homepage, Local
 //  Shops and Watch & Read pages used to give crawlers one or two
 //  sentences while visitors saw full pages. Each now carries the same
@@ -96,6 +100,11 @@ const NEWSLETTER_URL =
 const NEWSLETTER_ABOUT_URL =
   'https://fromthesalescrates.beehiiv.com/subscribe' +
   '?utm_source=website&utm_medium=about&utm_campaign=newsletter_signup';
+// Bundle pages use utm_medium=bundle, matching newsletterUrl('bundle') in
+// BundlePage.jsx.
+const NEWSLETTER_BUNDLE_URL =
+  'https://fromthesalescrates.beehiiv.com/subscribe' +
+  '?utm_source=website&utm_medium=bundle&utm_campaign=newsletter_signup';
 const NEWSLETTER_GUIDE_URL =
   'https://fromthesalescrates.beehiiv.com/subscribe' +
   '?utm_source=website&utm_medium=guide&utm_campaign=newsletter_signup';
@@ -241,6 +250,7 @@ async function main() {
   const { BLOG_POSTS } = await loadDataModule('src/data/blog/index.js');
   const { ARTISTS, GENRES } = await loadDataModule('src/data/artists/index.js');
   const { GUIDES } = await loadDataModule('src/data/guides.js');
+  const { BUNDLE, SIGNUP_REDIRECT_CONFIRMED } = await loadDataModule('src/data/bundle.js');
   const { FAQS } = await loadDataModule('src/data/faq.js');
   const { ABOUT } = await loadDataModule('src/data/about.js');
   const { MA_STORES, RINH_STORES } = await loadDataModule('src/data/partnerStores.js');
@@ -527,6 +537,38 @@ async function main() {
       content: h1(guide.title) + guideBlocks(guide.blocks),
     });
   }
+
+  // ── Free Hip-Hop Dig Bundle ──
+  // Landing page: indexed. Crawler text mirrors what the page shows, which
+  // depends on SIGNUP_REDIRECT_CONFIRMED (see src/data/bundle.js).
+  pages.push({
+    path: BUNDLE.path,
+    title: BUNDLE.seoTitle,
+    description: BUNDLE.description,
+    content:
+      h1(BUNDLE.title) +
+      BUNDLE.intro.map(p).join('') +
+      `<h2>${esc(BUNDLE.forYouHeading)}</h2><ul>` +
+      BUNDLE.forYouIf.map((t) => `<li>${esc(t)}</li>`).join('') +
+      '</ul>' +
+      `<h2>${esc(BUNDLE.insideHeading)}</h2><ul>` +
+      BUNDLE.inside.map((i) => `<li><strong>${esc(i.name)}</strong>: ${esc(i.what)}</li>`).join('') +
+      '</ul>' +
+      p(BUNDLE.note) +
+      (SIGNUP_REDIRECT_CONFIRMED
+        ? `<p>${a(NEWSLETTER_BUNDLE_URL, BUNDLE.signupButtonGated)}</p>` + p(BUNDLE.gatedPromise)
+        : `<p>${a(BUNDLE.thanksPath, BUNDLE.downloadButton)}</p>` +
+          p(BUNDLE.newsletterPitch) +
+          `<p>${a(NEWSLETTER_BUNDLE_URL, BUNDLE.signupButton)}</p>`),
+  });
+  // Download page: kept out of Google and out of the sitemap.
+  pages.push({
+    path: BUNDLE.thanksPath,
+    noindex: true, // kept out of sitemap.xml, see sitemap block
+    title: BUNDLE.thanksSeoTitle,
+    description: 'Download the free Hip-Hop Dig Bundle.',
+    content: h1(BUNDLE.thanksTitle) + p(BUNDLE.thanksLead) + p(BUNDLE.thanksNote) + p(BUNDLE.thanksFriday),
+  });
 
   // ── Artists index ──
   const artistEntries = Object.values(ARTISTS);
