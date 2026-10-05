@@ -5,6 +5,41 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'gang-starr-beyond-comprehension-the-band-cripple-creek': {
+    slug: 'gang-starr-beyond-comprehension-the-band-cripple-creek',
+    title: 'DJ Premier Built "Beyond Comprehension" on The Band\'s "Up on Cripple Creek"',
+    series: 'SAMPLE DNA',
+    date: '2026-10-05',
+    dateDisplay: 'October 5, 2026',
+    excerpt: 'Gang Starr\'s "Beyond Comprehension" is built on the rhythm track of The Band\'s "Up on Cripple Creek." Here is how to find both records, and which Band pressing is not the complete album.',
+    body: [
+      'DJ Premier sourced one of the beats on Step in the Arena from a roots-rock record, not a jazz one, and that single detail says a lot about how he dug.',
+      'The record is The Band\'s "Up on Cripple Creek," from their self-titled second album, released September 22, 1969 on Capitol. The track is "Beyond Comprehension," number six on Gang Starr\'s 1991 album for Chrysalis. Premier sampled the rhythm track, which is exactly the part a casual listener never traces. You feel the groove long before you think to ask where it came from.',
+      'He was not the only one to borrow from it. The Beastie Boys worked a replayed piece of the song\'s vocals into "High Plains Drifter" on Paul\'s Boutique, so one 1969 Capitol record sits underneath two very different pieces of hip-hop history.',
+      'That is the Premier method in miniature. Treat the whole record collection as raw material, and let the source genre land wherever it lands. He and Guru produced Step in the Arena themselves, recording in New York, and the album still sounds like nothing but Gang Starr.',
+      'Gang Starr\'s track does not sound like a rock record, and that is the point of a good flip: the sample does the work and never announces itself. If you only ever knew the Gang Starr version, hearing the original is a small shock, and it sends you back to "Beyond Comprehension" listening differently. That is the kind of connection a collector gets to enjoy twice.',
+      'Now the collecting part, because these two records each come with their own trap.',
+      'Step in the Arena first. Original 1991 Chrysalis copies and later reissues carry the same title, and sellers do not always say which one they are listing. Check the label and the year in the listing before you pay original money for a reissue.',
+      'The Band\'s second album is the trickier one. In 1980 Capitol issued it in its 16000 Series budget line, and that pressing dropped two tracks, "When You Awake" and "King Harvest (Has Surely Come)." The record is still a fine way to hear the groove Premier borrowed, but it is not the complete album. Read the track list before you assume you are getting the whole thing.',
+      'Search "Gang Starr Step in the Arena" and "The Band The Band" on digginginthesalescrates.com and compare Discogs, eBay and CDandLP in one pass. Then drop the needle on both, back to back, and listen for the rhythm that travelled twenty-one years.',
+    ],
+    shopArtists: [
+      {
+        name: 'Gang Starr',
+        pageSlug: 'gang-starr',
+        searchTerms: {
+          discogs: 'Gang Starr Step in the Arena',
+          ebay: 'Gang Starr Step in the Arena vinyl',
+          cdandlp: 'Gang Starr Step in the Arena',
+        },
+      },
+    ],
+    seo: {
+      title: 'Gang Starr "Beyond Comprehension" Sample: The Band\'s "Up on Cripple Creek" on Vinyl | Digging in the Sales Crates',
+      description: 'DJ Premier sampled the rhythm track of The Band\'s "Up on Cripple Creek" for Gang Starr\'s "Beyond Comprehension." What to look for on Step in the Arena and The Band\'s 1969 Capitol album, and which budget pressing drops two tracks.',
+    },
+  },
+
   'isaac-hayes-beastie-boys-ghostface-sample-dig': {
     slug: 'isaac-hayes-beastie-boys-ghostface-sample-dig',
     title: 'The Beastie Boys and Ghostface Went Digging in the Same Catalog, Twelve Years Apart',

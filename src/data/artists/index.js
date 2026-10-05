@@ -941,6 +941,44 @@ export const ARTISTS = {
       description: 'Find Gang Starr vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Step in the Arena, Daily Operation, Moment of Truth and Hard to Earn, on original Chrysalis pressings and current reissues.',
     },
   },
+
+  'main-source': {
+    slug: 'main-source',
+    name: 'Main Source',
+    tagline: 'Large Professor\'s first group, and the record where Nas showed up on wax before anyone knew his name.',
+    genres: ['Hip-Hop', 'Golden Era', 'Queens'],
+    searchTerms: {
+      // 'Main Source' is two common words, so a bare eBay query can pull in
+      // unrelated listings. Anchoring eBay to the album title keeps results on
+      // the record. Check all three buttons on the live page after deploy.
+      discogs: 'Main Source',
+      ebay: 'Main Source Breaking Atoms',
+      cdandlp: 'Main Source',
+    },
+    // Left false deliberately. Breaking Atoms came out on Wild Pitch, a small
+    // independent label, and Amazon's vinyl catalog for it was NOT verified.
+    // Check an Amazon search before switching this on.
+    amazonEligible: false,
+    bio: [
+      'Main Source came together in 1989 around three producers: Toronto-born K-Cut and Sir Scratch, and Large Professor out of New York. Breaking Atoms, their only album with the original lineup, came out July 23, 1991 on Wild Pitch Records. It was built on an E-mu SP-1200 and leans on jazz and soul samples with layered percussion, and "Looking at the Front Door" reached number one on the Hot Rap Singles chart.',
+      '"Live at the Barbeque" is the reason this record gets traced back to. It carries the first on-record appearance of Nas, alongside Joe Fatal and Akinyele, and that contribution was later sampled for Nas\'s Illmatic in 1994. Large Professor is the thread running forward from there: he produced three tracks on Illmatic, tying DJ Premier for the most credits on that album, and also worked with Mobb Deep, Kool G Rap, Akinyele and Pete Rock. Pete Rock co-produced one track on Breaking Atoms itself.',
+      'Business conflicts broke up the original lineup before a second album was finished, and Large Professor went solo. The group played together again in Toronto on December 22, 2002, their first show in nearly a decade. For collectors the catalog is short, so the hunt is mostly one record. Breaking Atoms was reissued in 2008 through Fontana, so confirm whether a listing is the original 1991 Wild Pitch pressing or a later edition before paying original money.',
+    ],
+    essentialRecords: [
+      { title: 'Breaking Atoms', year: 1991, label: 'Wild Pitch' },
+    ],
+    producerCredits: [
+      'Large Professor, primary producer of Breaking Atoms (1991)',
+      'Pete Rock, co-producer of one track on Breaking Atoms',
+      '"Live at the Barbeque" carries the first on-record appearance of Nas',
+      'Large Professor, three tracks on Nas, Illmatic (1994)',
+      'Toronto-born K-Cut and Sir Scratch, the other founding producers',
+    ],
+    seo: {
+      title: 'Main Source Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Main Source vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Breaking Atoms, the 1991 Wild Pitch album with Nas\'s first recorded verse on "Live at the Barbeque."',
+    },
+  },
 };
 
 export const GENRES = {
