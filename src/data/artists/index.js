@@ -979,6 +979,51 @@ export const ARTISTS = {
       description: 'Find Main Source vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Breaking Atoms, the 1991 Wild Pitch album with Nas\'s first recorded verse on "Live at the Barbeque."',
     },
   },
+
+  'the-band': {
+    slug: 'the-band',
+    name: 'The Band',
+    tagline: 'Five musicians, one Capitol rhythm section, and the roots-rock record that DJ Premier and the Beastie Boys both went digging in.',
+    genres: ['Rock', 'Roots Rock', 'Americana'],
+    searchTerms: {
+      // 'The Band' is two of the most common words in a record listing, so a
+      // bare query returns every band on earth. Anchoring all three searches
+      // to the two best-known members keeps results on the right catalog.
+      // Check all three buttons on the live page after deploy.
+      discogs: 'The Band Robbie Robertson Levon Helm',
+      ebay: 'The Band Robbie Robertson Levon Helm vinyl LP',
+      cdandlp: 'The Band Robertson Helm',
+    },
+    // Turned on October 7, 2026 after Joe confirmed an Amazon listing for The
+    // Band. The site builds the Amazon button from a search query plus the
+    // Associates tag, so it cannot take a fixed link. A bare "The Band vinyl"
+    // query is too generic, hence the override. Test the button after deploy.
+    amazonEligible: true,
+    amazonSearchTerm: 'The Band Music from Big Pink vinyl',
+    bio: [
+      'The Band was Robbie Robertson, Levon Helm, Rick Danko, Richard Manuel and Garth Hudson, four Canadians and one Arkansan who spent the early 1960s as Ronnie Hawkins\' backing group and then as Bob Dylan\'s band on the road in 1965 and 1966. Music from Big Pink arrived in 1968 on Capitol and carried "The Weight." The self-titled album followed in September 1969, and it is the one collectors and producers keep returning to.',
+      'That second album is where hip-hop comes in. "Up on Cripple Creek" supplied the rhythm track for Gang Starr\'s "Beyond Comprehension" on Step in the Arena in 1991, and the Beastie Boys worked a replayed piece of its vocals into "High Plains Drifter" on Paul\'s Boutique. Nobody was mining a Woodstock-era Americana record for breaks, which is exactly why the groove still sounds fresh under a drum machine. Levon Helm\'s drumming is the reason it works.',
+      'The catalog runs through Stage Fright in 1970 and Cahoots in 1971, the live Rock of Ages in 1972, and The Last Waltz, the 1978 three-LP farewell on Warner Bros. Helm, Danko and Manuel are gone, and Robertson died in 2023. For collectors, the trap is the budget line. In 1980 Capitol reissued the self-titled album in its 16000 Series with two tracks cut, "When You Awake" and "King Harvest (Has Surely Come)." Read the track list before you assume you are getting the complete record.',
+    ],
+    essentialRecords: [
+      { title: 'The Band', year: 1969, label: 'Capitol' },
+      { title: 'Music from Big Pink', year: 1968, label: 'Capitol' },
+      { title: 'Stage Fright', year: 1970, label: 'Capitol' },
+      { title: 'Cahoots', year: 1971, label: 'Capitol' },
+      { title: 'Rock of Ages', year: 1972, label: 'Capitol' },
+      { title: 'The Last Waltz', year: 1978, label: 'Warner Bros.' },
+    ],
+    producerCredits: [
+      '"Up on Cripple Creek" (1969), rhythm track sampled for Gang Starr, "Beyond Comprehension" (1991)',
+      '"Up on Cripple Creek" vocals replayed in Beastie Boys, "High Plains Drifter" (1989)',
+      'Levon Helm, drums and vocals; died 2012',
+      'Robbie Robertson, guitar and principal songwriter; died 2023',
+    ],
+    seo: {
+      title: 'The Band Vinyl Records | Digging in the Sales Crates',
+      description: 'Find The Band vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop The Band, Music from Big Pink and The Last Waltz, plus the Capitol album behind Gang Starr\'s "Beyond Comprehension."',
+    },
+  },
 };
 
 export const GENRES = {

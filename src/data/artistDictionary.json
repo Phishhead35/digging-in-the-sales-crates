@@ -2365,6 +2365,19 @@
         "east-coast"
       ],
       "canonicalForm": "Main Source"
+    },
+    {
+      "name": "The Band",
+      "aliases": [
+        "Band",
+        "Robbie Robertson",
+        "Levon Helm"
+      ],
+      "genres": [
+        "rock",
+        "americana"
+      ],
+      "canonicalForm": "The Band"
     }
   ]
 }

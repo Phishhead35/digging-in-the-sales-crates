@@ -33,6 +33,15 @@ export const BLOG_POSTS = {
           cdandlp: 'Gang Starr Step in the Arena',
         },
       },
+      {
+        name: 'The Band',
+        pageSlug: 'the-band',
+        searchTerms: {
+          discogs: 'The Band The Band',
+          ebay: 'The Band The Band Capitol vinyl LP',
+          cdandlp: 'The Band The Band',
+        },
+      },
     ],
     seo: {
       title: 'Gang Starr "Beyond Comprehension" Sample: The Band\'s "Up on Cripple Creek" on Vinyl | Digging in the Sales Crates',
