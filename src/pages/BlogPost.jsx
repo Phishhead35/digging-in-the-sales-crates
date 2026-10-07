@@ -21,6 +21,8 @@ function cdandlpUrl(term) {
 }
 // Turntable Lab search, same approach as ArtistPage.jsx. The term falls back
 // to the Discogs term; a shopArtists entry can set searchTerms.turntablelab.
+// Opt-in per artist, read from the artist record via pageSlug (see
+// resolveTtl), because TTL does not stock every artist.
 function ttlUrl(artist) {
   const term = artist.searchTerms.turntablelab || artist.searchTerms.discogs;
   return buildPartnerUrl('turntablelab', `/search?q=${encodeURIComponent(term)}`);
@@ -30,6 +32,11 @@ function ttlUrl(artist) {
 // shopArtists entry can set amazonSearchTerm to override it.
 function amazonUrl(term) {
   return buildPartnerUrl('amazon', `/s?k=${encodeURIComponent(term)}`);
+}
+
+function resolveTtl(artist) {
+  const fromArtist = artist.pageSlug ? ARTISTS[artist.pageSlug] : undefined;
+  return (artist.turntablelabEligible ?? fromArtist?.turntablelabEligible ?? false) === true;
 }
 
 // ── Amazon eligibility resolution ─────────────────────────────
@@ -127,6 +134,7 @@ function ShopArtists({ post }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {post.shopArtists.map(artist => {
             const amazon = resolveAmazon(artist);
+            const ttl = resolveTtl(artist);
             return (
             <div key={artist.name} style={{
               padding: '18px 20px', borderRadius: 12,
@@ -166,7 +174,7 @@ function ShopArtists({ post }) {
                   url={cdandlpUrl(artist.searchTerms.cdandlp)}
                   postSlug={post.slug} artistName={artist.name}
                 />
-                {isMonetized('turntablelab') && (
+                {ttl && isMonetized('turntablelab') && (
                   <MarketplaceButton
                     label="Turntable Lab" marketplace="turntablelab"
                     url={ttlUrl(artist)}

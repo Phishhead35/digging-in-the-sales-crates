@@ -916,6 +916,9 @@ export const ARTISTS = {
     // retail. Less certain than a Warner rock catalog, so revisit if the Amazon
     // results look thin.
     amazonEligible: true,
+    // Joe confirmed Turntable Lab stocks Gang Starr (October 2026). The TTL
+    // button is opt-in; leave this off for any artist TTL does not carry.
+    turntablelabEligible: true,
     bio: [
       'Gang Starr was Guru on the microphone and DJ Premier behind the board, and across five albums they made the most consistent case in rap for treating a record collection as raw material rather than a genre allegiance. Step in the Arena in 1991 and Daily Operation in 1992 set the template; Moment of Truth in 1998 is the one most people name first. Guru died in 2010, and Premier assembled One of the Best Yet from unreleased vocals in 2019.',
       'Premier is the reason this catalog belongs on a site about digging. "Beyond Comprehension," on Step in the Arena, is built on The Band\'s "Up on Cripple Creek," a 1969 Americana record that nobody was mining for breaks. That is the whole Premier method: the source does not have to be funk, or even be any good by its own lights, as long as four bars of it hit. "Jazz Thing," cut for the Mo\' Better Blues soundtrack in 1990, made the argument out loud.',
@@ -986,13 +989,15 @@ export const ARTISTS = {
     tagline: 'Five musicians, one Capitol rhythm section, and the roots-rock record that DJ Premier and the Beastie Boys both went digging in.',
     genres: ['Rock', 'Roots Rock', 'Americana'],
     searchTerms: {
-      // 'The Band' is two of the most common words in a record listing, so a
-      // bare query returns every band on earth. Anchoring all three searches
-      // to the two best-known members keeps results on the right catalog.
-      // Check all three buttons on the live page after deploy.
-      discogs: 'The Band Robbie Robertson Levon Helm',
-      ebay: 'The Band Robbie Robertson Levon Helm vinyl LP',
-      cdandlp: 'The Band Robertson Helm',
+      // 'The Band' alone is two of the most common words in a record listing, so
+      // a bare query returns every band on earth. Pairing the name with an album
+      // title ("The Band The Band", the 1969 self-titled record) keeps results on
+      // the right catalog, confirmed by testing the live searches. To steer a
+      // button at a different album, swap in its title (Music from Big Pink,
+      // Stage Fright, Rock of Ages, The Last Waltz).
+      discogs: 'The Band The Band',
+      ebay: 'The Band The Band vinyl LP',
+      cdandlp: 'The Band The Band',
     },
     // Turned on October 7, 2026 after Joe confirmed an Amazon listing for The
     // Band. The site builds the Amazon button from a search query plus the

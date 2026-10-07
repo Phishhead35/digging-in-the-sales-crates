@@ -28,7 +28,9 @@ function cdandlpUrl(term) {
 // Turntable Lab is a Shopify store, so /search?q= works. buildPartnerUrl adds
 // aff=56122 from partners.js. The term defaults to the artist's Discogs term;
 // an artist entry can set searchTerms.turntablelab to override it. TTL is a
-// new-pressings and reissues shop, so a deep-crates artist may return nothing.
+// new-pressings and reissues shop, so the button is opt-in: it only renders
+// when the artist entry has turntablelabEligible: true, set after confirming
+// TTL actually stocks the artist (same idea as amazonEligible).
 function ttlUrl(artist) {
   const term = artist.searchTerms.turntablelab || artist.searchTerms.discogs;
   return buildPartnerUrl('turntablelab', `/search?q=${encodeURIComponent(term)}`);
@@ -154,7 +156,7 @@ function SearchButtons({ artist, size = 'normal' }) {
           <Search size={14} /> CDandLP
           {isMonetized('cdandlp') && <AffiliateBadge label="aff" spaced />}
         </a>
-        {isMonetized('turntablelab') && (
+        {artist.turntablelabEligible && isMonetized('turntablelab') && (
           <a
             href={ttlUrl(artist)}
             target="_blank"
