@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { withSlash } from '../utils/withSlash';
 import { Heart, Trash2, ShoppingCart, Search } from 'lucide-react';
 import { formatPrice } from '../utils/api';
 import {
@@ -122,7 +123,7 @@ export default function Wishlist() {
           <div style={{ fontSize: 14, color: 'var(--text-muted)', marginBottom: 24 }}>
             Search for records and hit the heart icon to save them here.
           </div>
-          <Link to="/search" style={{
+          <Link to={withSlash("/search")} style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             padding: '12px 24px', borderRadius: 10,
             background: 'linear-gradient(135deg, #f59e0b, #d97706)',

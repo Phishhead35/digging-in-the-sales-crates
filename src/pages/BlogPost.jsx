@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { withSlash } from '../utils/withSlash';
 import { ArrowLeft, ArrowRight, Disc3, Search, ExternalLink } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { BLOG_POSTS } from '../data/blog';
@@ -146,7 +147,7 @@ function ShopArtists({ post }) {
                 <Disc3 size={18} color="var(--amber)" style={{ opacity: 0.6, flexShrink: 0 }} />
                 <span style={{ fontWeight: 700, fontSize: 15 }}>{artist.name}</span>
                 {artist.pageSlug && (
-                  <Link to={`/artists/${artist.pageSlug}`} style={{
+                  <Link to={withSlash(`/artists/${artist.pageSlug}`)} style={{
                     fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 1,
                     color: 'var(--text-muted)', textDecoration: 'none',
                     transition: 'color 0.2s',
@@ -212,7 +213,7 @@ function NotFound() {
       <p style={{ color: 'var(--text-secondary)', marginBottom: 28 }}>
         That post doesn't exist yet, but check back soon.
       </p>
-      <Link to="/blog" style={{
+      <Link to={withSlash("/blog")} style={{
         display: 'inline-flex', alignItems: 'center', gap: 6,
         padding: '10px 20px', borderRadius: 8,
         background: 'var(--amber)', color: '#0a0a0f',
@@ -248,7 +249,7 @@ export default function BlogPost() {
         <div style={{ maxWidth: 760, margin: '0 auto' }}>
 
           {/* Back link */}
-          <Link to="/blog" style={{
+          <Link to={withSlash("/blog")} style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             color: 'var(--text-muted)', fontSize: 12,
             fontFamily: 'var(--font-mono)', letterSpacing: 1,
@@ -348,7 +349,7 @@ export default function BlogPost() {
             }}>
               Search across Discogs, eBay, CDandLP, and Turntable Lab at once and find the lowest price on any record.
             </p>
-            <Link to="/search" style={{
+            <Link to={withSlash("/search")} style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               padding: '14px 32px', borderRadius: 12, fontSize: 15,
               background: 'linear-gradient(135deg, #f59e0b, #d97706)',

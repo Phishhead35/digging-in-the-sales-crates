@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { withSlash } from '../utils/withSlash';
 import { TrendingDown, Bell, BellOff, Trash2, Search, Plus } from 'lucide-react';
 import { formatPrice } from '../utils/api';
 import { trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
@@ -76,7 +77,7 @@ export function Deals() {
         <p style={{ color: 'var(--text-primary)', fontSize: 13, margin: 0 }}>
           Subscribe to their email lists, then paste promos into the Email Parser to extract deals automatically.
         </p>
-        <Link to="/email-parser" className="quick-search-pill">
+        <Link to={withSlash("/email-parser")} className="quick-search-pill">
           Open Email Parser →
         </Link>
       </div>
@@ -293,7 +294,7 @@ export function Alerts() {
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
-                <Link to={`/search?q=${encodeURIComponent(alert.title)}`} style={{
+                <Link to={withSlash(`/search?q=${encodeURIComponent(alert.title)}`)} style={{
                   padding: '8px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600,
                   background: 'var(--amber-glow)', border: '1px solid rgba(245,158,11,0.3)',
                   color: 'var(--amber)', display: 'flex', alignItems: 'center', gap: 6,

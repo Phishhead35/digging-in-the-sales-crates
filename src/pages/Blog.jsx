@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { withSlash } from '../utils/withSlash';
 import { BookOpen, ArrowRight, Disc3, TrendingUp, Radio, RefreshCw } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { BLOG_POSTS } from '../data/blog';
@@ -30,7 +31,7 @@ function PostCard({ post }) {
 
   return (
     <Link
-      to={`/blog/${post.slug}`}
+      to={withSlash(`/blog/${post.slug}`)}
       onClick={() => trackPostClick(post.slug)}
       style={{ textDecoration: 'none' }}
     >

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { withSlash } from '../utils/withSlash';
 import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3, Info } from 'lucide-react';
 import FollowUs from './FollowUs';
 import { AffiliateDisclosure } from './AffiliateDisclosure';
@@ -91,7 +92,7 @@ export default function Layout({ children }) {
             {/* Desktop Nav */}
             <div className="desktop-nav" style={{ display: 'flex', gap: 2, marginLeft: 'auto', alignItems: 'center' }}>
               {navLinks.map(({ to, label, icon: Icon, comingSoon }) => (
-                <Link key={to} to={to}
+                <Link key={to} to={withSlash(to)}
                   onClick={() => trackNavClick(label, to, 'header_desktop')}
                   style={{
                   display: 'flex', alignItems: 'center', gap: 6,
@@ -139,7 +140,7 @@ export default function Layout({ children }) {
             padding: '16px 24px',
           }}>
             {navLinks.map(({ to, label, icon: Icon, comingSoon }) => (
-              <Link key={to} to={to}
+              <Link key={to} to={withSlash(to)}
                 onClick={() => trackNavClick(label, to, 'header_mobile')}
                 style={{
                 display: 'flex', alignItems: 'center', gap: 10,
@@ -261,7 +262,7 @@ export default function Layout({ children }) {
           {/* Footer nav links */}
           <div style={{ display: 'flex', gap: 20, justifyContent: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
             {navLinks.map(({ to, label }) => (
-              <Link key={to} to={to}
+              <Link key={to} to={withSlash(to)}
                 onClick={() => trackNavClick(label, to, 'footer')}
                 style={{ fontSize: 11, color: 'var(--text-primary)', textDecoration: 'none' }}>
                 {label}
@@ -280,7 +281,7 @@ export default function Layout({ children }) {
               GUIDES
             </span>
             {GUIDES.map((g) => (
-              <Link key={g.slug} to={g.path}
+              <Link key={g.slug} to={withSlash(g.path)}
                 onClick={() => trackNavClick(g.title, g.path, 'footer')}
                 style={{ fontSize: 11, color: 'var(--text-primary)', textDecoration: 'none' }}>
                 {g.title}

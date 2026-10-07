@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { withSlash } from "../utils/withSlash";
 import { track, trackNewsletterClick, CLICK_SOURCES } from "../utils/analytics";
 import useSEO from "../hooks/useSEO";
 import { newsletterUrl } from "../components/NewsletterCta";
@@ -151,7 +152,7 @@ function Parts({ parts }) {
     if (typeof part === "string") return <React.Fragment key={i}>{part}</React.Fragment>;
     if (part.em) return <em key={i}>{part.em}</em>;
     return (
-      <Link key={i} to={part.href} style={styles.inlineLink}>
+      <Link key={i} to={withSlash(part.href)} style={styles.inlineLink}>
         {part.text}
       </Link>
     );

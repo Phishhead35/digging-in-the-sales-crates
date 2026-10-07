@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { withSlash } from '../utils/withSlash';
 import { Disc3, ArrowRight, Music } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import { ARTISTS, GENRES } from '../data/artists';
@@ -16,7 +17,7 @@ function trackArtistClick(artistName) {
 function ArtistCard({ artist, href }) {
   return (
     <Link
-      to={href}
+      to={withSlash(href)}
       onClick={() => trackArtistClick(artist.name)}
       style={{ textDecoration: 'none' }}
     >
@@ -218,7 +219,7 @@ export default function Artists() {
           }}>
             Search any artist, album, or label directly across Discogs, eBay, CDandLP, and Turntable Lab.
           </p>
-          <Link to="/search" style={{
+          <Link to={withSlash("/search")} style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '14px 32px', borderRadius: 12, fontSize: 15,
             background: 'linear-gradient(135deg, #f59e0b, #d97706)',

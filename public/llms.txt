@@ -1,55 +1,82 @@
 # Digging in the Sales Crates
 
-> A free vinyl record deal aggregator that searches Discogs, eBay, and CDandLP simultaneously, showing the lowest prices across all three marketplaces in one place. No sign-up required. Tagline: "Taking the Dig Out of Digging."
+> A free vinyl record search tool that checks Discogs, eBay, CDandLP, and Turntable Lab at the same time and shows the listings side by side, sorted by price. No sign-up required. Tagline: "Taking the Dig Out of Digging."
 
-Digging in the Sales Crates (digginginthesalescrates.com) is a vinyl record price comparison tool for collectors, diggers, and music fans. Users search for any artist, album, or label and instantly see listings from Discogs, eBay, and CDandLP side by side, sorted by price. The site is free to use and earns affiliate commissions when users click through to purchase on the marketplace.
+Digging in the Sales Crates (digginginthesalescrates.com) is a vinyl price comparison site for collectors, diggers, and music fans. Search any artist, album, or label and see listings from four marketplaces on one page. The site is free to use and earns affiliate commissions when visitors click through and buy.
 
 ## What the site does
 
-- Aggregates vinyl record listings from Discogs, eBay, and CDandLP in real time
-- Allows users to search by artist name, album title, or record label
-- Displays condition grades, prices, and seller information from all three sources
-- Links directly to marketplace listings so users can purchase on their preferred platform
-- Maintains a wishlist feature for tracking records users want to find
-- Shows deals and price alerts for vinyl collectors
-- Features a local record store directory for Massachusetts and New England shops
-
-## Artist Pages
-
-Dedicated pages with collector notes, essential records, and direct marketplace search links:
-
-- [Ol' Dirty Bastard](https://digginginthesalescrates.com/artists/old-dirty-bastard) — Wu-Tang solo catalog, Elektra pressings
-- [J Dilla](https://digginginthesalescrates.com/artists/j-dilla) — Stones Throw, Donuts, Slum Village
-- [Cannibal Ox](https://digginginthesalescrates.com/artists/cannibal-ox) — The Cold Vein, Definitive Jux
-- [Fatback Band](https://digginginthesalescrates.com/artists/fatback-band) — Brooklyn funk, Spring Records catalog
-- [Michael Jackson](https://digginginthesalescrates.com/artists/michael-jackson) — Epic catalog, Japanese pressings
-- [MF DOOM](https://digginginthesalescrates.com/artists/mf-doom) — Madvillainy, Operation: Doomsday, Fondle 'Em pressings
-- [The Beatles](https://digginginthesalescrates.com/artists/the-beatles) — UK Parlophone originals, mono pressings, Apple Records
-- [The Moments](https://digginginthesalescrates.com/artists/the-moments) — Stang soul 45s, All Platinum
-
-## Genre Pages
-
-- [Golden Era Hip-Hop Vinyl](https://digginginthesalescrates.com/genres/golden-era-hip-hop) — 1988–1998, Nas, Biggie, Wu-Tang, Gang Starr
-- [Japanese Jazz Vinyl](https://digginginthesalescrates.com/genres/japanese-jazz) — King Records, CBS/Sony Japan, audiophile pressings
+- Searches Discogs, eBay, CDandLP, and Turntable Lab in real time
+- Search by artist, album title, or record label
+- Shows price, condition grade, and seller details where the marketplace provides them
+- Links straight to each listing so visitors buy on the marketplace they trust
+- Artist pages with collector notes, essential records, and pressing details
+- A directory of independent record shops in Massachusetts, Rhode Island, and New Hampshire
+- Collector guides, blog posts, and short videos on samples, pressings, and reissues
 
 ## Key Pages
 
-- [Search / Aggregator](https://digginginthesalescrates.com/aggregator) — main search tool
-- [Deals](https://digginginthesalescrates.com/deals) — current vinyl deals and price alerts
-- [Artist Directory](https://digginginthesalescrates.com/artists) — browse all artist and genre pages
-- [Local Record Shops](https://digginginthesalescrates.com/local-shops) — New England record store directory
-- [Wishlist](https://digginginthesalescrates.com/wishlist) — save records to find later
-- [FAQ](https://digginginthesalescrates.com/faq) — how the site works
+- [Vinyl Search](https://digginginthesalescrates.com/search/): the main search tool
+- [Artists](https://digginginthesalescrates.com/artists/): every artist and genre page
+- [Deals](https://digginginthesalescrates.com/deals/): current vinyl deals
+- [Watch & Read](https://digginginthesalescrates.com/watch-read/): videos and blog posts
+- [Blog](https://digginginthesalescrates.com/blog/): collector stories, sample breakdowns, reissue news
+- [Where's My Shop?](https://digginginthesalescrates.com/local-shops/): New England record store directory
+- [FAQ](https://digginginthesalescrates.com/faq/): how the site works
+- [About](https://digginginthesalescrates.com/about/): who runs the site and why
+
+## Guides
+
+- [Where to buy cheap hip-hop vinyl](https://digginginthesalescrates.com/where-to-buy-cheap-hip-hop-vinyl/)
+- [Discogs vs eBay for records](https://digginginthesalescrates.com/discogs-vs-ebay-for-records/)
+
+## Artist Pages
+
+Each page has collector notes, essential records, and direct marketplace search links:
+
+- [Ol' Dirty Bastard](https://digginginthesalescrates.com/artists/old-dirty-bastard/): Dirty. Raw. Irreplaceable. Wu-Tang's wildest one.
+- [J Dilla](https://digginginthesalescrates.com/artists/j-dilla/): The architect of modern hip-hop's heartbeat.
+- [Cannibal Ox](https://digginginthesalescrates.com/artists/cannibal-ox/): El-P's coldest production. Vast Aire's sharpest pen.
+- [Fatback Band](https://digginginthesalescrates.com/artists/fatback-band/): The Brooklyn funk machine that ran from '70 to forever.
+- [Michael Jackson](https://digginginthesalescrates.com/artists/michael-jackson/): The most collected pop catalog on wax.
+- [MF DOOM](https://digginginthesalescrates.com/artists/mf-doom/): All caps when you spell the man's name.
+- [The Beatles](https://digginginthesalescrates.com/artists/the-beatles/): The most collected catalog in the history of recorded music.
+- [The Moments](https://digginginthesalescrates.com/artists/the-moments/): Hackensack soul. Proper and timeless.
+- [Tupac Shakur](https://digginginthesalescrates.com/artists/tupac/): The most urgent voice in hip-hop history. Still moving vinyl.
+- [Naughty by Nature](https://digginginthesalescrates.com/artists/naughty-by-nature/): East Orange, NJ. They didn't want rap. they needed it.
+- [Wu-Tang Clan](https://digginginthesalescrates.com/artists/wu-tang-clan/): Staten Island. Nine MCs. One of the most important groups in rap history.
+- [Madonna](https://digginginthesalescrates.com/artists/madonna/): The most sampled woman in hip-hop. The most collectable pop catalog outside the Beatles.
+- [John Coltrane](https://digginginthesalescrates.com/artists/john-coltrane/): The sound of searching. Jazz's most collected saxophonist.
+- [Eric B. & Rakim](https://digginginthesalescrates.com/artists/eric-b-and-rakim/): The blueprint. Every MC after 1987 is downstream.
+- [Boogie Down Productions](https://digginginthesalescrates.com/artists/boogie-down-productions/): South Bronx, 1986. KRS-One and Scott La Rock built the blueprint for conscious hip-hop.
+- [Pete Rock](https://digginginthesalescrates.com/artists/pete-rock/): The Soul Brother. Boom bap's most sampled sampler.
+- [Marvin Gaye](https://digginginthesalescrates.com/artists/marvin-gaye/): Motown's most fearless voice. Soul music's most sampled architect.
+- [DJ Quik](https://digginginthesalescrates.com/artists/dj-quik/): Compton. He built the G-funk blueprint before anyone called it that.
+- [Fleetwood Mac](https://digginginthesalescrates.com/artists/fleetwood-mac/): The best-selling record in every bin, and the deadwax decides what it is worth.
+- [Prince](https://digginginthesalescrates.com/artists/prince/): He played everything, owned everything, and outran every label he signed to.
+- [Tool](https://digginginthesalescrates.com/artists/tool/): Late to vinyl, heavily bootlegged, and worth getting right the first time.
+- [Blondie](https://digginginthesalescrates.com/artists/blondie/): CBGB to the top of the Hot 100, and hip-hop has been sampling them ever since.
+- [Gravediggaz](https://digginginthesalescrates.com/artists/gravediggaz/): Four Tommy Boy castoffs invented horrorcore, and RZA was in the group before most people knew his name.
+- [Isaac Hayes](https://digginginthesalescrates.com/artists/isaac-hayes/): He stretched soul until it became something else, and two generations of producers have been quarrying it ever since.
+- [Gang Starr](https://digginginthesalescrates.com/artists/gang-starr/): Guru and Premier, and the cleanest argument in rap that the break matters more than the genre it came from.
+- [Main Source](https://digginginthesalescrates.com/artists/main-source/): Large Professor's first group, and the record where Nas showed up on wax before anyone knew his name.
+- [The Band](https://digginginthesalescrates.com/artists/the-band/): Five musicians, one Capitol rhythm section, and the roots-rock record that DJ Premier and the Beastie Boys both went digging in.
+
+## Genre Pages
+
+- [Golden Era Hip-Hop](https://digginginthesalescrates.com/genres/golden-era-hip-hop/)
+- [Japanese Jazz](https://digginginthesalescrates.com/genres/japanese-jazz/)
 
 ## Marketplaces covered
 
-- **Discogs** — largest vinyl marketplace, condition-graded listings from global sellers
-- **eBay** — auction and fixed-price listings, broad inventory
-- **CDandLP** — European-focused marketplace, strong jazz and classical inventory
+- **Discogs**: the largest vinyl marketplace, condition-graded listings from sellers worldwide
+- **eBay**: auction and fixed-price listings, broad inventory
+- **CDandLP**: European marketplace, strong jazz, soul, and import inventory
+- **Turntable Lab**: new vinyl, reissues, and exclusive pressings
 
 ## Who this is for
 
-Vinyl collectors, record diggers, hip-hop heads, jazz enthusiasts, soul and funk collectors, and anyone looking to buy records without overpaying. Particularly strong for hip-hop vinyl (golden era, Wu-Tang, Stones Throw), soul and funk 45s, jazz original pressings, and audiophile collectors seeking Japanese pressings.
+Vinyl collectors, record diggers, hip-hop heads, jazz fans, soul and funk collectors, and anyone who wants to buy records without overpaying. Especially strong for golden era hip-hop, Wu-Tang and Stones Throw catalogs, the soul and funk records hip-hop sampled, original jazz pressings, and Japanese pressings.
 
 ## Contact
 

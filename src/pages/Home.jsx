@@ -1,5 +1,6 @@
 import React, { useState, startTransition } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { withSlash } from '../utils/withSlash';
 import { Search, TrendingDown, Star, ArrowRight, Disc3, ExternalLink } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import useLatestVideos from '../hooks/useLatestVideos';
@@ -439,7 +440,7 @@ export default function Home() {
               <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-primary)' }}>Own a record store?</span>
               <span style={{ fontSize: 13, color: 'var(--text-primary)', marginLeft: 8 }}>Get your shop in front of serious collectors.</span>
             </div>
-            <Link to="/featured-partners" style={{
+            <Link to={withSlash("/featured-partners")} style={{
               display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 18px', borderRadius: 8,
               background: 'var(--amber-glow)', border: '1px solid rgba(245,158,11,0.3)',
               color: 'var(--amber)', fontSize: 13, fontWeight: 600, textDecoration: 'none',
@@ -493,7 +494,7 @@ export default function Home() {
               </h2>
             </div>
             <Link
-              to="/watch-read"
+              to={withSlash("/watch-read")}
               onClick={() => trackWatchReadClick('homepage_section_link')}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 6,
@@ -531,7 +532,7 @@ export default function Home() {
                 FRESH IN THE CRATES
               </h2>
             </div>
-            <Link to="/deals" style={{
+            <Link to={withSlash("/deals")} style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               color: 'var(--amber)', fontSize: 13, fontWeight: 600,
               textDecoration: 'none',
@@ -554,7 +555,7 @@ export default function Home() {
               right now, and every Friday the free newsletter rounds up the best record sales
               we found that week.
             </p>
-            <Link to="/deals" style={{
+            <Link to={withSlash("/deals")} style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               padding: '12px 22px', borderRadius: 10, fontSize: 14,
               background: 'linear-gradient(135deg, #f59e0b, #d97706)',
@@ -591,7 +592,7 @@ export default function Home() {
           <p style={{ color: 'var(--text-primary)', fontSize: 15, maxWidth: 480, margin: '0 auto 28px', lineHeight: 1.7 }}>
             Search Discogs, eBay, CDandLP, and Turntable Lab at the same time. Condition graded. Lowest price first. Every time.
           </p>
-          <Link to="/search" className="view-deals-btn" style={{ display: 'inline-flex', fontSize: 15, padding: '14px 32px', borderRadius: 12 }}>
+          <Link to={withSlash("/search")} className="view-deals-btn" style={{ display: 'inline-flex', fontSize: 15, padding: '14px 32px', borderRadius: 12 }}>
             Start Digging <ArrowRight size={16} />
           </Link>
         </div>

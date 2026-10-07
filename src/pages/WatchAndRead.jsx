@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { withSlash } from '../utils/withSlash';
 import { Youtube, BookOpen, Disc3, TrendingUp, Radio, RefreshCw, ArrowRight, ExternalLink, PlayCircle, Mail } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import useLatestVideos from '../hooks/useLatestVideos';
@@ -163,7 +164,7 @@ function SeriesCard({ series }) {
 function StoryCard({ post }) {
   const { color, icon: Icon } = SERIES_STYLES[post.series] || DEFAULT_SERIES_STYLE;
   return (
-    <Link to={`/blog/${post.slug}`} onClick={() => trackPostClick(post.slug)} style={{ textDecoration: 'none' }}>
+    <Link to={withSlash(`/blog/${post.slug}`)} onClick={() => trackPostClick(post.slug)} style={{ textDecoration: 'none' }}>
       <div
         style={{
           borderRadius: 14, overflow: 'hidden',
@@ -330,7 +331,7 @@ export default function WatchAndRead() {
             Watch all videos <ExternalLink size={12} />
           </a>
           <Link
-            to="/blog"
+            to={withSlash("/blog")}
             onClick={() => trackBrowseAllClick('read_all_stories')}
             style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'var(--text-secondary)', fontSize: 13, textDecoration: 'none' }}
           >

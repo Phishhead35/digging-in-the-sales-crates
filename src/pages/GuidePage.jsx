@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { withSlash } from "../utils/withSlash";
 import useSEO from "../hooks/useSEO";
 import { trackNewsletterClick, CLICK_SOURCES } from "../utils/analytics";
 import { newsletterUrl } from "../components/NewsletterCta";
@@ -116,7 +117,7 @@ function Part({ part, slug }) {
     );
   }
   return (
-    <Link to={part.href} style={styles.link}>
+    <Link to={withSlash(part.href)} style={styles.link}>
       {part.text}
     </Link>
   );
@@ -168,7 +169,7 @@ export default function GuidePage({ slug }) {
           );
         })}
 
-        <Link to="/search" style={styles.cta}>
+        <Link to={withSlash("/search")} style={styles.cta}>
           Start a search
         </Link>
       </main>

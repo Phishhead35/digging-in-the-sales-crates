@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { withSlash } from "../utils/withSlash";
 import useSEO from "../hooks/useSEO";
 import { track, trackNewsletterClick, CLICK_SOURCES } from "../utils/analytics";
 import { newsletterUrl } from "../components/NewsletterCta";
@@ -160,7 +161,7 @@ export default function BundlePage({ mode = "landing" }) {
           <p style={styles.p}>{BUNDLE.thanksFriday}</p>
           {!SIGNUP_REDIRECT_CONFIRMED && signupLink(BUNDLE.signupButton)}
           <p style={{ ...styles.p, marginTop: "1.5rem" }}>
-            <Link to="/search" style={styles.link}>
+            <Link to={withSlash("/search")} style={styles.link}>
               Search Discogs, eBay, CDandLP, and Turntable Lab at once
             </Link>
           </p>
@@ -209,7 +210,7 @@ export default function BundlePage({ mode = "landing" }) {
           </div>
         ) : (
           <>
-            <Link to={BUNDLE.thanksPath} style={styles.button}>
+            <Link to={withSlash(BUNDLE.thanksPath)} style={styles.button}>
               {BUNDLE.downloadButton}
             </Link>
             <div style={styles.card}>
