@@ -25,6 +25,14 @@ function ebayUrl(artist) {
 function cdandlpUrl(term) {
   return `https://www.cdandlp.com/en/search/?q=${encodeURIComponent(term)}&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation`;
 }
+// Turntable Lab is a Shopify store, so /search?q= works. buildPartnerUrl adds
+// aff=56122 from partners.js. The term defaults to the artist's Discogs term;
+// an artist entry can set searchTerms.turntablelab to override it. TTL is a
+// new-pressings and reissues shop, so a deep-crates artist may return nothing.
+function ttlUrl(artist) {
+  const term = artist.searchTerms.turntablelab || artist.searchTerms.discogs;
+  return buildPartnerUrl('turntablelab', `/search?q=${encodeURIComponent(term)}`);
+}
 // Amazon has no per-item catalog lookup worth maintaining here, so this is a
 // plain search URL through buildPartnerUrl, which appends the tracking tag
 // from partners.js. Term defaults to "<artist name> vinyl"; an artist entry
@@ -146,6 +154,27 @@ function SearchButtons({ artist, size = 'normal' }) {
           <Search size={14} /> CDandLP
           {isMonetized('cdandlp') && <AffiliateBadge label="aff" spaced />}
         </a>
+        {isMonetized('turntablelab') && (
+          <a
+            href={ttlUrl(artist)}
+            target="_blank"
+            rel={relFor('turntablelab')}
+            onClick={() => trackClick(artist.name, 'turntablelab', ttlUrl(artist))}
+            style={{
+              ...btnStyle,
+              display: 'inline-flex', alignItems: 'center', gap: 7,
+              border: '1px solid rgba(139,92,246,0.4)',
+              background: 'rgba(139,92,246,0.08)',
+              color: '#a78bfa', fontWeight: 600, textDecoration: 'none',
+              transition: 'border-color 0.2s, background 0.2s',
+            }}
+            onMouseOver={e => { e.currentTarget.style.borderColor = 'rgba(139,92,246,0.7)'; e.currentTarget.style.background = 'rgba(139,92,246,0.14)'; }}
+            onMouseOut={e => { e.currentTarget.style.borderColor = 'rgba(139,92,246,0.4)'; e.currentTarget.style.background = 'rgba(139,92,246,0.08)'; }}
+          >
+            <Search size={14} /> Turntable Lab
+            <AffiliateBadge label="aff" spaced />
+          </a>
+        )}
         {artist.amazonEligible && isMonetized('amazon') && (
           <a
             href={amazonUrl(artist)}

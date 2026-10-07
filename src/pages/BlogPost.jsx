@@ -19,6 +19,12 @@ function ebayUrl(term) {
 function cdandlpUrl(term) {
   return `https://www.cdandlp.com/en/search/?q=${encodeURIComponent(term)}&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation`;
 }
+// Turntable Lab search, same approach as ArtistPage.jsx. The term falls back
+// to the Discogs term; a shopArtists entry can set searchTerms.turntablelab.
+function ttlUrl(artist) {
+  const term = artist.searchTerms.turntablelab || artist.searchTerms.discogs;
+  return buildPartnerUrl('turntablelab', `/search?q=${encodeURIComponent(term)}`);
+}
 // Same plain-search approach as ArtistPage.jsx: no per-item Amazon catalog
 // lookup, just a tracked search URL. term defaults to "<name> vinyl" but a
 // shopArtists entry can set amazonSearchTerm to override it.
@@ -64,6 +70,7 @@ const MARKETPLACE_STYLES = {
   ebay: { color: '#60a5fa', border: '1px solid rgba(96,165,250,0.4)' },
   cdandlp: { color: '#4ade80', border: '1px solid rgba(74,222,128,0.4)' },
   amazon: { color: '#ff9900', border: '1px solid rgba(255,153,0,0.4)' },
+  turntablelab: { color: '#a78bfa', border: '1px solid rgba(139,92,246,0.4)' },
 };
 
 function MarketplaceButton({ label, url, marketplace, postSlug, artistName }) {
@@ -159,6 +166,13 @@ function ShopArtists({ post }) {
                   url={cdandlpUrl(artist.searchTerms.cdandlp)}
                   postSlug={post.slug} artistName={artist.name}
                 />
+                {isMonetized('turntablelab') && (
+                  <MarketplaceButton
+                    label="Turntable Lab" marketplace="turntablelab"
+                    url={ttlUrl(artist)}
+                    postSlug={post.slug} artistName={artist.name}
+                  />
+                )}
                 {/* Same catalog-confidence gate as ArtistPage.jsx, but the
                     flag is now read from the artist record via pageSlug, so
                     /blog and /artists cannot disagree. See resolveAmazon. */}

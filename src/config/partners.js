@@ -112,7 +112,10 @@ export const PARTNERS = [
     status: 'live',
     network: 'Affiliatly',
     monetized: 'yes',
-    surfaces: ['deals', 'search', 'wishlist'],
+    // 'artist' and 'blog' added 2026-10-07 with the Turntable Lab search
+    // buttons on ArtistPage.jsx and BlogPost.jsx. This is what makes the
+    // disclosure on those pages name Turntable Lab.
+    surfaces: ['deals', 'search', 'wishlist', 'artist', 'blog'],
     base: 'https://www.turntablelab.com',
     params: { aff: '56122' },
     disclose: true,
