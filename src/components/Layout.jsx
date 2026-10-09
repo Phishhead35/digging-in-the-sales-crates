@@ -45,12 +45,20 @@ export default function Layout({ children }) {
     { to: '/deals',              label: 'Deals',             icon: TrendingDown },
     { to: '/watch-read',         label: 'Watch & Read',      icon: BookOpen },
     { to: '/blog',               label: 'Blog',              icon: FileText },
-    { to: '/featured-partners',  label: 'Featured Partners', icon: Star,      comingSoon: true },
     { to: '/local-shops',        label: "Where's My Shop?",  icon: MapPin },
     { to: '/wishlist',           label: 'Wishlist',          icon: Heart },
     { to: '/faq',                label: 'FAQ',               icon: HelpCircle },
+  ];
+
+  // Footer and hamburger menu only (2026-10-09). Eleven header links plus
+  // the NEW badge did not fit at 1366px, so About and Featured Partners
+  // left the header row. They stay one click away in the footer and in the
+  // mobile menu. Header order is unchanged for everything else.
+  const extraLinks = [
+    { to: '/featured-partners',  label: 'Featured Partners', icon: Star,      comingSoon: true },
     { to: '/about',              label: 'About',             icon: Info },
   ];
+  const menuLinks = [...navLinks, ...extraLinks];
 
   const isActive = (to) => {
     if (to === '/') return location.pathname === '/';
@@ -142,7 +150,7 @@ export default function Layout({ children }) {
             background: 'var(--bg-surface)', borderBottom: '1px solid var(--border)',
             padding: '16px 24px',
           }}>
-            {navLinks.map(({ to, label, icon: Icon, comingSoon }) => (
+            {menuLinks.map(({ to, label, icon: Icon, comingSoon }) => (
               <Link key={to} to={withSlash(to)}
                 onClick={() => trackNavClick(label, to, 'header_mobile')}
                 style={{
@@ -170,25 +178,26 @@ export default function Layout({ children }) {
 
       {/* Responsive styles */}
       <style>{`
-        /* Header breakpoints, measured Sep 25 2026 with the real fonts for
+        /* Header breakpoints. Measured Sep 25 2026 with the real fonts for
            ten links: about 1640px with icons, about 1215px without.
-           Blog was added Oct 9 2026 (eleven links). The new thresholds below
-           are ESTIMATES (about +85px with icons, +65px without), not
-           measurements, so check the header at 1280, 1366 and 1440 wide
-           after deploying and nudge 1739 / 1299 if the last link clips.
-           Below 1300px the hamburger takes over. */
-        @media (max-width: 1739px) {
+           Oct 9 2026: the header row is now nine links (Blog added; About
+           and Featured Partners moved to the footer and hamburger menu), so
+           it is narrower than the measured ten: roughly 1510px with icons and
+           1080px without. The thresholds below are ESTIMATES with margin, not
+           measurements. Icons hide below 1600px; the hamburger takes over
+           below 1200px. If the last link clips, raise 1599 / 1199. */
+        @media (max-width: 1599px) {
           .desktop-nav a { padding: 8px 9px !important; }
           .desktop-nav a svg { display: none !important; }
         }
-        @media (max-width: 1299px) {
+        @media (max-width: 1199px) {
           .desktop-nav { display: none !important; }
           .mobile-toggle { display: block !important; }
         }
         @media (max-width: 900px) {
           .nav-logo-text { font-size: 15px !important; letter-spacing: 1px !important; }
         }
-        @media (min-width: 1300px) {
+        @media (min-width: 1200px) {
           .mobile-toggle { display: none !important; }
         }
 
@@ -265,7 +274,7 @@ export default function Layout({ children }) {
 
           {/* Footer nav links */}
           <div style={{ display: 'flex', gap: 20, justifyContent: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
-            {navLinks.map(({ to, label }) => (
+            {menuLinks.map(({ to, label }) => (
               <Link key={to} to={withSlash(to)}
                 onClick={() => trackNavClick(label, to, 'footer')}
                 style={{ fontSize: 11, color: 'var(--text-primary)', textDecoration: 'none' }}>
