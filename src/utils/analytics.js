@@ -185,6 +185,11 @@ export function marketplaceFromUrl(url) {
   if (u.includes('discogs.com')) return 'discogs';
   if (u.includes('cdandlp.com')) return 'cdandlp';
   if (u.includes('turntablelab.com')) return 'turntablelab';
+  // VNYL (Awin advertiser 89537, added 2026-10-09). Its tracked link is an
+  // awin1.com redirect with no "vnyl" anywhere in the URL, so match the
+  // merchant id instead. Without this its clicks would roll up into
+  // 'partner_site' with the record shops.
+  if (/[?&](?:awin)?mid=89537(?:&|$)/.test(u)) return 'vnyl';
   // Its own marketplace value since 2026-09-21. Previously rolled up into
   // 'partner_site', which made its clicks indistinguishable from the
   // Massachusetts shop cards in the Marketplace dimension. Recordbuilds is a

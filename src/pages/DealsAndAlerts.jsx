@@ -6,6 +6,7 @@ import { formatPrice } from '../utils/api';
 import { trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
 import useSEO from '../hooks/useSEO';
 import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
+import { buildPartnerUrl } from '../config/partners';
 
 // ============================================================
 // DEALS PAGE — Curated store links + search shortcuts
@@ -18,7 +19,7 @@ export function Deals() {
   useSEO({
     title: 'Vinyl Deals & Price Alerts | Digging in the Sales Crates',
     description:
-      'Current vinyl record deals, sales, and price alerts from Discogs, eBay, CDandLP, and partner record shops in Massachusetts and New England.',
+      'Current vinyl record deals, sales, and price alerts from Discogs, eBay, CDandLP, Turntable Lab, and partner record shops in Massachusetts and New England.',
   });
 
   const navigate = useNavigate();
@@ -28,6 +29,9 @@ export function Deals() {
   const curatedStores = [
     { name: 'Turntable Lab', url: 'https://www.turntablelab.com?aff=56122', desc: 'NYC institution since 1999. New releases, DJ gear, and vinyl across every genre, not just hip-hop.', tag: 'All Genres', email: 'https://www.turntablelab.com', affiliate: true },
     { name: 'Retrolife', url: 'https://tidd.ly/4vOWBpT', desc: 'Record players, turntable-speaker systems, and HiFi speakers built for new collectors setting up their first rig. US warehouses, free shipping, 60-day returns.', tag: 'Turntables & Gear', email: 'https://retrolifeplayer.com', affiliate: true },
+    // VNYL's link lives in src/config/partners.js (Awin, clickref=ditsc-deals)
+    // so the tracking URL is defined in one place only.
+    { name: 'VNYL', url: buildPartnerUrl('vnyl'), desc: 'A record club picked around your taste. Connect Spotify or Apple Music and VNYL hand-picks up to 3 new records for you each month.', tag: 'Subscription', affiliate: true },
     { name: 'Fat Beats', url: 'https://fatbeats.com', desc: 'Hip-hop and rap specialists since 1994. New releases, exclusives, and pre-orders. Subscribe for sale emails.', tag: 'Hip-Hop / New', email: 'https://fatbeats.com' },
     { name: 'Get On Down', url: 'https://getondown.com', desc: 'Limited edition pressings, anniversary editions, and numbered sets. Known for elaborate packaging.', tag: 'Limited Editions', email: 'https://getondown.com' },
     { name: 'HHV Records', url: 'https://www.hhv.de/en-US/records', desc: 'Berlin-based since 2002. 80,000+ titles, rooted in Hip-Hop, jazz, funk, and soul. Ships worldwide.', tag: 'Hip-Hop / Global', email: 'https://www.hhv.de/en-US' },
@@ -83,8 +87,9 @@ export function Deals() {
       </div>
 
       {/* AFFILIATE DISCLOSURE.
-          Names only Turntable Lab and Retrolife, because those are the only
-          two cards below that pay anything. Fat Beats, Get On Down, HHV,
+          Names Turntable Lab, Retrolife, and VNYL (the sentence is built
+          from partners.js), because those are the only three cards below that
+          pay anything. Fat Beats, Get On Down, HHV,
           Mass Appeal, Rough Trade, Amoeba, and Bandcamp are goodwill links
           and are deliberately NOT badged: a false disclosure misleads in the
           other direction and is its own problem.
@@ -103,8 +108,8 @@ export function Deals() {
               // `affiliate` comes from the curatedStores data, so the
               // monetized dimension reflects what we actually declared
               // rather than what the URL happens to look like. Turntable
-              // Lab (aff=) and Retrolife (tidd.ly) are live programs;
-              // everything else on this list is currently unmonetized.
+              // Lab (aff=), Retrolife (tidd.ly) and VNYL (awin1.com) are live
+              // programs; everything else on this list is currently unmonetized.
               isAffiliate: Boolean(affiliate),
               notify: `${name} (deals page)`,
             })}

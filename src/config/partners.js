@@ -144,6 +144,26 @@ export const PARTNERS = [
     disclose: true,
   },
   {
+    key: 'vnyl',
+    name: 'VNYL',
+    status: 'live',
+    network: 'Awin',
+    advertiserId: '89537',
+    publisherId: '2823694',
+    monetized: 'yes',
+    // Approved on Awin 2026-10-05. A record subscription club (curated to the
+    // customer's Spotify or Apple Music taste, up to 3 new records a month),
+    // not a marketplace, so it is a Deals page card only and never a search
+    // source.
+    surfaces: ['deals'],
+    // Awin creative 4289874 ("Default Text"). clickref=ditsc-deals stamps
+    // every sale in the Awin report with the page that sent it; use a
+    // different clickref if VNYL ever appears on another surface.
+    prebuiltUrl:
+      'https://www.awin1.com/awclick.php?gid=559977&mid=89537&awinaffid=2823694&linkid=4289874&clickref=ditsc-deals',
+    disclose: true,
+  },
+  {
     key: 'discogs',
     name: 'Discogs',
     status: 'unmonetized',
