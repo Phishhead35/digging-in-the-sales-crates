@@ -35,22 +35,22 @@ export default function FeaturedPartners() {
         Digging in the Sales Crates is where vinyl collectors come to find deals, discover records, and connect with the stores that feed the habit. Our audience is your customer.
       </p>
 
-      {/* Coming soon card */}
+      {/* Partnership program card */}
       <div style={{
         background: 'var(--bg-card)', border: '1px solid rgba(245,158,11,0.25)',
         borderRadius: 16, padding: '36px 32px', marginBottom: 32,
       }}>
         <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 12 }}>
-          PARTNERSHIP TIERS: COMING SOON
+          PARTNERSHIP TIERS: NOW OPEN
         </p>
         <p style={{ color: 'var(--text-primary)', fontSize: 15, lineHeight: 1.7, marginBottom: 0 }}>
-          We're building a formal partnership program with tiered options including featured store placement, TikTok features, and on-location Shop Sessions. Want to be first in line when it launches?
+          We've launched a formal partnership program with tiered options including featured store placement, TikTok features, and on-location Shop Sessions. Want your store in it?
         </p>
       </div>
 
       {/* CTA */}
       <p style={{ color: 'var(--text-primary)', fontSize: 15, marginBottom: 20 }}>
-        Reach out now and we'll add you to the list.
+        Reach out and tell us about your store.
       </p>
       <a
         href="mailto:hello@digginginthesalescrates.com?subject=Partnership Interest"
