@@ -41,10 +41,10 @@ export default function FeaturedPartners() {
         borderRadius: 16, padding: '36px 32px', marginBottom: 32,
       }}>
         <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 12 }}>
-          PARTNERSHIP TIERS — COMING SUMMER 2026
+          PARTNERSHIP TIERS: COMING SOON
         </p>
         <p style={{ color: 'var(--text-primary)', fontSize: 15, lineHeight: 1.7, marginBottom: 0 }}>
-          We're launching our formal partnership program in July/August 2026 with tiered options including featured store placement, TikTok features, and on-location Shop Sessions. Want to be first in line when it launches?
+          We're building a formal partnership program with tiered options including featured store placement, TikTok features, and on-location Shop Sessions. Want to be first in line when it launches?
         </p>
       </div>
 

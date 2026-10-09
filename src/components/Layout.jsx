@@ -100,8 +100,10 @@ export default function Layout({ children }) {
               </div>
             </Link>
 
-            {/* Desktop Nav */}
-            <div className="desktop-nav" style={{ display: 'flex', gap: 2, marginLeft: 'auto', alignItems: 'center' }}>
+            {/* Desktop Nav. flex:1 + space-evenly (2026-10-09) spreads the nine
+                links across the free space so there is no dead gap after the
+                logo; on narrow widths it packs tight like before. */}
+            <div className="desktop-nav" style={{ display: 'flex', gap: 2, flex: 1, justifyContent: 'space-evenly', alignItems: 'center' }}>
               {navLinks.map(({ to, label, icon: Icon, comingSoon }) => (
                 <Link key={to} to={withSlash(to)}
                   onClick={() => trackNavClick(label, to, 'header_desktop')}
