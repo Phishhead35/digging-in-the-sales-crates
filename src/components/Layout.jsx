@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { withSlash } from '../utils/withSlash';
-import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3, Info } from 'lucide-react';
+import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3, Info, FileText } from 'lucide-react';
 import FollowUs from './FollowUs';
 import { AffiliateDisclosure } from './AffiliateDisclosure';
 import { trackNavClick, trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
@@ -29,11 +29,13 @@ export default function Layout({ children }) {
 
   useEffect(() => { setMobileOpen(false); }, [location]);
 
-  // Phase 2 (Homepage & Content Hub): "Blog" nav item replaced with
-  // "Watch & Read" (/watch-read), the new combined video + written content
-  // destination. /blog and /blog/:slug still exist and are still indexed —
-  // see prerender.mjs — they're just no longer linked from primary nav, per
-  // the Phase 2 SEO decision to avoid any redirect/broken-link risk.
+  // Phase 2 (Homepage & Content Hub) swapped "Blog" out of the nav for
+  // "Watch & Read" (/watch-read). Blog is back as its own link (2026-10-09),
+  // right after Watch & Read: the 18 posts were only reachable through
+  // "Read all stories" on /watch-read, and a sitewide link gives every post
+  // a short path from every page, which helps indexing. The footer row below
+  // is built from this same array, so it picks the link up too.
+  // Keep the crawler nav list in scripts/prerender.mjs in step with this.
   const navLinks = [
     { to: '/',                   label: 'Home',              icon: Home },
     // /search is the one search URL (2026-10-01). /aggregator was retired
@@ -42,6 +44,7 @@ export default function Layout({ children }) {
     { to: '/artists',            label: 'Artists',           icon: Disc3 },
     { to: '/deals',              label: 'Deals',             icon: TrendingDown },
     { to: '/watch-read',         label: 'Watch & Read',      icon: BookOpen },
+    { to: '/blog',               label: 'Blog',              icon: FileText },
     { to: '/featured-partners',  label: 'Featured Partners', icon: Star,      comingSoon: true },
     { to: '/local-shops',        label: "Where's My Shop?",  icon: MapPin },
     { to: '/wishlist',           label: 'Wishlist',          icon: Heart },
@@ -167,24 +170,25 @@ export default function Layout({ children }) {
 
       {/* Responsive styles */}
       <style>{`
-        /* Header breakpoints, measured Sep 25 2026 with the real fonts.
-           The ten desktop links with icons need about 1640px; without
-           icons they need about 1215px. Below 1240px the hamburger takes
-           over. (Before this change the header switched at 900px and the
-           last links, FAQ included, were clipped off-screen on common
-           1280 and 1366 laptops.) */
-        @media (max-width: 1639px) {
+        /* Header breakpoints, measured Sep 25 2026 with the real fonts for
+           ten links: about 1640px with icons, about 1215px without.
+           Blog was added Oct 9 2026 (eleven links). The new thresholds below
+           are ESTIMATES (about +85px with icons, +65px without), not
+           measurements, so check the header at 1280, 1366 and 1440 wide
+           after deploying and nudge 1739 / 1299 if the last link clips.
+           Below 1300px the hamburger takes over. */
+        @media (max-width: 1739px) {
           .desktop-nav a { padding: 8px 9px !important; }
           .desktop-nav a svg { display: none !important; }
         }
-        @media (max-width: 1239px) {
+        @media (max-width: 1299px) {
           .desktop-nav { display: none !important; }
           .mobile-toggle { display: block !important; }
         }
         @media (max-width: 900px) {
           .nav-logo-text { font-size: 15px !important; letter-spacing: 1px !important; }
         }
-        @media (min-width: 1240px) {
+        @media (min-width: 1300px) {
           .mobile-toggle { display: none !important; }
         }
 

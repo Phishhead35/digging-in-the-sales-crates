@@ -286,7 +286,8 @@ async function main() {
       ['/deals', 'Current vinyl deals'],
       ['/artists', 'Artist & genre pages'],
       ['/watch-read', 'Watch & Read: DITSC videos and written stories'],
-      ['/local-shops', 'New England record shop directory'],
+      ['/blog', 'Blog: sample connections, reissue alerts, and artist spotlights'],
+      ['/local-shops', 'Find record shops near you'],
       ['/faq', 'FAQ'],
       ['/about', 'About Digging in the Sales Crates'],
       // Guide pages, from src/data/guides.js (2026-10-04).
@@ -379,9 +380,9 @@ async function main() {
     },
     {
       path: '/local-shops',
-      title: `Local Record Shops in New England | ${SITE}`,
+      title: `Find Record Shops Near You | ${SITE}`,
       description:
-        'Find independent record stores in Massachusetts and New England. Directory of local vinyl shops for crate diggers.',
+        'Find independent record stores near you. Search by city, neighborhood, or zip code to see ratings, hours, and directions for local vinyl shops.',
       content:
         // Describes what this page actually does: a live map search. The
         // partner store directory is on the homepage, so it is linked
@@ -619,8 +620,9 @@ async function main() {
   pages.push(...artistEntries.map((e) => artistPage(e, 'artists')));
   pages.push(...genreEntries.map((e) => artistPage(e, 'genres')));
 
-  // ── Blog index (UNCHANGED in Phase 2 — /blog stays live and indexed,
-  //    it's just no longer linked from primary nav; see Layout.jsx) ──
+  // ── Blog index (UNCHANGED in Phase 2 — /blog stays live and indexed.
+  //    Linked from the primary nav and footer again since 2026-10-09;
+  //    see Layout.jsx) ──
   const posts = Object.values(BLOG_POSTS).sort((x, y) => (x.date < y.date ? 1 : -1));
   pages.push({
     path: '/blog',

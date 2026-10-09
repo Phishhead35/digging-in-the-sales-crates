@@ -248,9 +248,13 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, p
       </div>
 
       <div style={{ padding: '16px', flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <div style={{ fontSize: 13, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
-          {result.year || '—'} {result.country ? `· ${result.country}` : ''}
-        </div>
+        {/* Year and country row only renders when there is something to show.
+            It used to print a lone dash for results with neither (2026-10-09). */}
+        {(result.year || result.country) && (
+          <div style={{ fontSize: 13, color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)' }}>
+            {[result.year, result.country].filter(Boolean).join(' · ')}
+          </div>
+        )}
         <h3 style={{ fontSize: 14, fontWeight: 600, lineHeight: 1.4, flex: 1 }}>
           {result.title}
         </h3>

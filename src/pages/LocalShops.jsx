@@ -224,9 +224,9 @@ export default function LocalShops() {
   // prerender wins for Google, this hook wins for the browser tab and GA4's
   // page_title after client-side navigation.
   useSEO({
-    title: 'Local Record Shops in New England | Digging in the Sales Crates',
+    title: 'Find Record Shops Near You | Digging in the Sales Crates',
     description:
-      'Find independent record stores in Massachusetts and New England. Directory of local vinyl shops for crate diggers.',
+      'Find independent record stores near you. Search by city, neighborhood, or zip code to see ratings, hours, and directions for local vinyl shops.',
   });
 
   const [query, setQuery] = useState('');
