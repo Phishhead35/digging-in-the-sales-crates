@@ -5,6 +5,41 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'gravediggaz-6-feet-deep-which-copy-to-buy': {
+    slug: 'gravediggaz-6-feet-deep-which-copy-to-buy',
+    title: 'Which Copy of Gravediggaz\' 6 Feet Deep Should You Actually Buy?',
+    series: 'MARKET WATCH',
+    date: '2026-10-13',
+    dateDisplay: 'October 13, 2026',
+    excerpt: 'Gravediggaz\' 6 Feet Deep comes as a 2023 reissue, a 2024 blood splatter, a Vinyl Me, Please silver splatter and the 1994 original. Here is how to choose, and what to check before you click.',
+    body: [
+      'Gravediggaz\' 6 Feet Deep is the record people keep searching for on this site, and the searching is the easy part. The buying takes more thought, because the copies on offer are not interchangeable.',
+      'First, what you are chasing. The album came out in August 1994 on Gee Street, the London label. It was Prince Paul\'s idea: he pulled together Frukwan, Poetic and a Prince Rakeem who was about to become RZA, several of them freshly out at Tommy Boy, and gave each a horror alias. Paul was the Undertaker; RZA became the RZArector. Paul produced most of it, RZA a few tracks, including "Graveyard Chamber." "Nowhere to Run, Nowhere to Hide" is credited as built on Eugene McDaniels\' "Jagger the Dagger," and by one account RZA first wanted that track as a solo cut. If you watched our Wu-Tang Wednesday clip, that is the song.',
+      'Now the options.',
+      'The 2023 reissue. A black 2LP in a gatefold on HHC, listed by Turntable Lab and Spin Dizzy as limited to 2,000 copies. On October 12, Turntable Lab\'s page showed it sold out, and Spin Dizzy had a handful left. Our search still returns two Turntable Lab results, so confirm stock before you click. A limited run this thin is a reason to move, not to wait.',
+      'The 2024 blood splatter 2LP. Same label, colored vinyl, also sold out at Turntable Lab when we looked, with no edition size given.',
+      'The Vinyl Me, Please silver splatter. This is the one we would buy. Vinyl Me, Please put out a 2022 reissue of the 2LP on silver splatter vinyl, and it is the copy collectors point to. It is not a store-shelf pressing like the HHC runs. Right now it turns up on eBay and Discogs, so compare listings and condition yourself; we are not quoting a number.',
+      'The 1994 original. This is the copy most collectors mean when they say "the real one." We are not quoting a market value here. Condition, sleeve wear and which pressing you land on all move the price, and a number from a seller\'s listing is not a number you should pay against. Compare actual listings side by side before you commit.',
+      'One wrinkle worth knowing for imports. Per Wikipedia and Albumism, the album was released under a different title, Niggamortis, everywhere outside the United States, and changed to 6 Feet Deep for the US. If you are hunting a non-US original, search both titles. Our search shows two listings under Niggamortis.',
+      'Our rule on this one: if you want to hear the album tonight, buy whichever reissue is in stock. If you want the copy to own, go for the Vinyl Me, Please silver splatter. If you want the artifact, hunt the original and take your time.',
+    ],
+    shopArtists: [
+      {
+        name: 'Gravediggaz',
+        pageSlug: 'gravediggaz',
+        searchTerms: {
+          discogs: 'Gravediggaz 6 Feet Deep',
+          ebay: 'Gravediggaz 6 Feet Deep vinyl',
+          cdandlp: 'Gravediggaz 6 Feet Deep',
+        },
+      },
+    ],
+    seo: {
+      title: 'Gravediggaz 6 Feet Deep Vinyl: Which Copy to Buy | Digging in the Sales Crates',
+      description: 'Gravediggaz 6 Feet Deep on vinyl: the 2023 HHC reissue, the 2024 blood splatter, the Vinyl Me, Please silver splatter and the 1994 original. What to check before you buy.',
+    },
+  },
+
   'gang-starr-beyond-comprehension-the-band-cripple-creek': {
     slug: 'gang-starr-beyond-comprehension-the-band-cripple-creek',
     title: 'DJ Premier Built "Beyond Comprehension" on The Band\'s "Up on Cripple Creek"',
