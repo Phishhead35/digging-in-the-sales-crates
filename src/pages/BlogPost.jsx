@@ -225,6 +225,138 @@ function NotFound() {
   );
 }
 
+// ── Post body blocks ──────────────────────────────────────────
+// post.body is an array. A plain string is a paragraph (as before), and may
+// contain inline links written [text](/path) or [text](https://...). An object
+// is a block, chosen by `type`:
+//   { type: 'h2', text }
+//   { type: 'table', caption, columns: [], rows: [[]] }
+//   { type: 'embed', provider: 'facebook-reel', url, title, caption }
+//   { type: 'cta', label, href, note }            internal "compare" button
+//   { type: 'faq', items: [{ q, a }] }            visible FAQ (scripts/prerender.mjs
+//                                                 turns the same items into FAQPage JSON-LD)
+//   { type: 'links', title, items: [{ text, href }] }
+// Existing posts only use strings, so they render exactly as before.
+const BODY_TEXT = {
+  color: 'var(--text-primary)', fontSize: 16, lineHeight: 1.85, margin: 0,
+};
+const H2_STYLE = {
+  fontFamily: 'var(--font-display)', fontSize: 30, letterSpacing: 1,
+  lineHeight: 1.15, margin: '20px 0 0',
+};
+
+function Inline({ text }) {
+  const parts = String(text).split(/(\[[^\]]+\]\([^)]+\))/g);
+  return parts.map((part, i) => {
+    const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (!m) return part;
+    const [, label, href] = m;
+    const linkStyle = { color: 'var(--amber)' };
+    return href.startsWith('/')
+      ? <Link key={i} to={href} style={linkStyle}>{label}</Link>
+      : <a key={i} href={href} style={linkStyle} target="_blank" rel="noopener noreferrer">{label}</a>;
+  });
+}
+
+function facebookEmbedSrc(url) {
+  return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=340`;
+}
+
+function PostBlock({ block }) {
+  if (typeof block === 'string') {
+    return <p style={BODY_TEXT}><Inline text={block} /></p>;
+  }
+  switch (block.type) {
+    case 'h2':
+      return <h2 style={H2_STYLE}>{block.text}</h2>;
+    case 'table':
+      return (
+        <div style={{ overflowX: 'auto', border: '1px solid var(--border)', borderRadius: 12 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, lineHeight: 1.5, minWidth: 640 }}>
+            {block.caption && <caption style={{ textAlign: 'left', padding: '12px 14px', color: 'var(--text-muted)', fontSize: 12, fontFamily: 'var(--font-mono)' }}>{block.caption}</caption>}
+            <thead>
+              <tr>
+                {block.columns.map(c => (
+                  <th key={c} scope="col" style={{ textAlign: 'left', padding: '10px 14px', color: 'var(--amber)', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 1, borderBottom: '1px solid var(--border)' }}>{c}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {block.rows.map((row, r) => (
+                <tr key={r}>
+                  {row.map((cell, c) => (
+                    <td key={c} style={{ padding: '10px 14px', verticalAlign: 'top', borderBottom: '1px solid var(--border)', fontWeight: c === 0 ? 700 : 400, whiteSpace: c === 4 ? 'nowrap' : 'normal' }}>{cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    case 'embed':
+      return (
+        <figure style={{ margin: 0 }}>
+          <iframe
+            src={facebookEmbedSrc(block.url)}
+            title={block.title}
+            width="340" height="600" loading="lazy"
+            style={{ border: 'none', overflow: 'hidden', maxWidth: '100%', borderRadius: 12 }}
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            allowFullScreen
+          />
+          {block.caption && (
+            <figcaption style={{ color: 'var(--text-muted)', fontSize: 13, marginTop: 8 }}>
+              {block.caption} <a href={block.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--amber)' }}>Watch on Facebook</a>
+            </figcaption>
+          )}
+        </figure>
+      );
+    case 'cta':
+      return (
+        <div>
+          <Link to={block.href} style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            padding: '10px 18px', borderRadius: 8, fontSize: 13,
+            fontFamily: 'var(--font-mono)', letterSpacing: 0.5,
+            border: '1px solid rgba(245,158,11,0.4)', color: 'var(--amber)',
+            textDecoration: 'none',
+          }}>
+            <Search size={14} /> {block.label} <ArrowRight size={14} />
+          </Link>
+          {block.note && <p style={{ ...BODY_TEXT, fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>{block.note}</p>}
+        </div>
+      );
+    case 'faq':
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {block.items.map(item => (
+            <div key={item.q}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, margin: '0 0 6px' }}>{item.q}</h3>
+              <p style={BODY_TEXT}>{item.a}</p>
+            </div>
+          ))}
+        </div>
+      );
+    case 'links':
+      return (
+        <div>
+          {block.title && <h2 style={H2_STYLE}>{block.title}</h2>}
+          <ul style={{ margin: '12px 0 0', paddingLeft: 20, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {block.items.map(it => (
+              <li key={it.href}><Link to={it.href} style={{ color: 'var(--amber)' }}>{it.text}</Link></li>
+            ))}
+          </ul>
+        </div>
+      );
+    default:
+      return null;
+  }
+}
+
+function PostBody({ body }) {
+  return body.map((block, i) => <PostBlock key={i} block={block} />);
+}
+
 // ── Main page ─────────────────────────────────────────────────
 export default function BlogPost() {
   const { slug } = useParams();
@@ -295,14 +427,7 @@ export default function BlogPost() {
       {/* ── BODY ─────────────────────────────────────────────── */}
       <section style={{ padding: '56px 24px', borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 760, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {post.body.map((para, i) => (
-            <p key={i} style={{
-              color: 'var(--text-primary)', fontSize: 16, lineHeight: 1.85,
-              margin: 0,
-            }}>
-              {para}
-            </p>
-          ))}
+          <PostBody body={post.body} />
         </div>
       </section>
 

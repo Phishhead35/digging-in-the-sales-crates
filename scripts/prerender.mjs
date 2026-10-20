@@ -175,7 +175,9 @@ function renderPage(template, page) {
   const canonical = BASE + urlPath(page.canonical || page.path);
   let headExtra = `<link rel="canonical" href="${esc(canonical)}"/>`;
   if (page.jsonLd) {
-    headExtra += `<script type="application/ld+json">${JSON.stringify(page.jsonLd)}</script>`;
+    for (const block of [].concat(page.jsonLd)) {
+      headExtra += `<script type="application/ld+json">${JSON.stringify(block)}</script>`;
+    }
   }
   html = html.replace('</head>', `${headExtra}</head>`);
 
@@ -239,6 +241,60 @@ const guideBlocks = (blocks) =>
         : `<p>${guideParts(block.parts)}</p>`
     )
     .join('');
+
+// ── Blog body blocks (see PostBody in src/pages/BlogPost.jsx) ──
+// Strings are paragraphs and may hold inline [text](href) links. Objects are
+// blocks: h2, table, embed, cta, faq, links. Keep this list in step with
+// BlogPost.jsx, the same pairing as useSEO.js.
+const inlineHtml = (text = '') =>
+  esc(text).replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => a(href, label));
+
+function blockHtml(block) {
+  if (typeof block === 'string') return `<p>${inlineHtml(block)}</p>`;
+  switch (block.type) {
+    case 'h2':
+      return `<h2>${esc(block.text)}</h2>`;
+    case 'table':
+      return (
+        '<table>' +
+        (block.caption ? `<caption>${esc(block.caption)}</caption>` : '') +
+        `<thead><tr>${block.columns.map((c) => `<th scope="col">${esc(c)}</th>`).join('')}</tr></thead>` +
+        `<tbody>${block.rows
+          .map((row) => `<tr>${row.map((cell) => `<td>${esc(cell)}</td>`).join('')}</tr>`)
+          .join('')}</tbody></table>`
+      );
+    case 'embed':
+      return `<p>${esc(block.caption || block.title)} ${a(block.url, 'Watch on Facebook')}</p>`;
+    case 'cta':
+      return `<p>${a(block.href, block.label)}${block.note ? ' ' + esc(block.note) : ''}</p>`;
+    case 'faq':
+      return block.items.map((it) => `<h3>${esc(it.q)}</h3><p>${esc(it.a)}</p>`).join('');
+    case 'links':
+      return (
+        (block.title ? `<h2>${esc(block.title)}</h2>` : '') +
+        `<ul>${block.items.map((it) => `<li>${a(it.href, it.text)}</li>`).join('')}</ul>`
+      );
+    default:
+      return '';
+  }
+}
+
+// FAQPage JSON-LD, built from the same faq block that renders on the page so
+// the visible FAQ and the markup cannot drift apart. Google no longer shows
+// FAQ rich results for most sites; the markup is still valid and machine-readable.
+function faqJsonLd(body = []) {
+  const items = body.filter((b) => b && b.type === 'faq').flatMap((b) => b.items);
+  if (!items.length) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((it) => ({
+      '@type': 'Question',
+      name: it.q,
+      acceptedAnswer: { '@type': 'Answer', text: it.a },
+    })),
+  };
+}
 
 // ── Main ──
 async function main() {
@@ -649,7 +705,7 @@ async function main() {
       title: post.seo?.title || `${post.title} | ${SITE}`,
       description: post.seo?.description || post.excerpt || '',
       ogType: 'article',
-      jsonLd: {
+      jsonLd: [{
         '@context': 'https://schema.org',
         '@type': 'Article',
         headline: post.title,
@@ -658,11 +714,11 @@ async function main() {
         url: `${BASE}${urlPath(`/blog/${post.slug}`)}`,
         author: { '@type': 'Organization', name: SITE, url: BASE },
         publisher: { '@type': 'Organization', name: SITE, url: BASE },
-      },
+      }, faqJsonLd(post.body)].filter(Boolean),
       content:
         `<article>${h1(post.title)}` +
         `<p><em>${esc(post.series || '')} · ${esc(post.dateDisplay || post.date)}</em></p>` +
-        (post.body || []).map(p).join('') +
+        (post.body || []).map(blockHtml).join('') +
         `</article>` +
         disclosure('blog') +
         `<p>${a(NEWSLETTER_URL, 'Join This Week in the Sales Crates, our free weekly newsletter')}</p>` +

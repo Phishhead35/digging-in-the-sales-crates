@@ -5,6 +5,136 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'eminem-rock-bottom-janis-joplin-summertime-sample': {
+    slug: 'eminem-rock-bottom-janis-joplin-summertime-sample',
+    title: `Eminem Opened "Rock Bottom" With Janis Joplin. Here's Which Cheap Thrills to Buy.`,
+    series: 'MARKET WATCH',
+    date: '2026-10-19',
+    dateDisplay: 'October 19, 2026',
+    excerpt: `Eminem's "Rock Bottom" opens with Janis Joplin's "Summertime." Which Cheap Thrills to buy (1968 stereo, mono, or reissue), plus which Slim Shady LP to own.`,
+    body: [
+      `The opening of Eminem's "Rock Bottom" is not Eminem. It is a 1968 San Francisco band with Janis Joplin out front, and the record it came from is one of the easier old rock LPs to find. The cheapest Cheap Thrills on Discogs on October 19 was two dollars.`,
+      { type: 'embed', provider: 'facebook-reel', url: 'https://www.facebook.com/reel/2915035918891631/', title: 'Eminem flip reel: Rock Bottom and Summertime', caption: `This one hit 226,979 views on Facebook. Here is the record behind it.` },
+
+      { type: 'h2', text: `The sample: "Rock Bottom" and "Summertime"` },
+      `Jeff and Mark Bass, the Bass Brothers, produced "Rock Bottom" for The Slim Shady LP, which came out February 23, 1999 on Aftermath and Interscope. MusicBrainz lists the track as sampling "Summertime" by Big Brother and the Holding Company, and American Songwriter says Eminem used Joplin's version at the start of the song. WhoSampled lists it as multiple elements rather than one loop.`,
+      `The song underneath is older than all of it. "Summertime" is the George Gershwin and DuBose Heyward tune from 1934. Discogs notes that the 1968 front cover wrongly credits it to "Gershwin Bros." while the label credits Gershwin and Heyward, and it credits the arrangement to Sam Andrew. That is the kind of sleeve detail worth knowing before you buy.`,
+
+      { type: 'h2', text: `The record: Cheap Thrills` },
+      `Cheap Thrills came out August 12, 1968 on Columbia. It was Big Brother's last album with Joplin. Producer John Simon added crowd noise to make it sound live, and the R. Crumb cover is the part everyone remembers. It reached number one on the Billboard Top LPs chart for eight nonconsecutive weeks in 1968, and it went into the Grammy Hall of Fame in 2007.`,
+      `Want the band's full page? See [Big Brother and the Holding Company](/artists/big-brother-and-the-holding-company/).`,
+      { type: 'embed', provider: 'facebook-reel', url: 'https://www.facebook.com/reel/1094707699750110/', title: 'Big Brother and the Holding Company Sample DNA reel', caption: `Our Sample DNA take on the Big Brother side of the story.` },
+
+      { type: 'h2', text: `The "live album" that mostly isn't` },
+      `The 1968 sleeve says "Live material recorded at Bill Graham's Fillmore Auditorium," and Discogs credits three tracks as live. Wikipedia says only "Ball and Chain" was recorded live, on April 13, 1968 at the Winterland Ballroom. The sources disagree, so we are not picking one for you. What is not in dispute is the crowd noise John Simon added in the studio.`,
+
+      { type: 'h2', text: `Which copy of Cheap Thrills to buy` },
+      `The prices below are the cheapest Discogs listing on October 19, 2026, with the number of copies listed. The cheapest copy is often the roughest one, so read them as a floor, not a price.`,
+      {
+        type: 'table',
+        caption: `Cheap Thrills pressings, cheapest Discogs listing on October 19, 2026`,
+        columns: ['Pressing', 'Label / cat #', 'Year', 'What to know', 'Cheapest on Discogs'],
+        rows: [
+          ['US original, stereo', 'Columbia KCS 9700', '1968', `Gatefold, red "360 Sound" labels. A "T" in the runout points to Terre Haute, but other plants pressed 1968 copies too, so match yours to its exact Discogs entry.`, '$2.00 (158 listed)'],
+          ['US original, mono', 'Columbia KCL 2900', '1968', `Red label with white "MONO" at the bottom. Far fewer copies out there than stereo.`, '$85.00 (4 listed)'],
+          ['UK original, stereo', 'CBS 63392 (S 63392)', '1968', `Laminated front, unlaminated back, "Made in England" labels, runouts 63392 A1 / B1 (or A2 / B2).`, '$12.83 (23 listed)'],
+          ['UK original, mono', 'CBS 63392', '1968', `Same number with no prefix. Per Discogs, "Patent Pending" marks a first press.`, '$38.30 (3 listed)'],
+          ['US 1970 repress', 'Columbia KCS 9700', '1970', `Same number as the 1968 copy. Discogs marks two entries as represses, so check the label against the specific entry. We did not pull prices.`, 'not pulled'],
+          ['US budget reissue', 'Columbia PC 9700', '1980', `The "PC" prefix is the tell. A fine player, not a 1968 copy.`, '$6.47 (60 listed)'],
+          ['US 180g reissue', 'Columbia 88697 97824 1', '2011', `180 gram, gatefold, remastered.`, '$14.18 (34 listed)'],
+          ['Europe 180g reissue', 'Music On Vinyl MOVLP464', '2012', `180 gram, gatefold, remastered.`, '$19.66 (81 listed)'],
+          ['Mono reissue (RSD)', 'Legacy 88691947991', '2012', `Record Store Day Black Friday, limited to 3,000 and numbered. 180 gram from the original mono master.`, '$42.55 (2 listed)'],
+          ['Mobile Fidelity 2x45', 'MFSL 2-453', '2016', `Numbered 2LP at 45 RPM, 180 gram, mastered by Krieg Wunderlich.`, '$42.34 (57 listed)'],
+          ['Current EU reissue', 'Columbia 19075874991', '2018', `Gatefold.`, '$17.97 (79 listed)'],
+        ],
+      },
+      { type: 'cta', label: 'Compare every Cheap Thrills copy', href: '/search/?q=cheap+thrills+big+brother', note: 'eBay, Discogs, CDandLP and Turntable Lab in one search.' },
+      `Watch out for this: the 1968 US stereo, the 1970 repress and some later reissues all say KCS 9700. A listing that just says "original KCS 9700" proves nothing, so ask for label and runout photos. Discogs also lists a Simply Vinyl UK repress (SVLP 053). Claims about which copy sounds best, MoFi or mono or anything else, are opinion, and we have not A/B'd these, so we are not ranking them by ear.`,
+
+      { type: 'h2', text: `Which copy of The Slim Shady LP to buy` },
+      `Same rules. These are the cheapest Discogs listings on October 19, 2026.`,
+      {
+        type: 'table',
+        caption: `The Slim Shady LP pressings, cheapest Discogs listing on October 19, 2026`,
+        columns: ['Pressing', 'Label / cat #', 'Year', 'What to know', 'Cheapest on Discogs'],
+        rows: [
+          ['US 1999, colored labels', 'Aftermath / Interscope INT2-90287', '1999', `2LP with colored labels, a white hype sticker top left of the cover and a picture inner sleeve.`, '$66.60 (16 listed)'],
+          ['US 1999, black/white labels', 'Interscope / Aftermath INT2-90287', '1999', `Same number and barcode as the colored-label copy. White inner sleeves with an "OFFICIAL RECORD" insert.`, '$14.99 (49 listed)'],
+          ['Europe 1999', 'Aftermath 490 287-1', '1999', `Black labels, made in the EU, first copies came with a single-page insert.`, '$113.53 (7 listed)'],
+          ['EU 180g reissue', 'Aftermath 606949028718', '2013', `Some track titles are censored on the back cover.`, '$28.08 (60 listed)'],
+          ['US reissue', 'Aftermath / Interscope INT2-90287', '2014', `Same number as the original. "RE-1 WG/NRP" in the runouts tells you it is a reissue.`, '$28.09 (17 listed)'],
+          ['20th anniversary 3LP', 'Aftermath / Interscope B0030025-01', '2019', `The 2LP album plus a bonus compilation LP, tri-fold jacket, poster.`, '$39.99 (18 listed)'],
+          ['2023 RTI remaster', 'Aftermath / Interscope INT2-90287', '2023', `RTI pressing. Same catalog number again.`, '$33.33 (9 listed)'],
+          ['2024 three-color edition', 'Interscope 602456143058', '2024', `Limited to 3,000 and numbered. Blue, orange and green LPs in a die-cut trifold jacket.`, '$68.00 (15 listed)'],
+        ],
+      },
+      `One caution on the 1999 US copies. Discogs lists both the colored-label and the black/white-label 2LP as 1999, and we have not settled which one came first, so we are not calling either one the first pressing. Turntable Lab lists a black 2LP with a printed insert at $37.95, but its page showed a back-in-stock notice when we looked on October 19, so check stock before you click.`,
+      { type: 'cta', label: 'Compare every Slim Shady LP copy', href: '/search/?q=slim+shady+lp', note: 'eBay, Discogs, CDandLP and Turntable Lab in one search.' },
+
+      { type: 'h2', text: `Our call` },
+      `Cheap Thrills is plentiful. There were 158 US stereo copies listed with a floor of two dollars, so buy a clean 1968 stereo for about what a reissue costs. Mono is a different hunt: four copies listed, and the cheapest was $85.`,
+      `The Slim Shady LP is the opposite. The colored-label 1999 US copy had a floor of $66.60, and the Europe pressing was above $113. Most people should grab a reissue and put the difference toward something else in the crate.`,
+
+      { type: 'h2', text: `FAQ` },
+      {
+        type: 'faq',
+        items: [
+          { q: `What does Eminem sample on "Rock Bottom"?`, a: `Big Brother and the Holding Company's 1968 recording of "Summertime," sung by Janis Joplin. It is from the album Cheap Thrills.` },
+          { q: `Who produced "Rock Bottom"?`, a: `Jeff and Mark Bass, the Bass Brothers, for The Slim Shady LP (1999).` },
+          { q: `Is Cheap Thrills a live album?`, a: `Not really. It was made to sound live with added crowd noise. Wikipedia says only "Ball and Chain" was recorded live, at Winterland on April 13, 1968, while the original sleeve credits live material to the Fillmore.` },
+          { q: `How do I tell an original Cheap Thrills from a reissue?`, a: `1968 US copies are Columbia KCS 9700 (stereo) or KCL 2900 (mono) on red "360 Sound" labels. A "PC 9700" prefix means a later budget reissue. Check the runout: a "T" etched there points to the Terre Haute plant.` },
+          { q: `Is the original Slim Shady LP vinyl expensive?`, a: `The 1999 US colored-label 2LP had a lowest Discogs ask of $66.60 on October 19, 2026. Reissues were listed from about $28. Compare eBay, Discogs, CDandLP and Turntable Lab in Vinyl Search before you buy.` },
+        ],
+      },
+      { type: 'links', title: 'Keep digging', items: [
+        { text: 'Big Brother and the Holding Company: every Cheap Thrills pressing', href: '/artists/big-brother-and-the-holding-company/' },
+        { text: 'Bone Thugs Flipped "The Chain," and Rumours Is Still the Cheapest Grail in the Store', href: '/blog/bone-thugs-fleetwood-mac-the-chain-sample/' },
+        { text: 'Fleetwood Mac vinyl', href: '/artists/fleetwood-mac/' },
+        { text: 'Heart of Glass Became Work It, and Parallel Lines Is Still a Ten Dollar Record', href: '/blog/blondie-heart-of-glass-missy-elliott-work-it/' },
+        { text: 'DJ Premier Built "Beyond Comprehension" on The Band\'s "Up on Cripple Creek"', href: '/blog/gang-starr-beyond-comprehension-the-band-cripple-creek/' },
+        { text: 'The Money Is Moving to Originals, and the Data Proves It', href: '/blog/original-pressings-market-premium-2026/' },
+        { text: 'Discogs vs eBay for Records', href: '/discogs-vs-ebay-for-records/' },
+      ] },
+      `Vinyl Search checks eBay, Discogs, CDandLP and Turntable Lab at once. Discogs links are plain links; we earn nothing on them.`,
+    ],
+    shopArtists: [
+      {
+        name: 'Big Brother and the Holding Company: Cheap Thrills (1968 stereo)',
+        pageSlug: 'big-brother-and-the-holding-company',
+        amazonEligible: true,
+        amazonSearchTerm: 'cheap thrills big brother vinyl',
+        searchTerms: {
+          discogs: 'Big Brother Holding Company Cheap Thrills',
+          ebay: 'Big Brother Cheap Thrills KCS 9700 1968',
+          cdandlp: 'Big Brother Holding Company Cheap Thrills',
+        },
+      },
+      {
+        name: 'Big Brother and the Holding Company: Cheap Thrills (mono KCL 2900)',
+        pageSlug: 'big-brother-and-the-holding-company',
+        amazonEligible: false,
+        searchTerms: {
+          discogs: 'Big Brother Cheap Thrills KCL 2900',
+          ebay: 'Big Brother Cheap Thrills KCL 2900 mono',
+          cdandlp: 'Big Brother Holding Company Cheap Thrills CBS 63392',
+        },
+      },
+      {
+        name: 'Eminem: The Slim Shady LP',
+        amazonEligible: true,
+        amazonSearchTerm: 'slim shady lp vinyl',
+        searchTerms: {
+          discogs: 'Eminem Slim Shady LP',
+          ebay: 'Eminem Slim Shady LP 1999 INT2-90287',
+          cdandlp: 'Eminem Slim Shady LP',
+        },
+      },
+    ],
+    seo: {
+      title: `Eminem's Rock Bottom Sample: Which Cheap Thrills to Buy`,
+      description: `Eminem's "Rock Bottom" opens with Janis Joplin's "Summertime." Which Cheap Thrills to buy (1968 stereo, mono, or reissue) plus the Slim Shady LP.`,
+    },
+  },
   'gravediggaz-6-feet-deep-which-copy-to-buy': {
     slug: 'gravediggaz-6-feet-deep-which-copy-to-buy',
     title: 'Which Copy of Gravediggaz\' 6 Feet Deep Should You Actually Buy?',
