@@ -661,7 +661,7 @@ async function main() {
     content:
       h1(`${entry.name} Vinyl Records`) +
       (entry.tagline ? p(entry.tagline) : '') +
-      (entry.bio || []).map(p).join('') +
+      (entry.bio || []).map((t) => `<p>${inlineHtml(t)}</p>`).join('') +
       (entry.essentialRecords?.length
         ? '<h2>Essential Records</h2><ul>' +
           entry.essentialRecords

@@ -220,6 +220,20 @@ function SearchButtons({ artist, size = 'normal' }) {
   );
 }
 
+// ── Bio text with inline links: [text](/path) or [text](https://...) ──
+function BioText({ text }) {
+  const parts = String(text).split(/(\[[^\]]+\]\([^)]+\))/g);
+  return parts.map((part, i) => {
+    const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (!m) return part;
+    const [, label, href] = m;
+    const linkStyle = { color: 'var(--amber)' };
+    return href.startsWith('/')
+      ? <Link key={i} to={href} style={linkStyle}>{label}</Link>
+      : <a key={i} href={href} style={linkStyle} target="_blank" rel="noopener noreferrer">{label}</a>;
+  });
+}
+
 // ── 404 / not found ───────────────────────────────────────────
 function NotFound() {
   return (
@@ -353,7 +367,7 @@ export default function ArtistPage({ type = 'artist' }) {
                 color: 'var(--text-primary)', fontSize: 15, lineHeight: 1.8,
                 maxWidth: 720, margin: 0,
               }}>
-                {para}
+                <BioText text={para} />
               </p>
             ))}
           </div>

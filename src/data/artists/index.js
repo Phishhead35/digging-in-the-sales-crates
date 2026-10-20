@@ -32,7 +32,7 @@ export const ARTISTS = {
     amazonSearchTerm: 'cheap thrills big brother vinyl',
     bio: [
       'Big Brother and the Holding Company were a San Francisco band with Janis Joplin out front, and Cheap Thrills (Columbia, August 12, 1968) was their last album with her. Producer John Simon added crowd noise to make it sound live, R. Crumb drew the cover, and the record reached number one on the Billboard Top LPs chart for eight nonconsecutive weeks in 1968. It went into the Grammy Hall of Fame in 2007.',
-      'Hip-hop knows them for "Summertime." The tune is George Gershwin and DuBose Heyward from 1934, and Sam Andrew arranged this version. Eminem\'s "Rock Bottom" (The Slim Shady LP, 1999), produced by Jeff and Mark Bass, uses it at the start of the song. Our Sample DNA reel on the Big Brother side of that flip is on the Eminem post below.',
+      'Hip-hop knows them for "[Summertime](/blog/eminem-rock-bottom-janis-joplin-summertime-sample/)." The tune is George Gershwin and DuBose Heyward from 1934, and Sam Andrew arranged this version. Eminem\'s "Rock Bottom" (The Slim Shady LP, 1999), produced by Jeff and Mark Bass, uses it at the start of the song. Our [Sample DNA reel](https://www.facebook.com/reel/1094707699750110/) covers the Big Brother side of that flip, and the [Eminem post](/blog/eminem-rock-bottom-janis-joplin-summertime-sample/) has the full which-copy-to-buy breakdown.',
       'For collectors the useful fact is supply. Cheap Thrills is easy to find, with the US stereo KCS 9700 listed in the low single digits on Discogs, while the mono KCL 2900 is a much harder hunt. Our which-copy-to-buy table covers 11 pressings, from the 1968 originals to the Mobile Fidelity 2x45.',
     ],
     essentialRecords: [
