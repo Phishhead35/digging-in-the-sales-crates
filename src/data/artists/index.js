@@ -1031,8 +1031,14 @@ export const ARTISTS = {
       // Stage Fright, Rock of Ages, The Last Waltz).
       discogs: 'The Band The Band',
       ebay: 'The Band The Band vinyl LP',
-      cdandlp: 'The Band The Band',
+      cdandlp: 'The Band',
     },
+    // CDandLP's q= search matches "band" anywhere and fills with J. Geils Band.
+    // Its artist search (a=) is exact, so this page uses a fixed link instead.
+    // Same idea as ebayUrlOverride above. ArtistPage.jsx must read this field.
+    cdandlpUrlOverride: 'https://www.cdandlp.com/search/?a=The+Band&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation',
+    // Turntable Lab has nothing by The Band, so the button stays off here.
+    turntablelabEligible: false,
     // Turned on October 7, 2026 after Joe confirmed an Amazon listing for The
     // Band. The site builds the Amazon button from a search query plus the
     // Associates tag, so it cannot take a fixed link. A bare "The Band vinyl"

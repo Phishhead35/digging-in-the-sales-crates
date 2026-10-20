@@ -22,7 +22,11 @@ function ebayUrl(artist) {
   if (artist.ebayUrlOverride) return artist.ebayUrlOverride;
   return `https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(artist.searchTerms.ebay)}&mkevt=1&mkcid=1&mkrid=711-53200-19255-0&campid=5339145834&toolid=10001&customid=ditsc`;
 }
-function cdandlpUrl(term) {
+function cdandlpUrl(artist) {
+  // Fixed link for artists whose name is too generic for q= search (The Band
+  // returns J. Geils Band). Include the affiliate params in the override.
+  if (artist.cdandlpUrlOverride) return artist.cdandlpUrlOverride;
+  const term = artist.searchTerms.cdandlp;
   return `https://www.cdandlp.com/en/search/?q=${encodeURIComponent(term)}&affilie=digginginthesalescrates&utm_source=digginginthesalescrates.com&utm_medium=link&utm_campaign=affiliation`;
 }
 // Turntable Lab is a Shopify store, so /search?q= works. buildPartnerUrl adds
@@ -138,10 +142,10 @@ function SearchButtons({ artist, size = 'normal' }) {
           {isMonetized('ebay') && <AffiliateBadge label="aff" spaced />}
         </a>
         <a
-          href={cdandlpUrl(artist.searchTerms.cdandlp)}
+          href={cdandlpUrl(artist)}
           target="_blank"
           rel={relFor('cdandlp')}
-          onClick={() => trackClick(artist.name, 'cdandlp', cdandlpUrl(artist.searchTerms.cdandlp))}
+          onClick={() => trackClick(artist.name, 'cdandlp', cdandlpUrl(artist))}
           style={{
             ...btnStyle,
             display: 'inline-flex', alignItems: 'center', gap: 7,

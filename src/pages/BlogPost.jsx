@@ -172,7 +172,7 @@ function ShopArtists({ post }) {
                 />
                 <MarketplaceButton
                   label="CDandLP" marketplace="cdandlp"
-                  url={cdandlpUrl(artist.searchTerms.cdandlp)}
+                  url={artist.cdandlpUrlOverride || (artist.pageSlug && ARTISTS[artist.pageSlug]?.cdandlpUrlOverride) || cdandlpUrl(artist.searchTerms.cdandlp)}
                   postSlug={post.slug} artistName={artist.name}
                 />
                 {ttl && isMonetized('turntablelab') && (
