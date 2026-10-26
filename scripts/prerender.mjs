@@ -75,6 +75,16 @@
 //  home, search, deals, artist and blog pages are built from
 //  src/config/partners.js, the same rules the visible notices follow.
 //  Rule: never put text here that a visitor can't see on that page.
+//
+//  SOCIAL PREVIEW IMAGES (2026-10-26): every blog post now gets og:image,
+//  twitter:image and twitter:card=summary_large_image baked into the static
+//  HTML (social crawlers do not run JavaScript). The image is the optional
+//  `image` field on the post in src/data/blog/index.js, e.g.
+//  image: '/og/<slug>.png' (1200x630, file lives in public/og/). A post
+//  with no image, or whose file is missing from the build, falls back to
+//  DEFAULT_OG_IMAGE (public/og/default.png) and logs a warning. Any
+//  og:image / twitter:image / twitter:card tag already in the template is
+//  stripped first, so a page never carries two of them.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -114,6 +124,35 @@ const NEWSLETTER_GUIDE_URL =
 // so the sitemap/canonical/og:url always match what the static host
 // actually serves — no redirect on arrival, ever.
 const urlPath = (p) => (p === '/' || p.endsWith('/') ? p : `${p}/`);
+
+// ── Social preview images ──
+// Default card for any page that has no image of its own. File lives at
+// public/og/default.png (1200x630) and is copied into build/ by the CRA build.
+const DEFAULT_OG_IMAGE = '/og/default.png';
+const OG_IMAGE_WIDTH = 1200;
+const OG_IMAGE_HEIGHT = 630;
+// Social sites need a full https URL, never a relative path.
+const absoluteUrl = (u) =>
+  /^https?:\/\//i.test(u) ? u : `${BASE}${u.startsWith('/') ? '' : '/'}${u}`;
+// Picks the image for a post: its own `image` if that file made it into the
+// build, otherwise the default. A full https URL on the post is trusted as is.
+async function resolveOgImage(image, label) {
+  if (image && /^https?:\/\//i.test(image)) return image;
+  if (image) {
+    const rel = image.replace(/^\/+/, '');
+    try {
+      await fs.access(path.join(BUILD, rel));
+      return image;
+    } catch {
+      console.warn(`  ⚠ ${label}: image ${image} not found in build, using default card`);
+    }
+  }
+  return DEFAULT_OG_IMAGE;
+}
+// Removes any og:image*, twitter:image* and twitter:card tag, whatever the
+// attribute order, so the tags added below are the only ones on the page.
+const OG_IMAGE_TAGS_RE =
+  /<meta\b[^>]*?\b(?:property|name)\s*=\s*["'](?:og:image(?::[a-z_]+)?|twitter:image(?::alt)?|twitter:card)["'][^>]*>\s*/gi;
 
 // ── Load data modules (src/data files are plain ESM; copy to a
 //    temp .mjs so Node imports them regardless of package type) ──
@@ -174,6 +213,22 @@ function renderPage(template, page) {
   // CanonicalTag.jsx updates (not duplicates) an existing canonical link.
   const canonical = BASE + urlPath(page.canonical || page.path);
   let headExtra = `<link rel="canonical" href="${esc(canonical)}"/>`;
+  // Social preview image tags (blog posts set page.image). Strip whatever the
+  // template carries, then add one complete set.
+  if (page.image) {
+    html = html.replace(OG_IMAGE_TAGS_RE, '');
+    const img = esc(absoluteUrl(page.image));
+    const alt = esc(page.imageAlt || page.title);
+    headExtra +=
+      `<meta property="og:image" content="${img}"/>` +
+      `<meta property="og:image:secure_url" content="${img}"/>` +
+      `<meta property="og:image:width" content="${OG_IMAGE_WIDTH}"/>` +
+      `<meta property="og:image:height" content="${OG_IMAGE_HEIGHT}"/>` +
+      `<meta property="og:image:alt" content="${alt}"/>` +
+      `<meta name="twitter:card" content="summary_large_image"/>` +
+      `<meta name="twitter:image" content="${img}"/>` +
+      `<meta name="twitter:image:alt" content="${alt}"/>`;
+  }
   if (page.jsonLd) {
     for (const block of [].concat(page.jsonLd)) {
       headExtra += `<script type="application/ld+json">${JSON.stringify(block)}</script>`;
@@ -699,16 +754,29 @@ async function main() {
   });
 
   // ── Blog posts (UNCHANGED in Phase 2 — every existing URL keeps working) ──
+  // Social preview image per post: post.image, else the default card.
+  const postImages = {};
+  try {
+    await fs.access(path.join(BUILD, DEFAULT_OG_IMAGE.replace(/^\/+/, '')));
+  } catch {
+    console.warn(`  ⚠ default social card ${DEFAULT_OG_IMAGE} missing from build: add public${DEFAULT_OG_IMAGE}`);
+  }
+  for (const post of posts) {
+    postImages[post.slug] = await resolveOgImage(post.image, `blog/${post.slug}`);
+  }
   pages.push(
     ...posts.map((post) => ({
       path: `/blog/${post.slug}`,
       title: post.seo?.title || `${post.title} | ${SITE}`,
       description: post.seo?.description || post.excerpt || '',
       ogType: 'article',
+      image: postImages[post.slug],
+      imageAlt: post.title,
       jsonLd: [{
         '@context': 'https://schema.org',
         '@type': 'Article',
         headline: post.title,
+        image: [absoluteUrl(postImages[post.slug])],
         datePublished: post.date,
         description: post.seo?.description || post.excerpt || '',
         url: `${BASE}${urlPath(`/blog/${post.slug}`)}`,
