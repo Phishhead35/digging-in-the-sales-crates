@@ -5,6 +5,80 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'fleetwood-mac-rumours-vinyl-which-copy-to-buy': {
+    slug: 'fleetwood-mac-rumours-vinyl-which-copy-to-buy',
+    title: `Which Copy of Fleetwood Mac's Rumours Should You Actually Buy?`,
+    series: 'MARKET WATCH',
+    date: '2026-10-26',
+    dateDisplay: 'October 26, 2026',
+    excerpt: `Bone Thugs sampled "The Chain," and Rumours is in every bin. How to read a 1977 BSK 3010 or K 56344 original, what the Discogs numbers showed on October 26, and which reissue to buy instead.`,
+    body: [
+      `Rumours came out February 4, 1977, and it sold so many copies that finding one is never the problem. Choosing one is. We covered the Bone Thugs flip of "The Chain" in [our earlier post](/blog/bone-thugs-fleetwood-mac-the-chain-sample/). This post answers the buying question.`,
+
+      { type: 'h2', text: `The originals: BSK 3010 and K 56344` },
+      `The US original is Warner Bros. BSK 3010; the UK original is K 56344. The catalog number tells you little. Discogs splits the 1977 US copies by pressing plant (Los Angeles, Jacksonville, Gloversville and Pitman among them) and lists a US club edition under the same number. The runout and sleeve do the work.`,
+      `The most-owned US entry on Discogs is a Jacksonville pressing with a textured sleeve, an 11" x 22" foldout insert, and "MASTERED BY CAPITOL" in the runout. Over 20,000 collectors list it. The UK entry we checked has etched runouts crediting "ALLEN" and "EG" and a non-textured sleeve; Discogs lists other UK variants separately, so match your copy to a specific entry.`,
+
+      { type: 'h2', text: `What the numbers looked like` },
+      `These are the price stats on each Discogs release page when we checked on October 26, 2026. Lows tend to be the roughest copies, so read them as floors.`,
+      {
+        type: 'table',
+        caption: `Rumours pressings, Discogs release-page price stats on October 26, 2026`,
+        columns: ['Pressing', 'Label / cat #', 'Low', 'Median'],
+        rows: [
+          ['US 1977, Jacksonville pressing', 'Warner Bros. BSK 3010', '$6.00', '$26.18'],
+          ['UK 1977', 'Warner Bros. K 56344', '$2.25', '$26.67'],
+          ['Europe 2021 repress', 'Warner Records 9362-49793-5', '$13.75', '$26.21'],
+          ['US 2025 reissue', 'Reprise R1 3010', '$24.21', '$27.29'],
+        ],
+      },
+      `The medians sit within a dollar or two of each other. A typical old copy costs about what a new one does.`,
+      { type: 'cta', label: 'Compare every Rumours copy', href: '/search/?q=fleetwood+mac+rumours', note: 'eBay, Discogs, CDandLP and Turntable Lab in one search.' },
+
+      { type: 'h2', text: `The reissues` },
+      `The 2021 European repress was cut by Chris Bellman and pressed by Optimal in Germany, with a fold-out sheet. The 2025 Reprise reissue was made in the Czech Republic and also carries Bellman's "CB" in the runout. Turntable Lab had the 2025 edition new at $27.95 in our search.`,
+
+      { type: 'h2', text: `Our call` },
+      `If you want a player, buy a cheap original and stop thinking about it. If you want a keeper, pay median for a clean US copy that still has the insert, and check the runout against the Discogs entry before you pay. If you want zero risk, buy the 2025 new. We would take the clean original at the same money, but that is taste, not a measurement.`,
+
+      { type: 'h2', text: `FAQ` },
+      {
+        type: 'faq',
+        items: [
+          { q: `What is the US original catalog number for Rumours?`, a: `Warner Bros. BSK 3010, from 1977. The UK original is K 56344. Discogs lists many 1977 variants from different plants, so match your runout and sleeve to a specific entry.` },
+          { q: `Is an original Rumours worth a lot more than a reissue?`, a: `Not in the Discogs stats we checked on October 26, 2026. The medians on the US original, UK original, 2021 European repress and 2025 reissue entries were all between about $26 and $27. Lows ranged from $2.25 to $24.21.` },
+          { q: `What did Bone Thugs-N-Harmony sample from Rumours?`, a: `"The Chain." It is the base of "Wind Blow" on Strength & Loyalty (2007).` },
+          { q: `Where can I compare Rumours copies?`, a: `Vinyl Search checks eBay, Discogs, CDandLP and Turntable Lab at once.` },
+        ],
+      },
+      { type: 'links', title: 'Keep digging', items: [
+        { text: 'Fleetwood Mac vinyl', href: '/artists/fleetwood-mac/' },
+        { text: 'Bone Thugs Flipped "The Chain," and Rumours Is Still the Cheapest Grail in the Store', href: '/blog/bone-thugs-fleetwood-mac-the-chain-sample/' },
+        { text: 'Heart of Glass Became Work It, and Parallel Lines Is Still a Ten Dollar Record', href: '/blog/blondie-heart-of-glass-missy-elliott-work-it/' },
+        { text: 'The Money Is Moving to Originals, and the Data Proves It', href: '/blog/original-pressings-market-premium-2026/' },
+        { text: 'Discogs vs eBay for Records', href: '/discogs-vs-ebay-for-records/' },
+      ] },
+      `Vinyl Search checks eBay, Discogs, CDandLP and Turntable Lab at once. Discogs links are plain links; we earn nothing on them.`,
+    ],
+    shopArtists: [
+      {
+        name: 'Fleetwood Mac: Rumours',
+        pageSlug: 'fleetwood-mac',
+        amazonEligible: true,
+        amazonSearchTerm: 'fleetwood mac rumours vinyl',
+        searchTerms: {
+          discogs: 'Fleetwood Mac Rumours',
+          ebay: 'Fleetwood Mac Rumours BSK 3010 1977',
+          cdandlp: 'Fleetwood Mac Rumours',
+        },
+      },
+    ],
+    seo: {
+      title: `Rumours Vinyl: Original Pressing or Reissue to Buy?`,
+      description: `Bone Thugs sampled "The Chain," and Rumours is in every bin. How to read a 1977 BSK 3010 or K 56344 original, and which reissue to buy instead.`,
+    },
+  },
+
   'eminem-rock-bottom-janis-joplin-summertime-sample': {
     slug: 'eminem-rock-bottom-janis-joplin-summertime-sample',
     title: `Eminem Opened "Rock Bottom" With Janis Joplin. Here's Which Cheap Thrills to Buy.`,
@@ -362,6 +436,7 @@ export const BLOG_POSTS = {
       'Check the runout before you decide. Some copies carry an "RL" stamp, associated with mastering engineer Robert Ludwig, and audiophile forums have argued about which plants and which mastering house for decades. Accounts genuinely conflict, so treat any listing that advertises a grail pressing as a claim to verify yourself rather than a fact. Read the etchings, not the seller\'s title.',
       'The practical move: buy a beater copy for five dollars to actually play, and keep a want-list entry for a specific runout you have decided you want. That is a better strategy on Rumours than on almost any other record, because supply is enormous and the price spread between variants is enormous too.',
       'Run "Fleetwood Mac" and "Rumours" through digginginthesalescrates.com and compare Discogs, eBay and CDandLP. On a record with this many pressings in circulation, the marketplace spread is where the whole decision gets made.',
+      'Want the buying guide? We compared the 1977 originals and the 2021 and 2025 reissues in [Which Copy of Fleetwood Mac\'s Rumours Should You Actually Buy?](/blog/fleetwood-mac-rumours-vinyl-which-copy-to-buy/)',
     ],
     shopArtists: [
       {
