@@ -11,8 +11,10 @@
 /pin/     https://fromthesalescrates.beehiiv.com/subscribe?utm_source=pinterest&utm_medium=bio&utm_campaign=newsletter_signup 302
 /email    https://fromthesalescrates.beehiiv.com/subscribe?utm_source=email_signature&utm_medium=signature&utm_campaign=newsletter_signup 302
 /email/   https://fromthesalescrates.beehiiv.com/subscribe?utm_source=email_signature&utm_medium=signature&utm_campaign=newsletter_signup 302
-/newsletter   https://fromthesalescrates.beehiiv.com/subscribe?utm_source=direct&utm_medium=shared_link&utm_campaign=newsletter_signup 302
-/newsletter/  https://fromthesalescrates.beehiiv.com/subscribe?utm_source=direct&utm_medium=shared_link&utm_campaign=newsletter_signup 302
+# /newsletter and /newsletter/ are NOT here on purpose. They are handled by
+# functions/newsletter.js, which passes incoming utm_ tags through to Beehiiv
+# and only falls back to utm_source=direct when none are present. A rule here
+# would match first and bring back the hard-coded tags.
 
 # Pinterest profile short links (302 so the destination can change later)
 /shop        https://www.pinterest.com/digginginthesalescrates/  302
