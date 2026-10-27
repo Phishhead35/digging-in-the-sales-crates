@@ -708,6 +708,7 @@ export const ARTISTS = {
     // Warner/Rhino keeps Rumours and the surrounding catalog in constant
     // vinyl reissue. Confident yes.
     amazonEligible: true,
+    turntablelabEligible: true,
     bio: [
       'Fleetwood Mac started in 1967 as a British blues band built around Peter Green, and became something else entirely once Lindsey Buckingham and Stevie Nicks joined in 1975. Both eras are worth digging. The blues records are scarcer; the Buckingham and Nicks records are everywhere, which is exactly what makes them interesting.',
       'Rumours (1977) is the one every store has. It sold in numbers that put a copy in nearly every American household with a turntable, and that ubiquity is why it belongs in a sample digger\'s crate as much as a rock collector\'s. Bone Thugs-N-Harmony built "Wind Blow" on "The Chain," and producers have been pulling from Warner Bros. rock of this era for decades precisely because the supply is endless.',
