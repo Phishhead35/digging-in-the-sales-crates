@@ -7,6 +7,7 @@
 export const BLOG_POSTS = {
   'fleetwood-mac-rumours-vinyl-which-copy-to-buy': {
     slug: 'fleetwood-mac-rumours-vinyl-which-copy-to-buy',
+    image: '/og/fleetwood-mac-rumours-vinyl-which-copy-to-buy.png',
     title: `Which Copy of Fleetwood Mac's Rumours Should You Actually Buy?`,
     series: 'MARKET WATCH',
     date: '2026-10-26',
@@ -81,6 +82,7 @@ export const BLOG_POSTS = {
 
   'eminem-rock-bottom-janis-joplin-summertime-sample': {
     slug: 'eminem-rock-bottom-janis-joplin-summertime-sample',
+    image: '/og/eminem-rock-bottom-janis-joplin-summertime-sample.png',
     title: `Eminem Opened "Rock Bottom" With Janis Joplin. Here's Which Cheap Thrills to Buy.`,
     series: 'MARKET WATCH',
     date: '2026-10-19',
@@ -211,6 +213,7 @@ export const BLOG_POSTS = {
   },
   'gravediggaz-6-feet-deep-which-copy-to-buy': {
     slug: 'gravediggaz-6-feet-deep-which-copy-to-buy',
+    image: '/og/gravediggaz-6-feet-deep-which-copy-to-buy.png',
     title: 'Which Copy of Gravediggaz\' 6 Feet Deep Should You Actually Buy?',
     series: 'MARKET WATCH',
     date: '2026-10-13',
@@ -246,6 +249,7 @@ export const BLOG_POSTS = {
 
   'gang-starr-beyond-comprehension-the-band-cripple-creek': {
     slug: 'gang-starr-beyond-comprehension-the-band-cripple-creek',
+    image: '/og/gang-starr-beyond-comprehension-the-band-cripple-creek.png',
     title: 'DJ Premier Built "Beyond Comprehension" on The Band\'s "Up on Cripple Creek"',
     series: 'SAMPLE DNA',
     date: '2026-10-05',
@@ -290,6 +294,7 @@ export const BLOG_POSTS = {
 
   'isaac-hayes-beastie-boys-ghostface-sample-dig': {
     slug: 'isaac-hayes-beastie-boys-ghostface-sample-dig',
+    image: '/og/isaac-hayes-beastie-boys-ghostface-sample-dig.png',
     title: 'The Beastie Boys and Ghostface Went Digging in the Same Catalog, Twelve Years Apart',
     series: 'CRATE SPOTLIGHT',
     date: '2026-09-28',
@@ -324,6 +329,7 @@ export const BLOG_POSTS = {
 
   'blondie-heart-of-glass-missy-elliott-work-it': {
     slug: 'blondie-heart-of-glass-missy-elliott-work-it',
+    image: '/og/blondie-heart-of-glass-missy-elliott-work-it.png',
     title: 'Heart of Glass Became Work It, and Parallel Lines Is Still a Ten Dollar Record',
     series: 'SAMPLE DNA',
     date: '2026-09-21',
@@ -356,6 +362,7 @@ export const BLOG_POSTS = {
 
   'prince-around-the-world-in-a-day-crate-guide': {
     slug: 'prince-around-the-world-in-a-day-crate-guide',
+    image: '/og/prince-around-the-world-in-a-day-crate-guide.png',
     title: 'Prince Buried the Follow-Up to Purple Rain on Purpose',
     series: 'CRATE SPOTLIGHT',
     date: '2026-09-15',
@@ -390,6 +397,7 @@ export const BLOG_POSTS = {
 
   'beatles-rubber-soul-2026-reissue': {
     slug: 'beatles-rubber-soul-2026-reissue',
+    image: '/og/beatles-rubber-soul-2026-reissue.png',
     title: 'Rubber Soul Returns October 2, and the Capitol Version Is the Real Story',
     series: 'REISSUE RADAR',
     date: '2026-09-10',
@@ -423,6 +431,7 @@ export const BLOG_POSTS = {
   },
   'bone-thugs-fleetwood-mac-the-chain-sample': {
     slug: 'bone-thugs-fleetwood-mac-the-chain-sample',
+    image: '/og/bone-thugs-fleetwood-mac-the-chain-sample.png',
     title: 'Bone Thugs Flipped "The Chain," and Rumours Is Still the Cheapest Grail in the Store',
     series: 'SAMPLE DNA',
     date: '2026-08-24',
@@ -464,6 +473,7 @@ export const BLOG_POSTS = {
   },
   'dj-quik-quik-is-the-name-g-funk': {
     slug: 'dj-quik-quik-is-the-name-g-funk',
+    image: '/og/dj-quik-quik-is-the-name-g-funk.png',
     title: 'DJ Quik Made the G-Funk Blueprint a Year Before The Chronic',
     series: 'CRATE SPOTLIGHT',
     date: '2026-08-17',
@@ -495,6 +505,7 @@ export const BLOG_POSTS = {
   },
   'diana-ross-marvin-gaye-50-cent-ja-rule-sample': {
     slug: 'diana-ross-marvin-gaye-50-cent-ja-rule-sample',
+    image: '/og/diana-ross-marvin-gaye-50-cent-ja-rule-sample.png',
     title: 'The Diana Ross & Marvin Gaye Record That 50 Cent and Ja Rule Both Sampled',
     series: 'SAMPLE DNA',
     date: '2026-08-10',
@@ -535,6 +546,7 @@ export const BLOG_POSTS = {
   },
   'pete-rock-vinyl-collecting-guide': {
     slug: 'pete-rock-vinyl-collecting-guide',
+    image: '/og/pete-rock-vinyl-collecting-guide.png',
     title: 'Pete Rock & CL Smooth: The Sample That Still Defines Boom Bap Vinyl',
     series: 'CRATE SPOTLIGHT',
     date: '2026-08-03',
@@ -566,6 +578,7 @@ export const BLOG_POSTS = {
   },
   'boogie-down-productions-vinyl-collecting-guide': {
     slug: 'boogie-down-productions-vinyl-collecting-guide',
+    image: '/og/boogie-down-productions-vinyl-collecting-guide.png',
     title: 'Collecting Boogie Down Productions: Why Criminal Minded Still Commands Crate Space',
     series: 'CRATE SPOTLIGHT',
     date: '2026-07-27',
@@ -596,6 +609,7 @@ export const BLOG_POSTS = {
   },
   'mf-doom-vinyl-collecting-guide': {
     slug: 'mf-doom-vinyl-collecting-guide',
+    image: '/og/mf-doom-vinyl-collecting-guide.png',
     title: 'Collecting MF DOOM on Vinyl: What\'s Worth Chasing and What to Verify First',
     series: 'CRATE SPOTLIGHT',
     date: '2026-07-20',
@@ -633,6 +647,7 @@ export const BLOG_POSTS = {
   },
   'wu-tang-clan-vinyl-collecting-guide': {
     slug: 'wu-tang-clan-vinyl-collecting-guide',
+    image: '/og/wu-tang-clan-vinyl-collecting-guide.png',
     title: 'Starting a Wu-Tang Vinyl Collection: 36 Chambers, Reissues and Essential Solo Albums',
     series: 'CRATE SPOTLIGHT',
     date: '2026-07-18',
@@ -673,6 +688,7 @@ export const BLOG_POSTS = {
   },
   'funkadelic-maggot-brain-reissue-2026': {
     slug: 'funkadelic-maggot-brain-reissue-2026',
+    image: '/og/funkadelic-maggot-brain-reissue-2026.png',
     title: 'Maggot Brain Is Getting Cut From Tape Again, and That\'s a Big Deal',
     series: 'REISSUE RADAR',
     date: '2026-07-15',
@@ -702,6 +718,7 @@ export const BLOG_POSTS = {
   },
   'fatback-band-king-tim-iii-first-rap-record': {
     slug: 'fatback-band-king-tim-iii-first-rap-record',
+    image: '/og/fatback-band-king-tim-iii-first-rap-record.png',
     title: 'The Fatback Band Cut the First Rap Record, and It Was Buried on a B-Side',
     series: 'CRATE SPOTLIGHT',
     date: '2026-07-12',
@@ -732,6 +749,7 @@ export const BLOG_POSTS = {
   },
   'original-pressings-market-premium-2026': {
     slug: 'original-pressings-market-premium-2026',
+    image: '/og/original-pressings-market-premium-2026.png',
     title: 'The Money Is Moving to Originals, and the Data Proves It',
     series: 'MARKET WATCH',
     date: '2026-07-08',
@@ -763,6 +781,7 @@ export const BLOG_POSTS = {
   },
   'beats-rhymes-and-life-30th-anniversary': {
     slug: 'beats-rhymes-and-life-30th-anniversary',
+    image: '/og/beats-rhymes-and-life-30th-anniversary.png',
     title: 'Beats, Rhymes and Life Turns 30: The Album Where Dilla Went Major',
     series: 'SAMPLE DNA',
     date: '2026-07-06',
@@ -810,6 +829,7 @@ export const BLOG_POSTS = {
   },
   'curtis-mayfield-super-fly-rhino-reissue': {
     slug: 'curtis-mayfield-super-fly-rhino-reissue',
+    image: '/og/curtis-mayfield-super-fly-rhino-reissue.png',
     title: 'Rhino Just Recut Super Fly, and Every Sample Digger Should Care',
     series: 'REISSUE RADAR',
     date: '2026-07-03',
@@ -839,6 +859,7 @@ export const BLOG_POSTS = {
   },
   'roy-ayers-vibrations-reissue': {
     slug: 'roy-ayers-vibrations-reissue',
+    image: '/og/roy-ayers-vibrations-reissue.png',
     title: 'Roy Ayers\' Vibrations Gets the Reissue Treatment It Deserves',
     series: 'REISSUE RADAR',
     date: '2026-07-01',
