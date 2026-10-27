@@ -740,6 +740,8 @@ async function main() {
     title: `Blog | ${SITE}`,
     description:
       'Sample connections, reissue alerts, artist spotlights, and market trends for vinyl collectors and crate diggers.',
+    image: DEFAULT_OG_IMAGE,
+    imageAlt: 'Digging in the Sales Crates blog',
     content:
       h1('The DITSC Blog') +
       posts
