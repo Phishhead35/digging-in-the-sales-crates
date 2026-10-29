@@ -205,9 +205,18 @@ function rankResults(list) {
 // click_source 'search_partner_card', separate from marketplace clicks.
 function PartnerCard({ store, searchTerm }) {
   const href = store.siteUrl || store.url;
+  // The button says where it actually goes. Discogs does not filter a
+  // seller's inventory by keyword from a URL (tested 2026-10-29), so a
+  // Discogs-only shop cannot be sent to "the record you searched". Label it
+  // honestly instead of implying a search.
+  const buttonLabel = /discogs\.com/i.test(href)
+    ? 'Browse their Discogs shop →'
+    : /instagram\.com/i.test(href)
+    ? 'Follow on Instagram →'
+    : 'Visit shop →';
   return (
     <div className="store-card" style={{
-      display: 'flex', flexDirection: 'column',
+      display: 'flex', flexDirection: 'column', justifyContent: 'center',
       padding: 20, borderRadius: 16,
       background: 'var(--bg-card)',
       border: '1px solid rgba(245,158,11,0.35)',
@@ -222,7 +231,7 @@ function PartnerCard({ store, searchTerm }) {
       <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>
         {store.type} · {store.location}
       </div>
-      <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '12px 0 16px', flex: 1 }}>
+      <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '12px 0 16px' }}>
         {store.desc}
       </p>
       <a
@@ -242,7 +251,7 @@ function PartnerCard({ store, searchTerm }) {
           padding: '8px 14px', borderRadius: 8, background: 'var(--amber)',
         }}
       >
-        Visit shop →
+        {buttonLabel}
       </a>
     </div>
   );

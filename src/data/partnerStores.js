@@ -9,9 +9,10 @@
 // but is left out of the general rotation pool used by the search
 // results card and artist-page auto-picks (PARTNER_STORES, below).
 // Use this for shops worth listing as a local dig spot but that don't
-// have a working direct-purchase link. A specific artist page can still
-// pull an excluded store back in on purpose via partnerOverride — see
-// getPartnersByNames.
+// have a working direct-purchase link, or whose stock rarely matches a
+// vinyl search (Music Magick, mostly CDs and DVDs, 2026-10-29). A specific
+// artist page can still pull an excluded store back in on purpose via
+// partnerOverride — see getPartnersByNames.
 
 export const MA_STORES = [
   { name: 'Spin That Records', type: 'Vintage Vinyl', location: 'Springfield, MA', desc: "Springfield MA's only vintage vinyl store. Classic Rock, Jazz, Soul, Latin, Folk and more. Plus vintage turntables, receivers, and hi-fi equipment.", url: 'https://spinthatspringfield.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=spin-that-records', specialties: ['Rock', 'Jazz', 'Soul', 'Latin', 'Folk'] },
@@ -27,7 +28,7 @@ export const MA_STORES = [
 ];
 
 export const RINH_STORES = [
-  { name: 'Music Magick', type: 'Multi-Media', location: 'West Warwick, RI', desc: 'The ultimate multi-media store in West Warwick, RI. Over 50,000 CDs and 30,000 DVDs across all genres, plus games and Blu-rays. Most priced at just $2.', url: 'https://www.discogs.com/seller/musicmagickshop/profile?page=1&utm_source=ditsc&utm_medium=referral&utm_campaign=music-magick' },
+  { name: 'Music Magick', type: 'Multi-Media', location: 'West Warwick, RI', desc: 'The ultimate multi-media store in West Warwick, RI. Over 50,000 CDs and 30,000 DVDs across all genres, plus games and Blu-rays. Most priced at just $2.', url: 'https://www.discogs.com/seller/musicmagickshop/profile?page=1&utm_source=ditsc&utm_medium=referral&utm_campaign=music-magick', excludeFromRotation: true },
   { name: 'The Time Capsule', type: 'Records, Comics & Games', location: 'Cranston, RI', desc: 'Cranston location at 537 Pontiac Ave. Massive LP restock every Friday. Plus new comics every Wednesday (80-100 titles), thousands of back issues, and restocked video games weekly.', url: 'https://www.discogs.com/seller/oftimespast/profile?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-cranston', siteUrl: 'https://www.thetimecapsule.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=the-time-capsule-cranston' },
   { name: 'New Hampshire Vintage Vinyl', type: 'Pre-Owned Vinyl', location: 'Laconia, NH', desc: 'Laconia, NH record shop at 633 Main St. New crates of pre-owned records hit the floor every Saturday. In-store customers get first dibs; the rest go live online Sunday evenings.', url: 'https://www.nhvintagevinyl.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=nh-vintage-vinyl' },
 ];
@@ -39,9 +40,10 @@ export const RINH_STORES = [
 const ALL_PARTNER_STORES = [...MA_STORES, ...RINH_STORES];
 
 // Rotation-eligible partners only — excludes anything flagged
-// excludeFromRotation (currently just Soundtracks Beverly, no working
-// direct-purchase link). This is what SearchResults.jsx's rotating
-// card and getPartnersForArtist's default auto-pick draw from.
+// excludeFromRotation (currently Soundtracks Beverly, no working
+// direct-purchase link, and Music Magick, mostly CDs and DVDs). This is
+// what SearchResults.jsx's rotating card and getPartnersForArtist's
+// default auto-pick draw from.
 export const PARTNER_STORES = ALL_PARTNER_STORES.filter(s => !s.excludeFromRotation);
 
 // ── Genre-aware partner picker ─────────────────────────────────
