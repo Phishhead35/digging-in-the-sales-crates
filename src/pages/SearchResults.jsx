@@ -3,13 +3,14 @@ import { fuzzyMatchArtist } from '../utils/fuzzyMatch';
 import SearchSuggestion from '../components/SearchSuggestion';
 import SearchTypeahead from '../components/SearchTypeahead';
 import useSearchTypeahead from '../hooks/useSearchTypeahead';
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Search, ExternalLink, ShoppingCart, Heart, AlertCircle, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { searchDiscogs, searchEbay, searchCDandLP, searchTurntableLab, formatPrice } from '../utils/api';
 import useSEO from '../hooks/useSEO';
 import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
 import { isMonetized } from '../config/partners';
+import { PARTNER_STORES } from '../data/partnerStores';
 import {
   trackStoreClick,
   trackSelectItem,
@@ -29,6 +30,26 @@ import {
 // grid below, so the skeleton's height roughly matches the real results grid's
 // height and swapping loading -> loaded doesn't cause a big layout shift (CLS).
 const RESULTS_PER_PAGE = 20;
+
+// ── Partner store card slot ───────────────────────────────────
+// One rotating partner store card sits in the results grid at position 5
+// (index 4). It shipped 2026-07-09 to fix two weeks of zero store clicks,
+// because partner shops only lived on the homepage. It was lost on
+// 2026-09-11 when this whole file was replaced for the Turntable Lab push,
+// and restored 2026-10-29.
+//
+// The card is inserted AFTER ranking, into a fixed slot, so price sorting
+// and the unpriced weave can never bury it. It is not a result: it does not
+// count toward `position` on record clicks, which stays the rank among real
+// results. With fewer than five results it goes at the end instead of
+// vanishing. The store is picked once per search (not per render), from the
+// rotation pool in src/data/partnerStores.js. Add or edit partners there.
+const PARTNER_CARD_INDEX = 4;
+
+function pickPartnerStore() {
+  if (!PARTNER_STORES.length) return null;
+  return PARTNER_STORES[Math.floor(Math.random() * PARTNER_STORES.length)];
+}
 
 // ── Source presentation ───────────────────────────────────────
 // Badge label, badge colors, and the human store name used in GA4.
@@ -176,6 +197,56 @@ function rankResults(list) {
 // item_title, click_source) are unchanged, so existing GA4 reports keep
 // working. Price, condition, result position, marketplace, and an
 // affiliate-params-present flag are added on top.
+
+// ── Partner store card ────────────────────────────────────────
+// Sized to sit in the same grid as RecordCard. Description text is solid
+// white (var(--text-primary)), not muted. Links to the shop's own site when
+// it has one, otherwise its Discogs seller page. Clicks report as
+// click_source 'search_partner_card', separate from marketplace clicks.
+function PartnerCard({ store, searchTerm }) {
+  const href = store.siteUrl || store.url;
+  return (
+    <div className="store-card" style={{
+      display: 'flex', flexDirection: 'column',
+      padding: 20, borderRadius: 16,
+      background: 'var(--bg-card)',
+      border: '1px solid rgba(245,158,11,0.35)',
+    }}>
+      <p style={{
+        color: 'var(--amber)', fontSize: 10, fontFamily: 'var(--font-mono)',
+        letterSpacing: 2, margin: '0 0 10px',
+      }}>
+        STORES WE DIG
+      </p>
+      <div style={{ fontWeight: 700, fontSize: 16, color: 'var(--text-primary)' }}>{store.name}</div>
+      <div style={{ fontSize: 11, color: 'var(--amber)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>
+        {store.type} · {store.location}
+      </div>
+      <p style={{ fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.6, margin: '12px 0 16px', flex: 1 }}>
+        {store.desc}
+      </p>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => trackStoreClick({
+          storeName: store.name,
+          storeUrl: href,
+          clickSource: CLICK_SOURCES.SEARCH_PARTNER_CARD,
+          searchTerm,
+          notify: `${store.name} (search partner card)`,
+        })}
+        style={{
+          alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 6,
+          fontSize: 12, fontWeight: 700, color: '#0a0a0f', textDecoration: 'none',
+          padding: '8px 14px', borderRadius: 8, background: 'var(--amber)',
+        }}
+      >
+        Visit shop →
+      </a>
+    </div>
+  );
+}
 
 function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, position, searchTerm }) {
   const thumb = result.cover_image || result.thumb || result.picture || null;
@@ -412,6 +483,11 @@ export default function SearchResults() {
   // via useSearchTypeahead. Separate from searchSuggestion above, which
   // only appears AFTER a zero-result search comes back.
   const typeahead = useSearchTypeahead(inputVal);
+
+  // The partner store shown in the grid slot. Picked once per search term,
+  // so it does not change when the visitor switches filter tabs, wishlists
+  // a record, or the page re-renders for any other reason.
+  const partnerStore = useMemo(() => pickPartnerStore(), [query]);
 
   const toTitleCase = (str) =>
     str.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -694,6 +770,29 @@ export default function SearchResults() {
 
   const isWishlisted = (item) => wishlist.some(w => w.id === item.id && w.source === item.source);
 
+  // Grid contents: the ranked records, with the partner card spliced into a
+  // fixed slot afterward. `position` on each record stays its rank among real
+  // results, so the card never shifts result_position in GA4.
+  const gridItems = results.map((r, index) => (
+    <RecordCard
+      key={`${r.source}-${r.id}`}
+      result={r}
+      onWishlist={toggleWishlist}
+      wishlisted={isWishlisted(r)}
+      onResultClick={handleResultClick}
+      priority={index === 0}
+      position={index + 1}
+      searchTerm={query}
+    />
+  ));
+  if (partnerStore && gridItems.length > 0) {
+    gridItems.splice(
+      Math.min(PARTNER_CARD_INDEX, gridItems.length),
+      0,
+      <PartnerCard key="partner-card" store={partnerStore} searchTerm={query} />
+    );
+  }
+
   return (
     <div style={{ maxWidth: 1280, margin: '0 auto', padding: '32px 16px', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
 
@@ -808,18 +907,7 @@ export default function SearchResults() {
             first link, not after it. */}
         <AffiliateDisclosure variant="compact" surface="search" />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(220px, 100%), 1fr))', gap: 20 }}>
-          {results.map((r, index) => (
-            <RecordCard
-              key={`${r.source}-${r.id}`}
-              result={r}
-              onWishlist={toggleWishlist}
-              wishlisted={isWishlisted(r)}
-              onResultClick={handleResultClick}
-              priority={index === 0}
-              position={index + 1}
-              searchTerm={query}
-            />
-          ))}
+          {gridItems}
         </div>
         </>
       )}
