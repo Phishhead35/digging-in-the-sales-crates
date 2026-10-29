@@ -1,13 +1,13 @@
 import React, { useState, startTransition } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { withSlash } from '../utils/withSlash';
-import { Search, TrendingDown, Star, ArrowRight, Disc3, ExternalLink } from 'lucide-react';
+import { Search, TrendingDown, Star, ArrowRight, Disc3, ExternalLink, Mail } from 'lucide-react';
 import useSEO from '../hooks/useSEO';
 import useLatestVideos from '../hooks/useLatestVideos';
 import useSearchTypeahead from '../hooks/useSearchTypeahead';
 import VideoCard from '../components/VideoCard';
 import SearchTypeahead from '../components/SearchTypeahead';
-import NewsletterCta from '../components/NewsletterCta';
+import NewsletterCta, { newsletterUrl } from '../components/NewsletterCta';
 import { MA_STORES, RINH_STORES } from '../data/partnerStores';
 import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
 import { isMonetized } from '../config/partners';
@@ -15,6 +15,7 @@ import {
   trackStoreClick as analyticsStoreClick,
   trackWatchReadClick,
   trackSearchOrigin,
+  trackNewsletterClick,
   CLICK_SOURCES,
 } from '../utils/analytics';
 
@@ -22,6 +23,14 @@ const TRENDING_SEARCHES = [
   'Eric B & Rakim', 'A Tribe Called Quest', 'Wu-Tang Clan',
   'J Dilla', 'Pete Rock', 'Nas Illmatic', 'De La Soul',
 ];
+
+// Newsletter pill in the hero (2026-10-29). Its own GA4 source value, so
+// signups from the top of the page can be compared against the bottom card
+// (CLICK_SOURCES.HOMEPAGE_NEWSLETTER). The matching utm_medium is
+// 'homepage_hero' (see newsletterUrl below). To move this into
+// CLICK_SOURCES in analytics.js later, add
+// HOMEPAGE_HERO_NEWSLETTER: 'homepage_hero_newsletter' and swap the constant.
+const HERO_NEWSLETTER_SOURCE = 'homepage_hero_newsletter';
 
 // "Fresh in the Crates" used to render a hardcoded DEALS_PREVIEW array of
 // four made-up deals (invented prices like "$12.99, was $24.99") presented
@@ -389,6 +398,32 @@ export default function Home() {
                 {term}
               </button>
             ))}
+          </div>
+
+          {/* Newsletter pill (2026-10-29). Outlined, so the amber DIG button
+              stays the main action. Static markup, no images, no async
+              content: it cannot shift layout or become the LCP element.
+              utm_medium 'homepage_hero' and the GA4 source below are separate
+              from the bottom card, so the two placements can be compared. */}
+          <div style={{ marginTop: 24 }}>
+            <a
+              href={newsletterUrl('homepage_hero')}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackNewsletterClick(HERO_NEWSLETTER_SOURCE)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                padding: '9px 18px', borderRadius: 100,
+                border: '1px solid rgba(245,158,11,0.45)',
+                background: 'rgba(245,158,11,0.06)',
+                color: 'var(--amber)', fontSize: 13, fontWeight: 600,
+                textDecoration: 'none',
+              }}
+            >
+              <Mail size={14} />
+              Free weekly newsletter: sample connections and record sales. Join
+              <ArrowRight size={13} />
+            </a>
           </div>
         </div>
       </section>
