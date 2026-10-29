@@ -413,6 +413,7 @@ async function main() {
   const { ABOUT } = await loadDataModule('src/data/about.js');
   const { MA_STORES, RINH_STORES, HOME_STRIP_STORES } = await loadDataModule('src/data/partnerStores.js');
   const { VIDEO_SERIES } = await loadDataModule('src/data/playlists.js');
+  const { PARTNER_PAGE } = await loadDataModule('src/data/partnerPage.js');
   PARTNER_CFG = await loadDataModule('src/config/partners.js');
 
   // Latest YouTube uploads, as the live site serves them (the Worker
@@ -580,17 +581,35 @@ async function main() {
         `<p>${a('/local-shops', 'Somewhere else? Search any city or zip code for record shops near you')}</p>`,
     },
     {
-      // Hidden from Google 2026-10-04 until the page has real copy (who it
-      // is for, that it is free, how to reach out). The page still works for
-      // anyone who clicks to it. Remove noindex when the copy ships.
-      path: '/featured-partners',
-      noindex: true, // kept out of sitemap.xml, see sitemap block
-      title: `Partner With Us | ${SITE}`,
-      description:
-        'Get your record store in front of serious vinyl collectors. Partner with Digging in the Sales Crates.',
+      // Partner With Us. Hidden from Google 2026-10-04 until it had real
+      // copy; indexed since 2026-10-29, when the copy shipped. The words come
+      // from src/data/partnerPage.js, the same file the page renders from, so
+      // title, description and body match what visitors see. To hide the
+      // page again, add `noindex: true` here.
+      path: PARTNER_PAGE.path,
+      title: PARTNER_PAGE.seoTitle,
+      description: PARTNER_PAGE.description,
       content:
-        h1('Partner With Us') +
-        p('Get your record store in front of serious vinyl collectors and crate diggers.'),
+        h1(PARTNER_PAGE.title) +
+        p(PARTNER_PAGE.lead) +
+        `<h2>${esc(PARTNER_PAGE.stepsHeading)}</h2><ol>` +
+        PARTNER_PAGE.steps
+          .map((s) => `<li><strong>${esc(s.title)}</strong>: ${esc(s.text)}</li>`)
+          .join('') +
+        '</ol>' +
+        `<h2>${esc(PARTNER_PAGE.getHeading)}</h2><ul>` +
+        PARTNER_PAGE.gets.map((g) => `<li>${esc(g)}</li>`).join('') +
+        '</ul>' +
+        `<h2>${esc(PARTNER_PAGE.costHeading)}</h2>` +
+        p(PARTNER_PAGE.cost) +
+        `<h2>${esc(PARTNER_PAGE.honestHeading)}</h2>` +
+        p(PARTNER_PAGE.honest) +
+        `<h2>${esc(PARTNER_PAGE.videoHeading)}</h2>` +
+        p(PARTNER_PAGE.video) +
+        `<h2>${esc(PARTNER_PAGE.applyHeading)}</h2>` +
+        p(PARTNER_PAGE.applyIntro) +
+        `<p>${esc(PARTNER_PAGE.emailFallbackLead)} ${a(`mailto:${PARTNER_PAGE.email}`, PARTNER_PAGE.email)}.</p>` +
+        `<p>${a('/shops', 'See the shops already listed')}</p>`,
     },
     {
       path: '/faq',
