@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { withSlash } from '../utils/withSlash';
-import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3, Info, FileText } from 'lucide-react';
+import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3, Info, FileText, Store } from 'lucide-react';
 import FollowUs from './FollowUs';
 import { AffiliateDisclosure } from './AffiliateDisclosure';
 import { trackNavClick, trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
@@ -45,7 +45,9 @@ export default function Layout({ children }) {
     { to: '/deals',              label: 'Deals',             icon: TrendingDown },
     { to: '/watch-read',         label: 'Watch & Read',      icon: BookOpen },
     { to: '/blog',               label: 'Blog',              icon: FileText },
-    { to: '/local-shops',        label: "Where's My Shop?",  icon: MapPin },
+    // Renamed from "Where's My Shop?" (2026-10-29). That label read like a
+    // store-owner portal; the page is a zip-code finder for shoppers.
+    { to: '/local-shops',        label: 'Find Record Shops', icon: MapPin },
     { to: '/wishlist',           label: 'Wishlist',          icon: Heart },
     { to: '/faq',                label: 'FAQ',               icon: HelpCircle },
   ];
@@ -54,7 +56,10 @@ export default function Layout({ children }) {
   // the NEW badge did not fit at 1366px, so About and Featured Partners
   // left the header row. They stay one click away in the footer and in the
   // mobile menu. Header order is unchanged for everything else.
+  // "Partner Shops" (/shops, 2026-10-29) is here and not in the header for
+  // the same reason: the header row is already at its width limit.
   const extraLinks = [
+    { to: '/shops',              label: 'Partner Shops',     icon: Store },
     { to: '/featured-partners',  label: 'Featured Partners', icon: Star,      comingSoon: true },
     { to: '/about',              label: 'About',             icon: Info },
   ];
@@ -187,7 +192,10 @@ export default function Layout({ children }) {
            it is narrower than the measured ten: roughly 1510px with icons and
            1080px without. The thresholds below are ESTIMATES with margin, not
            measurements. Icons hide below 1600px; the hamburger takes over
-           below 1200px. If the last link clips, raise 1599 / 1199. */
+           below 1200px. If the last link clips, raise 1599 / 1199.
+           Oct 29 2026: "Where's My Shop?" became "Find Record Shops", three
+           characters longer, so check the last header link at 1200px to
+           1366px widths after this deploys. */
         @media (max-width: 1599px) {
           .desktop-nav a { padding: 8px 9px !important; }
           .desktop-nav a svg { display: none !important; }

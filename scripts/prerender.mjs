@@ -411,7 +411,7 @@ async function main() {
   const { BUNDLE, SIGNUP_REDIRECT_CONFIRMED } = await loadDataModule('src/data/bundle.js');
   const { FAQS } = await loadDataModule('src/data/faq.js');
   const { ABOUT } = await loadDataModule('src/data/about.js');
-  const { MA_STORES, RINH_STORES } = await loadDataModule('src/data/partnerStores.js');
+  const { MA_STORES, RINH_STORES, HOME_STRIP_STORES } = await loadDataModule('src/data/partnerStores.js');
   const { VIDEO_SERIES } = await loadDataModule('src/data/playlists.js');
   PARTNER_CFG = await loadDataModule('src/config/partners.js');
 
@@ -465,21 +465,18 @@ async function main() {
       content:
         h1(SITE) +
         p('Taking the Dig Out of Digging. Free vinyl record price comparison: search Discogs, eBay, CDandLP, and Turntable Lab simultaneously and find the lowest price on any record in seconds. No sign-up required.') +
-        // Shops We Dig, the same partner stores the homepage shows.
+        // Shops We Dig: the short strip the homepage shows (stores flagged
+        // homepageStrip in partnerStores.js), then a link to the full list.
+        // No affiliate notice: the strip carries no affiliate links.
         '<h2>Shops We Dig</h2>' +
         p('Hand-picked independent stores worth your time and money. These are the real ones.') +
-        disclosure('home') +
-        [['Massachusetts', MA_STORES], ['Rhode Island & New Hampshire', RINH_STORES]]
-          .map(
-            ([region, stores]) =>
-              `<h3>${esc(region)}</h3><ul>` +
-              stores
-                .map((st) => `<li><strong>${esc(st.name)}</strong> (${esc(st.type)}, ${esc(st.location)}). ${esc(st.desc)}</li>`)
-                .join('') +
-              '</ul>'
-          )
+        '<ul>' +
+        HOME_STRIP_STORES
+          .map((st) => `<li><strong>${esc(st.name)}</strong> (${esc(st.type)}, ${esc(st.location)}). ${esc(st.desc)}</li>`)
           .join('') +
-        p('Own a record store? Get your shop in front of serious collectors: hello@digginginthesalescrates.com') +
+        '</ul>' +
+        `<p>${a('/shops', `See all ${MA_STORES.length + RINH_STORES.length} shops`)}</p>` +
+        p('Own a record store? Get your shop in front of serious collectors.') +
         '<h2>Stop Overpaying for Records</h2>' +
         p('Search Discogs, eBay, CDandLP, and Turntable Lab at the same time. Condition graded. Lowest price first. Every time.') +
         navLinks,

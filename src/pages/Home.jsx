@@ -8,14 +8,15 @@ import useSearchTypeahead from '../hooks/useSearchTypeahead';
 import VideoCard from '../components/VideoCard';
 import SearchTypeahead from '../components/SearchTypeahead';
 import NewsletterCta, { newsletterUrl } from '../components/NewsletterCta';
-import { MA_STORES, RINH_STORES } from '../data/partnerStores';
-import { AffiliateDisclosure, AffiliateBadge } from '../components/AffiliateDisclosure';
+import { MA_STORES, RINH_STORES, HOME_STRIP_STORES } from '../data/partnerStores';
+import { AffiliateBadge } from '../components/AffiliateDisclosure';
 import { isMonetized } from '../config/partners';
 import {
   trackStoreClick as analyticsStoreClick,
   trackWatchReadClick,
   trackSearchOrigin,
   trackNewsletterClick,
+  trackNavClick,
   CLICK_SOURCES,
 } from '../utils/analytics';
 
@@ -444,26 +445,33 @@ export default function Home() {
             <p style={{ color: 'var(--text-primary)', fontSize: 15, marginTop: 8, maxWidth: 560 }}>
               Hand-picked independent stores worth your time and money. These are the real ones.
             </p>
-            {/* Disclosure for the affiliate links in this section (today, the
-                eBay store button on Planet Records). Built from partners.js,
-                so it names exactly the programs linked on the homepage and
-                disappears if none are. Added 2026-10-04: the homepage had no
-                disclosure at all before. */}
-            <div style={{ marginTop: 10, maxWidth: 560 }}>
-              <AffiliateDisclosure variant="compact" surface="home" />
-            </div>
+            {/* No affiliate notice here since 2026-10-29: the strip no longer
+                includes Planet Records (the only card with an eBay link), so
+                nothing in this section earns a commission. The full list,
+                with that eBay button and its notice, is on /shops. If you
+                add a strip store that carries an affiliate link, put the
+                <AffiliateDisclosure surface="home" /> notice back. */}
           </div>
 
-          {/* Massachusetts */}
-          <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>MASSACHUSETTS</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 28 }}>
-            {MA_STORES.map(store => <StoreCard key={store.name} store={store} />)}
+          {/* Short strip: the stores flagged homepageStrip in
+              src/data/partnerStores.js. The whole list is at /shops. */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, marginBottom: 20 }}>
+            {HOME_STRIP_STORES.map(store => <StoreCard key={`${store.name}-${store.location}`} store={store} />)}
           </div>
 
-          {/* Rhode Island & New Hampshire */}
-          <p style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, color: 'var(--amber)', marginBottom: 16 }}>RHODE ISLAND & NEW HAMPSHIRE</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, marginBottom: 24 }}>
-            {RINH_STORES.map(store => <StoreCard key={store.name} store={store} />)}
+          <div style={{ marginBottom: 24 }}>
+            <Link
+              to={withSlash('/shops')}
+              onClick={() => trackNavClick('See all shops', '/shops', 'homepage_strip')}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                padding: '10px 20px', borderRadius: 10, fontSize: 14, fontWeight: 700,
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                color: '#000', textDecoration: 'none',
+              }}
+            >
+              See all {MA_STORES.length + RINH_STORES.length} shops <ArrowRight size={14} />
+            </Link>
           </div>
 
           {/* Store signup CTA */}

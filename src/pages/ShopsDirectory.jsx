@@ -146,16 +146,19 @@ export default function ShopsDirectory() {
   });
 
   // Jump to a shop when the URL carries its anchor (/shops/#planet-records).
-  // The route loads as a lazy chunk, so the browser's own hash scroll has
-  // nothing to land on yet; wait a beat for the cards to render.
+  // The route loads as a lazy chunk, and the page keeps settling after the
+  // first render (fonts, the footer, the scroll-to-top reset), so a single
+  // smooth scroll lands a little off. Jump instantly, then again once the
+  // layout has settled. scrollMarginTop on each card clears the fixed nav.
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     if (!hash) return undefined;
-    const t = setTimeout(() => {
+    const jump = () => {
       const el = document.getElementById(hash);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 150);
-    return () => clearTimeout(t);
+      if (el) el.scrollIntoView({ block: 'start' });
+    };
+    const timers = [setTimeout(jump, 100), setTimeout(jump, 500)];
+    return () => timers.forEach(clearTimeout);
   }, []);
 
   return (
