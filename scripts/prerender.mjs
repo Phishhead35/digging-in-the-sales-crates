@@ -85,6 +85,13 @@
 //  DEFAULT_OG_IMAGE (public/og/default.png) and logs a warning. Any
 //  og:image / twitter:image / twitter:card tag already in the template is
 //  stripped first, so a page never carries two of them.
+//
+//  SHOPS DIRECTORY (2026-10-29): /shops is the full list of partner record
+//  stores, grouped by state, read from src/data/partnerStores.js (the same
+//  file src/pages/ShopsDirectory.jsx renders from). Its title and
+//  description must match the useSEO call in that page. The crawler copy
+//  leaves out the eBay store link on purpose: it is an affiliate link, and
+//  the crawler HTML carries no sponsored/nofollow markup.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -288,6 +295,46 @@ const disclosure = (surface) => {
   );
 };
 
+// ── Shops directory helpers (/shops) ──
+// Same grouping rule as src/pages/ShopsDirectory.jsx: by the two-letter
+// state at the end of each store's `location`, in this display order.
+// A state not listed still shows, after these.
+const SHOP_STATE_ORDER = [
+  ['MA', 'Massachusetts'],
+  ['RI', 'Rhode Island'],
+  ['NH', 'New Hampshire'],
+];
+const shopState = (store) => {
+  const m = /,\s*([A-Z]{2})\s*$/.exec(store.location || '');
+  return m ? m[1] : '';
+};
+function groupShopsByState(stores) {
+  const groups = SHOP_STATE_ORDER
+    .map(([code, name]) => ({ name, stores: stores.filter((s) => shopState(s) === code) }))
+    .filter((g) => g.stores.length > 0);
+  const knownCodes = SHOP_STATE_ORDER.map(([code]) => code);
+  const other = stores.filter((s) => !knownCodes.includes(shopState(s)));
+  if (other.length) groups.push({ name: 'More Shops', stores: other });
+  return groups;
+}
+// Website and Discogs/Instagram links, labelled like the page's buttons.
+// The eBay store link is left out on purpose (see the header note).
+const shopLinksHtml = (st) => {
+  const links = [];
+  if (st.siteUrl) {
+    links.push(a(st.siteUrl, 'Website'));
+    links.push(a(st.url, 'Discogs'));
+  } else {
+    const label = /discogs\.com/i.test(st.url)
+      ? 'Discogs'
+      : /instagram\.com/i.test(st.url)
+        ? 'Instagram'
+        : 'Website';
+    links.push(a(st.url, label));
+  }
+  return links.join(' · ');
+};
+
 const guideBlocks = (blocks) =>
   blocks
     .map((block) =>
@@ -398,6 +445,7 @@ async function main() {
       ['/artists', 'Artist & genre pages'],
       ['/watch-read', 'Watch & Read: DITSC videos and written stories'],
       ['/blog', 'Blog: sample connections, reissue alerts, and artist spotlights'],
+      ['/shops', 'Independent record shops we dig in New England'],
       ['/local-shops', 'Find record shops near you'],
       ['/faq', 'FAQ'],
       ['/about', 'About Digging in the Sales Crates'],
@@ -503,6 +551,36 @@ async function main() {
         p('Discover independent vinyl shops in your area. Enter your city, neighborhood, or zip code to get started.') +
         p('Each result links to the shop and gives you directions.') +
         `<p>${a('/', 'See the partner shops we dig in Massachusetts, Rhode Island, and New Hampshire')}</p>`,
+    },
+    {
+      // Partner shop directory. Title and description match the useSEO call
+      // in src/pages/ShopsDirectory.jsx; keep them in step. The body is the
+      // same words the page shows, built from the same data file.
+      path: '/shops',
+      title: `Independent Record Stores in New England | ${SITE}`,
+      description:
+        "Hand-picked independent record stores in Massachusetts, Rhode Island, and New Hampshire, with locations, specialties, and links to each shop's site and Discogs store.",
+      content:
+        h1('Independent Record Shops We Dig') +
+        p(
+          `${MA_STORES.length + RINH_STORES.length} independent stores in Massachusetts, Rhode Island, and New Hampshire that we think are worth your time and money. Click through to a shop's site or Discogs store to see what's in the bins.`
+        ) +
+        disclosure('home') +
+        groupShopsByState([...MA_STORES, ...RINH_STORES])
+          .map(
+            (g) =>
+              `<h2>${esc(g.name)}</h2><ul>` +
+              g.stores
+                .map(
+                  (st) =>
+                    `<li><strong>${esc(st.name)}</strong> (${esc(st.type)}, ${esc(st.location)}). ${esc(st.desc)} ${shopLinksHtml(st)}</li>`
+                )
+                .join('') +
+              '</ul>'
+          )
+          .join('') +
+        p('Own a record store? Get your shop in front of serious collectors.') +
+        `<p>${a('/local-shops', 'Somewhere else? Search any city or zip code for record shops near you')}</p>`,
     },
     {
       // Hidden from Google 2026-10-04 until the page has real copy (who it

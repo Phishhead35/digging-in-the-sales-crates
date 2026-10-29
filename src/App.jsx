@@ -21,6 +21,9 @@ const Deals = lazy(() => import('./pages/DealsAndAlerts').then(m => ({ default: 
 const Alerts = lazy(() => import('./pages/DealsAndAlerts').then(m => ({ default: m.Alerts })));
 const EmailParser = lazy(() => import('./pages/EmailParser'));
 const LocalShops = lazy(() => import('./pages/LocalShops'));
+// Partner shop directory (2026-10-29): every partner store, grouped by state.
+// Reads src/data/partnerStores.js, the same file the homepage and search use.
+const ShopsDirectory = lazy(() => import('./pages/ShopsDirectory'));
 const FeaturedPartners = lazy(() => import('./pages/FeaturedPartners'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const About = lazy(() => import('./pages/About'));
@@ -129,6 +132,7 @@ export default function App() {
             <Route path="/alerts" element={<Alerts />} />
             <Route path="/email-parser" element={<EmailParser />} />
             <Route path="/local-shops" element={<LocalShops />} />
+            <Route path="/shops" element={<ShopsDirectory />} />
             <Route path="/featured-partners" element={<FeaturedPartners />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/about" element={<About />} />
