@@ -27,6 +27,16 @@
 /aggregator   /search/  301
 /aggregator/  /search/  301
 
+# Partner page guesses (2026-10-29). The real page is /featured-partners/.
+# These used to fall through to the SPA and show the homepage with a 200, so
+# a store owner who typed one saw no partner page at all. 301 (permanent).
+/partner            /featured-partners/  301
+/partner/           /featured-partners/  301
+/partners           /featured-partners/  301
+/partners/          /featured-partners/  301
+/partner-with-us    /featured-partners/  301
+/partner-with-us/   /featured-partners/  301
+
 # /sitemap_index.xml used to fall through to the SPA and return the homepage
 # with a 200. Some crawlers probe this name; send them to the real sitemap.
 /sitemap_index.xml  /sitemap.xml  301
