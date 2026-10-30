@@ -31,6 +31,13 @@ import {
 // height and swapping loading -> loaded doesn't cause a big layout shift (CLS).
 const RESULTS_PER_PAGE = 20;
 
+// Most pages the pagination control will offer. Discogs reports every release
+// that matches, and a popular title can run to hundreds of pages ("Kind of
+// Blue" reported 364 against 34 visible results on 2026-10-29). Nobody pages
+// that deep, and the counter contradicted the result count on the page. Only
+// Discogs paginates (see doSearch), so this caps that one source.
+const MAX_PAGES = 10;
+
 // ── Partner store card slot ───────────────────────────────────
 // One rotating partner store card sits in the results grid at position 5
 // (index 4). It shipped 2026-07-09 to fix two weeks of zero store clicks,
@@ -191,6 +198,185 @@ function rankResults(list) {
   return out;
 }
 
+// ── Relevance tiers ───────────────────────────────────────────
+// Price sorting alone ranked "Third Kind Of Blue" (a different album, $9.81)
+// above Miles Davis "Kind of Blue" for the search "Kind of Blue", because it
+// was cheaper. Cheapest-first is only the right order among results that are
+// actually the record the visitor typed.
+//
+// Each result gets a tier from how its TITLE matches the query. Lower tiers
+// come first, and rankResults() (cheapest first, unpriced woven in) then runs
+// inside each tier, so price still decides the order among equally good
+// matches.
+//
+//   0  title is exactly the query, or artist + title is, or a known artist
+//      name sits right in front of it ("Miles Davis Kind Of Blue 180g")
+//   1  title starts with the query ("Kind Of Blue Live In Paris")
+//   2  query appears inside a longer title ("Third Kind Of Blue")
+//   3  every word of the query is there, but not as a phrase
+//   4  at least half the words of a longer query are there
+//   5  anything else
+//
+// This looks at titles only. It does not look up artists or promote an
+// artist's catalog; the dictionary below is used for one thing, recognizing
+// "Miles Davis" as an artist name sitting in front of the title. Set
+// RELEVANCE_RANKING to false to go back to pure price order.
+const RELEVANCE_RANKING = true;
+
+function normalizeText(s) {
+  return String(s || '')
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/['’`]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+// Artist names and aliases from the typeahead dictionary, normalized.
+// Defensive on purpose: if the dictionary shape ever changes this just ends
+// up empty and the artist-in-front check quietly never fires.
+const KNOWN_ARTISTS = (() => {
+  const set = new Set();
+  const list = Array.isArray(artistDictionary && artistDictionary.artists) ? artistDictionary.artists : [];
+  for (const a of list) {
+    const names = [a && a.canonicalForm].concat(Array.isArray(a && a.aliases) ? a.aliases : []);
+    for (const n of names) {
+      const key = normalizeText(n);
+      if (key) set.add(key);
+    }
+  }
+  return set;
+})();
+
+function endsWithKnownArtist(prefix) {
+  const words = prefix.split(' ');
+  for (let k = Math.min(4, words.length); k >= 1; k--) {
+    if (KNOWN_ARTISTS.has(words.slice(-k).join(' '))) return true;
+  }
+  return false;
+}
+
+// Listing words that say nothing about which record it is.
+const TITLE_NOISE = new Set(['vinyl', 'lp', '2lp', '3lp', 'cd', 'record', 'records']);
+
+function stripTrailingNoise(normalized) {
+  const words = normalized.split(' ');
+  while (words.length > 1 && TITLE_NOISE.has(words[words.length - 1])) words.pop();
+  return words.join(' ');
+}
+
+// Pull the title apart the way each source writes it:
+//   Discogs, CDandLP    "Miles Davis - Kind Of Blue"   (CDandLP may lead with "- ")
+//   Turntable Lab       "Miles Davis: Kind Of Blue (Columbia, Vinyl LP)"
+//   eBay catalog style  "Kind of Blue [Blue Vinyl] by Davis, Miles (Record, 2019)"
+// Brackets and parentheses are dropped first. The eBay "by" split only runs
+// when the title ends in a parenthetical, so a real title like "Stand By Me"
+// is never cut in half.
+function titleParts(result) {
+  let raw = String(result.title || '');
+  const endsInParen = /\)\s*$/.test(raw);
+  raw = raw.replace(/\[[^\]]*\]|\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
+
+  let artist = '';
+  let name = raw;
+  const dash = raw.match(/^(.*?)\s+-\s+(.+)$/);
+  if (dash) {
+    artist = dash[1];
+    name = dash[2];
+  } else if (/^-\s+/.test(raw)) {
+    name = raw.replace(/^-\s+/, '');
+  } else if (result.source === 'turntablelab') {
+    const colon = raw.match(/^(.+?):\s+(.+)$/);
+    if (colon) { artist = colon[1]; name = colon[2]; }
+  } else if (endsInParen) {
+    const by = raw.match(/^(.+)\s+by\s+(.+)$/i);
+    if (by) { name = by[1]; artist = by[2]; }
+  }
+
+  return {
+    artist: normalizeText(artist),
+    name: stripTrailingNoise(normalizeText(name)),
+    full: stripTrailingNoise(normalizeText(raw.replace(/\s+-\s+/g, ' ').replace(/:\s+/g, ' '))),
+  };
+}
+
+function relevanceTier(result, q, qTokens) {
+  const { artist, name, full } = titleParts(result);
+
+  const artistPlusTitle = artist ? [`${artist} ${name}`, `${name} ${artist}`] : [];
+  if (name === q || full === q || artistPlusTitle.includes(q)) return 0;
+
+  const padded = ` ${full} `;
+  const at = padded.indexOf(` ${q} `);
+  if (at !== -1) {
+    const prefix = padded.slice(0, at).trim();
+    if (prefix && endsWithKnownArtist(prefix)) return 0;
+    if (!prefix || name.startsWith(`${q} `)) return 1;
+    return 2;
+  }
+
+  const have = new Set(`${full} ${artist}`.split(' '));
+  const hits = qTokens.filter(t => have.has(t)).length;
+  if (hits === qTokens.length) return 3;
+  if (hits >= 2 && hits * 2 >= qTokens.length) return 4;
+  return 5;
+}
+
+/**
+ * Relevance first, then price inside each relevance tier.
+ * Returns a NEW array. Does not mutate the input.
+ */
+function rankByRelevance(list, query) {
+  const q = normalizeText(query);
+  if (!RELEVANCE_RANKING || !q) return rankResults(list);
+
+  const qTokens = q.split(' ');
+  const tiers = [[], [], [], [], [], []];
+  for (const r of list) tiers[relevanceTier(r, q, qTokens)].push(r);
+
+  const out = [];
+  for (const tier of tiers) {
+    if (tier.length) out.push(...rankResults(tier));
+  }
+  return out;
+}
+
+// ── Duplicate listings ────────────────────────────────────────
+// The CDandLP feed returned the same listing twice for "Kind of Blue" (two
+// identical "Third Kind Of Blue" cards, 2026-10-29). Two cards with the same
+// source and id are always the same thing. For CDandLP, the same title at the
+// same price is also treated as the same listing, since the card shows nothing
+// that would tell the two apart. eBay and Turntable Lab are left alone: two
+// sellers can list the same record at the same price and both are real.
+function dedupeResults(list) {
+  const seen = new Set();
+  return list.filter(r => {
+    const keys = [`id|${r.source}|${r.id}`];
+    if (r.source === 'cdandlp') {
+      keys.push(`tp|${normalizeText(r.title)}|${r.lowest_price}|${r.currency || ''}`);
+    }
+    if (keys.some(k => seen.has(k))) return false;
+    keys.forEach(k => seen.add(k));
+    return true;
+  });
+}
+
+// ── Thumbnails ────────────────────────────────────────────────
+// eBay sometimes returns no image at all, or its generic "no photo" picture
+// (04040_0.jpg). Both end up as the placeholder card below instead of a blank
+// grey box. Takes the first usable candidate and forces https.
+const NO_IMAGE_URL = /04040_0\.jpg|no[-_]?image|image[-_]?not[-_]?available|spacer\.gif/i;
+
+function cleanThumb(...candidates) {
+  for (const c of candidates) {
+    if (typeof c !== 'string') continue;
+    const url = c.trim().replace(/^http:\/\//i, 'https://');
+    if (url && !NO_IMAGE_URL.test(url)) return url;
+  }
+  return null;
+}
+
 // ── GA4 tracking ──────────────────────────────────────────────
 // All tracking now lives in src/utils/analytics.js. The store_click
 // event name and its original parameters (store_name, store_url,
@@ -258,7 +444,7 @@ function PartnerCard({ store, searchTerm }) {
 }
 
 function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, position, searchTerm }) {
-  const thumb = result.cover_image || result.thumb || result.picture || null;
+  const thumb = cleanThumb(result.cover_image, result.thumb, result.picture);
   const [imgError, setImgError] = useState(false);
   const meta = SOURCE_META[result.source] || SOURCE_META.cdandlp;
 
@@ -287,20 +473,25 @@ function RecordCard({ result, onWishlist, wishlisted, onResultClick, priority, p
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
           ) : (
-            <div style={{
-              width: '100%', height: '100%', display: 'flex', alignItems: 'center',
-              justifyContent: 'center',
-              background: 'linear-gradient(135deg, #16161f, #1c1c28)',
-            }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{
-                  width: 60, height: 60, borderRadius: '50%',
-                  background: '#222', border: '3px solid #333',
-                  margin: '0 auto 8px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                  <div style={{ width: 12, height: 12, borderRadius: '50%', background: '#444' }} />
-                </div>
+            <div
+              role="img"
+              aria-label="No cover image available"
+              style={{
+                width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'center', gap: 10,
+                background: 'linear-gradient(135deg, #16161f, #1c1c28)',
+              }}
+            >
+              <div style={{
+                width: 64, height: 64, borderRadius: '50%',
+                background: '#222', border: '3px solid #333',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <div style={{ width: 14, height: 14, borderRadius: '50%', background: 'var(--amber)' }} />
               </div>
+              <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 1.5, color: '#fff' }}>
+                NO PHOTO
+              </span>
             </div>
           )}
         </div>
@@ -487,6 +678,9 @@ export default function SearchResults() {
   // never mistaken for "Discogs has nothing".
   const [discogsDown, setDiscogsDown] = useState(false);
   const lastSearchedRef = useRef('');
+  // Last page we actually fetched. Lets the page effect tell a real Next/Prev
+  // click from the reset to page 1 that a brand-new search does.
+  const prevPageRef = useRef(1);
 
   // Live "as you type" suggestions, shared with the homepage search box
   // via useSearchTypeahead. Separate from searchSuggestion above, which
@@ -551,6 +745,11 @@ export default function SearchResults() {
     const startedAt = (typeof performance !== 'undefined' ? performance.now() : Date.now());
     const counts = { discogs: 0, ebay: 0, cdandlp: 0, turntablelab: 0 };
 
+    // Only Discogs paginates. eBay, CDandLP and Turntable Lab are one-shot
+    // queries with no page parameter, so asking for them again on page 2 just
+    // repeated the same records. Pages 2 and up are Discogs only.
+    const firstPage = pg === 1;
+
     try {
       const combined = [];
 
@@ -570,17 +769,21 @@ export default function SearchResults() {
         }
         counts.discogs = items.length;
         combined.push(...items);
-        if (data.pagination) setTotalPages(data.pagination.pages || 1);
+        // Always set, so a search where Discogs returns no pagination cannot
+        // leave the previous search's page count on screen.
+        setTotalPages(Math.min(MAX_PAGES, Math.max(1, Number(data.pagination && data.pagination.pages) || 1)));
       }
 
-      if (src === 'all' || src === 'ebay') {
+      if (firstPage && (src === 'all' || src === 'ebay')) {
         try {
           const ebayData = await searchEbay(q);
           const items = ebayData?.findItemsByKeywordsResponse?.[0]?.searchResult?.[0]?.item || [];
           const mapped = items.map(item => ({
             id: item.itemId?.[0],
             title: item.title?.[0],
-            thumb: item.galleryURL?.[0],
+            // Some listings come back without galleryURL. Try the larger
+            // picture fields first; the card shows a placeholder if none exist.
+            thumb: item.pictureURLLarge?.[0] || item.galleryPlusPictureURL?.[0] || item.galleryURL?.[0],
             lowest_price: parseFloat(item.sellingStatus?.[0]?.currentPrice?.[0]?.__value__ || 0),
             source: 'ebay',
             url: item.viewItemURL?.[0],
@@ -593,7 +796,7 @@ export default function SearchResults() {
         }
       }
 
-      if (src === 'all' || src === 'cdandlp') {
+      if (firstPage && (src === 'all' || src === 'cdandlp')) {
         try {
           const cdData = await searchCDandLP(q);
           const rawItems = cdData?.information?.items || {};
@@ -620,7 +823,7 @@ export default function SearchResults() {
         }
       }
 
-      if (src === 'all' || src === 'turntablelab') {
+      if (firstPage && (src === 'all' || src === 'turntablelab')) {
         try {
           const ttlData = await searchTurntableLab(q);
           // The Pages Function already returns the RecordCard shape
@@ -640,15 +843,16 @@ export default function SearchResults() {
         }
       }
 
-      // Rank once, here, so both the full list and every filtered view
-      // inherit the order. The activeSource effect below only filters,
-      // it never reorders.
+      // Drop duplicate listings, then rank once, here, so both the full list
+      // and every filtered view inherit the order. The activeSource effect
+      // below only filters, it never reorders.
       //
-      // Note this replaces the earlier `combined.sort(byPriceAsc)`. That
-      // sorted in place and sent unpriced results to the back; rankResults
-      // returns a new array with them woven through instead. See the comment
-      // block above UNPRICED_CADENCE for why.
-      const ranked = rankResults(combined);
+      // Ranking is relevance tier first, then price inside each tier (see
+      // "Relevance tiers" above). Inside a tier it is still rankResults, which
+      // sorts cheapest first and weaves unpriced results through. See the
+      // comment block above UNPRICED_CADENCE for why.
+      const deduped = dedupeResults(combined);
+      const ranked = rankByRelevance(deduped, q);
 
       setAllResults(ranked);
       setResults(ranked);
@@ -669,7 +873,7 @@ export default function SearchResults() {
       if (src === 'all') {
         trackViewSearchResults({
           searchTerm: q,
-          resultCount: combined.length,
+          resultCount: deduped.length,
           discogs: counts.discogs,
           ebay: counts.ebay,
           cdandlp: counts.cdandlp,
@@ -697,6 +901,9 @@ export default function SearchResults() {
     if (!query || query === lastSearchedRef.current) return;
     lastSearchedRef.current = query;
     setInputVal(query);
+    // A new search fetches page 1 itself just below. Mark page 1 as already
+    // fetched so the page effect does not fetch it a second time.
+    prevPageRef.current = 1;
     setPage(1);
     setActiveSource('all');
     // Track search term in GA4 — feeds into artist page + blog recommendations.
@@ -735,13 +942,15 @@ export default function SearchResults() {
     }
   }, [activeSource, allResults]);
 
-  // Pagination — only fires when user explicitly clicks next/prev
-  // Uses a ref to detect real page changes vs resets triggered by new searches
-  const prevPageRef = useRef(1);
+  // Pagination — only fires when the visitor changes page.
+  // Uses a ref to detect real page changes vs resets triggered by new searches.
+  // This used to skip page 1, so pressing Prev back to page 1 left page 2's
+  // records on screen under a "1 / N" counter. Going back to page 1 now
+  // refetches it, but is not reported as a pagination click.
   useEffect(() => {
-    if (page > 1 && query && page !== prevPageRef.current) {
+    if (query && page !== prevPageRef.current) {
       prevPageRef.current = page;
-      trackPagination(page, query);
+      if (page > 1) trackPagination(page, query);
       doSearch(query, page, 'all');
     } else {
       prevPageRef.current = page;
@@ -855,6 +1064,10 @@ export default function SearchResults() {
                 query,
                 s === 'all' ? allResults.length : allResults.filter(r => r.source === s).length
               );
+              // Pages 2 and up only carry Discogs releases, so a store tab
+              // there would be empty. Go back to page 1, which has every
+              // store; the page effect refetches it.
+              if (page > 1 && s !== 'all' && s !== 'discogs') setPage(1);
             }}
             className={`filter-btn${activeSource === s ? ' filter-btn-active' : ''}`}>
             {SOURCE_TAB_LABEL[s]}
@@ -862,7 +1075,11 @@ export default function SearchResults() {
         ))}
         {query && (
           <span style={{ color: 'var(--text-muted)', fontSize: 13, marginLeft: 8 }}>
-            {loading ? 'Searching...' : `${results.length} results for "${query}"`}
+            {loading
+              ? 'Searching...'
+              : page > 1
+              ? `Page ${page}: ${results.length} more Discogs releases for "${query}"`
+              : `${results.length} results for "${query}"`}
           </span>
         )}
       </div>
@@ -942,8 +1159,11 @@ export default function SearchResults() {
         </>
       )}
 
-      {!loading && totalPages > 1 && (
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 40, alignItems: 'center' }}>
+      {/* Only Discogs paginates, so the control is hidden on the eBay, CDandLP
+          and Turntable Lab tabs, where it would page through nothing. */}
+      {!loading && totalPages > 1 && (activeSource === 'all' || activeSource === 'discogs') && (
+        <div style={{ marginTop: 40 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 8, alignItems: 'center' }}>
           <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} style={{
             padding: '8px 16px', borderRadius: 8, background: 'var(--bg-card)',
             border: '1px solid var(--border)', color: page === 1 ? 'var(--text-muted)' : 'var(--text-primary)',
@@ -961,6 +1181,10 @@ export default function SearchResults() {
           }}>
             Next <ChevronRight size={15} />
           </button>
+        </div>
+        <p style={{ textAlign: 'center', color: '#fff', fontSize: 12, margin: '10px 0 0' }}>
+          Page 1 covers every store. Pages 2 and up list more Discogs releases.
+        </p>
         </div>
       )}
 
