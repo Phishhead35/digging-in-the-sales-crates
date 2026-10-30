@@ -608,7 +608,8 @@ async function main() {
         p(PARTNER_PAGE.video) +
         `<h2>${esc(PARTNER_PAGE.applyHeading)}</h2>` +
         p(PARTNER_PAGE.applyIntro) +
-        `<p>${esc(PARTNER_PAGE.emailFallbackLead)} ${a(`mailto:${PARTNER_PAGE.email}`, PARTNER_PAGE.email)}.</p>` +
+        `<p>${a(PARTNER_PAGE.formUrl, PARTNER_PAGE.applyButtonLabel)} ${esc(PARTNER_PAGE.applyButtonNote)}</p>` +
+        `<p>${esc(PARTNER_PAGE.emailFallbackLead)} ${a(`mailto:${PARTNER_PAGE.email}`, PARTNER_PAGE.email)}. ${esc(PARTNER_PAGE.emailCopyNote)}</p>` +
         `<p>${a('/shops', 'See the shops already listed')}</p>`,
     },
     {

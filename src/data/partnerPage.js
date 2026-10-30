@@ -17,6 +17,13 @@
 // links do run in Facebook videos), that DITSC takes no cut (the Planet
 // Records eBay store button earns a commission), or any number of
 // "collectors" or site visitors.
+//
+// THE APPLICATION is a Google Form (formUrl below), opened in a new tab.
+// Responses go to the DITSC Gmail and to a linked Google Sheet. An in-page
+// form was tried first: a mailto: form failed on machines with no default
+// mail app, and Formspree's verification email never arrived (2026-10-29).
+// Keep the form's access set to "Anyone", with no sign-in required, or store
+// owners without a Google account hit an access-denied page.
 
 export const PARTNER_PAGE = {
   path: '/featured-partners',
@@ -31,7 +38,7 @@ export const PARTNER_PAGE = {
 
   stepsHeading: 'How it works',
   steps: [
-    { title: 'Apply', text: 'Fill out the form below. It takes two minutes.' },
+    { title: 'Apply', text: 'Fill out the short application. It takes two minutes.' },
     {
       title: 'We take a look',
       text: "We check that you're a real shop with real stock and fair grading. If you are, you're in.",
@@ -64,21 +71,13 @@ export const PARTNER_PAGE = {
 
   applyHeading: 'Apply to be listed',
   applyIntro:
-    'Fill this out and your email app will open with everything filled in, ready to send.',
+    'The application is a short form: your shop, where it is, your links, and what you carry. We read every one and write back by email.',
+  formUrl:
+    'https://docs.google.com/forms/d/e/1FAIpQLSdvMqamfLcDRnWXCocudKKJQmWoRqXaHT4BtObeMnAGe77Z-w/viewform',
+  applyButtonLabel: 'Fill out the application',
+  applyButtonNote: 'Opens in a new tab.',
+
   email: 'hello@digginginthesalescrates.com',
   emailFallbackLead: 'Prefer to write it yourself? Email',
-
-  fields: [
-    { name: 'shop', label: 'Shop name', required: true },
-    { name: 'location', label: 'City and state', required: true },
-    { name: 'website', label: 'Website', type: 'url', placeholder: 'https://' },
-    { name: 'discogs', label: 'Discogs store link', type: 'url', placeholder: 'https://' },
-    { name: 'owner', label: 'Your name', required: true },
-    { name: 'emailAddress', label: 'Your email', type: 'email', required: true },
-    { name: 'genres', label: 'What you specialize in' },
-    { name: 'about', label: 'What makes your shop worth digging? (2 or 3 sentences)', textarea: true },
-    { name: 'notes', label: 'Anything buyers should know? (grading, shipping, in-store pickup)', textarea: true },
-  ],
-  videoLabel: 'Open to being featured in a video if we can get there',
-  submitLabel: 'Open my email',
+  emailCopyNote: "If the link doesn't open your email, copy the address.",
 };
