@@ -60,7 +60,7 @@ export default function Layout({ children }) {
   // the same reason: the header row is already at its width limit.
   const extraLinks = [
     { to: '/shops',              label: 'Partner Shops',     icon: Store },
-    { to: '/featured-partners',  label: 'For Record Shop Owners', icon: Star, comingSoon: true },
+    { to: '/featured-partners',  label: 'For Record Shop Owners', icon: Star },
     { to: '/about',              label: 'About',             icon: Info },
   ];
   const menuLinks = [...navLinks, ...extraLinks];
