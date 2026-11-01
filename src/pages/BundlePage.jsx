@@ -203,22 +203,10 @@ export default function BundlePage({ mode = "landing" }) {
 
         <p style={styles.p}>{BUNDLE.note}</p>
 
-        {SIGNUP_REDIRECT_CONFIRMED ? (
-          <div style={styles.card}>
-            {signupLink(BUNDLE.signupButtonGated)}
-            <p style={{ ...styles.p, margin: "0.5rem 0 0" }}>{BUNDLE.gatedPromise}</p>
-          </div>
-        ) : (
-          <>
-            <Link to={withSlash(BUNDLE.thanksPath)} style={styles.button}>
-              {BUNDLE.downloadButton}
-            </Link>
-            <div style={styles.card}>
-              <p style={{ ...styles.p, margin: "0 0 0.75rem" }}>{BUNDLE.newsletterPitch}</p>
-              {signupLink(BUNDLE.signupButton)}
-            </div>
-          </>
-        )}
+        <div style={styles.card}>
+          <p style={{ ...styles.p, margin: "0 0 0.75rem" }}>{BUNDLE.newsletterPitch}</p>
+          {signupLink(BUNDLE.signupButton)}
+        </div>
       </main>
     </div>
   );

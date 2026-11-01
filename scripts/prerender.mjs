@@ -747,7 +747,7 @@ async function main() {
 
   // ── Free Hip-Hop Dig Bundle ──
   // Landing page: indexed. Crawler text mirrors what the page shows, which
-  // depends on SIGNUP_REDIRECT_CONFIRMED (see src/data/bundle.js).
+  // has no download link: the button is the newsletter signup.
   pages.push({
     path: BUNDLE.path,
     title: BUNDLE.seoTitle,
@@ -762,11 +762,8 @@ async function main() {
       BUNDLE.inside.map((i) => `<li><strong>${esc(i.name)}</strong>: ${esc(i.what)}</li>`).join('') +
       '</ul>' +
       p(BUNDLE.note) +
-      (SIGNUP_REDIRECT_CONFIRMED
-        ? `<p>${a(NEWSLETTER_BUNDLE_URL, BUNDLE.signupButtonGated)}</p>` + p(BUNDLE.gatedPromise)
-        : `<p>${a(BUNDLE.thanksPath, BUNDLE.downloadButton)}</p>` +
-          p(BUNDLE.newsletterPitch) +
-          `<p>${a(NEWSLETTER_BUNDLE_URL, BUNDLE.signupButton)}</p>`),
+      p(BUNDLE.newsletterPitch) +
+      `<p>${a(NEWSLETTER_BUNDLE_URL, BUNDLE.signupButton)}</p>`,
   });
   // Download page: kept out of Google and out of the sitemap.
   pages.push({
