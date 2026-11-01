@@ -14,8 +14,8 @@ import { ABOUT } from "../data/about";
 const NEWSLETTER_URL = newsletterUrl("about");
 
 // Buy Me a Coffee page. Same rule: empty means the support block
-// is hidden entirely.
-const SUPPORT_URL = "";
+// is hidden entirely. Same URL is in src/components/Layout.jsx (footer).
+const SUPPORT_URL = "https://buymeacoffee.com/digginginthesalescrates";
 
 // Page text (bio, the three family crates, section copy) lives in
 // src/data/about.js since 2026-10-04, so the static HTML crawlers read
@@ -232,7 +232,7 @@ export default function About() {
                 onClick={onSupport}
                 style={styles.buttonOutline}
               >
-                Buy me a coffee
+                Buy Me a Coffee
               </a>
             )}
           </div>

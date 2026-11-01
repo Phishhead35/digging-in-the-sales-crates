@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { withSlash } from '../utils/withSlash';
-import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3, Info, FileText, Store } from 'lucide-react';
+import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3, Info, FileText, Store, Coffee } from 'lucide-react';
 import FollowUs from './FollowUs';
 import { AffiliateDisclosure } from './AffiliateDisclosure';
-import { trackNavClick, trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
+import { track, trackNavClick, trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
 import { GUIDES } from '../data/guides';
+
+// Buy Me a Coffee page (2026-10-31). Optional support link in the footer.
+// Not an affiliate link, so it stays out of partners.js and gets no badge.
+// Same URL lives in src/pages/About.jsx; change both if it ever moves.
+const SUPPORT_URL = 'https://buymeacoffee.com/digginginthesalescrates';
 
 export default function Layout({ children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -310,6 +315,21 @@ export default function Layout({ children }) {
                 {g.title}
               </Link>
             ))}
+          </div>
+
+          {/* Optional support link. Fires support_click (the same event the
+              About page uses), not store_click, so it never shows up in the
+              marketplace or NO_LEAK reports. */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
+            <a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer"
+              onClick={() => track('support_click', { click_source: 'footer', destination: SUPPORT_URL })}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+                fontSize: 11, color: 'var(--text-primary)', textDecoration: 'none',
+              }}>
+              <Coffee size={12} aria-hidden="true" />
+              Buy Me a Coffee
+            </a>
           </div>
 
           <div style={{ marginBottom: 16 }}>
