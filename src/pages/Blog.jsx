@@ -130,7 +130,7 @@ export default function Blog() {
             letterSpacing: 1.5, marginBottom: 24, fontFamily: 'var(--font-mono)',
           }}>
             <BookOpen size={12} />
-            DITSC BLOG
+            BLOG
           </div>
 
           <h1 style={{

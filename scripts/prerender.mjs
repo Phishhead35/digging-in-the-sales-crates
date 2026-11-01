@@ -444,7 +444,7 @@ async function main() {
       // in the visible nav; the page itself still exists with noindex).
       ['/deals', 'Current vinyl deals'],
       ['/artists', 'Artist & genre pages'],
-      ['/watch-read', 'Watch & Read: DITSC videos and written stories'],
+      ['/watch-read', 'Watch & Read: our videos and written stories'],
       ['/blog', 'Blog: sample connections, reissue alerts, and artist spotlights'],
       ['/shops', 'Independent record shops we dig in New England'],
       ['/local-shops', 'Find record shops near you'],
@@ -697,15 +697,15 @@ async function main() {
       path: '/watch-read',
       title: `Watch & Read | ${SITE}`,
       description:
-        'Videos, stories, and recurring series from DITSC: the latest YouTube uploads, weekly playlist series, and written vinyl-collecting guides.',
+        'Videos, stories, and recurring series from us: the latest YouTube uploads, weekly playlist series, and written vinyl-collecting guides.',
       content:
         // Same three sections the page shows: latest uploads (as served
         // by /api/latest-videos at build time), the weekly series from
         // src/data/playlists.js, and the written stories.
         h1('Watch & Read') +
-        p('Videos, stories, and recurring series from DITSC.') +
+        p('Videos, stories, and recurring series from us.') +
         (latestVideos.length
-          ? '<h2>Latest from DITSC</h2><ul>' +
+          ? '<h2>Latest from Us</h2><ul>' +
             latestVideos.map((v) => `<li>${a(v.url, v.title)}</li>`).join('') +
             '</ul>'
           : '') +
@@ -720,7 +720,7 @@ async function main() {
           .map((post) => `<li>${a(`/blog/${post.slug}`, post.title)}</li>`)
           .join('') +
         '</ul>' +
-        `<p>${a('/blog', 'Read all stories')} · ${a('https://www.youtube.com/@digginginthesalescrates', 'Visit the DITSC YouTube channel')}</p>`,
+        `<p>${a('/blog', 'Read all stories')} · ${a('https://www.youtube.com/@digginginthesalescrates', 'Visit our YouTube channel')}</p>`,
     },
   ];
   pages.push(...STATIC_PAGES);
@@ -838,7 +838,7 @@ async function main() {
     image: DEFAULT_OG_IMAGE,
     imageAlt: 'Digging in the Sales Crates blog',
     content:
-      h1('The DITSC Blog') +
+      h1('From the Crates') +
       posts
         .map(
           (post) =>

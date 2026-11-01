@@ -209,7 +209,7 @@ function StoryCard({ post }) {
 export default function WatchAndRead() {
   useSEO({
     title: 'Watch & Read | Digging in the Sales Crates',
-    description: 'Videos, stories, and recurring series from DITSC: the latest YouTube uploads, weekly playlist series, and written vinyl-collecting guides.',
+    description: 'Videos, stories, and recurring series from us: the latest YouTube uploads, weekly playlist series, and written vinyl-collecting guides.',
   });
 
   const videos = useLatestVideos();
@@ -240,7 +240,7 @@ export default function WatchAndRead() {
             letterSpacing: 1.5, marginBottom: 24, fontFamily: 'var(--font-mono)',
           }}>
             <Youtube size={12} />
-            DITSC CONTENT HUB
+            CONTENT HUB
           </div>
 
           <h1 style={{
@@ -255,7 +255,7 @@ export default function WatchAndRead() {
             color: 'var(--text-secondary)', fontSize: 16,
             fontWeight: 300, maxWidth: 520, lineHeight: 1.7,
           }}>
-            Videos, stories, and recurring series from DITSC.
+            Videos, stories, and recurring series from us.
           </p>
           </div>
 
@@ -268,7 +268,7 @@ export default function WatchAndRead() {
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <SectionEyebrow>LATEST UPLOADS</SectionEyebrow>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 32, letterSpacing: 1, marginBottom: 24 }}>
-            Latest from DITSC
+            Latest from Us
           </h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20 }}>
             {videos.map((video, i) => {
@@ -344,7 +344,7 @@ export default function WatchAndRead() {
             onClick={() => trackBrowseAllClick('youtube_channel')}
             style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#e63946', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}
           >
-            <Youtube size={14} /> Visit the DITSC YouTube channel <ExternalLink size={12} />
+            <Youtube size={14} /> Visit our YouTube channel <ExternalLink size={12} />
           </a>
         </div>
       </section>
