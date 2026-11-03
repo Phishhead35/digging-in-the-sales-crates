@@ -5,6 +5,94 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'beastie-boys-looking-down-the-barrel-of-a-gun-sample': {
+    slug: 'beastie-boys-looking-down-the-barrel-of-a-gun-sample',
+    image: '/og/beastie-boys-looking-down-the-barrel-of-a-gun-sample.png',
+    title: `Two Records Built Beastie Boys' "Looking Down the Barrel of a Gun." Here Is How to Buy Both.`,
+    series: 'SAMPLE DNA',
+    date: '2026-11-03',
+    dateDisplay: 'November 3, 2026',
+    excerpt: `"Looking Down the Barrel of a Gun" on Paul's Boutique rests on the Incredible Bongo Band and Mountain. Where each record comes from, and what Bongo Rock, Climbing! and Paul's Boutique cost in our search on November 3.`,
+    body: [
+      `Paul's Boutique came out July 25, 1989 on Capitol, and the Dust Brothers built it almost entirely from other people's records. Wikipedia counts 105 songs sampled across the album. "Looking Down the Barrel of a Gun" is one of the sparse ones. The Vinyl Factory credits it with just two records: the Incredible Bongo Band's "Last Bongo in Belgium" and Mountain's "Mississippi Queen." Some fan guides list extra fragments, and the sources disagree on them, so we are sticking to the two everyone names. Our video on this track passed 150,000 views across platforms. This is the buying guide, and it pairs with our [Beastie Boys page](/artists/beastie-boys/).`,
+
+      { type: 'h2', text: `Record one: "Last Bongo in Belgium"` },
+      `It is track four on Bongo Rock (1973, Pride/MGM), a studio project Michael Viner started in 1972 while working at MGM Records. The track runs 6:55 and is credited to Perry Botkin Jr. and Viner. The same album holds the band's "Apache," one of the best-known breakbeats in hip-hop, which is why the whole LP gets mined. The fan site Paul's Boutique Info lists "Last Bongo in Belgium" as the main beat of the Beastie Boys track.`,
+
+      { type: 'h2', text: `Record two: "Mississippi Queen"` },
+      `Mountain's "Mississippi Queen" opens Climbing!, released March 7, 1970 on Windfall Records. Leslie West played guitar and sang, Felix Pappalardi produced and played bass, and Corky Laing was on drums. Discogs lists plenty of Climbing! pressings, including US Windfall copies, UK Bell copies, and reissues from Friday Music (2017) and Music On Vinyl (2023).`,
+
+      { type: 'h2', text: `What our search showed on November 3` },
+      `These are the lowest listings we saw for each record in our own search on November 3, 2026. Prices move daily, so treat them as a starting point.`,
+      {
+        type: 'table',
+        caption: `Starting prices in Digging in the Sales Crates search, November 3, 2026`,
+        columns: ['Record', 'Where', 'Starting price'],
+        rows: [
+          ['Bongo Rock, Deluxe 40th Anniversary Edition (new)', 'Turntable Lab', '$25.95'],
+          ['Bongo Rock (used)', 'CDandLP', '$31.01'],
+          ['Bongo Rock, 1973 original', 'eBay', '$95.00'],
+          ['Mountain, Climbing! (used)', 'eBay', '$6.99'],
+          ['Paul\'s Boutique LP (new)', 'Turntable Lab', '$29.95'],
+        ],
+      },
+      `Climbing! was the bargain. Most of the eBay listings we saw sat between about $10 and $27.`,
+      { type: 'cta', label: 'Search Bongo Rock copies', href: '/search/?q=incredible+bongo+band', note: 'eBay, Discogs, CDandLP and Turntable Lab in one search.' },
+
+      { type: 'h2', text: `Our call` },
+      `Buy Climbing! used. It is the cheapest half of this sample and the one with the most pressings to choose from, so match your label to a Discogs entry before you pay. For Bongo Rock, the new Deluxe 40th Anniversary edition at about $26 is the low-risk buy; the 1973 original costs collector money, and we would only pay it for a clean copy. If you want the album both records ended up on, [Paul's Boutique](/search/?q=beastie+boys+paul%27s+boutique) runs about $30 new. That is taste and price, not a pressing comparison; we have not A/B tested these copies. More Beastie Boys digging is on [our Isaac Hayes post](/blog/isaac-hayes-beastie-boys-ghostface-sample-dig/) and the [Beastie Boys page](/artists/beastie-boys/).`,
+
+      { type: 'h2', text: `FAQ` },
+      {
+        type: 'faq',
+        items: [
+          { q: `What does "Looking Down the Barrel of a Gun" sample?`, a: `According to The Vinyl Factory, the Incredible Bongo Band's "Last Bongo in Belgium" and Mountain's "Mississippi Queen." Some fan guides list additional fragments, and the sources disagree.` },
+          { q: `Which Beastie Boys album is it on?`, a: `Paul's Boutique, released July 25, 1989 on Capitol.` },
+          { q: `Which album has "Last Bongo in Belgium"?`, a: `Bongo Rock by the Incredible Bongo Band (Pride/MGM, 1973). It is track four.` },
+          { q: `Where can I compare copies?`, a: `Vinyl Search checks eBay, Discogs, CDandLP and Turntable Lab at once.` },
+        ],
+      },
+      { type: 'links', title: 'Keep digging', items: [
+        { text: 'Beastie Boys vinyl', href: '/artists/beastie-boys/' },
+        { text: 'The Beastie Boys and Ghostface Went Digging in the Same Catalog, Twelve Years Apart', href: '/blog/isaac-hayes-beastie-boys-ghostface-sample-dig/' },
+        { text: 'DJ Premier Built "Beyond Comprehension" on The Band\'s "Up on Cripple Creek"', href: '/blog/gang-starr-beyond-comprehension-the-band-cripple-creek/' },
+        { text: 'Discogs vs eBay for Records', href: '/discogs-vs-ebay-for-records/' },
+      ] },
+      `Vinyl Search checks eBay, Discogs, CDandLP and Turntable Lab at once. Discogs links are plain links; we earn nothing on them.`,
+    ],
+    shopArtists: [
+      {
+        name: 'Beastie Boys: Paul\'s Boutique',
+        pageSlug: 'beastie-boys',
+        searchTerms: {
+          discogs: 'Beastie Boys Paul\'s Boutique',
+          ebay: 'Beastie Boys Paul\'s Boutique vinyl',
+          cdandlp: 'Beastie Boys Paul\'s Boutique',
+        },
+      },
+      {
+        name: 'Incredible Bongo Band: Bongo Rock',
+        searchTerms: {
+          discogs: 'Incredible Bongo Band Bongo Rock',
+          ebay: 'Incredible Bongo Band Bongo Rock vinyl',
+          cdandlp: 'Incredible Bongo Band Bongo Rock',
+        },
+      },
+      {
+        name: 'Mountain: Climbing!',
+        searchTerms: {
+          discogs: 'Mountain Climbing',
+          ebay: 'Mountain Climbing LP Windfall',
+          cdandlp: 'Mountain Climbing',
+        },
+      },
+    ],
+    seo: {
+      title: `"Looking Down the Barrel of a Gun" Sample: Bongo Rock and Climbing! on Vinyl`,
+      description: `Beastie Boys built "Looking Down the Barrel of a Gun" from the Incredible Bongo Band and Mountain. Which albums to buy, what they cost, and where to search them.`,
+    },
+  },
+
   'fleetwood-mac-rumours-vinyl-which-copy-to-buy': {
     slug: 'fleetwood-mac-rumours-vinyl-which-copy-to-buy',
     image: '/og/fleetwood-mac-rumours-vinyl-which-copy-to-buy.png',

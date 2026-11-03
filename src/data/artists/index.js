@@ -1070,6 +1070,44 @@ export const ARTISTS = {
       description: 'Find The Band vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop The Band, Music from Big Pink and The Last Waltz, plus the Capitol album behind Gang Starr\'s "Beyond Comprehension."',
     },
   },
+
+  'beastie-boys': {
+    slug: 'beastie-boys',
+    name: 'Beastie Boys',
+    tagline: 'Three New Yorkers, two landmark records, and a sample trail that runs from Mountain and the Incredible Bongo Band to Isaac Hayes and The Band.',
+    genres: ['Hip-Hop', 'Golden Era', 'Alternative Hip-Hop'],
+    searchTerms: {
+      discogs: 'Beastie Boys Paul\'s Boutique',
+      ebay: 'Beastie Boys Paul\'s Boutique vinyl LP',
+      cdandlp: 'Beastie Boys',
+    },
+    // Turntable Lab carries Paul's Boutique new (LP and 180g 2LP, confirmed in a
+    // live search on November 3, 2026), so its button stays on. Amazon is left
+    // off until Joe confirms an Amazon listing; flip amazonEligible to true and
+    // add an amazonSearchTerm such as 'Beastie Boys Paul\'s Boutique vinyl' then.
+    turntablelabEligible: true,
+    amazonEligible: false,
+    bio: [
+      'The Beastie Boys came out of New York and made two records that collectors keep returning to. Licensed to Ill arrived on Def Jam and Columbia on November 15, 1986, produced by Rick Rubin. It leaned on rock records, among them the Led Zeppelin drums under "Rhymin & Stealin." Paul\'s Boutique followed on Capitol on July 25, 1989, produced by the Dust Brothers.',
+      'Paul\'s Boutique is the one that matters for crate diggers. It is built almost entirely from samples; Wikipedia counts 105 songs sampled across the album. It was a commercial disappointment on release, peaking at number 14 on the Billboard 200, and it was later certified double platinum. The trail leads to records you can actually buy: "[Looking Down the Barrel of a Gun](/blog/beastie-boys-looking-down-the-barrel-of-a-gun-sample/)" rests on the Incredible Bongo Band\'s "Last Bongo in Belgium" and Mountain\'s "Mississippi Queen," and our [Isaac Hayes post](/blog/isaac-hayes-beastie-boys-ghostface-sample-dig/) covers the Shaft cue behind "The Sounds of Science."',
+      'The group also worked a replayed piece of [The Band](/artists/the-band/)\'s "Up on Cripple Creek" into "High Plains Drifter." For collectors the practical news is that Paul\'s Boutique has been reissued repeatedly, with current LP and 180g 2LP editions in retail, so a first pressing is a choice and not a requirement. Check the Discogs entry against your label and runout before you pay original money.',
+    ],
+    essentialRecords: [
+      { title: 'Paul\'s Boutique', year: 1989, label: 'Capitol' },
+      { title: 'Licensed to Ill', year: 1986, label: 'Def Jam / Columbia' },
+    ],
+    producerCredits: [
+      '"Looking Down the Barrel of a Gun" (1989) built on the Incredible Bongo Band, "Last Bongo in Belgium" (1973), and Mountain, "Mississippi Queen" (1970)',
+      '"The Sounds of Science" (1989) built on an Isaac Hayes cue from Shaft (see our Isaac Hayes post)',
+      '"High Plains Drifter" (1989) replays vocals from The Band, "Up on Cripple Creek" (1969)',
+      'The Dust Brothers, producers of Paul\'s Boutique',
+    ],
+    seo: {
+      title: 'Beastie Boys Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Beastie Boys vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Paul\'s Boutique and Licensed to Ill, and follow the samples back to Mountain, the Incredible Bongo Band and Isaac Hayes.',
+    },
+  },
+
 };
 
 export const GENRES = {

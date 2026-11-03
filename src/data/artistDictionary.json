@@ -2378,6 +2378,22 @@
         "americana"
       ],
       "canonicalForm": "The Band"
+    },
+    {
+      "name": "Beastie Boys",
+      "aliases": [
+        "Beastie Boy",
+        "Beasty Boys",
+        "Paul's Boutique",
+        "Licensed to Ill",
+        "Mike D",
+        "Ad-Rock"
+      ],
+      "genres": [
+        "hip-hop",
+        "east-coast"
+      ],
+      "canonicalForm": "Beastie Boys"
     }
   ]
 }
