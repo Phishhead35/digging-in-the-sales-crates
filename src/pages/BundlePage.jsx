@@ -6,7 +6,7 @@ import { track, trackNewsletterClick, CLICK_SOURCES } from "../utils/analytics";
 import { newsletterUrl } from "../components/NewsletterCta";
 import { BUNDLE, SIGNUP_REDIRECT_CONFIRMED } from "../data/bundle";
 
-// ── Free Hip-Hop Dig Bundle pages (added 2026-10-05) ───────────
+// ── Free Breaks Bible Sampler pages (added 2026-10-05, sampler swap 2026-11-04) ──
 // One component, two modes:
 //   <BundlePage />                the landing page at /bundle
 //   <BundlePage mode="thanks" />  the download page at /bundle/thanks
@@ -117,7 +117,7 @@ export default function BundlePage({ mode = "landing" }) {
   // static HTML crawlers receive.
   useSEO({
     title: thanks ? BUNDLE.thanksSeoTitle : BUNDLE.seoTitle,
-    description: thanks ? "Download the free Hip-Hop Dig Bundle." : BUNDLE.description,
+    description: thanks ? BUNDLE.thanksDescription : BUNDLE.description,
   });
 
   const onSignup = () => trackNewsletterClick(CLICK_SOURCES.BUNDLE_PAGE);
