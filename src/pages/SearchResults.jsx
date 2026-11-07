@@ -152,7 +152,7 @@ function byPriceAsc(a, b) {
 // UNPRICED_CADENCE = 3 puts one unpriced card after every three priced ones,
 // so roughly a quarter of each screen is catalog matches. Raise it to show
 // fewer of them, lower it to show more. Do not set it below 1.
-const UNPRICED_CADENCE = 3;
+const UNPRICED_CADENCE = 5;
 
 /**
  * Rank the combined result set.
