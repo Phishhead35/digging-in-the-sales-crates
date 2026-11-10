@@ -245,7 +245,24 @@ const H2_STYLE = {
   lineHeight: 1.15, margin: '20px 0 0',
 };
 
-function Inline({ text }) {
+// Affiliate hosts get rel="sponsored nofollow" and, when the post slug is
+// known, a blog marketplace click event. Keep in step with prerender.mjs.
+const AFFILIATE_HOSTS = [
+  ['turntablelab.com', 'turntablelab'],
+  ['ebay.com', 'ebay'],
+  ['cdandlp.com', 'cdandlp'],
+];
+function affiliateMarketplace(href) {
+  try {
+    const host = new URL(href).hostname.replace(/^www\./, '');
+    const hit = AFFILIATE_HOSTS.find(([h]) => host === h || host.endsWith('.' + h));
+    return hit ? hit[1] : null;
+  } catch {
+    return null;
+  }
+}
+
+function Inline({ text, slug }) {
   const parts = String(text).split(/(\[[^\]]+\]\([^)]+\))/g);
   return parts.map((part, i) => {
     const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
@@ -254,7 +271,19 @@ function Inline({ text }) {
     const linkStyle = { color: 'var(--amber)' };
     return href.startsWith('/')
       ? <Link key={i} to={href} style={linkStyle}>{label}</Link>
-      : <a key={i} href={href} style={linkStyle} target="_blank" rel="noopener noreferrer">{label}</a>;
+      : (() => {
+          const mp = affiliateMarketplace(href);
+          return (
+            <a
+              key={i}
+              href={href}
+              style={linkStyle}
+              target="_blank"
+              rel={mp ? 'sponsored nofollow noopener noreferrer' : 'noopener noreferrer'}
+              onClick={mp && slug ? () => trackClick(slug, label, mp, href) : undefined}
+            >{label}</a>
+          );
+        })();
   });
 }
 
@@ -262,9 +291,9 @@ function facebookEmbedSrc(url) {
   return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=340`;
 }
 
-function PostBlock({ block }) {
+function PostBlock({ block, slug }) {
   if (typeof block === 'string') {
-    return <p style={BODY_TEXT}><Inline text={block} /></p>;
+    return <p style={BODY_TEXT}><Inline text={block} slug={slug} /></p>;
   }
   switch (block.type) {
     case 'h2':
@@ -285,7 +314,7 @@ function PostBlock({ block }) {
               {block.rows.map((row, r) => (
                 <tr key={r}>
                   {row.map((cell, c) => (
-                    <td key={c} style={{ padding: '10px 14px', verticalAlign: 'top', borderBottom: '1px solid var(--border)', fontWeight: c === 0 ? 700 : 400, whiteSpace: c === 4 ? 'nowrap' : 'normal' }}>{cell}</td>
+                    <td key={c} style={{ padding: '10px 14px', verticalAlign: 'top', borderBottom: '1px solid var(--border)', fontWeight: c === 0 ? 700 : 400, whiteSpace: c === 4 ? 'nowrap' : 'normal' }}><Inline text={cell} slug={slug} /></td>
                   ))}
                 </tr>
               ))}
@@ -353,8 +382,8 @@ function PostBlock({ block }) {
   }
 }
 
-function PostBody({ body }) {
-  return body.map((block, i) => <PostBlock key={i} block={block} />);
+function PostBody({ body, slug }) {
+  return body.map((block, i) => <PostBlock key={i} block={block} slug={slug} />);
 }
 
 // ── Main page ─────────────────────────────────────────────────
@@ -427,7 +456,7 @@ export default function BlogPost() {
       {/* ── BODY ─────────────────────────────────────────────── */}
       <section style={{ padding: '56px 24px', borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 760, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <PostBody body={post.body} />
+          <PostBody body={post.body} slug={post.slug} />
         </div>
       </section>
 

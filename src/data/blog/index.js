@@ -5,6 +5,111 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'czarface-vinyl-collecting-guide': {
+    slug: 'czarface-vinyl-collecting-guide',
+    image: '/og/czarface-vinyl-collecting-guide.png',
+    title: `Czarface on Vinyl: Where to Start, and What Each Record Costs Right Now`,
+    series: 'CRATE SPOTLIGHT',
+    date: '2026-11-09',
+    dateDisplay: 'November 9, 2026',
+    excerpt: `Czarface is Inspectah Deck, 7L and Esoteric. Where to start with the records, including the Knull & Void 12-inch from Venom: The Last Dance, and what our search showed on November 9.`,
+    body: [
+      `Czarface formed in 2013 when 7L and Esoteric teamed up with Wu-Tang Clan's Inspectah Deck, and the catalog has grown into a long run of albums since. If our Method Man clip sent you here, the record we played is "Knull & Void," the 12-inch from the Venom: The Last Dance soundtrack, with Method Man and Frankie Pulitzer. That clip pulled more than 90,000 views, so this is the buying guide. It pairs with our [Czarface page](/artists/czarface/).`,
+
+      { type: 'h2', text: `The single in our clip` },
+      `"Knull & Void" is a pink-vinyl 12-inch on Silver Age, listed on Discogs as a 33 RPM EP dated 2025. The catch is supply: a Getondown listing for a numbered pink, black and white splatter pressing, limited to 500 copies at $24.98, showed sold out, and so did Ear Candy at $26.34. The German shop decks.de listed it in stock at 22.14 euros. In our own search it returns two Discogs listings and nothing from the other marketplaces, so expect to buy it there.`,
+
+      { type: 'h2', text: `Where to start` },
+      `The debut, Czarface, came out February 19, 2013 on Brick Records, and it is the origin story. Discogs has several pressings, including limited and repress editions. After that, the guest-headliner records are the ones collectors chase: Czarface Meets Metal Face (2018, with MF DOOM) and Czarface Meets Ghostface (2019, with Ghostface Killah).`,
+
+      { type: 'h2', text: `The new album` },
+      `Czarface Meets Frankie Pulitzer is the 2026 album, dated August 28, with Busta Rhymes, Method Man (on "Mad Technology") and El-P among the guests. Music Direct lists the standard LP at $29.99, and Good Taste Records had a ruby red indie exclusive at $34 that showed as sold out when we checked. In our search, CDandLP listed it from $45.43, a big step above the retail price, so compare before you buy.`,
+
+      { type: 'h2', text: `What our search showed on November 9` },
+      `These are the lowest listings we saw in our own search on November 9, 2026. Prices move daily, so treat them as a starting point.`,
+      {
+        type: 'table',
+        caption: `Starting prices in Digging in the Sales Crates search, November 9, 2026`,
+        columns: ['Record', 'Where', 'Starting price'],
+        rows: [
+          ['[Czarface Meets Ghostface](https://www.turntablelab.com/products/czarface-czarface-meets-ghostface-vinyl-lp?aff=56122) (new)', 'Turntable Lab', '$22.95'],
+          ['[A Fistful of Peril](https://www.turntablelab.com/products/czarface-a-fistful-of-peril-vinyl-lp?aff=56122) (new)', 'Turntable Lab', '$23.95'],
+          ['[Czarface Meets Metal Face](https://www.turntablelab.com/products/czarface-mf-doom-czarface-meets-metal-face-vinyl-lp?aff=56122) (new)', 'Turntable Lab', '$26.95'],
+          ['[Super What?](https://www.turntablelab.com/products/czarface-mf-doom-super-what-vinyl-lp?aff=56122) (new)', 'Turntable Lab', '$27.95'],
+          ['[Czarmageddon!](https://www.turntablelab.com/products/czarface-czarmageddon-vinyl-lp?aff=56122) (new)', 'Turntable Lab', '$31.95'],
+          ['Czarface, 2013 debut', 'eBay', '$40.26'],
+          ['Czarface Meets Frankie Pulitzer', 'CDandLP', '$45.43'],
+        ],
+      },
+      `Nearly every older record is in the $23 to $32 range new, except the 2013 debut, which started at $40.26 on eBay.`,
+      { type: 'cta', label: 'Search Czarface copies', href: '/search/?q=czarface', note: 'eBay, Discogs, CDandLP and Turntable Lab in one search.' },
+
+      { type: 'h2', text: `Our call` },
+      `Start with Czarface Meets Ghostface or Metal Face new from Turntable Lab, both under about $27. They are the easiest buys and the best sense of what the group does. Add the debut if you want the origin, and for the new album, Music Direct lists it at $29.99 while CDandLP was $45.43 in our search. If you want the exact record from our clip, go to Discogs for "Knull & Void" and check each listing's condition and details. That is a price call, not a pressing comparison; we have not A/B tested these copies.`,
+
+      { type: 'h2', text: `Shop local` },
+      `DJ 7L's own record shop, Soundtracks in Beverly, MA, is one of our featured Stores We Dig, and it is pinned on our [Czarface page](/artists/czarface/). If you are on the North Shore, go dig there.`,
+
+      { type: 'h2', text: `FAQ` },
+      {
+        type: 'faq',
+        items: [
+          { q: `Who is in Czarface?`, a: `Inspectah Deck of Wu-Tang Clan, 7L and Esoteric. Wikipedia says the group formed in 2013.` },
+          { q: `Is Method Man on a Czarface record?`, a: `Yes. He is featured with Frankie Pulitzer on the "Knull & Void" 12-inch from Venom: The Last Dance, and a retailer tracklist credits him on "Mad Technology" on the 2026 album Czarface Meets Frankie Pulitzer.` },
+          { q: `Where can I buy "Knull & Void"?`, a: `In our November 9 search it came up only on Discogs. Two US retailers we checked showed it sold out.` },
+          { q: `Which Czarface album should I buy first?`, a: `Czarface Meets Ghostface (2019) or Czarface Meets Metal Face (2018). Both started at under $27 new in our November 9 search.` },
+          { q: `Where can I compare copies?`, a: `Vinyl Search checks eBay, Discogs, CDandLP and Turntable Lab at once.` },
+        ],
+      },
+      { type: 'links', title: 'Keep digging', items: [
+        { text: 'Czarface vinyl', href: '/artists/czarface/' },
+        { text: 'Starting a Wu-Tang Vinyl Collection: 36 Chambers, Reissues and Essential Solo Albums', href: '/blog/wu-tang-clan-vinyl-collecting-guide/' },
+        { text: 'Collecting MF DOOM on Vinyl: What\'s Worth Chasing and What to Verify First', href: '/blog/mf-doom-vinyl-collecting-guide/' },
+        { text: 'Discogs vs eBay for Records', href: '/discogs-vs-ebay-for-records/' },
+      ] },
+      `Vinyl Search checks eBay, Discogs, CDandLP and Turntable Lab at once. Discogs links are plain links; we earn nothing on them.`,
+    ],
+    shopArtists: [
+      {
+        name: 'Czarface: Knull & Void (12 inch)',
+        pageSlug: 'czarface',
+        searchTerms: {
+          discogs: 'Czarface Knull & Void',
+          ebay: 'Czarface Knull Void vinyl',
+          cdandlp: 'Czarface Knull Void',
+        },
+      },
+      {
+        name: 'Czarface: Czarface Meets Frankie Pulitzer',
+        searchTerms: {
+          discogs: 'Czarface Meets Frankie Pulitzer',
+          ebay: 'Czarface Meets Frankie Pulitzer vinyl',
+          cdandlp: 'Czarface Frankie Pulitzer',
+        },
+      },
+      {
+        name: 'Czarface: Czarface Meets Ghostface',
+        searchTerms: {
+          discogs: 'Czarface Meets Ghostface',
+          ebay: 'Czarface Meets Ghostface vinyl',
+          cdandlp: 'Czarface Ghostface',
+        },
+      },
+      {
+        name: 'Czarface: Czarface Meets Metal Face',
+        searchTerms: {
+          discogs: 'Czarface Meets Metal Face',
+          ebay: 'Czarface Meets Metal Face vinyl',
+          cdandlp: 'Czarface Metal Face',
+        },
+      },
+    ],
+    seo: {
+      title: `Czarface Vinyl: Where to Start and What It Costs`,
+      description: `Czarface on vinyl: where to start with Inspectah Deck, 7L and Esoteric, what Czarface Meets Frankie Pulitzer costs, and where to search the records.`,
+    },
+  },
+
   'beastie-boys-looking-down-the-barrel-of-a-gun-sample': {
     slug: 'beastie-boys-looking-down-the-barrel-of-a-gun-sample',
     image: '/og/beastie-boys-looking-down-the-barrel-of-a-gun-sample.png',

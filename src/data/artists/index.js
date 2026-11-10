@@ -1108,6 +1108,51 @@ export const ARTISTS = {
     },
   },
 
+  'czarface': {
+    slug: 'czarface',
+    name: 'Czarface',
+    tagline: 'Inspectah Deck of Wu-Tang Clan with 7L and Esoteric: a comic-book rap group with a long vinyl run, from the 2013 debut to MF DOOM, Ghostface and the new Frankie Pulitzer LP.',
+    genres: ['Hip-Hop', 'Underground Hip-Hop', 'Boom Bap'],
+    searchTerms: {
+      discogs: 'Czarface',
+      ebay: 'Czarface vinyl LP',
+      cdandlp: 'Czarface',
+    },
+    // Turntable Lab carries several Czarface LPs new (Meets Ghostface, Meets Metal Face,
+    // A Fistful of Peril, Super What?, Czarmageddon!, confirmed in a live search on
+    // November 9, 2026), so its button stays on. Amazon is left off until Joe confirms
+    // an Amazon listing; flip amazonEligible to true and add an amazonSearchTerm then.
+    turntablelabEligible: true,
+    amazonEligible: false,
+    // DJ 7L's shop, Soundtracks Beverly, is excluded from the general partner
+    // rotation (no direct-purchase link), so it is pinned here on purpose.
+    partnerOverride: ['Soundtracks Beverly'],
+    bio: [
+      'Czarface formed in 2013 when 7L and Esoteric teamed up with Wu-Tang Clan\'s Inspectah Deck. The debut, Czarface, came out February 19, 2013 on Brick Records, and the group has kept to a steady release schedule since, with albums that lean on a comic-book world and hard drums.',
+      'The records collectors chase are the collaborations. Czarface Meets Metal Face (2018) and Super What? (2021) were recorded with MF DOOM, and Czarface Meets Ghostface (2019) with Ghostface Killah. The newest is Czarface Meets Frankie Pulitzer, dated August 28, 2026 on Silver Age, with guests including Busta Rhymes, Method Man (on "Mad Technology," per the retailer tracklist) and El-P. Before it came "Knull & Void," a pink-vinyl 12-inch from the Venom: The Last Dance soundtrack with Method Man and Frankie Pulitzer, which sold out at the retailers we checked. Our [buying guide](/blog/czarface-vinyl-collecting-guide/) lists what each one cost in our search.',
+      'For collectors the practical news is that most of the catalog is easy to find new. Turntable Lab carried several of the albums in our November 9 search, so a copy is a price decision and not a hunt. Check any Discogs pressing against its label details before you pay for a limited or repress edition. DJ 7L\'s own record shop, Soundtracks in Beverly, MA, is one of our featured Stores We Dig and is pinned below. Inspectah Deck\'s other group is on our [Wu-Tang Clan page](/artists/wu-tang-clan/), and the DOOM records pair with our [MF DOOM page](/artists/mf-doom/).',
+    ],
+    essentialRecords: [
+      { title: 'Czarface', year: 2013, label: 'Brick Records' },
+      { title: 'A Fistful of Peril', year: 2016, label: 'Silver Age' },
+      { title: 'Czarface Meets Metal Face', year: 2018, label: 'Silver Age' },
+      { title: 'Czarface Meets Ghostface', year: 2019, label: 'Silver Age' },
+      { title: 'Knull & Void (feat. Method Man & Frankie Pulitzer)', year: 2025, label: 'Silver Age' },
+      { title: 'Czarface Meets Frankie Pulitzer', year: 2026, label: 'Silver Age' },
+    ],
+    producerCredits: [
+      'Inspectah Deck of Wu-Tang Clan, with 7L and Esoteric, the group formed in 2013',
+      'Czarface Meets Metal Face (2018) and Super What? (2021), recorded with MF DOOM',
+      'Czarface Meets Ghostface (2019), recorded with Ghostface Killah',
+      '"Knull & Void" (2025 12-inch, from Venom: The Last Dance), featuring Method Man and Frankie Pulitzer',
+      'Czarface Meets Frankie Pulitzer (2026), with guests Busta Rhymes, Method Man and El-P',
+    ],
+    seo: {
+      title: 'Czarface Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Czarface vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Czarface Meets Ghostface, Metal Face and Frankie Pulitzer, from Inspectah Deck, 7L and Esoteric.',
+    },
+  },
+
 };
 
 export const GENRES = {

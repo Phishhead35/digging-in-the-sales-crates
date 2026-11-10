@@ -2394,6 +2394,30 @@
         "east-coast"
       ],
       "canonicalForm": "Beastie Boys"
+    },
+    {
+      "name": "Czarface",
+      "aliases": [
+        "Czar Face",
+        "Czar",
+        "Zcar",
+        "Czarfce",
+        "7L & Esoteric",
+        "7L and Esoteric",
+        "Esoteric",
+        "Frankie Pulitzer",
+        "Czarface Meets Frankie Pulitzer",
+        "Czarface Meets Metal Face",
+        "Czarface Meets Ghostface",
+        "Knull & Void",
+        "Knull and Void",
+        "Czarface Knull & Void"
+      ],
+      "genres": [
+        "hip-hop",
+        "east-coast"
+      ],
+      "canonicalForm": "Czarface"
     }
   ]
 }

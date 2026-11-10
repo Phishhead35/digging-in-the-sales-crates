@@ -348,8 +348,14 @@ const guideBlocks = (blocks) =>
 // Strings are paragraphs and may hold inline [text](href) links. Objects are
 // blocks: h2, table, embed, cta, faq, links. Keep this list in step with
 // BlogPost.jsx, the same pairing as useSEO.js.
+const AFFILIATE_HREF = /^https?:\/\/([^/]+\.)?(turntablelab|ebay|cdandlp)\.com\//;
 const inlineHtml = (text = '') =>
-  esc(text).replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => a(href, label));
+  esc(text).replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
+    const link = a(href, label);
+    return AFFILIATE_HREF.test(href)
+      ? link.replace('<a ', '<a rel="sponsored nofollow noopener" ')
+      : link;
+  });
 
 function blockHtml(block) {
   if (typeof block === 'string') return `<p>${inlineHtml(block)}</p>`;
@@ -362,7 +368,7 @@ function blockHtml(block) {
         (block.caption ? `<caption>${esc(block.caption)}</caption>` : '') +
         `<thead><tr>${block.columns.map((c) => `<th scope="col">${esc(c)}</th>`).join('')}</tr></thead>` +
         `<tbody>${block.rows
-          .map((row) => `<tr>${row.map((cell) => `<td>${esc(cell)}</td>`).join('')}</tr>`)
+          .map((row) => `<tr>${row.map((cell) => `<td>${inlineHtml(cell)}</td>`).join('')}</tr>`)
           .join('')}</tbody></table>`
       );
     case 'embed':
