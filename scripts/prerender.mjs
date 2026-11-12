@@ -415,6 +415,7 @@ async function main() {
   const { ARTISTS, GENRES } = await loadDataModule('src/data/artists/index.js');
   const { GUIDES } = await loadDataModule('src/data/guides.js');
   const { BUNDLE, SIGNUP_REDIRECT_CONFIRMED } = await loadDataModule('src/data/bundle.js');
+  const { BB_DOWNLOAD } = await loadDataModule('src/data/breaksBibleDownload.js');
   const { FAQS } = await loadDataModule('src/data/faq.js');
   const { ABOUT } = await loadDataModule('src/data/about.js');
   const { MA_STORES, RINH_STORES, HOME_STRIP_STORES } = await loadDataModule('src/data/partnerStores.js');
@@ -778,6 +779,15 @@ async function main() {
     title: BUNDLE.thanksSeoTitle,
     description: 'Download the free Hip-Hop Dig Bundle.',
     content: h1(BUNDLE.thanksTitle) + p(BUNDLE.thanksLead) + p(BUNDLE.thanksNote) + p(BUNDLE.thanksFriday),
+  });
+  // Breaks Bible post-purchase download page: kept out of Google and out of the sitemap.
+  // The PDF is never in the HTML. The page checks the Stripe session in the browser.
+  pages.push({
+    path: BB_DOWNLOAD.path,
+    noindex: true, // kept out of sitemap.xml, see sitemap block
+    title: BB_DOWNLOAD.seoTitle,
+    description: BB_DOWNLOAD.description,
+    content: h1(BB_DOWNLOAD.title) + p(BB_DOWNLOAD.lead),
   });
 
   // ── Artists index ──

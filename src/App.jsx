@@ -40,6 +40,8 @@ const WatchAndRead = lazy(() => import('./pages/WatchAndRead'));
 const GuidePage = lazy(() => import('./pages/GuidePage'));
 // Free Hip-Hop Dig Bundle (2026-10-05): landing page and download page.
 const BundlePage = lazy(() => import('./pages/BundlePage'));
+// Breaks Bible post-purchase download page (2026-11-12). Stripe redirects buyers here.
+const BreaksBibleDownload = lazy(() => import('./pages/BreaksBibleDownload'));
 
 // box-sizing is set in index.css; overflow-x and img/video/iframe rules are kept here
 // because they use !important to override any inline styles set by third-party scripts.
@@ -144,6 +146,7 @@ export default function App() {
             <Route path="/watch-read" element={<WatchAndRead />} />
             <Route path="/bundle" element={<BundlePage />} />
             <Route path="/bundle/thanks" element={<BundlePage mode="thanks" />} />
+            <Route path="/breaks-bible/download" element={<BreaksBibleDownload />} />
             {GUIDES.map((g) => (
               <Route key={g.slug} path={g.path} element={<GuidePage slug={g.slug} />} />
             ))}
