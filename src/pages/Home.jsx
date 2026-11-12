@@ -69,7 +69,7 @@ const ONLINE_FRIENDS = [
     desc: 'Pick the right setup before you buy.',
     extra: 'Whether you’re upgrading a setup you already have or buying your very first record player, we’ve got your back. If you want to nerd out on the details, cool. If you just want a simple way to make an easy decision, also cool. Our stuff is built for both.',
     featured: true,
-    url: 'https://builder.recordbuilds.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=recordbuilds',
+    url: 'https://builder.recordbuilds.com/?utm_source=digginginthesalescrates&utm_medium=referral',
   },
 ];
 
