@@ -753,8 +753,9 @@ async function main() {
   }
 
   // ── Free Hip-Hop Dig Bundle ──
-  // Landing page: indexed. Crawler text mirrors what the page shows, which
-  // has no download link: the button is the newsletter signup.
+  // Landing page: indexed. Crawler text mirrors what the page shows: the buy
+  // block, then the sampler pitch. The sampler has no direct link here; its
+  // button is the newsletter signup.
   pages.push({
     path: BUNDLE.path,
     title: BUNDLE.seoTitle,
@@ -762,13 +763,16 @@ async function main() {
     content:
       h1(BUNDLE.title) +
       BUNDLE.intro.map(p).join('') +
+      `<h2>${esc(BUNDLE.buyHeading)}</h2>` +
+      p(BUNDLE.buyLead) +
+      p(BUNDLE.buyEarlyBird) +
+      `<p>${a(BUNDLE.buyUrl, BUNDLE.buyButton)}</p>` +
       `<h2>${esc(BUNDLE.forYouHeading)}</h2><ul>` +
       BUNDLE.forYouIf.map((t) => `<li>${esc(t)}</li>`).join('') +
       '</ul>' +
       `<h2>${esc(BUNDLE.insideHeading)}</h2><ul>` +
       BUNDLE.inside.map((i) => `<li><strong>${esc(i.name)}</strong>: ${esc(i.what)}</li>`).join('') +
       '</ul>' +
-      p(BUNDLE.note) +
       p(BUNDLE.newsletterPitch) +
       `<p>${a(NEWSLETTER_BUNDLE_URL, BUNDLE.signupButton)}</p>`,
   });

@@ -121,6 +121,7 @@ export default function BundlePage({ mode = "landing" }) {
   });
 
   const onSignup = () => trackNewsletterClick(CLICK_SOURCES.BUNDLE_PAGE);
+  const onBuy = () => track("bundle_buy_click", { click_source: "bundle_page" });
   const onDownload = () =>
     track("bundle_download", { click_source: thanks ? "bundle_thanks" : "bundle_page" });
 
@@ -185,6 +186,15 @@ export default function BundlePage({ mode = "landing" }) {
           <p key={i} style={styles.lead}>{text}</p>
         ))}
 
+        <div style={styles.card}>
+          <h2 style={{ ...styles.h2, margin: "0 0 0.75rem" }}>{BUNDLE.buyHeading}</h2>
+          <p style={{ ...styles.p, margin: "0 0 0.5rem" }}>{BUNDLE.buyLead}</p>
+          <p style={{ ...styles.p, margin: "0 0 1rem", fontWeight: 600 }}>{BUNDLE.buyEarlyBird}</p>
+          <a href={BUNDLE.buyUrl} onClick={onBuy} style={styles.button}>
+            {BUNDLE.buyButton}
+          </a>
+        </div>
+
         <h2 style={styles.h2}>{BUNDLE.forYouHeading}</h2>
         <ul style={styles.ul}>
           {BUNDLE.forYouIf.map((text) => (
@@ -200,8 +210,6 @@ export default function BundlePage({ mode = "landing" }) {
             </li>
           ))}
         </ul>
-
-        <p style={styles.p}>{BUNDLE.note}</p>
 
         <div style={styles.card}>
           <p style={{ ...styles.p, margin: "0 0 0.75rem" }}>{BUNDLE.newsletterPitch}</p>

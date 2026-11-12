@@ -65,7 +65,14 @@ export const BUNDLE = {
     { name: 'What to pay', what: 'A fair price for each, so you know a deal when you see one.' },
   ],
 
-  note: 'This is the free sample of the Breaks Bible. The full book is on the way. Join the newsletter and you will hear first when the early-bird link goes live.',
+  // Buy block, shown near the top of the landing page. buyUrl is the Stripe
+  // payment link for the full book. To pre-fill the early-bird code, add
+  // ?prefilled_promo_code=EARLYBIRD to it (test that first).
+  buyHeading: 'Get the full Breaks Bible',
+  buyLead: 'The full Breaks Bible is out now: 100 breaks, $19.',
+  buyEarlyBird: 'First 100 buyers, while they last: use code EARLYBIRD for $5 off.',
+  buyButton: 'Buy the Breaks Bible: $19',
+  buyUrl: 'https://buy.stripe.com/28EdR91kX3QpgZwffB0VO02',
 
   // Landing page buttons and copy
   downloadButton: 'Download the free sampler',
