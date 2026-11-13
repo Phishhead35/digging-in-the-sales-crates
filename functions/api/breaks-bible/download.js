@@ -11,7 +11,7 @@
 
 const PDF_KEY = 'breaks-bible.pdf';
 const FILE_NAME = 'The-Breaks-Bible.pdf';
-const MAX_DOWNLOADS_PER_PURCHASE = 10;
+const MAX_DOWNLOADS_PER_PURCHASE = 5;
 const SESSION_ID_RE = /^cs_(live|test)_[A-Za-z0-9]{10,200}$/;
 
 const baseHeaders = {
