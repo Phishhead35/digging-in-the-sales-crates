@@ -5,6 +5,90 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'michael-jackson-thriller-or-bad-which-to-buy': {
+    slug: 'michael-jackson-thriller-or-bad-which-to-buy',
+    image: '/og/michael-jackson-thriller-or-bad-which-to-buy.png',
+    title: `Thriller or Bad: Which Michael Jackson Record Should You Actually Buy?`,
+    series: 'MARKET WATCH',
+    date: '2026-11-16',
+    dateDisplay: 'November 16, 2026',
+    excerpt: `Thriller had seven top 10 singles. Bad had five number ones. Neither is scarce, so the buying question is condition and edition: the 2026 Thriller reissue, the MoFi One-Step sets, and what our search showed on November 16.`,
+    body: [
+      `Thriller or Bad. You only get one. We asked that on our channel this month and the comments split hard. Which album is better is your call. Which copy to buy is ours, and that answer is easier.`,
+
+      { type: 'h2', text: `The case on paper` },
+      `Thriller came out November 29, 1982 on Epic. Seven singles came off it, and all seven reached the Billboard Hot 100 top 10, with "Billie Jean" and "Beat It" going to number one. The RIAA has it at 34 times platinum in the US.`,
+      `Bad followed on August 31, 1987, Jackson's last album with Quincy Jones. It did something Thriller did not: five Hot 100 number ones from one record ("I Just Can't Stop Loving You," "Bad," "The Way You Make Me Feel," "Man in the Mirror" and "Dirty Diana"), plus "Smooth Criminal" in the top 10. It is 11 times platinum in the US.`,
+
+      { type: 'h2', text: `What that means in the bins` },
+      `Those numbers are the whole market story. Neither record is rare, and you should not pay a rarity price for a common pressing. When we searched on November 16, 2026, Thriller came back with listings from all four marketplaces we check. Bad came back mostly from Discogs sellers, so read the condition grades on those listings before you look at the price.`,
+      { type: 'cta', label: 'Compare every Thriller copy', href: '/search/?q=thriller', note: 'eBay, Discogs, CDandLP and Turntable Lab in one search.' },
+      { type: 'cta', label: 'Compare every Bad copy', href: '/search/?q=michael+jackson+bad', note: 'Most listings were on Discogs when we checked.' },
+
+      { type: 'h2', text: `The new editions` },
+      {
+        type: 'table',
+        caption: `New editions, as listed by the label or retailer, checked November 16, 2026`,
+        columns: ['Edition', 'What it is', 'Listed price'],
+        rows: [
+          ['Thriller, 2026 reissue (Sony)', 'Red and black marble LP, dated October 30, 2026', '£29.99 at Piccadilly Records (UK)'],
+          ['Thriller, MoFi UltraDisc One-Step', '180g 33 RPM, from the original analog master tapes, 40,000 numbered', '$100 on MoFi\'s page'],
+          ['Bad, MoFi UltraDisc One-Step', '180g 45 RPM 2LP box, 6,000 numbered, adds "Leave Me Alone"', '$125 at MoFi'],
+        ],
+      },
+      `Read the MoFi spec sheets side by side. MoFi says its Thriller set was mastered from the original analog tapes. For Bad, it lists a Mitsubishi X-80 16-bit/48kHz digital master as the source. That is not a knock on the record. It does mean the $125 Bad box is a premium cut of a digital source, not an analog upgrade, and you should buy it for the 45 RPM format and the bonus track, not for a new source tape.`,
+
+      { type: 'h2', text: `Our call` },
+      `If you want a player, buy a clean used copy of whichever album you play more. Both were pressed in huge numbers, so pay for condition, not age, and skip any seller who prices a common copy like a grail. If you want one premium copy, Thriller's One-Step is the better-documented buy because of its analog source. Buy the Bad box if the 45 RPM cut and "Leave Me Alone" matter to you. We have not A/B tested these pressings, so this is a call on specs and supply, not sound.`,
+
+      { type: 'h2', text: `FAQ` },
+      {
+        type: 'faq',
+        items: [
+          { q: `Which album had more number one singles, Thriller or Bad?`, a: `Bad, with five Billboard Hot 100 number ones. Thriller had two, "Billie Jean" and "Beat It," but all seven of its singles reached the top 10.` },
+          { q: `Is an original Thriller LP rare?`, a: `No. Thriller is certified 34 times platinum in the US, so original-era copies are common. Pay for condition, not age.` },
+          { q: `Is the MoFi Bad One-Step from analog tapes?`, a: `No. MoFi lists a Mitsubishi X-80 16-bit/48kHz digital master as the source. MoFi's Thriller One-Step is listed as mastered from the original analog master tapes.` },
+          { q: `Where can I compare Thriller and Bad copies?`, a: `Vinyl Search checks eBay, Discogs, CDandLP and Turntable Lab at once.` },
+        ],
+      },
+      { type: 'links', title: 'Keep digging', items: [
+        { text: 'Michael Jackson vinyl', href: '/artists/michael-jackson/' },
+        { text: 'Which Copy of Fleetwood Mac\'s Rumours Should You Actually Buy?', href: '/blog/fleetwood-mac-rumours-vinyl-which-copy-to-buy/' },
+        { text: 'The Money Is Moving to Originals, and the Data Proves It', href: '/blog/original-pressings-market-premium-2026/' },
+        { text: 'Discogs vs eBay for Records', href: '/discogs-vs-ebay-for-records/' },
+      ] },
+      `Vinyl Search checks eBay, Discogs, CDandLP and Turntable Lab at once. Discogs links are plain links; we earn nothing on them.`,
+    ],
+    shopArtists: [
+      {
+        name: 'Michael Jackson: Thriller',
+        pageSlug: 'michael-jackson',
+        amazonEligible: true,
+        amazonSearchTerm: 'michael jackson thriller vinyl',
+        searchTerms: {
+          discogs: 'Michael Jackson Thriller',
+          ebay: 'Michael Jackson Thriller vinyl LP',
+          cdandlp: 'Michael Jackson Thriller',
+        },
+      },
+      {
+        name: 'Michael Jackson: Bad',
+        pageSlug: 'michael-jackson',
+        amazonEligible: true,
+        amazonSearchTerm: 'michael jackson bad vinyl',
+        searchTerms: {
+          discogs: 'Michael Jackson Bad',
+          ebay: 'Michael Jackson Bad vinyl LP 1987',
+          cdandlp: 'Michael Jackson Bad',
+        },
+      },
+    ],
+    seo: {
+      title: `Thriller or Bad on Vinyl: Which Michael Jackson LP to Buy`,
+      description: `Thriller had seven top 10 singles; Bad had five number ones. Neither is rare. Which copy to buy, plus the 2026 Thriller reissue and the MoFi One-Step sets.`,
+    },
+  },
+
   'czarface-vinyl-collecting-guide': {
     slug: 'czarface-vinyl-collecting-guide',
     image: '/og/czarface-vinyl-collecting-guide.png',
