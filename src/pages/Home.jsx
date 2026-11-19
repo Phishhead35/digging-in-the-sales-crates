@@ -49,6 +49,16 @@ const BREAKS_BIBLE_HOME = {
 };
 const BREAKS_BIBLE_SOURCE = 'homepage_breaks_bible';
 
+// ── Holiday gift guide link (2026-11-19, seasonal) ──────────────
+// One line under the Breaks Bible card. Same words are in prerender.mjs
+// (GIFT_GUIDE_HOME) so crawlers see it too; edit both together. After the
+// holidays, set GIFT_GUIDE_HOME to null here and there to hide it.
+const GIFT_GUIDE_HOME = {
+  label: 'Shopping for a record collector? Read our 2026 holiday gift guide',
+  path: '/blog/holiday-gift-guide-for-record-collectors-2026',
+};
+const GIFT_GUIDE_SOURCE = 'homepage_gift_guide';
+
 // "Fresh in the Crates" used to render a hardcoded DEALS_PREVIEW array of
 // four made-up deals (invented prices like "$12.99, was $24.99") presented
 // as real. Removed 2026-10-04. The section now points to the Deals page and
@@ -550,6 +560,18 @@ export default function Home() {
               {BREAKS_BIBLE_HOME.button} <ArrowRight size={14} />
             </Link>
           </div>
+          {GIFT_GUIDE_HOME && (
+            <Link
+              to={withSlash(GIFT_GUIDE_HOME.path)}
+              onClick={() => trackNavClick(GIFT_GUIDE_HOME.label, GIFT_GUIDE_HOME.path, GIFT_GUIDE_SOURCE)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 14,
+                color: 'var(--amber)', fontSize: 14, fontWeight: 600, textDecoration: 'none',
+              }}
+            >
+              {GIFT_GUIDE_HOME.label} <ArrowRight size={14} />
+            </Link>
+          )}
         </div>
       </section>
 
@@ -656,7 +678,7 @@ export default function Home() {
           }}>
             <p style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1.6, margin: 0, maxWidth: 640, flex: '1 1 320px' }}>
               Real sales, checked by hand. The Deals page has the stores and sales we trust
-              right now, and every Friday the free newsletter rounds up the best record sales
+              right now, and every Saturday the free newsletter rounds up the best record sales
               we found that week.
             </p>
             <Link to={withSlash("/deals")} style={{

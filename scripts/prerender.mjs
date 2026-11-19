@@ -158,6 +158,12 @@ const NEWSLETTER_HOME_HERO_URL =
   '?utm_source=website&utm_medium=homepage_hero&utm_campaign=newsletter_signup';
 // Homepage Breaks Bible block. Same words as BREAKS_BIBLE_HOME in Home.jsx;
 // edit both together. When the EARLYBIRD offer ends, delete `offer` in both.
+// Homepage holiday gift guide link, same words as GIFT_GUIDE_HOME in
+// Home.jsx (2026-11-19, seasonal). Set to null in both after the holidays.
+const GIFT_GUIDE_HOME = {
+  label: 'Shopping for a record collector? Read our 2026 holiday gift guide',
+  path: '/blog/holiday-gift-guide-for-record-collectors-2026',
+};
 const BREAKS_BIBLE_HOME = {
   eyebrow: 'THE BREAKS BIBLE',
   heading: 'KNOW THE BREAK, FIND THE RECORD',
@@ -575,6 +581,7 @@ async function main() {
         p(BREAKS_BIBLE_HOME.body) +
         (BREAKS_BIBLE_HOME.offer ? p(BREAKS_BIBLE_HOME.offer) : '') +
         `<p>${a(BUNDLE.path, BREAKS_BIBLE_HOME.button)}</p>` +
+        (GIFT_GUIDE_HOME ? `<p>${a(GIFT_GUIDE_HOME.path, GIFT_GUIDE_HOME.label)}</p>` : '') +
         '<h2>Stop Overpaying for Records</h2>' +
         // "Condition graded. Lowest price first. Every time." removed
         // 2026-11-20 (not true for Discogs results). Matches Home.jsx.
