@@ -33,6 +33,22 @@ const TRENDING_SEARCHES = [
 // HOMEPAGE_HERO_NEWSLETTER: 'homepage_hero_newsletter' and swap the constant.
 const HERO_NEWSLETTER_SOURCE = 'homepage_hero_newsletter';
 
+// ── Breaks Bible block (2026-11-20) ─────────────────────────────
+// Position 3, right after Shops We Dig (which stays position 2 per the
+// Phase 2 ground rule). Links to /bundle, where the free sampler and the
+// $19 book live. These strings are duplicated in prerender.mjs
+// (BREAKS_BIBLE_HOME) so crawlers see the same words: edit both together,
+// same pairing rule as useSEO.js. When the EARLYBIRD offer ends, delete
+// `offer` here and there.
+const BREAKS_BIBLE_HOME = {
+  eyebrow: 'THE BREAKS BIBLE',
+  heading: 'KNOW THE BREAK, FIND THE RECORD',
+  body: 'The records behind the most-sampled breaks, where to find them, and what to pay. Start with the free 10-break sampler, or get the full book for $19.',
+  offer: 'First 100 copies: use code EARLYBIRD for $5 off.',
+  button: 'Get the free sampler',
+};
+const BREAKS_BIBLE_SOURCE = 'homepage_breaks_bible';
+
 // "Fresh in the Crates" used to render a hardcoded DEALS_PREVIEW array of
 // four made-up deals (invented prices like "$12.99, was $24.99") presented
 // as real. Removed 2026-10-04. The section now points to the Deals page and
@@ -218,7 +234,7 @@ export default function Home() {
 
   useSEO({
     title: 'Digging in the Sales Crates | Vinyl Record Price Comparison',
-    description: 'Find the lowest prices on vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Taking the Dig Out of Digging™. Search rare hip-hop, jazz, and soul LPs in seconds.',
+    description: 'Compare vinyl prices across Discogs, eBay, CDandLP, and Turntable Lab, plus record-buying guides, the Breaks Bible, and a free weekly newsletter.',
   });
 
   // search_origin fires on the homepage where the origin is known.
@@ -346,7 +362,7 @@ export default function Home() {
             color: 'var(--text-secondary)', fontSize: 17, fontWeight: 300,
             maxWidth: 480, margin: '0 auto 40px', lineHeight: 1.7,
           }}>
-            Search Discogs, eBay, CDandLP, and Turntable Lab at once. Find the lowest price on any vinyl in seconds.
+            Search Discogs, eBay, CDandLP, and Turntable Lab at once. Compare prices on any record in seconds.
           </p>
 
           {/* Search bar */}
@@ -494,8 +510,51 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── BREAKS BIBLE (2026-11-20) ──────────────────────────────
+          Position 3. The one product the site sells. Text block and a
+          link, no image, so nothing here can shift layout. */}
+      <section style={{ padding: SECTION_MINOR, borderTop: '1px solid var(--border)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+          <div style={{
+            background: 'var(--bg-card)', border: '2px solid var(--amber)',
+            borderRadius: 14, padding: '24px 26px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            gap: 20, flexWrap: 'wrap',
+          }}>
+            <div style={{ flex: '1 1 380px', maxWidth: 720 }}>
+              <p style={{ color: 'var(--amber)', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: 2, marginBottom: 8 }}>
+                {BREAKS_BIBLE_HOME.eyebrow}
+              </p>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 30, letterSpacing: 1, color: 'var(--text-primary)', marginBottom: 10 }}>
+                {BREAKS_BIBLE_HOME.heading}
+              </h2>
+              <p style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>
+                {BREAKS_BIBLE_HOME.body}
+              </p>
+              {BREAKS_BIBLE_HOME.offer && (
+                <p style={{ fontSize: 14, color: 'var(--amber)', fontWeight: 600, lineHeight: 1.6, margin: '8px 0 0' }}>
+                  {BREAKS_BIBLE_HOME.offer}
+                </p>
+              )}
+            </div>
+            <Link
+              to={withSlash('/bundle')}
+              onClick={() => trackNavClick(BREAKS_BIBLE_HOME.button, '/bundle', BREAKS_BIBLE_SOURCE)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                padding: '12px 22px', borderRadius: 10, fontSize: 14,
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                color: '#000', fontWeight: 700, textDecoration: 'none', flexShrink: 0,
+              }}
+            >
+              {BREAKS_BIBLE_HOME.button} <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── ONLINE FRIENDS ─────────────────────────────────────────
-          Position 3 (after Shops We Dig, before Latest From DITSC).
+          Position 4 since 2026-11-20 (after the Breaks Bible block, before Latest Videos).
           Online-only resources, not physical stores. Grid capped at
           minmax(280px, 420px) instead of the store grid's minmax(260px, 1fr)
           so a lone card stays a normal card width instead of stretching
@@ -533,7 +592,9 @@ export default function Home() {
                 FROM THE CHANNEL
               </p>
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, letterSpacing: 1 }}>
-                LATEST FROM DITSC
+                {/* Was "LATEST FROM DITSC" until 2026-11-20. The DITSC name
+                    belongs to another company; never show it publicly. */}
+                LATEST VIDEOS
               </h2>
             </div>
             <Link
@@ -633,7 +694,11 @@ export default function Home() {
             STOP OVERPAYING FOR RECORDS
           </h2>
           <p style={{ color: 'var(--text-primary)', fontSize: 15, maxWidth: 480, margin: '0 auto 28px', lineHeight: 1.7 }}>
-            Search Discogs, eBay, CDandLP, and Turntable Lab at the same time. Condition graded. Lowest price first. Every time.
+            {/* "Condition graded. Lowest price first. Every time." removed
+                2026-11-20: Discogs results carry no price or condition, so
+                the promise was not true. Keep the twin line in
+                prerender.mjs in step. */}
+            Search Discogs, eBay, CDandLP, and Turntable Lab at the same time and compare listings side by side before you buy.
           </p>
           <Link to={withSlash("/search")} className="view-deals-btn" style={{ display: 'inline-flex', fontSize: 15, padding: '14px 32px', borderRadius: 12 }}>
             Start Digging <ArrowRight size={16} />

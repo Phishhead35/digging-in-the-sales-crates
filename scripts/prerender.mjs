@@ -92,6 +92,13 @@
 //  description must match the useSEO call in that page. The crawler copy
 //  leaves out the eBay store link on purpose: it is an affiliate link, and
 //  the crawler HTML carries no sponsored/nofollow markup.
+//
+//  HOMEPAGE FIXES (2026-11-20): removed "Condition graded. Lowest price
+//  first. Every time." (not true for Discogs results); added the hero
+//  newsletter pill and the Breaks Bible block to the crawler copy, so
+//  Google and AI tools see the newsletter and the /bundle link; gave the
+//  "Own a record store?" line its Learn more link. Description updated to
+//  match useSEO in Home.jsx.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -125,6 +132,22 @@ const NEWSLETTER_BUNDLE_URL =
 const NEWSLETTER_GUIDE_URL =
   'https://fromthesalescrates.beehiiv.com/subscribe' +
   '?utm_source=website&utm_medium=guide&utm_campaign=newsletter_signup';
+// Homepage hero pill uses utm_medium=homepage_hero, matching
+// newsletterUrl('homepage_hero') in Home.jsx (2026-11-20). Before this, the
+// pill only existed after JavaScript ran, so crawlers never saw a newsletter
+// link on the homepage.
+const NEWSLETTER_HOME_HERO_URL =
+  'https://fromthesalescrates.beehiiv.com/subscribe' +
+  '?utm_source=website&utm_medium=homepage_hero&utm_campaign=newsletter_signup';
+// Homepage Breaks Bible block. Same words as BREAKS_BIBLE_HOME in Home.jsx;
+// edit both together. When the EARLYBIRD offer ends, delete `offer` in both.
+const BREAKS_BIBLE_HOME = {
+  eyebrow: 'THE BREAKS BIBLE',
+  heading: 'KNOW THE BREAK, FIND THE RECORD',
+  body: 'The records behind the most-sampled breaks, where to find them, and what to pay. Start with the free 10-break sampler, or get the full book for $19.',
+  offer: 'First 100 copies: use code EARLYBIRD for $5 off.',
+  button: 'Get the free sampler',
+};
 
 // The one place that decides the public URL shape for a route path.
 // Matches the directory+index.html structure written below (outDir),
@@ -468,11 +491,16 @@ async function main() {
     {
       path: '/',
       title: `${SITE} | Vinyl Record Price Comparison`,
+      // Description matches useSEO in Home.jsx; edit both together.
+      // 2026-11-20: dropped "Find the lowest prices" (Discogs results show no
+      // price) and added the guides, Breaks Bible, and newsletter.
       description:
-        'Find the lowest prices on vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Taking the Dig Out of Digging™. Search rare hip-hop, jazz, and soul LPs in seconds.',
+        'Compare vinyl prices across Discogs, eBay, CDandLP, and Turntable Lab, plus record-buying guides, the Breaks Bible, and a free weekly newsletter.',
       content:
         h1(SITE) +
-        p('Taking the Dig Out of Digging. Free vinyl record price comparison: search Discogs, eBay, CDandLP, and Turntable Lab simultaneously and find the lowest price on any record in seconds. No sign-up required.') +
+        p('Taking the Dig Out of Digging. Free vinyl record price comparison: search Discogs, eBay, CDandLP, and Turntable Lab at once and compare prices on any record in seconds. No sign-up required.') +
+        // Hero newsletter pill, same text as the live button (2026-11-20).
+        `<p>${a(NEWSLETTER_HOME_HERO_URL, 'Free weekly newsletter: sample connections and record sales. Join')}</p>` +
         // Shops We Dig: the short strip the homepage shows (stores flagged
         // homepageStrip in partnerStores.js), then a link to the full list.
         // No affiliate notice: the strip carries no affiliate links.
@@ -484,9 +512,18 @@ async function main() {
           .join('') +
         '</ul>' +
         `<p>${a('/shops', `See all ${MA_STORES.length + RINH_STORES.length} shops`)}</p>` +
-        p('Own a record store? Get your shop in front of serious collectors.') +
+        // The live card has a "Learn more" button to the partner page; the
+        // crawler copy had no link here until 2026-11-20.
+        `<p>Own a record store? Get your shop in front of serious collectors. ${a(PARTNER_PAGE.path, 'Learn more')}</p>` +
+        // Breaks Bible block, position 3 on the live page (2026-11-20).
+        `<h2>${esc(BREAKS_BIBLE_HOME.heading)}</h2>` +
+        p(BREAKS_BIBLE_HOME.body) +
+        (BREAKS_BIBLE_HOME.offer ? p(BREAKS_BIBLE_HOME.offer) : '') +
+        `<p>${a(BUNDLE.path, BREAKS_BIBLE_HOME.button)}</p>` +
         '<h2>Stop Overpaying for Records</h2>' +
-        p('Search Discogs, eBay, CDandLP, and Turntable Lab at the same time. Condition graded. Lowest price first. Every time.') +
+        // "Condition graded. Lowest price first. Every time." removed
+        // 2026-11-20 (not true for Discogs results). Matches Home.jsx.
+        p('Search Discogs, eBay, CDandLP, and Turntable Lab at the same time and compare listings side by side before you buy.') +
         navLinks,
     },
     {
