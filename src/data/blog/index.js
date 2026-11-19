@@ -5,6 +5,107 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  // Holiday gift guide (2026-11-19). Uses three fields no earlier post uses:
+  //   heroImage  shown under the title (BlogPost.jsx) and in the crawler copy
+  //   itemList   becomes ItemList JSON-LD in scripts/prerender.mjs
+  //   **bold** and *italic* inside paragraphs (BlogPost.jsx Inline and
+  //              prerender.mjs inlineHtml both understand them)
+  // Amazon and Awin (tidd.ly) links get rel="sponsored" automatically. The
+  // Recordbuilds link is a plain link: no tracked link exists yet. If Joe gets
+  // one, swap it in and add Recordbuilds to the disclosure line.
+  'holiday-gift-guide-for-record-collectors-2026': {
+    slug: 'holiday-gift-guide-for-record-collectors-2026',
+    image: '/og/gift-guide-og-2026.jpg',
+    heroImage: {
+      src: '/og/gift-guide-hero-2026.jpg',
+      width: 1600,
+      height: 900,
+      alt: 'Holiday gift guide for record collectors: a crate of vinyl, wrapped gifts, and a turntable',
+    },
+    title: `Holiday Gift Guide for Record Collectors (2026)`,
+    series: 'GIFT GUIDE',
+    date: '2026-11-19',
+    dateDisplay: 'November 19, 2026',
+    excerpt: `Gifts for vinyl collectors at every budget: the $19 Breaks Bible, slipmats and sleeves under $25, a Spin Clean, a VNYL membership, first record players, and used hi-fi in Boston. Prices checked November 19, 2026.`,
+    body: [
+      `*Disclosure: Some links in this post are affiliate links. Digging in the Sales Crates is a Turntable Lab affiliate, a VNYL affiliate, and a RetroLife affiliate. As an Amazon Associate I earn from qualifying purchases. If you buy through affiliate links, we may earn a small commission at no extra cost to you. Village Vinyl and HiFi is one of the independent shops we recommend; that link is not an affiliate link.*`,
+      `If you are shopping for someone who collects vinyl, especially hip-hop, soul, funk, and breaks, these are gifts they will actually use: things that protect records, clean them, store them, or help them play music.`,
+      `Prices were checked on Thursday, November 19, 2026. They can move before Black Friday (November 27) and Christmas, so confirm the live price before you buy.`,
+
+      { type: 'h2', text: `Start here: The Breaks Bible ($19)` },
+      `The first gift is ours. The [Breaks Bible](/bundle/) is a guide to 100 of the most-sampled breaks, with the records to hunt and what to pay. It is $19. For the first 100 buyers, while they last, code EARLYBIRD takes $5 off.`,
+      `If they want a look first, the free 13-page sampler is on the same page.`,
+
+      { type: 'h2', text: `Under $25` },
+      `**Turntable Lab Ed Hertz Slipmat (Black, single), $14.95.** A soft-touch felt slipmat with Turntable Lab's op art graphic. It works for everyday listening and for DJing, and it is an easy stocking stuffer if they already have a turntable. [Ed Hertz Slipmat at Turntable Lab](https://www.turntablelab.com/products/turntable-lab-ed-hertz-slipmat-single?aff=56122).`,
+      `**Turntable Lab Cork Record Mat, $20.** A 3mm cork platter mat for listening setups. Cork helps cut vibration and static, and it grips a record better than a basic felt mat. (Turntable Lab does not recommend this one for DJ use.) [Cork Record Mat at Turntable Lab](https://www.turntablelab.com/products/turntable-lab-cork-record-mat?aff=56122).`,
+      `**Turntable Lab Archival Rice Paper Inner Record Sleeves, 50-pack, $24.95.** Soft, anti-static inner sleeves with a blue rice-paper layer. A practical gift for anyone who is still storing records in old paper inners. This pack was listed as a regular, in-season item, unlike Turntable Lab's perfected antistatic inners, which were on pre-order for January 2027. [Rice paper inner sleeves at Turntable Lab](https://www.turntablelab.com/products/turntable-lab-archival-inner-record-rice-paper-sleeves-50-units?aff=56122).`,
+
+      { type: 'h2', text: `Under $50` },
+      `**Record Corner Vinyl Storage and Display Unit, $40.** A clear, freestanding module that holds up to 36 LPs. Good for a "now playing" stack or a small new-arrivals shelf next to the turntable. The page listed the clear single unit at $40. [Record Corner storage unit at Turntable Lab](https://www.turntablelab.com/products/record-corner-vinyl-storage-display-unit?aff=56122).`,
+      `**Gifts for Hip-Hop Vinyl Collectors (Amazon Idea List).** A 10-item list with sleeves, a cleaning kit, a now-playing stand, a crate, a couple of hip-hop books, and a few classic albums. When I checked the list on November 19, 2026, the prices shown on that page ranged from $8.49 to $38.99. [Gifts for Hip-Hop Vinyl Collectors](https://www.amazon.com/shop/ditsc.com/list/2IXPWH4DEM0A7?tag=josephnicho03-20).`,
+      `**10 Vinyl Accessories Every New Collector Needs (Amazon Idea List).** My starter list for someone who just got a turntable, with the basics that protect records and make setup easier. When I checked the list on November 19, 2026, prices on the page ranged from $8.49 to $66.95. [10 Vinyl Accessories Every New Collector Needs](https://www.amazon.com/shop/ditsc.com/list/18AL82FBV7ISK?tag=josephnicho03-20).`,
+
+      { type: 'h2', text: `Under $100` },
+      `**Spin Clean MKII Record Washing System, $79.99.** The everyday record washer I recommend most. It is hand-powered, cleans both sides, and keeps the label dry. If they already clean records in the sink, this is the upgrade. [Spin Clean MKII at Turntable Lab](https://www.turntablelab.com/products/spin-clean-spin-clean-mkii-record-washing-system?aff=56122).`,
+      `**A VNYL gift membership.** VNYL is a curated vinyl subscription: you tell them what the listener likes, and they send records to keep. [Start at VNYL](https://tidd.ly/4ywTvYZ) and choose the gift option. On VNYL's plans page, memberships started at $22 a month for one record, $39 a month for three records, and a three-month plan billed at $99 every three months. Confirm the gift term and whether it renews before you check out, because those plan prices were listed as membership billing, not as a one-time prepaid gift.`,
+
+      { type: 'h2', text: `Splurge` },
+      `**Line Phono Cube Turntable Stand / Record Storage, from $159.** A made-in-the-USA stand that holds the turntable and about 90 LPs. On November 19, the Carbon finish was $159 and the Birch finish was $169, on sale from $199. [Line Phono Cube at Turntable Lab](https://www.turntablelab.com/products/line-phono-cube-turntable-stand-record-storage?aff=56122).`,
+      `**AIAIAI TMA-2 DJ Modular Headphones, $199.** Closed-back DJ headphones with replaceable parts and a punchy low end, useful for mixing or late-night listening without a room full of speakers. [TMA-2 DJ headphones at Turntable Lab](https://www.turntablelab.com/products/aiaiai-tma-2-headphones-dj-preset?aff=56122).`,
+      `**Retrolife R512 all-in-one record player, $199.99.** A compact first player with built-in speakers, an Audio-Technica AT3600L cartridge, Bluetooth input, and RCA output if they add speakers later. The product page listed it at $199.99, down from $249.99. The same page also showed code BF10 for an extra 10% off (a listed checkout price of $179.99). Confirm the code at checkout, because codes expire. This is a starter all-in-one, not a full hi-fi setup. [Shop the R512 at Retrolife](https://tidd.ly/4vOWBpT).`,
+      `**Audio-Technica AT-LP120XUSB-BK Direct Drive Turntable, $399.** A better long-term table: direct drive, a built-in switchable preamp, USB recording, and a cartridge you can upgrade later. Turntable Lab listed it at $399. If they are ready to move past an all-in-one player, this is the one. [AT-LP120XUSB at Turntable Lab](https://www.turntablelab.com/products/audio-technica-at-lp120xusb-bk-direct-drive-usb-turntable-black?aff=56122).`,
+      `**Recordbuilds Aspiring Audiophile's Den, $429.** A complete first listening setup: an Audio-Technica AT-LP70X turntable and Edifier R1280T powered speakers, planned so the pieces work together. Recordbuilds listed this build at $429 on its Builds page on November 19, 2026. [Aspiring Audiophile's Den at Recordbuilds](https://recordbuilds.com/aspiring-audiophiles-den/).`,
+      `**Used turntables, amps, and speakers from Village Vinyl and HiFi (Boston).** If you can shop in person, [Village Vinyl and HiFi](https://www.villagevinylhifi.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=village-vinyl-hifi) in Coolidge Corner sells quality used and vintage gear they test and, when needed, repair, alongside the record bins. Their [hi-fi page](https://www.villagevinylhifi.com/hi-fi) is live, but they do not list individual gear prices online, and the inventory changes. Call or visit the shop at 307 Harvard Street, Brookline, MA (open daily, 12:00 PM to 8:00 PM) before you make the trip. This is one of the independent shops we recommend.`,
+
+      { type: 'h2', text: `More gift lists` },
+      `If you want a longer browsing list, these Amazon Idea Lists were live on November 19, 2026:`,
+      `[10 Must-Have Vinyl Cleaning Tools](https://www.amazon.com/shop/ditsc.com/list/16OQE9F87OJ74?tag=josephnicho03-20). Prices shown on the list page ranged from $14.25 to $79.99.`,
+      `[Record Storage and Display Ideas](https://www.amazon.com/shop/ditsc.com/list/3TX0N84LEXO6N?tag=josephnicho03-20). Prices shown on the list page ranged from $8.49 to $95.08.`,
+      `[Hip-Hop Books Every Fan Should Own](https://www.amazon.com/shop/ditsc.com/list/CI4P4EI7P08O?tag=josephnicho03-20). Ten titles were listed, including *Can't Stop Won't Stop*, *Check the Technique*, *Dilla Time*, *The Rap Year Book*, and *Decoded*. Prices were not visible on the list page when I checked.`,
+      `You can also start from the [Digging in the Sales Crates Amazon storefront](https://www.amazon.com/shop/ditsc.com?tag=josephnicho03-20).`,
+
+      { type: 'h2', text: `FAQ` },
+      {
+        type: 'faq',
+        items: [
+          { q: `What is a good vinyl gift under $25?`, a: `The Breaks Bible is $19, and it is something they can use the next time they go looking for records. If they already have a turntable, a cork mat ($20), an Ed Hertz slipmat ($14.95), or a 50-pack of inner sleeves ($24.95) is just as useful.` },
+          { q: `Is a Spin Clean a good gift?`, a: `Yes, for most collectors. It is the everyday cleaner I recommend: hand-powered, simple, and built for regular use. If they have only a handful of records, start with sleeves and a mat, and save the Spin Clean for when the collection is growing.` },
+          { q: `I need a first record player. Which one should I get?`, a: `If you want everything in one box, the Retrolife R512 is a compact all-in-one that was on sale at $199.99. If you want a turntable that can grow with them, the Audio-Technica AT-LP120XUSB at $399 is the stronger long-term table. If you want a complete setup already matched with speakers, Recordbuilds' Aspiring Audiophile's Den was listed at $429. If you are in the Boston area, Village Vinyl and HiFi can help you hear used and vintage gear in person.` },
+          { q: `Do these links earn a commission?`, a: `Some of them do. Turntable Lab, Amazon, VNYL, and RetroLife links are affiliate links. That does not change the price you pay. The Village Vinyl and HiFi link is a referral to a shop we recommend, not an affiliate link.` },
+          { q: `Will code EARLYBIRD still work on the Breaks Bible?`, a: `It is for the first 100 buyers, while they last, and it takes $5 off the $19 price. If the code is gone, the book is still $19 on the same page.` },
+        ],
+      },
+
+      `**Want more crate knowledge?** Grab the free [Breaks Bible Sampler](/bundle/) and get crate finds every Saturday in the [From the Sales Crates](https://fromthesalescrates.beehiiv.com/subscribe?utm_source=website&utm_medium=blog&utm_campaign=gift_guide_2026) newsletter.`,
+    ],
+    // One entry per gift, in page order. prerender.mjs turns this into
+    // ItemList JSON-LD. Names and links match the body above.
+    itemList: [
+      { name: 'The Breaks Bible', url: 'https://digginginthesalescrates.com/bundle/' },
+      { name: 'Turntable Lab Ed Hertz Slipmat', url: 'https://www.turntablelab.com/products/turntable-lab-ed-hertz-slipmat-single?aff=56122' },
+      { name: 'Turntable Lab Cork Record Mat', url: 'https://www.turntablelab.com/products/turntable-lab-cork-record-mat?aff=56122' },
+      { name: 'Turntable Lab Archival Rice Paper Inner Record Sleeves, 50-pack', url: 'https://www.turntablelab.com/products/turntable-lab-archival-inner-record-rice-paper-sleeves-50-units?aff=56122' },
+      { name: 'Record Corner Vinyl Storage and Display Unit', url: 'https://www.turntablelab.com/products/record-corner-vinyl-storage-display-unit?aff=56122' },
+      { name: 'Gifts for Hip-Hop Vinyl Collectors (Amazon Idea List)', url: 'https://www.amazon.com/shop/ditsc.com/list/2IXPWH4DEM0A7?tag=josephnicho03-20' },
+      { name: '10 Vinyl Accessories Every New Collector Needs (Amazon Idea List)', url: 'https://www.amazon.com/shop/ditsc.com/list/18AL82FBV7ISK?tag=josephnicho03-20' },
+      { name: 'Spin Clean MKII Record Washing System', url: 'https://www.turntablelab.com/products/spin-clean-spin-clean-mkii-record-washing-system?aff=56122' },
+      { name: 'VNYL gift membership', url: 'https://tidd.ly/4ywTvYZ' },
+      { name: 'Line Phono Cube Turntable Stand / Record Storage', url: 'https://www.turntablelab.com/products/line-phono-cube-turntable-stand-record-storage?aff=56122' },
+      { name: 'AIAIAI TMA-2 DJ Modular Headphones', url: 'https://www.turntablelab.com/products/aiaiai-tma-2-headphones-dj-preset?aff=56122' },
+      { name: 'Retrolife R512 all-in-one record player', url: 'https://tidd.ly/4vOWBpT' },
+      { name: 'Audio-Technica AT-LP120XUSB-BK Direct Drive Turntable', url: 'https://www.turntablelab.com/products/audio-technica-at-lp120xusb-bk-direct-drive-usb-turntable-black?aff=56122' },
+      { name: "Recordbuilds Aspiring Audiophile's Den", url: 'https://recordbuilds.com/aspiring-audiophiles-den/' },
+      { name: 'Used hi-fi gear from Village Vinyl and HiFi', url: 'https://www.villagevinylhifi.com/?utm_source=ditsc&utm_medium=referral&utm_campaign=village-vinyl-hifi' },
+    ],
+    // No shopArtists: this post is not about one artist, so the "Shop these
+    // artists" section is left off.
+    seo: {
+      title: `Holiday Gift Guide for Record Collectors, 2026`,
+      description: `Gifts for vinyl collectors, from $15 slipmats and the Breaks Bible to a Spin Clean, first record players, and used hi-fi in Boston. Prices checked November 19, 2026.`,
+    },
+  },
+
   'michael-jackson-thriller-or-bad-which-to-buy': {
     slug: 'michael-jackson-thriller-or-bad-which-to-buy',
     image: '/og/michael-jackson-thriller-or-bad-which-to-buy.png',

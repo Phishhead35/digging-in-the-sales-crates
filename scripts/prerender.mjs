@@ -104,6 +104,14 @@
 //  sampler PDF (no email), Product + Offer JSON-LD for the $19 book, and a
 //  social card (public/og/breaks-bible.png if present, else the default).
 //  /bundle/thanks got its download link and a description from bundle.js.
+//
+//  GIFT GUIDE SUPPORT (2026-11-19): blog posts can now carry heroImage
+//  (written under the H1) and itemList (ItemList JSON-LD). Article author
+//  is now Person: Joe Nicholas on every post, matching the "By Joe
+//  Nicholas" byline visitors already see. Body text understands **bold**
+//  and *italic*, and Amazon and Awin (tidd.ly) links get rel="sponsored".
+//  Every page's crawler copy now ends with the footer's newsletter and
+//  Breaks Bible links (SITE_FOOTER_LINKS), matching the footer in Layout.jsx.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -137,6 +145,10 @@ const NEWSLETTER_BUNDLE_URL =
 const NEWSLETTER_GUIDE_URL =
   'https://fromthesalescrates.beehiiv.com/subscribe' +
   '?utm_source=website&utm_medium=guide&utm_campaign=newsletter_signup';
+// Footer uses utm_medium=footer, matching newsletterUrl('footer') in Layout.jsx.
+const NEWSLETTER_FOOTER_URL =
+  'https://fromthesalescrates.beehiiv.com/subscribe' +
+  '?utm_source=website&utm_medium=footer&utm_campaign=newsletter_signup';
 // Homepage hero pill uses utm_medium=homepage_hero, matching
 // newsletterUrl('homepage_hero') in Home.jsx (2026-11-20). Before this, the
 // pill only existed after JavaScript ran, so crawlers never saw a newsletter
@@ -275,11 +287,15 @@ function renderPage(template, page) {
   if (page.content) {
     const wrapped =
       `<div style="max-width:820px;margin:0 auto;padding:32px 20px;` +
-      `color:#e5e5e5;background:#0a0a0f">${page.content}</div>`;
+      `color:#e5e5e5;background:#0a0a0f">${page.content}${SITE_FOOTER_LINKS}</div>`;
     html = html.replace('<div id="root"></div>', `<div id="root">${wrapped}</div>`);
   }
   return html;
 }
+
+// The two links the site footer shows on every page (Layout.jsx, 2026-11-19).
+// Built lazily because a() is defined below. Same words as the footer.
+let SITE_FOOTER_LINKS = '';
 
 // Internal links (starting with "/") go through urlPath() so they match
 // the trailing-slash URL the host actually serves. External links and
@@ -376,14 +392,28 @@ const guideBlocks = (blocks) =>
 // Strings are paragraphs and may hold inline [text](href) links. Objects are
 // blocks: h2, table, embed, cta, faq, links. Keep this list in step with
 // BlogPost.jsx, the same pairing as useSEO.js.
-const AFFILIATE_HREF = /^https?:\/\/([^/]+\.)?(turntablelab|ebay|cdandlp)\.com\//;
+const unesc = (s) =>
+  s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+// Amazon and Awin's tidd.ly short links added 2026-11-19 (gift guide).
+// Keep in step with AFFILIATE_HOSTS in BlogPost.jsx.
+const AFFILIATE_HREF =
+  /^https?:\/\/(([^/]+\.)?(turntablelab|ebay|cdandlp|amazon)\.com|tidd\.ly)\//;
 const inlineHtml = (text = '') =>
-  esc(text).replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
-    const link = a(href, label);
-    return AFFILIATE_HREF.test(href)
-      ? link.replace('<a ', '<a rel="sponsored nofollow noopener" ')
-      : link;
-  });
+  esc(text)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
+      // esc() has already run on the whole string, and a() escapes again.
+      // Undo the first pass so links with & in them (UTM tags) and labels
+      // with quotes come out escaped exactly once (2026-11-19 fix; before
+      // this, & in an inline link became &amp;amp;).
+      const raw = unesc(href);
+      const link = a(raw, unesc(label));
+      return AFFILIATE_HREF.test(raw)
+        ? link.replace('<a ', '<a rel="sponsored nofollow noopener" ')
+        : link;
+    })
+    // **bold** and *italic*, same rules as Inline in BlogPost.jsx.
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*\s][^*]*)\*/g, '<em>$1</em>');
 
 function blockHtml(block) {
   if (typeof block === 'string') return `<p>${inlineHtml(block)}</p>`;
@@ -432,6 +462,23 @@ function faqJsonLd(body = []) {
   };
 }
 
+// ItemList JSON-LD from a post's optional itemList: [{ name, url }]
+// (2026-11-19, gift guide). Positions follow the list order.
+function itemListJsonLd(post) {
+  if (!post.itemList?.length) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: post.title,
+    itemListElement: post.itemList.map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: it.name,
+      url: it.url,
+    })),
+  };
+}
+
 // ── Main ──
 async function main() {
   const template = await fs.readFile(path.join(BUILD, 'index.html'), 'utf8');
@@ -450,6 +497,9 @@ async function main() {
   const { VIDEO_SERIES } = await loadDataModule('src/data/playlists.js');
   const { PARTNER_PAGE } = await loadDataModule('src/data/partnerPage.js');
   PARTNER_CFG = await loadDataModule('src/config/partners.js');
+  SITE_FOOTER_LINKS =
+    `<p>${a(NEWSLETTER_FOOTER_URL, 'Free weekly newsletter')} · ` +
+    `${a('/bundle', 'The Breaks Bible: free sampler')}</p>`;
 
   // Latest YouTube uploads, as the live site serves them (the Worker
   // refreshes this list every 6 hours). Read once at build time, so the
@@ -975,12 +1025,20 @@ async function main() {
         datePublished: post.date,
         description: post.seo?.description || post.excerpt || '',
         url: `${BASE}${urlPath(`/blog/${post.slug}`)}`,
-        author: { '@type': 'Organization', name: SITE, url: BASE },
+        // Person since 2026-11-19 (was the Organization). Matches the
+        // "By Joe Nicholas" byline on every post.
+        author: { '@type': 'Person', name: 'Joe Nicholas', url: `${BASE}/about/` },
         publisher: { '@type': 'Organization', name: SITE, url: BASE },
-      }, faqJsonLd(post.body)].filter(Boolean),
+      }, faqJsonLd(post.body), itemListJsonLd(post)].filter(Boolean),
       content:
         `<article>${h1(post.title)}` +
         `<p><em>${esc(post.series || '')} · ${esc(post.dateDisplay || post.date)}</em></p>` +
+        // Optional hero image, same as the live page (BlogPost.jsx).
+        (post.heroImage
+          ? `<p><img src="${esc(post.heroImage.src)}" alt="${esc(post.heroImage.alt)}" ` +
+            `width="${esc(post.heroImage.width)}" height="${esc(post.heroImage.height)}" ` +
+            `style="max-width:100%;height:auto"/></p>`
+          : '') +
         (post.body || []).map(blockHtml).join('') +
         `</article>` +
         disclosure('blog') +

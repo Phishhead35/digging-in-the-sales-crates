@@ -246,25 +246,46 @@ const H2_STYLE = {
 };
 
 // Affiliate hosts get rel="sponsored nofollow" and, when the post slug is
-// known, a blog marketplace click event. Keep in step with prerender.mjs.
+// known, a blog marketplace click event. Keep in step with AFFILIATE_HREF in
+// prerender.mjs. Amazon and Awin's tidd.ly short links added 2026-11-19 for
+// the gift guide.
 const AFFILIATE_HOSTS = [
   ['turntablelab.com', 'turntablelab'],
   ['ebay.com', 'ebay'],
   ['cdandlp.com', 'cdandlp'],
+  ['amazon.com', 'amazon'],
+  ['tidd.ly', 'awin'],
 ];
+// tidd.ly is Awin's shortener for every Awin program, so the path says which
+// one. Unknown tidd.ly links still count as paid ('awin').
+const AWIN_SHORT_LINKS = {
+  '/4ywTvYZ': 'vnyl',
+  '/4vOWBpT': 'retrolife',
+};
 function affiliateMarketplace(href) {
   try {
-    const host = new URL(href).hostname.replace(/^www\./, '');
+    const url = new URL(href);
+    const host = url.hostname.replace(/^www\./, '');
     const hit = AFFILIATE_HOSTS.find(([h]) => host === h || host.endsWith('.' + h));
-    return hit ? hit[1] : null;
+    if (!hit) return null;
+    if (hit[1] === 'awin') return AWIN_SHORT_LINKS[url.pathname] || 'awin';
+    return hit[1];
   } catch {
     return null;
   }
 }
 
+// Inline markup in body strings: [text](href) links, **bold** and *italic*.
+// Bold and italic added 2026-11-19 (gift guide item names, the disclosure
+// line, book titles). They do not nest, and no earlier post uses asterisks,
+// so older posts render exactly as before.
+const INLINE_TOKENS = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*\s][^*]*\*)/g;
+
 function Inline({ text, slug }) {
-  const parts = String(text).split(/(\[[^\]]+\]\([^)]+\))/g);
+  const parts = String(text).split(INLINE_TOKENS);
   return parts.map((part, i) => {
+    if (/^\*\*[^*]+\*\*$/.test(part)) return <strong key={i}>{part.slice(2, -2)}</strong>;
+    if (/^\*[^*\s][^*]*\*$/.test(part)) return <em key={i}>{part.slice(1, -1)}</em>;
     const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
     if (!m) return part;
     const [, label, href] = m;
@@ -450,6 +471,26 @@ export default function BlogPost() {
           }}>
             {post.title}
           </h1>
+
+          {/* Optional hero image (2026-11-19, first used by the gift guide).
+              width and height reserve the space, so nothing shifts when it
+              loads. It is the first big thing on the page, so it loads
+              eagerly with high priority. */}
+          {post.heroImage && (
+            <img
+              src={post.heroImage.src}
+              alt={post.heroImage.alt}
+              width={post.heroImage.width}
+              height={post.heroImage.height}
+              fetchpriority="high"
+              decoding="async"
+              style={{
+                display: 'block', width: '100%', height: 'auto',
+                borderRadius: 14, marginTop: 28,
+                border: '1px solid var(--border)',
+              }}
+            />
+          )}
         </div>
       </section>
 

@@ -4,13 +4,21 @@ import { withSlash } from '../utils/withSlash';
 import { Menu, X, Search, Home, Heart, TrendingDown, Mail, MapPin, BookOpen, Star, HelpCircle, Disc3, Info, FileText, Store, Coffee } from 'lucide-react';
 import FollowUs from './FollowUs';
 import { AffiliateDisclosure } from './AffiliateDisclosure';
-import { track, trackNavClick, trackStoreClick, CLICK_SOURCES } from '../utils/analytics';
+import { track, trackNavClick, trackStoreClick, trackNewsletterClick, CLICK_SOURCES } from '../utils/analytics';
 import { GUIDES } from '../data/guides';
+import { newsletterUrl } from './NewsletterCta';
 
 // Buy Me a Coffee page (2026-10-31). Optional support link in the footer.
 // Not an affiliate link, so it stays out of partners.js and gets no badge.
 // Same URL lives in src/pages/About.jsx; change both if it ever moves.
 const SUPPORT_URL = 'https://buymeacoffee.com/digginginthesalescrates';
+
+// Footer newsletter and Breaks Bible links (2026-11-19). Shown on every page.
+// utm_medium=footer separates these signups in Beehiiv; the GA4 source below
+// separates them in reports. scripts/prerender.mjs writes the same two links
+// into every page's crawler copy (SITE_FOOTER_LINKS); edit both together.
+const FOOTER_NEWSLETTER_URL = newsletterUrl('footer');
+const FOOTER_NEWSLETTER_SOURCE = 'footer_newsletter';
 
 export default function Layout({ children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -93,7 +101,7 @@ export default function Layout({ children }) {
             <Link to="/" className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
               <img
                 src="/ditsc-logo-small.webp"
-                alt="DITSC"
+                alt="Digging in the Sales Crates"
                 width={42}
                 height={42}
                 style={{
@@ -273,7 +281,7 @@ export default function Layout({ children }) {
           <div className="footer-logo-wrap">
             <img
               src="/ditsc-logo-small.webp"
-              alt="DITSC"
+              alt="Digging in the Sales Crates"
               width={52}
               height={52}
               style={{
@@ -296,6 +304,26 @@ export default function Layout({ children }) {
                 {label}
               </Link>
             ))}
+          </div>
+
+          {/* Newsletter and Breaks Bible (2026-11-19). Same two links are in
+              every page's crawler copy, see SITE_FOOTER_LINKS in
+              scripts/prerender.mjs. */}
+          <div style={{ display: 'flex', gap: 20, justifyContent: 'center', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
+            <a href={FOOTER_NEWSLETTER_URL} target="_blank" rel="noopener noreferrer"
+              onClick={() => trackNewsletterClick(FOOTER_NEWSLETTER_SOURCE)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+                fontSize: 12, fontWeight: 600, color: 'var(--amber)', textDecoration: 'none',
+              }}>
+              <Mail size={12} aria-hidden="true" />
+              Free weekly newsletter
+            </a>
+            <Link to={withSlash('/bundle')}
+              onClick={() => trackNavClick('The Breaks Bible', '/bundle', 'footer')}
+              style={{ fontSize: 12, fontWeight: 600, color: 'var(--amber)', textDecoration: 'none' }}>
+              The Breaks Bible: free sampler
+            </Link>
           </div>
 
           {/* Guide pages (2026-10-04). Built from src/data/guides.js, so a
