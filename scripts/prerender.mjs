@@ -112,6 +112,11 @@
 //  and *italic*, and Amazon and Awin (tidd.ly) links get rel="sponsored".
 //  Every page's crawler copy now ends with the footer's newsletter and
 //  Breaks Bible links (SITE_FOOTER_LINKS), matching the footer in Layout.jsx.
+//
+//  DOLLAR-SIGN FIX (2026-11-19): every html.replace() in renderPage now uses
+//  a function replacer. A "$15" in the gift guide description was read as a
+//  "$1" placeholder and pasted part of the meta tag into description,
+//  og:description and twitter:description.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -236,14 +241,18 @@ function replaceMeta(html, attr, key, value) {
     console.warn(`  ⚠ meta ${key} not found in template`);
     return html;
   }
-  return html.replace(re, `$1${esc(value)}$2`);
+  // Function replacers here and below (2026-11-19): with a plain string,
+  // replace() treats "$1", "$&" and friends in the TEXT as placeholders, so
+  // a description like "from $15 slipmats" came out as "from <meta ...5
+  // slipmats". A function's return value is always used as-is.
+  return html.replace(re, (_, before, after) => `${before}${esc(value)}${after}`);
 }
 
 function renderPage(template, page) {
   const url = BASE + urlPath(page.path);
   let html = template;
 
-  html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${esc(page.title)}</title>`);
+  html = html.replace(/<title>[\s\S]*?<\/title>/i, () => `<title>${esc(page.title)}</title>`);
   html = replaceMeta(html, 'name', 'description', page.description);
   html = replaceMeta(html, 'property', 'og:title', page.title);
   html = replaceMeta(html, 'property', 'og:description', page.description);
@@ -287,14 +296,14 @@ function renderPage(template, page) {
       headExtra += `<script type="application/ld+json">${JSON.stringify(block)}</script>`;
     }
   }
-  html = html.replace('</head>', `${headExtra}</head>`);
+  html = html.replace('</head>', () => `${headExtra}</head>`);
 
   // Inject crawler-readable content into #root (React clears it on mount)
   if (page.content) {
     const wrapped =
       `<div style="max-width:820px;margin:0 auto;padding:32px 20px;` +
       `color:#e5e5e5;background:#0a0a0f">${page.content}${SITE_FOOTER_LINKS}</div>`;
-    html = html.replace('<div id="root"></div>', `<div id="root">${wrapped}</div>`);
+    html = html.replace('<div id="root"></div>', () => `<div id="root">${wrapped}</div>`);
   }
   return html;
 }
