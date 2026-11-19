@@ -17,15 +17,15 @@
 // Plain ESM, no JSX: prerender.mjs imports this with Node.
 // ─────────────────────────────────────────────────────────────
 
-// SIGNUP_REDIRECT_CONFIRMED controls what the landing page promises.
+// UNGATED 2026-11-20: the landing page gives the sampler as a direct download,
+// no email needed, with the $19 buy button right under it and the newsletter
+// as an optional signup further down. The goal is book sales, so nothing
+// stands between a visitor and the sampler.
 //
-//   false (today): the landing page offers the direct download AND the
-//     newsletter signup side by side. Nothing is hidden, and nobody is
-//     promised a download that might not arrive.
-//   true: the landing page has a single "join, then get the bundle" button
-//     and promises the download right after signup. ONLY set this to true
-//     after Beehiiv is confirmed to send new subscribers to
-//     /bundle/thanks/ when they sign up (test it with a fresh email address).
+// SIGNUP_REDIRECT_CONFIRMED now only decides whether /bundle/thanks shows a
+// newsletter button (false = show it). The landing page no longer reads it.
+// Leave it false unless Beehiiv is confirmed to send new subscribers to
+// /bundle/thanks/ (in which case they are already on the list).
 export const SIGNUP_REDIRECT_CONFIRMED = false;
 
 export const BUNDLE = {
@@ -35,7 +35,7 @@ export const BUNDLE = {
   title: 'Free Breaks Bible Sampler',
   seoTitle: 'Free Breaks Bible Sampler: 10 Most-Sampled Breaks | Digging in the Sales Crates',
   description:
-    'A free PDF with 10 of the most-sampled breaks, the records to hunt, and what to pay. The sampler from the Breaks Bible, for crate diggers.',
+    'A free PDF with 10 of the most-sampled breaks, the records to hunt, and what to pay. No email needed. The sampler from the Breaks Bible.',
 
   // The sampler PDF, hosted on the site (public/breaks-bible-sampler.pdf).
   // Never rename that file; every link to the free download points here.
@@ -49,6 +49,8 @@ export const BUNDLE = {
   intro: [
     'Ten of the most-sampled breaks, with the records to hunt and what to pay. Free PDF, 13 pages.',
   ],
+  // Shown under the download button on the landing page (2026-11-20).
+  downloadNote: 'No email needed. It opens right in your browser.',
 
   forYouHeading: 'This is for you if',
   forYouIf: [
@@ -69,7 +71,7 @@ export const BUNDLE = {
   // payment link for the full book. To pre-fill the early-bird code, add
   // ?prefilled_promo_code=EARLYBIRD to it (test that first).
   buyHeading: 'Get the full Breaks Bible',
-  buyLead: 'The full Breaks Bible is out now: 100 breaks, $19.',
+  buyLead: 'Like the sampler? The full Breaks Bible is out now: 100 breaks, $19.',
   buyEarlyBird: 'First 100 buyers, while they last: use code EARLYBIRD for $5 off.',
   buyButton: 'Buy the Breaks Bible: $19',
   buyUrl: 'https://buy.stripe.com/28EdR91kX3QpgZwffB0VO02',
@@ -79,8 +81,10 @@ export const BUNDLE = {
   signupButton: 'Join the free newsletter',
   signupButtonGated: 'Join the free newsletter and get the sampler',
   gatedPromise: "You'll land on the download page right after you sign up.",
+  // Optional signup card. The sampler no longer depends on it (2026-11-20).
+  newsletterHeading: 'Want more crate finds every Saturday?',
   newsletterPitch:
-    "While you're here: This Week in the Sales Crates is a free weekly email with the best record sales I find, plus the Wu-Wednesday, Sample DNA, and Throwback Thursday picks.",
+    'This Week in the Sales Crates is a free weekly email with the best record sales I find, plus the Wu-Wednesday, Sample DNA, and Throwback Thursday picks.',
 
   // Thanks / download page
   thanksTitle: 'Your Breaks Bible Sampler',
@@ -89,6 +93,8 @@ export const BUNDLE = {
   thanksLead: "Here's the sampler:",
   thanksNote:
     "It's a PDF, 13 pages, and it opens on any phone or computer. Save this page if you want to come back to it.",
+  // Key name kept so nothing that reads it breaks; the newsletter moved to
+  // Saturday mornings with the Nov 14 2026 issue.
   thanksFriday:
-    'Every Friday you get This Week in the Sales Crates: the best record sales I found that week, plus the Wu-Wednesday, Sample DNA, and Throwback Thursday picks.',
+    'Every Saturday you get This Week in the Sales Crates: the best record sales I found that week, plus the Wu-Wednesday, Sample DNA, and Throwback Thursday picks.',
 };

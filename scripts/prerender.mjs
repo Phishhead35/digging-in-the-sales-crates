@@ -99,6 +99,11 @@
 //  Google and AI tools see the newsletter and the /bundle link; gave the
 //  "Own a record store?" line its Learn more link. Description updated to
 //  match useSEO in Home.jsx.
+//
+//  BUNDLE UNGATED (2026-11-20): /bundle now carries a direct link to the
+//  sampler PDF (no email), Product + Offer JSON-LD for the $19 book, and a
+//  social card (public/og/breaks-bible.png if present, else the default).
+//  /bundle/thanks got its download link and a description from bundle.js.
 // ─────────────────────────────────────────────────────────────
 
 import { promises as fs } from 'fs';
@@ -789,17 +794,49 @@ async function main() {
     });
   }
 
-  // ── Free Hip-Hop Dig Bundle ──
-  // Landing page: indexed. Crawler text mirrors what the page shows: the buy
-  // block, then the sampler pitch. The sampler has no direct link here; its
-  // button is the newsletter signup.
+  // ── Free Breaks Bible Sampler (/bundle) ──
+  // Landing page: indexed. Crawler text mirrors what the page shows, in the
+  // same order: intro, direct sampler download (ungated 2026-11-20), buy
+  // block, the two lists, then the optional newsletter card.
+  //
+  // The PDF link is written by hand, not with a(): a() sends internal links
+  // through urlPath(), which would add a trailing slash and break the file
+  // URL (/breaks-bible-sampler.pdf/ does not exist).
+  const samplerLink = (label) =>
+    `<a href="${esc(BUNDLE.downloadUrl)}" style="color:#f59e0b">${esc(label)}</a>`;
+  // Social card: the book cover if public/og/breaks-bible.png exists
+  // (1200x630), otherwise the default card. Drop the file in and redeploy;
+  // nothing else to change.
+  const bundleImage = await resolveOgImage('/og/breaks-bible.png', 'bundle');
   pages.push({
     path: BUNDLE.path,
     title: BUNDLE.seoTitle,
     description: BUNDLE.description,
+    image: bundleImage,
+    imageAlt: 'The Breaks Bible by Digging in the Sales Crates',
+    // Product + Offer for the $19 book. Product has no author field, so Joe
+    // is named in the description instead of as an author.
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: 'The Breaks Bible',
+      description:
+        'A PDF guide by Joe Nicholas to 100 of the most-sampled breaks: the source records to hunt and what to pay for each. A free 10-break sampler is also available.',
+      image: [absoluteUrl(bundleImage)],
+      brand: { '@type': 'Brand', name: SITE },
+      offers: {
+        '@type': 'Offer',
+        price: '19.00',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        url: BASE + urlPath(BUNDLE.path),
+      },
+    },
     content:
       h1(BUNDLE.title) +
       BUNDLE.intro.map(p).join('') +
+      `<p>${samplerLink(BUNDLE.downloadButton)}</p>` +
+      p(BUNDLE.downloadNote) +
       `<h2>${esc(BUNDLE.buyHeading)}</h2>` +
       p(BUNDLE.buyLead) +
       p(BUNDLE.buyEarlyBird) +
@@ -810,6 +847,7 @@ async function main() {
       `<h2>${esc(BUNDLE.insideHeading)}</h2><ul>` +
       BUNDLE.inside.map((i) => `<li><strong>${esc(i.name)}</strong>: ${esc(i.what)}</li>`).join('') +
       '</ul>' +
+      `<h2>${esc(BUNDLE.newsletterHeading)}</h2>` +
       p(BUNDLE.newsletterPitch) +
       `<p>${a(NEWSLETTER_BUNDLE_URL, BUNDLE.signupButton)}</p>`,
   });
@@ -818,8 +856,14 @@ async function main() {
     path: BUNDLE.thanksPath,
     noindex: true, // kept out of sitemap.xml, see sitemap block
     title: BUNDLE.thanksSeoTitle,
-    description: 'Download the free Hip-Hop Dig Bundle.',
-    content: h1(BUNDLE.thanksTitle) + p(BUNDLE.thanksLead) + p(BUNDLE.thanksNote) + p(BUNDLE.thanksFriday),
+    // Was a hardcoded "Hip-Hop Dig Bundle" line until 2026-11-20.
+    description: BUNDLE.thanksDescription,
+    content:
+      h1(BUNDLE.thanksTitle) +
+      p(BUNDLE.thanksLead) +
+      `<p>${samplerLink(BUNDLE.downloadButton)}</p>` +
+      p(BUNDLE.thanksNote) +
+      p(BUNDLE.thanksFriday),
   });
   // Breaks Bible post-purchase download page: kept out of Google and out of the sitemap.
   // The PDF is never in the HTML. The page checks the Stripe session in the browser.

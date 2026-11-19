@@ -6,7 +6,8 @@ import { track, trackNewsletterClick, CLICK_SOURCES } from "../utils/analytics";
 import { newsletterUrl } from "../components/NewsletterCta";
 import { BUNDLE, SIGNUP_REDIRECT_CONFIRMED } from "../data/bundle";
 
-// ── Free Breaks Bible Sampler pages (added 2026-10-05, sampler swap 2026-11-04) ──
+// ── Free Breaks Bible Sampler pages (added 2026-10-05, sampler swap 2026-11-04,
+//    ungated 2026-11-20: the landing page now has the direct download) ──
 // One component, two modes:
 //   <BundlePage />                the landing page at /bundle
 //   <BundlePage mode="thanks" />  the download page at /bundle/thanks
@@ -186,6 +187,22 @@ export default function BundlePage({ mode = "landing" }) {
           <p key={i} style={styles.lead}>{text}</p>
         ))}
 
+        {/* Ungated 2026-11-20: the sampler downloads straight away, no
+            email. Same bundle_download event as the thanks page, with
+            click_source bundle_page, so GA4 history carries over. */}
+        <a
+          href={BUNDLE.downloadUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onDownload}
+          style={styles.button}
+        >
+          {BUNDLE.downloadButton}
+        </a>
+        <p style={{ ...styles.p, margin: "0.25rem 0 0" }}>{BUNDLE.downloadNote}</p>
+
+        {/* Buy block sits right under the download, so the next step after
+            the free sampler is the full book. */}
         <div style={styles.card}>
           <h2 style={{ ...styles.h2, margin: "0 0 0.75rem" }}>{BUNDLE.buyHeading}</h2>
           <p style={{ ...styles.p, margin: "0 0 0.5rem" }}>{BUNDLE.buyLead}</p>
@@ -211,7 +228,10 @@ export default function BundlePage({ mode = "landing" }) {
           ))}
         </ul>
 
+        {/* Optional newsletter signup. Kept in plain view, since the gated
+            page used to bring in half of all subscribers. */}
         <div style={styles.card}>
+          <h2 style={{ ...styles.h2, margin: "0 0 0.75rem" }}>{BUNDLE.newsletterHeading}</h2>
           <p style={{ ...styles.p, margin: "0 0 0.75rem" }}>{BUNDLE.newsletterPitch}</p>
           {signupLink(BUNDLE.signupButton)}
         </div>
