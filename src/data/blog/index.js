@@ -18,6 +18,7 @@ export const BLOG_POSTS = {
 
       { type: 'h2', text: `Why the drums sound like that` },
       `Bonham's kit was set up in the lobby of Headley Grange, with two microphones hung above the staircase and run through Helios compressors. No studio room sounds like that stairwell, which is why producers keep lifting the break instead of replaying it.`,
+      `If breaks like this are why you dig, the free [Breaks Bible sampler](/bundle/) covers 10 of the most-sampled breaks, with the original records and who flipped them.`,
 
       { type: 'h2', text: `The originals: 2401012 and SD 7208` },
       `IV came out November 8, 1971 on Atlantic. The UK original is 2401012. K 50008 is a later UK number, and Discogs flags a 2014 European "K 50008" LP as unofficial, so do not let that number sell you an "original." UK copies from 1971 have the plum Atlantic label, and Discogs notes that first-batch copies show an inverted feather symbol on side two. The runouts carry hand-etched "Pecko Duck" and "Porky." The main UK entry on Discogs has more collectors wanting it than owning it, and it is priced like a trophy.`,
@@ -40,7 +41,7 @@ export const BLOG_POSTS = {
 
       { type: 'h2', text: `Our call` },
       `For a player, buy a clean US SD 7208 and pay for condition, not the plant. For a keeper, a UK 2401012 plum label is the one, but match the runouts and label to a specific Discogs entry before you pay trophy money. For new, buy the 2014 remaster, or the deluxe if the alternate Levee mix matters to you. We have not A/B tested these pressings, so this is a call on documentation and supply, not sound.`,
-      `When we searched for Led Zeppelin IV on November 24, 2026, the search returned 39 results across eBay, Discogs and Turntable Lab. CDandLP listings showed up when we searched for Led Zeppelin alone.`,
+      `Shopping this Black Friday week? The 2014 remaster, or the Atlantic 75 clear pressing if you can find it in stock, is an easy gift for a Zeppelin fan. Our [holiday gift guide](/blog/holiday-gift-guide-for-record-collectors-2026/) has more at every budget.`,
       { type: 'cta', label: 'Compare every Led Zeppelin IV copy', href: '/search/?q=led+zeppelin+iv', note: 'eBay, Discogs and Turntable Lab in one search.' },
 
       { type: 'h2', text: `FAQ` },
@@ -57,6 +58,7 @@ export const BLOG_POSTS = {
       { type: 'links', title: 'Keep digging', items: [
         { text: 'Led Zeppelin vinyl', href: '/artists/led-zeppelin/' },
         { text: 'Beastie Boys vinyl', href: '/artists/beastie-boys/' },
+        { text: 'Holiday Gift Guide for Record Collectors (2026)', href: '/blog/holiday-gift-guide-for-record-collectors-2026/' },
         { text: 'Two Records Built Beastie Boys\' "Looking Down the Barrel of a Gun." Here Is How to Buy Both.', href: '/blog/beastie-boys-looking-down-the-barrel-of-a-gun-sample/' },
         { text: 'Which Copy of Fleetwood Mac\'s Rumours Should You Actually Buy?', href: '/blog/fleetwood-mac-rumours-vinyl-which-copy-to-buy/' },
         { text: 'Discogs vs eBay for Records', href: '/discogs-vs-ebay-for-records/' },
