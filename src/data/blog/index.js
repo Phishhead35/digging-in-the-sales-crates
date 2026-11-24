@@ -5,6 +5,83 @@
 //  in /blog-drafts — review, then convert into an entry below.
 // ─────────────────────────────────────────────────────────────
 export const BLOG_POSTS = {
+  'led-zeppelin-iv-which-copy-to-buy': {
+    slug: 'led-zeppelin-iv-which-copy-to-buy',
+    image: '/og/led-zeppelin-iv-which-copy-to-buy.png',
+    title: `Which Copy of Led Zeppelin IV Should You Actually Buy?`,
+    series: 'CRATE SPOTLIGHT',
+    date: '2026-11-24',
+    dateDisplay: 'November 24, 2026',
+    excerpt: `The Beastie Boys opened Licensed to Ill with John Bonham's "When the Levee Breaks" drums. How to read a UK 2401012 or US SD 7208 original, what the 2014 Jimmy Page remaster and the Atlantic 75 clear edition are, and which one to buy.`,
+    body: [
+      `The Beastie Boys opened Licensed to Ill with John Bonham. The drums under "Rhymin & Stealin" come from "When the Levee Breaks," the closing track on Led Zeppelin IV, and Licensed to Ill turned 40 this month (Def Jam/Columbia, November 15, 1986). Dr. Dre used the same break on "Lyrical Gangbang," and Björk built "Army of Me" on it. That makes IV a sample record as much as a rock record. It is also in every bin, so finding one is easy. Choosing one is the work.`,
+
+      { type: 'h2', text: `Why the drums sound like that` },
+      `Bonham's kit was set up in the lobby of Headley Grange, with two microphones hung above the staircase and run through Helios compressors. No studio room sounds like that stairwell, which is why producers keep lifting the break instead of replaying it.`,
+
+      { type: 'h2', text: `The originals: 2401012 and SD 7208` },
+      `IV came out November 8, 1971 on Atlantic. The UK original is 2401012. K 50008 is a later UK number, and Discogs flags a 2014 European "K 50008" LP as unofficial, so do not let that number sell you an "original." UK copies from 1971 have the plum Atlantic label, and Discogs notes that first-batch copies show an inverted feather symbol on side two. The runouts carry hand-etched "Pecko Duck" and "Porky." The main UK entry on Discogs has more collectors wanting it than owning it, and it is priced like a trophy.`,
+      `The US original is Atlantic SD 7208, but Discogs lists 27 different 1971 US variants under that one number. The plant tells them apart: "RI" in the matrix for Richmond, Indiana, "PR" for Presswell, and no suffix for Terre Haute. There is no single US first pressing to chase. The three most-owned US entries each have thousands of owners and between 17 and 99 copies for sale, which keeps them cheap.`,
+      {
+        type: 'table',
+        caption: `Discogs collector counts on November 24, 2026 (approximate; Discogs pages and listings disagree slightly)`,
+        columns: ['Pressing', 'Label / cat #', 'Have', 'Want'],
+        rows: [
+          ['UK 1971, plum label', 'Atlantic 2401012', '3,925', '4,555'],
+          ['US 1971, Richmond (RI)', 'Atlantic SD 7208', '7,643', '1,645'],
+          ['US 1971, Presswell (PR)', 'Atlantic SD 7208', '7,013', '1,573'],
+          ['2014 Jimmy Page remaster, Europe', 'Atlantic 8122-79657-7', '28,676', '3,063'],
+          ['2023 Atlantic 75, crystal clear', 'Atlantic RCV1 7208', '7,197', '864'],
+        ],
+      },
+
+      { type: 'h2', text: `The reissues` },
+      `Jimmy Page remastered the catalog in 2014: 180g vinyl, with lacquers cut at Metropolis by John Davis. The deluxe 2LP adds a companion disc of alternate mixes, including an alternate UK mix of "When the Levee Breaks." The Atlantic 75 edition (October 27, 2023) is crystal-clear 180g vinyl with a sticker crediting the Page remaster. Turntable Lab lists it at $27.95, though it was out of stock when we checked on November 24.`,
+
+      { type: 'h2', text: `Our call` },
+      `For a player, buy a clean US SD 7208 and pay for condition, not the plant. For a keeper, a UK 2401012 plum label is the one, but match the runouts and label to a specific Discogs entry before you pay trophy money. For new, buy the 2014 remaster, or the deluxe if the alternate Levee mix matters to you. We have not A/B tested these pressings, so this is a call on documentation and supply, not sound.`,
+      `When we searched for Led Zeppelin IV on November 24, 2026, the search returned 39 results across eBay, Discogs and Turntable Lab. CDandLP listings showed up when we searched for Led Zeppelin alone.`,
+      { type: 'cta', label: 'Compare every Led Zeppelin IV copy', href: '/search/?q=led+zeppelin+iv', note: 'eBay, Discogs and Turntable Lab in one search.' },
+
+      { type: 'h2', text: `FAQ` },
+      {
+        type: 'faq',
+        items: [
+          { q: `What is the UK original catalog number for Led Zeppelin IV?`, a: `Atlantic 2401012, from 1971, on the plum Atlantic label. K 50008 is a later UK number, and Discogs flags a 2014 European "K 50008" LP as unofficial.` },
+          { q: `What is the US original catalog number for Led Zeppelin IV?`, a: `Atlantic SD 7208. Discogs lists 27 different 1971 US variants under that number, split by pressing plant, so read the matrix in the runout.` },
+          { q: `What did the Beastie Boys sample from Led Zeppelin IV?`, a: `The drums from "When the Levee Breaks," on "Rhymin & Stealin," the opening track of Licensed to Ill (1986).` },
+          { q: `Is the Atlantic 75 Led Zeppelin IV a new remaster?`, a: `Its sticker credits the remaster produced by Jimmy Page, the same credit as the 2014 reissue. It is pressed on crystal-clear 180g vinyl.` },
+          { q: `Where can I compare Led Zeppelin IV copies?`, a: `Vinyl Search checks eBay, Discogs, CDandLP and Turntable Lab at once.` },
+        ],
+      },
+      { type: 'links', title: 'Keep digging', items: [
+        { text: 'Led Zeppelin vinyl', href: '/artists/led-zeppelin/' },
+        { text: 'Beastie Boys vinyl', href: '/artists/beastie-boys/' },
+        { text: 'Two Records Built Beastie Boys\' "Looking Down the Barrel of a Gun." Here Is How to Buy Both.', href: '/blog/beastie-boys-looking-down-the-barrel-of-a-gun-sample/' },
+        { text: 'Which Copy of Fleetwood Mac\'s Rumours Should You Actually Buy?', href: '/blog/fleetwood-mac-rumours-vinyl-which-copy-to-buy/' },
+        { text: 'Discogs vs eBay for Records', href: '/discogs-vs-ebay-for-records/' },
+      ] },
+      `Vinyl Search checks eBay, Discogs, CDandLP and Turntable Lab at once. Discogs links are plain links; we earn nothing on them.`,
+    ],
+    shopArtists: [
+      {
+        name: 'Led Zeppelin: Led Zeppelin IV',
+        pageSlug: 'led-zeppelin',
+        amazonEligible: true,
+        amazonSearchTerm: 'led zeppelin iv vinyl',
+        searchTerms: {
+          discogs: 'Led Zeppelin IV',
+          ebay: 'Led Zeppelin IV vinyl LP',
+          cdandlp: 'Led Zeppelin',
+        },
+      },
+    ],
+    seo: {
+      title: `Led Zeppelin IV Vinyl: Which Copy to Buy?`,
+      description: `The Beastie Boys sampled the "When the Levee Breaks" drums. How to read a UK 2401012 or US SD 7208 original, and the 2014 Page remaster vs the Atlantic 75 clear.`,
+    },
+  },
+
   // Holiday gift guide (2026-11-19). Uses three fields no earlier post uses:
   //   heroImage  shown under the title (BlogPost.jsx) and in the crawler copy
   //   itemList   becomes ItemList JSON-LD in scripts/prerender.mjs

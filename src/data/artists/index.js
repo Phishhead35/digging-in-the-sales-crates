@@ -1153,6 +1153,95 @@ export const ARTISTS = {
     },
   },
 
+  'led-zeppelin': {
+    slug: 'led-zeppelin',
+    name: 'Led Zeppelin',
+    tagline: 'Every bin has them, and hip-hop keeps going back to the same Bonham break.',
+    genres: ['Rock', 'Hard Rock', 'Blues Rock'],
+    searchTerms: {
+      discogs: 'Led Zeppelin',
+      ebay: 'Led Zeppelin vinyl LP',
+      cdandlp: 'Led Zeppelin',
+    },
+    // Atlantic/Rhino keeps the catalog in constant vinyl reissue (2014 Jimmy
+    // Page remasters, the 2023 Atlantic 75 clear IV). Same reasoning as
+    // Fleetwood Mac: confident yes on Amazon. Turntable Lab carried II, III,
+    // Houses of the Holy, Physical Graffiti and the Atlantic 75 IV in our
+    // November 24, 2026 site search, so its button stays on.
+    amazonEligible: true,
+    amazonSearchTerm: 'led zeppelin vinyl',
+    turntablelabEligible: true,
+    bio: [
+      'Led Zeppelin formed in London in 1968: Robert Plant on vocals, Jimmy Page on guitar, John Paul Jones on bass and keyboards, and John Bonham on drums. They signed to Atlantic that November, launched their own Swan Song label in 1974, and split in December 1980 after Bonham\'s death that September. Nine studio albums came out of those twelve years, and every one of them is still easy to find.',
+      'For crate diggers, the record is Led Zeppelin IV (Atlantic, November 8, 1971). Bonham\'s drums on "When the Levee Breaks" were recorded in the lobby of Headley Grange with two microphones hung above the staircase, and nobody has matched that sound in a studio since. The Beastie Boys put the break under "Rhymin & Stealin" on Licensed to Ill, Dr. Dre used it on "Lyrical Gangbang," and Björk built "Army of Me" on it. The Beasties also took the riff from "The Ocean" for "She\'s Crafty," and Puff Daddy\'s "Come with Me" is built on "Kashmir," with Page playing guitar on it.',
+      'For collectors, the catalog number is only the start. The US original of IV is Atlantic SD 7208, but Discogs lists 27 different 1971 US variants under that one number, split by pressing plant. The UK original is 2401012 on the plum Atlantic label. K 50008 is a later UK number, and Discogs flags a 2014 European "K 50008" LP as unofficial. Read the runouts before you pay original money. We compared the originals with the 2014 Page remaster and the Atlantic 75 clear edition in [Which Copy of Led Zeppelin IV Should You Actually Buy?](/blog/led-zeppelin-iv-which-copy-to-buy/), and the Beastie Boys side of the story is on our [Beastie Boys page](/artists/beastie-boys/).',
+    ],
+    essentialRecords: [
+      { title: 'Led Zeppelin IV', year: 1971, label: 'Atlantic' },
+      { title: 'Led Zeppelin II', year: 1969, label: 'Atlantic' },
+      { title: 'Led Zeppelin', year: 1969, label: 'Atlantic' },
+      { title: 'Led Zeppelin III', year: 1970, label: 'Atlantic' },
+      { title: 'Houses of the Holy', year: 1973, label: 'Atlantic' },
+      { title: 'Physical Graffiti', year: 1975, label: 'Swan Song' },
+    ],
+    producerCredits: [
+      'Jimmy Page, credited on the 2014 reissues as "Remastered & Produced by Jimmy Page"',
+      '"When the Levee Breaks" (1971) drums sampled by Beastie Boys, "Rhymin & Stealin" (1986)',
+      '"When the Levee Breaks" also sampled by Dr. Dre, "Lyrical Gangbang" (1992), and Björk, "Army of Me"',
+      '"The Ocean" (1973) riff used by Beastie Boys, "She\'s Crafty" (1986)',
+      '"Kashmir" (1975) built into Puff Daddy, "Come with Me" (1998), with Jimmy Page on guitar',
+    ],
+    seo: {
+      title: 'Led Zeppelin Vinyl Records | Digging in the Sales Crates',
+      description: 'Find Led Zeppelin vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop Led Zeppelin IV, II, Houses of the Holy and Physical Graffiti, from 1971 originals to the 2014 Jimmy Page remasters.',
+    },
+  },
+
+  'a-tribe-called-quest': {
+    slug: 'a-tribe-called-quest',
+    name: 'A Tribe Called Quest',
+    tagline: 'Queens, the Native Tongues, three Jive records every collection needs, and a farewell that went to number one.',
+    genres: ['Hip-Hop', 'Golden Era', 'Jazz Rap'],
+    searchTerms: {
+      discogs: 'A Tribe Called Quest',
+      ebay: 'A Tribe Called Quest vinyl LP',
+      cdandlp: 'A Tribe Called Quest',
+    },
+    // Turntable Lab carries Midnight Marauders, People's Instinctive Travels and
+    // Anthology new (confirmed in a live search on November 24, 2026), so its
+    // button stays on. The catalog is a Jive/Sony major-label catalog with
+    // current represses, which meets the amazonEligible rule above. Amazon
+    // listings showed up in web search but the pages could not be opened to
+    // confirm stock; flip to false if the button lands on nothing.
+    amazonEligible: true,
+    amazonSearchTerm: 'a tribe called quest vinyl',
+    turntablelabEligible: true,
+    bio: [
+      'A Tribe Called Quest formed in Queens, New York in 1985: Q-Tip, Phife Dawg, Ali Shaheed Muhammad and Jarobi White. In 1988 they co-founded the Native Tongues collective with the Jungle Brothers, De La Soul, Queen Latifah and Monie Love. Jarobi left during the Low End Theory sessions in 1991, and the trio that remained made the records collectors chase.',
+      'The run on Jive is the core of any hip-hop shelf: People\'s Instinctive Travels and the Paths of Rhythm (April 17, 1990), The Low End Theory (September 24, 1991) and Midnight Marauders (November 9, 1993). The samples lead straight to other crates. "Can I Kick It?" is built on Lou Reed\'s "Walk on the Wild Side," "Electric Relaxation" on Ronnie Foster\'s "Mystic Brew," and "Award Tour" on Weldon Irvine\'s "We Gettin\' Down." Beats, Rhymes and Life (1996) went to number one, with J Dilla in the production mix; we covered it in [Beats, Rhymes and Life Turns 30](/blog/beats-rhymes-and-life-30th-anniversary/), and there is more on our [J Dilla page](/artists/j-dilla/).',
+      'Phife Dawg died on March 22, 2016. The group finished We Got It from Here... Thank You 4 Your Service anyway, and it came out on Epic on November 11, 2016, debuting at number one on the Billboard 200. They entered the Rock and Roll Hall of Fame in 2024. For buyers, the classics are in print: Midnight Marauders, People\'s Instinctive Travels and Anthology were all new at Turntable Lab when we checked on November 24, 2026. The black Low End Theory 2LP was sold out there, and colored represses of Midnight Marauders and The Low End Theory were on pre-order with an estimated early March 2027 ship date. The US original Midnight Marauders is Jive 01241-41490-1 on Discogs; match the label and runout before you pay original money.',
+    ],
+    essentialRecords: [
+      { title: 'The Low End Theory', year: 1991, label: 'Jive' },
+      { title: 'Midnight Marauders', year: 1993, label: 'Jive' },
+      { title: 'People\'s Instinctive Travels and the Paths of Rhythm', year: 1990, label: 'Jive' },
+      { title: 'Beats, Rhymes and Life', year: 1996, label: 'Jive' },
+      { title: 'The Love Movement', year: 1998, label: 'Jive' },
+      { title: 'We Got It from Here... Thank You 4 Your Service', year: 2016, label: 'Epic' },
+    ],
+    producerCredits: [
+      '"Can I Kick It?" (1990) built on Lou Reed, "Walk on the Wild Side"',
+      '"Electric Relaxation" (1993) built on Ronnie Foster, "Mystic Brew"',
+      '"Award Tour" (1993) built on Weldon Irvine, "We Gettin\' Down" (1975)',
+      'Beats, Rhymes and Life (1996), with J Dilla in the production mix',
+      'Native Tongues co-founders, 1988, with the Jungle Brothers and De La Soul',
+    ],
+    seo: {
+      title: 'A Tribe Called Quest Vinyl Records | Digging in the Sales Crates',
+      description: 'Find A Tribe Called Quest vinyl records across Discogs, eBay, CDandLP, and Turntable Lab. Shop The Low End Theory, Midnight Marauders and People\'s Instinctive Travels, from Jive originals to current represses.',
+    },
+  },
+
 };
 
 export const GENRES = {
